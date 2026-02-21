@@ -1,0 +1,60 @@
+{% extends "base_report.html" %}
+{% block title %}Relevé de Compte - {{ student.firstName }} {{ student.lastName }}{% endblock %}
+{% block content %}
+<div class="columns mb-5">
+    <div class="column is-6">
+        <div class="monday-card" style="height: 100%;">
+            <div class="monday-card-header"><i class="fas fa-user-graduate"></i> Informations Étudiant</div>
+            <table style="width: 100%;">
+                <tr><td style="padding: 8px 0; color: var(--monday-grey);">Nom Complet</td><td style="padding: 8px 0; font-weight: 600; text-align: right;">{{ student.firstName }} {{ student.lastName }}</td></tr>
+                <tr><td style="padding: 8px 0; color: var(--monday-grey);">Matricule</td><td style="padding: 8px 0; font-weight: 600; text-align: right;">{{ student.matricule }}</td></tr>
+                <tr><td style="padding: 8px 0; color: var(--monday-grey);">Classe</td><td style="padding: 8px 0; font-weight: 600; text-align: right;"><span class="status-pill status-info">{{ student.className }}</span></td></tr>
+            </table>
+        </div>
+    </div>
+    <div class="column is-6">
+        <div class="monday-card" style="height: 100%; background-color: #f5f6f8; border: none;">
+            <div class="monday-card-header"><i class="fas fa-wallet"></i> Synthèse Financière</div>
+            <div class="columns is-mobile has-text-centered">
+                <div class="column"><div class="kpi-value" style="color: var(--monday-blue);">{{ "{:,.0f}".format(student.totalFeesDue) }}</div><div class="kpi-label">Total Dû</div></div>
+                <div class="column" style="border-left: 1px solid #d0d4e4;"><div class="kpi-value" style="color: var(--monday-green);">{{ "{:,.0f}".format(student.totalFeesPaid) }}</div><div class="kpi-label">Payé</div></div>
+                <div class="column" style="border-left: 1px solid #d0d4e4;"><div class="kpi-value" style="color: var(--monday-red);">{{ "{:,.0f}".format(student.balance) }}</div><div class="kpi-label">Reste</div></div>
+            </div>
+        </div>
+    </div>
+</div>
+<h3 class="monday-title" style="font-size: 18px; margin-bottom: 15px;">Historique des Transactions</h3>
+<h4 class="monday-title" style="font-size: 16px; margin-top: 20px; margin-bottom: 10px;">Factures</h4>
+<table class="monday-table">
+    <thead><tr><th>Date</th><th>Titre</th><th>Montant</th><th>Statut</th></tr></thead>
+    <tbody>
+        {% for invoice in invoices %}
+        <tr>
+            <td>{{ invoice.due_date.strftime('%d/%m/%Y') if invoice.due_date else '-' }}</td>
+            <td>{{ invoice.title or '-' }}</td>
+            <td style="text-align: right; font-weight: 700;">{{ "{:,.0f}".format(invoice.amount) }} FCFA</td>
+            <td>{% if invoice.status == 'PAID' %}<span class="status-pill status-done">Payé</span>{% elif invoice.status == 'PARTIAL' %}<span class="status-pill status-in-progress">Partiel</span>{% else %}<span class="status-pill status-todo">Impayé</span>{% endif %}</td>
+        </tr>
+        {% else %}
+        <tr><td colspan="4" style="text-align: center; padding: 30px; color: var(--monday-grey);">Aucune facture enregistrée.</td></tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+<h4 class="monday-title" style="font-size: 16px; margin-top: 20px; margin-bottom: 10px;">Paiements</h4>
+<table class="monday-table">
+    <thead><tr><th>Date</th><th>Référence</th><th>Méthode</th><th style="text-align: right;">Montant</th></tr></thead>
+    <tbody>
+        {% for payment in payments %}
+        <tr>
+            <td>{{ payment.paymentDate.strftime('%d/%m/%Y') if payment.paymentDate else '-' }}</td>
+            <td><span style="font-family: monospace; background: #f0f0f0; padding: 2px 6px; border-radius: 4px;">{{ payment.reference or '-' }}</span></td>
+            <td>{{ payment.method or '-' }}</td>
+            <td style="text-align: right; font-weight: 700;">{{ "{:,.0f}".format(payment.amount) }} FCFA</td>
+        </tr>
+        {% else %}
+        <tr><td colspan="4" style="text-align: center; padding: 30px; color: var(--monday-grey);">Aucun paiement enregistré.</td></tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock %}

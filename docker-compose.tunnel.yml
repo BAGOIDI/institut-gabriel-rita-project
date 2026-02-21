@@ -1,0 +1,20 @@
+version: '3.8'
+
+services:
+  # Service de tunnel pour exposer le frontend sur Internet via Ngrok
+  ngrok-tunnel:
+    build:
+      dockerfile: Dockerfile.tunnel
+    container_name: ngrok-tunnel-service
+    restart: unless-stopped
+    environment:
+      - NGROK_TOKEN=39U5LlaL4aGsTQhELuSwWdLddnP_6owjpMiNkfa98ks1qMeU5
+      - TARGET_URL=http://school-frontend:5173
+    ports:
+      - "4040:4040"  # Port d'administration ngrok
+    networks:
+      - school-network  # Utiliser le réseau existant de l'application
+      
+networks:
+  school-network:
+    external: true  # Réseau externe créé par le docker-compose principal

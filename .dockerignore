@@ -1,0 +1,10 @@
+# Fichiers et dossiers à ignorer lors de la construction Docker
+
+# Dossier ZKTeco
+ZKTeco/
+
+# Dossiers node_modules générés par npm
+node_modules/
+
+# Dossier gestscolxp
+gestscolxp/

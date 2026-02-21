@@ -1,0 +1,34 @@
+{% extends "base_report.html" %}
+{% block title %}Relance Paiements - Retards{% endblock %}
+{% block content %}
+<div class="columns is-vcentered mb-5">
+    <div class="column">
+        <h2 class="monday-title" style="color: var(--monday-red) !important;"><i class="fas fa-exclamation-circle mr-2"></i> Liste des Impayés</h2>
+        <p class="monday-subtitle">Étudiants avec solde débiteur au {{ current_date }}</p>
+    </div>
+    <div class="column is-narrow">
+        <div class="monday-card" style="padding: 10px 20px; background-color: #fff0f3; border: 1px solid var(--monday-red);">
+            <div class="kpi-label" style="color: var(--monday-red);">Nombre d'Étudiants</div>
+            <div class="kpi-value" style="color: var(--monday-red); font-size: 24px;">{{ late_payments|length }}</div>
+        </div>
+    </div>
+</div>
+<div class="table-container">
+    <table class="monday-table">
+        <thead><tr><th>Classe</th><th>Matricule</th><th>Nom & Prénoms</th><th style="text-align: right;">Solde</th><th style="text-align: center;">Statut</th></tr></thead>
+        <tbody>
+            {% for student in late_payments %}
+            <tr>
+                <td><span class="status-pill status-default">{{ student.className }}</span></td>
+                <td>{{ student.matricule }}</td>
+                <td style="font-weight: 600;">{{ student.lastName }} {{ student.firstName }}</td>
+                <td style="text-align: right; font-weight: 700; color: var(--monday-red);">{{ "{:,.0f}".format(student.balance) }} FCFA</td>
+                <td style="text-align: center;"><span class="status-pill status-stuck">En Retard</span></td>
+            </tr>
+            {% else %}
+            <tr><td colspan="5" style="text-align: center; padding: 40px;">Aucun retard détecté !</td></tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}

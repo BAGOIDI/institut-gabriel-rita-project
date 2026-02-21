@@ -1,0 +1,122 @@
+{% extends "base_report.html" %}
+
+{% block title %}Emploi du Temps - {{ class_name }}{% endblock %}
+
+{% block container_class %}landscape{% endblock %}
+
+{% block extra_css %}
+<style>
+    @page { size: A4 landscape; margin: 0; }
+    
+    .schedule-table {
+        width: 100%;
+        border-collapse: collapse;
+        border: 1px solid var(--primary-blue);
+        table-layout: fixed;
+    }
+    .schedule-table th {
+        background-color: var(--primary-blue);
+        color: white;
+        padding: 8px;
+        border: 0.5px solid white;
+    }
+    .schedule-table td {
+        border: 0.5px solid var(--primary-blue);
+        padding: 0;
+        height: 95px;
+        vertical-align: middle;
+    }
+    
+    .time-slot-cell {
+        background-color: #F3F4F6;
+        color: var(--primary-blue);
+        font-weight: 700;
+        font-size: 11px;
+        width: 80px;
+        text-align: center !important;
+    }
+
+    .course-block {
+        height: 100%;
+        padding: 8px 12px;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: flex-start;
+        text-align: left;
+    }
+    .course-subject { font-weight: 700; font-size: 11px; color: var(--text-main); margin-bottom: 4px; text-transform: uppercase; }
+    .course-detail { font-size: 10px; color: var(--text-muted); display: flex; align-items: center; gap: 6px; margin-bottom: 2px; }
+    
+    /* Background Colors */
+    .bg-tech { background-color: rgba(11, 75, 131, 0.08); }
+    .bg-elec { background-color: rgba(230, 166, 71, 0.08); }
+    .bg-mech { background-color: rgba(163, 140, 92, 0.08); }
+    .bg-info { background-color: rgba(16, 185, 129, 0.08); }
+    .bg-gen  { background-color: rgba(239, 68, 68, 0.08); }
+    .bg-default { background-color: #FAFAFA; }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="report-title-section">
+    <h1 class="report-title">Emploi du Temps Hebdomadaire</h1>
+    <div class="info-group">
+        <div class="class-info-box">
+            <span class="class-label">Semaine du</span>
+            <span class="class-value">10 Juin 2026</span>
+        </div>
+        <div class="class-info-box">
+            <span class="class-label">Classe</span>
+            <span class="class-value">{{ class_name }}</span>
+        </div>
+    </div>
+</div>
+
+<table class="schedule-table">
+    <thead>
+        <tr>
+            <th style="width: 80px;">Heure</th>
+            <th style="width: 15.3%;">Lundi</th>
+            <th style="width: 15.3%;">Mardi</th>
+            <th style="width: 15.3%;">Mercredi</th>
+            <th style="width: 15.3%;">Jeudi</th>
+            <th style="width: 15.3%;">Vendredi</th>
+            <th style="width: 15.3%;">Samedi</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for time_slot in time_slots %}
+        <tr>
+            <td class="time-slot-cell">{{ time_slot }}</td>
+            {% for day in range(1, 7) %}
+            {% set course = schedule.get(day, {}).get(time_slot) %}
+            <td>
+                {% if course %}
+                    {% set bg_class = 'bg-default' %}
+                    {% if 'Math' in course.subject or 'Auto' in course.subject %} {% set bg_class = 'bg-tech' %}
+                    {% elif 'Phys' in course.subject or 'Elec' in course.subject %} {% set bg_class = 'bg-elec' %}
+                    {% elif 'Hist' in course.subject or 'Mech' in course.subject %} {% set bg_class = 'bg-mech' %}
+                    {% elif 'SVT' in course.subject or 'Info' in course.subject or 'CAO' in course.subject %} {% set bg_class = 'bg-info' %}
+                    {% elif 'Anglais' in course.subject or 'Projet' in course.subject %} {% set bg_class = 'bg-gen' %}
+                    {% endif %}
+                    
+                    <div class="course-block {{ bg_class }}">
+                        <div class="course-subject">{{ course.subject }}</div>
+                        <div class="course-detail"><i class="fas fa-user-circle"></i> {{ course.teacher_name }}</div>
+                        <div class="course-detail"><i class="fas fa-map-marker-alt"></i> {{ course.room }}</div>
+                    </div>
+                {% endif %}
+            </td>
+            {% endfor %}
+        </tr>
+        <!-- Optional Pause Row Logic could go here if data supports it -->
+        {% endfor %}
+        
+        <!-- Static Pause Row Example (can be moved inside loop if time_slots are split) -->
+        <tr style="height: 25px;">
+            <td colspan="7" style="background-color: #E5E7EB; text-align: center; font-weight: 800; color: var(--text-muted); padding: 4px; height: auto; letter-spacing: 15px; text-transform: uppercase; border: 0.5px solid var(--primary-blue);">PAUSE</td>
+        </tr>
+    </tbody>
+</table>
+{% endblock %}

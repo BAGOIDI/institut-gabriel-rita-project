@@ -1,0 +1,23 @@
+{% extends "base_report.html" %}
+{% block title %}Suivi des Moratoires{% endblock %}
+{% block content %}
+<div class="monday-header"><div><h2 class="monday-title">Suivi des Moratoires</h2><p class="monday-subtitle">Échéanciers de paiement actifs</p></div></div>
+<div class="table-container">
+    <table class="monday-table">
+        <thead><tr><th>Étudiant</th><th>Classe</th><th>Matricule</th><th style="text-align: right;">Solde</th><th style="text-align: center;">Statut</th></tr></thead>
+        <tbody>
+            {% for student in students %}
+            <tr>
+                <td><div style="font-weight: 600;">{{ student.lastName }} {{ student.firstName }}</div></td>
+                <td><span class="status-pill status-default">{{ student.className }}</span></td>
+                <td>{{ student.matricule }}</td>
+                <td style="text-align: right; font-family: monospace; font-size: 13px;">{{ "{:,.0f}".format(student.balance) }} FCFA</td>
+                <td style="text-align: center;"><span class="status-pill status-working">Moratoire</span></td>
+            </tr>
+            {% else %}
+            <tr><td colspan="5" style="text-align: center; padding: 30px; color: var(--monday-grey);">Aucun moratoire actif enregistré.</td></tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}

@@ -1,0 +1,204 @@
+services:
+  # ============================================================================
+  # 1. INFRASTRUCTURE
+  # ============================================================================
+  school-waha:
+    container_name: school-waha
+    image: devlikeapro/waha
+    ports: [ "3001:3000" ]
+    env_file: [ ./.env ]
+    networks: [ school-network ]
+
+  traefik:
+    image: traefik:v2.10
+    container_name: infra-traefik
+    command:
+      - "--api.insecure=true"
+      - "--providers.docker=true"
+      - "--providers.docker.exposedbydefault=false"
+      - "--entrypoints.web.address=:80"
+    ports:
+      - "80:80"
+      - "8080:8080"
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+    networks:
+      - school-network
+
+  postgres:
+    container_name: school-db
+    image: postgres:15-alpine
+    ports:
+      - "5432:5432"
+    env_file:
+      - ./.env
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+      - ./database/init-db.sh:/docker-entrypoint-initdb.d/init-db.sh
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER} -d ${POSTGRES_DB}"]
+      interval: 10s
+      retries: 5
+    networks:
+      - school-network
+
+
+
+  rabbitmq:
+    image: rabbitmq:3-management
+    container_name: infra-rabbitmq
+    ports:
+      - "5672:5672"   # Port pour l'API NestJS
+      - "15672:15672" # Port pour l'Interface Web (User: guest / Pass: guest)
+    environment:
+      RABBITMQ_DEFAULT_USER: admin
+      RABBITMQ_DEFAULT_PASS: admin
+    networks:
+      - school-network
+    healthcheck:
+      test: ["CMD", "rabbitmq-diagnostics", "-q", "ping"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  redis:
+    container_name: school-redis
+    image: redis:alpine
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis_data:/data
+    networks:
+      - school-network
+
+  typesense:
+    container_name: school-typesense
+    image: typesense/typesense:0.25.2
+    ports:
+      - "8108:8108"
+    env_file:
+      - ./.env
+    volumes:
+      - typesense_data:/data
+    command: --data-dir /data --api-key ${TYPESENSE_API_KEY} --enable-cors
+    networks:
+      - school-network
+
+  # ============================================================================
+  # 2. SERVICES OPEN SOURCE (AJOUTÉS)
+  # ============================================================================
+
+  keycloak:
+    container_name: school-keycloak
+    image: quay.io/keycloak/keycloak:latest
+    command: start-dev --import-realm
+    environment:
+      KC_DB: postgres
+      KC_DB_URL: jdbc:postgresql://postgres:5432/keycloak_db
+      KC_DB_USERNAME: ${POSTGRES_USER}
+      KC_DB_PASSWORD: ${POSTGRES_PASSWORD}
+      KEYCLOAK_ADMIN: admin
+      KEYCLOAK_ADMIN_PASSWORD: admin
+      KC_HTTP_RELATIVE_PATH: /auth
+    volumes:
+      - ./keycloak-realm.json:/opt/keycloak/data/import/realm.json
+    depends_on:
+      rabbitmq:
+        condition: service_healthy
+      postgres:
+        condition: service_healthy
+    networks:
+      - school-network
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.keycloak.rule=Host(`localhost`) && PathPrefix(`/auth`)"
+      - "traefik.http.services.keycloak.loadbalancer.server.port=8080"
+
+
+
+
+  service-core-scolarite:
+    container_name: service-core-scolarite
+    build: ./service-core-scolarite
+    ports: ["3000:3000"]
+    environment:
+      - DATABASE_HOST=postgres
+      - DATABASE_PORT=5432
+      - DATABASE_NAME=scolarite_db
+      - DATABASE_USER=${POSTGRES_USER}
+      - DATABASE_PASSWORD=${POSTGRES_PASSWORD}
+      - RABBITMQ_URL=amqp://admin:admin@rabbitmq:5672
+    depends_on:
+      postgres:
+        condition: service_healthy
+      rabbitmq:
+        condition: service_started
+    restart: unless-stopped
+    networks: [school-network]
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.core.rule=Host(`localhost`) && PathPrefix(`/api/core`)"
+      - "traefik.http.services.core.loadbalancer.server.port=3000"
+
+  service-planning:
+    container_name: service-planning
+    build: ./service-planning
+    ports: ["3002:3000"]
+    environment:
+      - DATABASE_URL=postgresql://${POSTGRES_USER}:${POSTGRES_PASSWORD}@postgres:5432/planning_db
+      - DATABASE_HOST=postgres
+      - DATABASE_PORT=5432
+      - DATABASE_NAME=planning_db
+    depends_on:
+      postgres:
+        condition: service_healthy
+    restart: unless-stopped
+    networks: [school-network]
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.planning.rule=Host(`localhost`) && PathPrefix(`/api/planning`)"
+      - "traefik.http.services.planning.loadbalancer.server.port=3000"
+
+  school-frontend:
+    container_name: school-frontend
+    build: ./frontend
+    ports: ["5173:80"]
+    env_file: [./.env]
+    networks: [school-network]
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.front.rule=Host(`localhost`)"
+      - "traefik.http.services.front.loadbalancer.server.port=80"
+
+
+
+
+
+
+  snipeit:
+    image: snipe/snipe-it:latest
+    container_name: oss-snipeit
+    environment:
+      DB_HOST: postgres
+      DB_DATABASE: snipeit_db
+      DB_USERNAME: ${POSTGRES_USER}
+      DB_PASSWORD: ${POSTGRES_PASSWORD}
+      APP_URL: http://localhost/inventory
+      APP_KEY: base64:D5oGA+H6/qXJt2X7/1/1/1/1/1/1/1/1/1/1/1/1/1/1=
+    networks: [school-network]
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.snipeit.rule=Host(`localhost`) && PathPrefix(`/inventory`)"
+      - "traefik.http.services.snipeit.loadbalancer.server.port=80"
+volumes:
+  moodle_data:
+  moodle_html:
+  postgres_data:
+  redis_data:
+  waha_data:
+  typesense_data:
+  lms_data:
+
+networks:
+  school-network:
+    driver: bridge

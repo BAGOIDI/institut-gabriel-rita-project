@@ -1,0 +1,42 @@
+# Utilisation d'une image Alpine Linux légère
+FROM alpine:latest
+
+# Installation de ngrok et autres utilitaires nécessaires
+RUN apk add --no-cache \
+    curl \
+    wget \
+    openssl \
+    ca-certificates \
+    && update-ca-certificates
+
+# Téléchargement et installation de ngrok
+RUN case $(uname -m) in \
+        x86_64) ARCH="amd64" ;; \
+        aarch64) ARCH="arm64" ;; \
+        armv6l) ARCH="armv6" ;; \
+        *) echo "Architecture non supportée"; exit 1 ;; \
+    esac && \
+    wget -q https://bin.equinox.io/c/bNyj1mQVY4c/ngrok-v3-stable-linux-$ARCH.tgz -O - | tar xz -C /usr/local/bin
+
+# Création d'un utilisateur non root pour des raisons de sécurité
+RUN addgroup -g 1001 -S ngrok && \
+    adduser -u 1001 -S ngrok -G ngrok
+
+# Création du répertoire de travail
+WORKDIR /home/ngrok
+
+# Copie du script de démarrage
+COPY start-tunnel.sh .
+
+# Rendre le script exécutable
+RUN chmod +x start-tunnel.sh && \
+    chown ngrok:ngrok start-tunnel.sh
+
+# Changer d'utilisateur
+USER ngrok
+
+# Exposition du port (bien que ngrok crée un tunnel externe, il écoute localement)
+EXPOSE 4040
+
+# Point d'entrée
+ENTRYPOINT ["./start-tunnel.sh"]

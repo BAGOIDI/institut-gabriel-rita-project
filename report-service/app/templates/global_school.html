@@ -1,0 +1,96 @@
+{% extends "base_report.html" %}
+
+{% block title %}Rapport Global - Institut{% endblock %}
+
+{% block extra_css %}
+<style>
+    .kpi-container {
+        display: flex;
+        justify-content: space-between;
+        margin-bottom: 30px;
+        border: 1px solid var(--border-color);
+    }
+    .kpi-box {
+        flex: 1;
+        padding: 15px;
+        text-align: center;
+        border-right: 1px solid var(--border-color);
+    }
+    .kpi-box:last-child { border-right: none; }
+    .kpi-label {
+        font-size: 10px;
+        text-transform: uppercase;
+        color: var(--text-muted);
+        font-weight: 600;
+        margin-bottom: 5px;
+    }
+    .kpi-value {
+        font-size: 24px;
+        font-weight: 700;
+        color: var(--primary-blue);
+    }
+    .section-header {
+        font-size: 14px;
+        font-weight: 700;
+        color: var(--secondary-blue);
+        margin-bottom: 10px;
+        text-transform: uppercase;
+        border-left: 5px solid var(--accent-orange);
+        padding-left: 10px;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="report-title-section" style="display: block; text-align: center; border-bottom: none;">
+    <h1 class="report-title" style="margin-bottom: 10px;">Tableau de Bord Global</h1>
+    <div class="class-info-box" style="display: inline-flex;">
+        <span class="class-label">Année Académique</span>
+        <span class="class-value">{{ school_year|default('2025-2026') }}</span>
+    </div>
+</div>
+
+<div class="kpi-container">
+    <div class="kpi-box">
+        <div class="kpi-label">Total Étudiants</div>
+        <div class="kpi-value">{{ statistics.total_students }}</div>
+    </div>
+    <div class="kpi-box">
+        <div class="kpi-label">Étudiants Actifs</div>
+        <div class="kpi-value">{{ statistics.active_students }}</div>
+    </div>
+    <div class="kpi-box">
+        <div class="kpi-label">Personnel</div>
+        <div class="kpi-value">{{ statistics.total_staff }}</div>
+    </div>
+    <div class="kpi-box">
+        <div class="kpi-label">Total Revenu</div>
+        <div class="kpi-value" style="font-size: 18px;">{{ "{:,.0f}".format(statistics.total_revenue) }}</div>
+    </div>
+</div>
+
+<div class="section-header">Liste des Étudiants</div>
+
+<table class="admin-table">
+    <thead>
+        <tr>
+            <th class="text-left">Nom</th>
+            <th class="text-left">Matricule</th>
+            <th class="text-left">Classe</th>
+            <th class="text-center">Actif</th>
+            <th class="text-right">Solde</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for student in students %}
+        <tr>
+            <td class="font-bold text-blue">{{ student.firstName }} {{ student.lastName }}</td>
+            <td>{{ student.matricule }}</td>
+            <td>{{ student.className }}</td>
+            <td class="text-center">{% if student.isActive %}<span class="status-pill status-done">Oui</span>{% else %}<span class="status-pill status-todo">Non</span>{% endif %}</td>
+            <td class="text-right status-warning">{{ "{:,.0f}".format(student.balance) }}</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock %}

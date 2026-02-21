@@ -1,0 +1,9 @@
+# Fichiers et dossiers à ignorer par Git
+
+# Dossier ZKTeco
+ZKTeco/
+# Dossiers node_modules générés par npm
+node_modules/
+
+# Dossier gestscolxp
+gestscolxp/

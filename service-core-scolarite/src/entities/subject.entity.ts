@@ -1,0 +1,33 @@
+import { Entity, Column, PrimaryGeneratedColumn, ManyToOne, JoinColumn, OneToMany } from 'typeorm';
+import { Class } from './class.entity';
+import { Semester } from './semester.entity';
+import { Grade } from './grade.entity';
+
+@Entity({ name: 'subjects' })
+export class Subject {
+  @PrimaryGeneratedColumn('uuid')
+  id: string;
+
+  @Column()
+  name: string;
+
+  @Column({ nullable: true })
+  code: string;
+
+  @ManyToOne(() => Class, { nullable: true })
+  @JoinColumn({ name: 'class_id' })
+  class: Class;
+
+  @ManyToOne(() => Semester, { nullable: true })
+  @JoinColumn({ name: 'semester_id' })
+  semester: Semester;
+
+  @Column({ default: 1 })
+  coefficient: number;
+
+  @Column({ default: 0 })
+  creditsEcts: number;
+
+  @OneToMany(() => Grade, grade => grade.subject)
+  grades: Grade[];
+}
