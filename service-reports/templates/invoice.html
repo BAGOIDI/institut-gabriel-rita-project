@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>Facture</title>
+    <style>
+        body { font-family: 'Helvetica', sans-serif; color: #333; line-height: 1.6; }
+        .container { max-width: 800px; margin: 0 auto; padding: 20px; }
+        .header { display: flex; justify-content: space-between; margin-bottom: 40px; border-bottom: 2px solid #eee; padding-bottom: 20px; }
+        .logo { font-size: 24px; font-weight: bold; color: #2563eb; }
+        .invoice-info { text-align: right; }
+        .client-info { margin-bottom: 40px; }
+        table { width: 100%; border-collapse: collapse; margin-bottom: 30px; }
+        th { background: #f8fafc; text-align: left; padding: 12px; border-bottom: 2px solid #e2e8f0; }
+        td { padding: 12px; border-bottom: 1px solid #e2e8f0; }
+        .total-section { float: right; width: 300px; }
+        .total-row { display: flex; justify-content: space-between; padding: 8px 0; }
+        .grand-total { font-weight: bold; font-size: 18px; border-top: 2px solid #333; margin-top: 10px; padding-top: 10px; }
+        .footer { margin-top: 60px; text-align: center; font-size: 12px; color: #64748b; border-top: 1px solid #eee; padding-top: 20px; }
+        .status-paid { color: #16a34a; font-weight: bold; border: 2px solid #16a34a; padding: 5px 10px; border-radius: 4px; display: inline-block; transform: rotate(-10deg); }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <div class="logo">INSTITUT GABRIEL RITA</div>
+            <div class="invoice-info">
+                <h1>REÇU DE PAIEMENT</h1>
+                <p>N°: {{ invoice_number }}</p>
+                <p>Date: {{ date }}</p>
+            </div>
+        </div>
+
+        <div class="client-info">
+            <h3>Facturé à :</h3>
+            <p><strong>{{ student_name }}</strong></p>
+            <p>ID Étudiant: {{ student_id }}</p>
+        </div>
+
+        <table>
+            <thead>
+                <tr>
+                    <th>Description</th>
+                    <th style="text-align: right;">Montant</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for item in items %}
+                <tr>
+                    <td>{{ item.description }}</td>
+                    <td style="text-align: right;">{{ "{:,.0f}".format(item.amount) }} FCFA</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+
+        <div class="total-section">
+            <div class="total-row">
+                <span>Total Dû:</span>
+                <span>{{ "{:,.0f}".format(total) }} FCFA</span>
+            </div>
+            <div class="total-row">
+                <span>Montant Payé:</span>
+                <span>{{ "{:,.0f}".format(paid) }} FCFA</span>
+            </div>
+            <div class="total-row grand-total">
+                <span>Reste à Payer:</span>
+                <span style="color: {{ '#dc2626' if balance > 0 else '#16a34a' }};">
+                    {{ "{:,.0f}".format(balance) }} FCFA
+                </span>
+            </div>
+            <br>
+            <div style="text-align: right;">
+                Mode de paiement: <strong>{{ method }}</strong>
+            </div>
+        </div>
+
+        <div style="clear: both;"></div>
+
+        <div class="footer">
+            <p>Merci de votre confiance.</p>
+            <p>Institut Gabriel Rita - Tél: +225 XX XX XX XX - Email: contact@igr.ci</p>
+            <p>Généré le {{ generated_at }}</p>
+        </div>
+    </div>
+</body>
+</html>

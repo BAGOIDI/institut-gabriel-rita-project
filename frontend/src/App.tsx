@@ -3,7 +3,7 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { Layout } from './components/Layout';
 import { BancoLayout } from './components/BancoLayout';
 import { ProtectedRoute } from './components/ProtectedRoute';
-import { Dashboard } from './pages/Dashboard';
+import Dashboard from './pages/Dashboard';
 import { Students } from './pages/Students';
 import { Teachers } from './pages/Teachers';
 import { Timetable } from './pages/Timetable';
