@@ -1,93 +1,360 @@
-# Institut Gabriel Rita Project
+# 🏫 Institut Gabriel Rita - Système de Gestion Scolaire
 
+[![Docker](https://img.shields.io/badge/Docker-Compose-blue)](https://docs.docker.com/compose/)
+[![NestJS](https://img.shields.io/badge/NestJS-%5E10.0.0-red)](https://nestjs.com/)
+[![React](https://img.shields.io/badge/React-%5E18.2.0-blue)](https://reactjs.org/)
+[![PostgreSQL](https://img.shields.io/badge/PostgreSQL-15-green)](https://www.postgresql.org/)
+[![License](https://img.shields.io/badge/license-MIT-green)](LICENSE)
 
+Système de gestion scolaire moderne basé sur une architecture microservices avec interface utilisateur intuitive.
 
-## Getting started
+## 📋 Table des matières
 
-To make it easy for you to get started with GitLab, here's a list of recommended next steps.
+- [Description](#description)
+- [Architecture](#architecture)
+- [Fonctionnalités](#fonctionnalités)
+- [Prérequis](#prérequis)
+- [Installation](#installation)
+- [Configuration](#configuration)
+- [Démarrage](#démarrage)
+- [Services](#services)
+- [API Endpoints](#api-endpoints)
+- [Développement](#développement)
+- [Déploiement](#déploiement)
+- [Tests](#tests)
+- [Contribuer](#contribuer)
+- [Licence](#licence)
 
-Already a pro? Just edit this README.md and make it your own. Want to make it easy? [Use the template at the bottom](#editing-this-readme)!
+## 📖 Description
 
-## Add your files
+Le **Système de Gestion Scolaire Institut Gabriel Rita** est une solution complète de gestion éducative conçue pour les établissements d'enseignement. Cette plateforme permet de gérer efficacement les étudiants, le personnel, les finances, les emplois du temps et les rapports académiques.
 
-* [Create](https://docs.gitlab.com/user/project/repository/web_editor/#create-a-file) or [upload](https://docs.gitlab.com/user/project/repository/web_editor/#upload-a-file) files
-* [Add files using the command line](https://docs.gitlab.com/topics/git/add_files/#add-files-to-a-git-repository) or push an existing Git repository with the following command:
+## 🏗️ Architecture
+
+L'application suit une architecture microservices moderne :
 
 ```
-cd existing_repo
-git remote add origin https://gitlab.com/abel.kofisallc/institut-gabriel-rita-project.git
-git branch -M main
-git push -uf origin main
+┌─────────────────┐    ┌─────────────────┐    ┌─────────────────┐
+│   Frontend      │    │   Traefik       │    │   PostgreSQL    │
+│   (React)       │◄──►│   (Reverse      │◄──►│   (Base de      │
+│   Port: 5173    │    │   Proxy)        │    │   données)      │
+└─────────────────┘    └─────────────────┘    └─────────────────┘
+                              │
+        ┌─────────────────────┼─────────────────────┐
+        │                     │                     │
+┌─────────────────┐    ┌─────────────────┐    ┌─────────────────┐
+│   Dashboard     │    │   Finance       │    │   Core          │
+│   Port: 3003    │    │   Port: 3004    │    │   Port: 3000    │
+└─────────────────┘    └─────────────────┘    └─────────────────┘
+        │                     │                     │
+┌─────────────────┐    ┌─────────────────┐    ┌─────────────────┐
+│   Planning      │    │   Reports       │    │   RabbitMQ      │
+│   Port: 3002    │    │   Port: 8000    │    │   Ports: 5672   │
+└─────────────────┘    └─────────────────┘    │        15672    │
+                                               └─────────────────┘
 ```
 
-## Integrate with your tools
+## ✨ Fonctionnalités
 
-* [Set up project integrations](https://gitlab.com/abel.kofisallc/institut-gabriel-rita-project/-/settings/integrations)
+### 🎓 Gestion Académique
+- **Gestion des étudiants** : Inscriptions, dossiers, historique académique
+- **Gestion du personnel** : Professeurs, administrateurs, personnels
+- **Gestion des classes** : Création, affectation, organisation
+- **Emplois du temps** : Planification interactive et gestion des disponibilités
 
-## Collaborate with your team
+### 💰 Gestion Financière
+- **Paiements** : Suivi des frais de scolarité et paiements
+- **Facturation** : Génération de factures automatiques
+- **Rapports financiers** : Analyse et reporting des flux financiers
 
-* [Invite team members and collaborators](https://docs.gitlab.com/user/project/members/)
-* [Create a new merge request](https://docs.gitlab.com/user/project/merge_requests/creating_merge_requests/)
-* [Automatically close issues from merge requests](https://docs.gitlab.com/user/project/issues/managing_issues/#closing-issues-automatically)
-* [Enable merge request approvals](https://docs.gitlab.com/user/project/merge_requests/approvals/)
-* [Set auto-merge](https://docs.gitlab.com/user/project/merge_requests/auto_merge/)
+### 📊 Tableau de bord
+- **Statistiques en temps réel** : Vue d'ensemble de l'établissement
+- **Notifications** : Alertes et mises à jour instantanées
+- **Analytics** : Tableaux de bord personnalisables
 
-## Test and Deploy
+### 📝 Rapports
+- **Rapports académiques** : Performances, fréquentation, résultats
+- **Rapports financiers** : États des paiements, moratoires
+- **Export PDF** : Génération de documents professionnels
 
-Use the built-in continuous integration in GitLab.
+## 🛠️ Prérequis
 
-* [Get started with GitLab CI/CD](https://docs.gitlab.com/ci/quick_start/)
-* [Analyze your code for known vulnerabilities with Static Application Security Testing (SAST)](https://docs.gitlab.com/user/application_security/sast/)
-* [Deploy to Kubernetes, Amazon EC2, or Amazon ECS using Auto Deploy](https://docs.gitlab.com/topics/autodevops/requirements/)
-* [Use pull-based deployments for improved Kubernetes management](https://docs.gitlab.com/user/clusters/agent/)
-* [Set up protected environments](https://docs.gitlab.com/ci/environments/protected_environments/)
+- **Docker** >= 20.10
+- **Docker Compose** >= 1.29
+- **Git** >= 2.30
+- **Mémoire** : 4GB minimum
+- **Espace disque** : 2GB minimum
 
-***
+## 🚀 Installation
 
-# Editing this README
+### 1. Cloner le repository
 
-When you're ready to make this README your own, just edit this file and use the handy template below (or feel free to structure it however you want - this is just a starting point!). Thanks to [makeareadme.com](https://www.makeareadme.com/) for this template.
+```bash
+git clone https://gitlab.com/abel.kofisallc/institut-gabriel-rita-project.git
+cd institut-gabriel-rita-project
+```
 
-## Suggestions for a good README
+### 2. Configuration de l'environnement
 
-Every project is different, so consider which of these sections apply to yours. The sections used in the template are suggestions for most open source projects. Also keep in mind that while a README can be too long and detailed, too long is better than too short. If you think your README is too long, consider utilizing another form of documentation rather than cutting out information.
+Copier le fichier d'environnement :
 
-## Name
-Choose a self-explaining name for your project.
+```bash
+cp .env.example .env
+```
 
-## Description
-Let people know what your project can do specifically. Provide context and add a link to any reference visitors might be unfamiliar with. A list of Features or a Background subsection can also be added here. If there are alternatives to your project, this is a good place to list differentiating factors.
+### 3. Construction des services
 
-## Badges
-On some READMEs, you may see small images that convey metadata, such as whether or not all the tests are passing for the project. You can use Shields to add some to your README. Many services also have instructions for adding a badge.
+```bash
+docker-compose build
+```
 
-## Visuals
-Depending on what you are making, it can be a good idea to include screenshots or even a video (you'll frequently see GIFs rather than actual videos). Tools like ttygif can help, but check out Asciinema for a more sophisticated method.
+## ⚙️ Configuration
 
-## Installation
-Within a particular ecosystem, there may be a common way of installing things, such as using Yarn, NuGet, or Homebrew. However, consider the possibility that whoever is reading your README is a novice and would like more guidance. Listing specific steps helps remove ambiguity and gets people to using your project as quickly as possible. If it only runs in a specific context like a particular programming language version or operating system or has dependencies that have to be installed manually, also add a Requirements subsection.
+### Variables d'environnement principales
 
-## Usage
-Use examples liberally, and show the expected output if you can. It's helpful to have inline the smallest example of usage that you can demonstrate, while providing links to more sophisticated examples if they are too long to reasonably include in the README.
+```env
+# Base de données
+POSTGRES_USER=admin
+POSTGRES_PASSWORD=admin
+POSTGRES_DB=scolarite_db
 
-## Support
-Tell people where they can go to for help. It can be any combination of an issue tracker, a chat room, an email address, etc.
+# RabbitMQ
+RABBITMQ_DEFAULT_USER=admin
+RABBITMQ_DEFAULT_PASS=admin
 
-## Roadmap
-If you have ideas for releases in the future, it is a good idea to list them in the README.
+# Configuration frontend
+VITE_API_URL=http://localhost:80
+```
 
-## Contributing
-State if you are open to contributions and what your requirements are for accepting them.
+### Configuration des services
 
-For people who want to make changes to your project, it's helpful to have some documentation on how to get started. Perhaps there is a script that they should run or some environment variables that they need to set. Make these steps explicit. These instructions could also be useful to your future self.
+Chaque microservice peut être configuré individuellement via ses variables d'environnement dans le `docker-compose.yml`.
 
-You can also document commands to lint the code or run tests. These steps help to ensure high code quality and reduce the likelihood that the changes inadvertently break something. Having instructions for running tests is especially helpful if it requires external setup, such as starting a Selenium server for testing in a browser.
+## ▶️ Démarrage
 
-## Authors and acknowledgment
-Show your appreciation to those who have contributed to the project.
+### Démarrage complet
 
-## License
-For open source projects, say how it is licensed.
+```bash
+docker-compose up -d
+```
 
-## Project status
-If you have run out of energy or time for your project, put a note at the top of the README saying that development has slowed down or stopped completely. Someone may choose to fork your project or volunteer to step in as a maintainer or owner, allowing your project to keep going. You can also make an explicit request for maintainers.
+### Démarrage sélectif
+
+```bash
+# Infrastructure seulement
+docker-compose up -d postgres rabbitmq redis traefik
+
+# Services backend
+docker-compose up -d service-core-scolarite service-dashboard service-finance service-planning
+
+# Interface utilisateur
+docker-compose up -d school-frontend
+```
+
+### Vérification de l'état
+
+```bash
+docker-compose ps
+```
+
+## 📦 Services
+
+| Service | Port | Description | Statut |
+|---------|------|-------------|--------|
+| **Frontend** | 5173 | Interface utilisateur React | ✅ |
+| **API Core** | 3000 | Gestion des données principales | ✅ |
+| **Dashboard** | 3003 | Tableau de bord et websockets | ✅ |
+| **Finance** | 3004 | Gestion financière | ✅ |
+| **Planning** | 3002 | Emplois du temps | ✅ |
+| **Reports** | 8000 | Génération de rapports | ✅ |
+| **PostgreSQL** | 5432 | Base de données | ✅ |
+| **RabbitMQ** | 5672/15672 | Message broker | ✅ |
+| **Redis** | 6379 | Cache et sessions | ✅ |
+| **Traefik** | 80/8080 | Reverse proxy | ✅ |
+
+### URLs d'accès
+
+- **Application** : http://localhost:5173
+- **Traefik Dashboard** : http://localhost:8080
+- **RabbitMQ Management** : http://localhost:15672
+- **API Documentation** : http://localhost/api/core/docs
+
+## 🌐 API Endpoints
+
+### Core API (`/api/core`)
+- `GET /students` - Liste des étudiants
+- `POST /students` - Création d'étudiant
+- `GET /classes` - Liste des classes
+- `GET /staff` - Liste du personnel
+
+### Dashboard API (`/api/dashboard`)
+- `GET /summary` - Résumé des statistiques
+- `GET /events` - Événements en temps réel
+- WebSocket `/` - Connexion temps réel
+
+### Finance API (`/api/finance`)
+- `GET /payments` - Liste des paiements
+- `POST /payments` - Enregistrement de paiement
+- `GET /invoices` - Liste des factures
+
+### Planning API (`/api/planning`)
+- `GET /schedules` - Emplois du temps
+- `POST /schedules` - Création d'emploi du temps
+
+## 🧪 Développement
+
+### Développement local
+
+```bash
+# Démarrer l'infrastructure
+docker-compose up -d postgres rabbitmq redis
+
+# Démarrer un service en mode développement (exemple)
+cd service-dashboard
+npm install
+npm run start:dev
+```
+
+### Structure du projet
+
+```
+institut-gabriel-rita-project/
+├── frontend/              # Application React
+├── service-core-scolarite/ # Service principal (NestJS)
+├── service-dashboard/     # Tableau de bord (NestJS)
+├── service-finance/       # Gestion financière (NestJS)
+├── service-planning/      # Emplois du temps (NestJS)
+├── service-reports/       # Génération de rapports (Python)
+├── database/              # Scripts de base de données
+├── docker-compose.yml     # Configuration Docker
+└── .env                   # Variables d'environnement
+```
+
+### Commandes utiles
+
+```bash
+# Logs des services
+docker-compose logs -f service-dashboard
+
+# Redémarrage d'un service
+docker-compose restart service-core-scolarite
+
+# Arrêt complet
+docker-compose down
+
+# Nettoyage complet
+docker-compose down -v --remove-orphans
+```
+
+## 🚀 Déploiement
+
+### Environnements
+
+Le projet supporte plusieurs environnements :
+
+- **Développement** : `docker-compose.yml`
+- **Production** : `docker-compose.prod.yml` (à créer)
+- **Staging** : `docker-compose.staging.yml` (à créer)
+
+### Déploiement production
+
+```bash
+# Construction pour production
+docker-compose -f docker-compose.prod.yml build --no-cache
+
+# Démarrage
+docker-compose -f docker-compose.prod.yml up -d
+```
+
+## 🧪 Tests
+
+### Tests frontend
+
+```bash
+cd frontend
+npm test
+npm run test:coverage
+```
+
+### Tests backend
+
+```bash
+cd service-core-scolarite
+npm run test
+npm run test:e2e
+npm run test:cov
+```
+
+## 🤝 Contribuer
+
+Les contributions sont les bienvenues ! Pour contribuer :
+
+1. **Fork** le repository
+2. **Créez** une branche pour votre fonctionnalité (`git checkout -b feature/AmazingFeature`)
+3. **Commit** vos changements (`git commit -m 'Add some AmazingFeature'`)
+4. **Push** vers la branche (`git push origin feature/AmazingFeature`)
+5. **Ouvrez** une Pull Request
+
+### Standards de codage
+
+- **Frontend** : React avec TypeScript, ESLint, Prettier
+- **Backend** : NestJS avec TypeScript, ESLint
+- **Commits** : Conventional Commits
+- **Branches** : GitFlow
+
+### Processus de review
+
+1. Code review par au moins un développeur
+2. Tests automatisés passés
+3. Documentation mise à jour
+4. Merge dans `develop` puis `main`
+
+## 📄 Licence
+
+Ce projet est sous licence MIT. Voir le fichier [LICENSE](LICENSE) pour plus d'informations.
+
+## 👥 Auteurs et remerciements
+
+### Équipe de développement
+- **Chef de projet** : Abel KOFI
+- **Développeurs backend** : Équipe NestJS
+- **Développeurs frontend** : Équipe React
+- **DevOps** : Équipe infrastructure
+
+### Technologies utilisées
+
+- **Frontend** : React, TypeScript, TailwindCSS
+- **Backend** : NestJS, PostgreSQL, RabbitMQ
+- **Infrastructure** : Docker, Traefik, Redis
+- **Monitoring** : Traefik Dashboard
+
+### Remerciements
+
+Merci à toutes les personnes qui ont contribué à ce projet et à la communauté open source.
+
+## 📞 Support
+
+Pour tout support technique :
+
+- **Email** : support@institut-gabriel-rita.edu
+- **Issues** : [GitHub Issues](https://gitlab.com/abel.kofisallc/institut-gabriel-rita-project/-/issues)
+- **Documentation** : [Wiki du projet](https://gitlab.com/abel.kofisallc/institut-gabriel-rita-project/-/wikis/home)
+
+## 🚧 Roadmap
+
+### Version 2.0 (à venir)
+- [ ] Intégration avec les systèmes de gestion des notes
+- [ ] Application mobile native
+- [ ] Système de messagerie intégré
+- [ ] Module de gestion des bibliothèques
+- [ ] Intégration avec les systèmes de paiement en ligne
+
+### Version 1.5 (en cours)
+- [x] Amélioration de l'interface utilisateur
+- [x] Optimisation des performances
+- [x] Ajout de nouveaux rapports
+- [ ] Tests automatisés étendus
+
+---
+
+*Développé avec ❤️ pour l'Institut Gabriel Rita*
