@@ -1,9 +1,14 @@
+import { CourseModule } from './modules/course/course.module';
+import { ScheduleModule } from './modules/schedule/schedule.module';
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { ConfigModule } from '@nestjs/config';
 
 @Module({
   imports: [
+    CourseModule,
+    ScheduleModule,
+
     ConfigModule.forRoot({ isGlobal: true }),
     TypeOrmModule.forRoot({
       type: 'postgres',

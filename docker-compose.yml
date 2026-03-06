@@ -126,6 +126,22 @@ services:
       - "traefik.http.routers.planning.rule=Host(`localhost`) && PathPrefix(`/api/planning`)"
       - "traefik.http.services.planning.loadbalancer.server.port=3000"
 
+  
+  service-bulletins:
+    build: ./service-bulletins
+    container_name: service-bulletins
+    ports: ["3005:3000"]
+    environment:
+      - DATABASE_HOST=postgres
+      - RABBITMQ_URL=amqp://admin:admin@rabbitmq:5672
+    depends_on:
+      postgres: { condition: service_healthy }
+    networks: [school-network]
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.bulletins.rule=Host(`localhost`) && PathPrefix(`/api/bulletins`)"
+      - "traefik.http.services.bulletins.loadbalancer.server.port=3000"
+
   # --- FRONTEND ---
   school-frontend:
     build: ./frontend

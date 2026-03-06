@@ -6,19 +6,41 @@ from app.models.models import (
 from app.services.pdf_service import PDFService
 from datetime import datetime
 import io
+import requests
 
 reports_bp = Blueprint('reports', __name__)
+
+PLANNING_SERVICE_URL = 'http://service-planning:3000/schedule'
 
 @reports_bp.route('/schedule/<class_name>', methods=['GET'])
 def get_schedule_pdf(class_name):
     try:
-        # Récupération de la classe par nom
-        class_obj = Class.query.filter_by(name=class_name).first()
-        if not class_obj:
-            return jsonify({'error': 'Class not found'}), 404
-        
-        # Récupération des emplois du temps pour la classe spécifiée
-        schedules = CourseSchedule.query.filter_by(class_id=class_obj.id).all()
+        # Récupération des emplois du temps depuis le service-planning
+        try:
+            response = requests.get(f'{PLANNING_SERVICE_URL}/class/{class_name}', timeout=5)
+            if response.status_code == 404:
+                return jsonify({'error': 'Classe non trouvée'}), 404
+            response.raise_for_status()
+            schedules = response.json()
+        except requests.exceptions.RequestException as e:
+            # Fallback sur la base de données locale si le service n'est pas disponible
+            class_obj = Class.query.filter_by(name=class_name).first()
+            if not class_obj:
+                return jsonify({'error': 'Class not found'}), 404
+            schedules_db = CourseSchedule.query.filter_by(class_id=class_obj.id).all()
+            schedules = []
+            for schedule in schedules_db:
+                teacher = Staff.query.get(schedule.teacher_id) if schedule.teacher_id else None
+                subject = Subject.query.get(schedule.subject_id) if schedule.subject_id else None
+                schedules.append({
+                    'className': class_name,
+                    'subjectName': subject.name if subject else 'Non assigné',
+                    'teacherName': f'{teacher.first_name} {teacher.last_name}' if teacher else 'Non assigné',
+                    'dayOfWeek': schedule.day_of_week,
+                    'startTime': schedule.start_time.strftime('%H:%M'),
+                    'endTime': schedule.end_time.strftime('%H:%M'),
+                    'room': schedule.room
+                })
         
         # Structure de données pour le template
         time_slots = ["08:00 - 09:00", "09:00 - 10:00", "10:00 - 11:00", "11:00 - 12:00", "14:00 - 15:00", "15:00 - 16:00"]
@@ -26,22 +48,18 @@ def get_schedule_pdf(class_name):
         # Organiser les emplois du temps par jour et heure
         schedule_data = {}
         for schedule in schedules:
-            day_key = ['Lundi', 'Mardi', 'Mercredi', 'Jeudi', 'Vendredi', 'Samedi', 'Dimanche'][schedule.day_of_week - 1]
-            time_key = f"{schedule.start_time.strftime('%H:%M')} - {schedule.end_time.strftime('%H:%M')}"
+            day_key = ['Lundi', 'Mardi', 'Mercredi', 'Jeudi', 'Vendredi', 'Samedi', 'Dimanche'][schedule['dayOfWeek'] - 1]
+            time_key = f"{schedule['startTime']} - {schedule['endTime']}"
             
             if day_key not in schedule_data:
                 schedule_data[day_key] = {}
             
-            # Récupérer le professeur associé
-            teacher = Staff.query.get(schedule.teacher_id) if schedule.teacher_id else None
-            subject = Subject.query.get(schedule.subject_id) if schedule.subject_id else None
-            
             schedule_data[day_key][time_key] = {
-                "subject": subject.name if subject else "Non assigné",
-                "teacher_name": f"{teacher.first_name} {teacher.last_name}" if teacher else "Non assigné",
-                "room": schedule.room,
-                "startTime": schedule.start_time.strftime('%H:%M'),
-                "endTime": schedule.end_time.strftime('%H:%M')
+                "subject": schedule['subjectName'],
+                "teacher_name": schedule['teacherName'],
+                "room": schedule.get('room', ''),
+                "startTime": schedule['startTime'],
+                "endTime": schedule['endTime']
             }
 
         data = {

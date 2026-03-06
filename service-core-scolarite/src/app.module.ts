@@ -1,3 +1,15 @@
+import { UserModule } from './modules/users/users.module';
+import { SubjectModule } from './modules/subjects/subjects.module';
+import { StudentModule } from './modules/students/students.module';
+import { StaffModule } from './modules/staff/staff.module';
+import { SpecialtyModule } from './modules/specialtys/specialtys.module';
+import { SemesterModule } from './modules/semesters/semesters.module';
+import { RoleModule } from './modules/roles/roles.module';
+import { PaymentModule } from './modules/payments/payments.module';
+import { InvoiceModule } from './modules/invoices/invoices.module';
+import { GradeModule } from './modules/grades/grades.module';
+import { ClassModule } from './modules/classes/classes.module';
+import { AcademicYearModule } from './modules/academic-years/academic-years.module';
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { ConfigModule } from '@nestjs/config';
@@ -18,6 +30,19 @@ import { Subject } from './entities/subject.entity';
 
 @Module({
   imports: [
+    UserModule,
+    SubjectModule,
+    StudentModule,
+    StaffModule,
+    SpecialtyModule,
+    SemesterModule,
+    RoleModule,
+    PaymentModule,
+    InvoiceModule,
+    GradeModule,
+    ClassModule,
+    AcademicYearModule,
+
     ConfigModule.forRoot({ isGlobal: true }),
     TypeOrmModule.forRoot({
       type: 'postgres',

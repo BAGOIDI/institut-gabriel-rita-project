@@ -1,32 +1,25 @@
 import axios from 'axios';
 
-const REPORT_SERVICE_BASE_URL = import.meta.env.VITE_REPORT_SERVICE_URL || 'http://localhost:5000';
+const REPORT_SERVICE_BASE_URL = import.meta.env.VITE_REPORT_SERVICE_URL || 'http://localhost:8000';
 
 const reportService = {
   async generateScheduleReport(scheduleData: any, format: 'pdf' | 'xlsx' | 'docx' | 'csv' | 'html' = 'pdf') {
     try {
-      const response = await axios.post(
-        `${REPORT_SERVICE_BASE_URL}/generate-report`,
-        {
-          format,
-          reportName: 'schedule',
-          parameters: {
-            title: scheduleData.title || 'Emploi du Temps',
-            description: scheduleData.period || 'Rapport d\'emploi du temps généré',
-          },
-          data: scheduleData,
-        },
+      // Utiliser l'endpoint direct du report-service pour les emplois du temps
+      const className = scheduleData.filter || scheduleData.class || '';
+      const response = await axios.get(
+        `${REPORT_SERVICE_BASE_URL}/api/reports/schedule/${className}`,
         {
           responseType: 'blob',
         }
       );
       
       // Créer un blob à partir de la réponse
-      const blob = new Blob([response.data], { type: getContentType(format) });
+      const blob = new Blob([response.data], { type: 'application/pdf' });
       
       // Créer un lien de téléchargement
       const downloadUrl = window.URL.createObjectURL(blob);
-      const fileName = `emploi_du_temps.${format}`;
+      const fileName = `emploi_du_temps_${className}.pdf`;
       
       // Télécharger le fichier
       const link = document.createElement('a');

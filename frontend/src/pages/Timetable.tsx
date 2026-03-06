@@ -273,15 +273,37 @@ export const Timetable = () => {
   const fetchTimetable = async () => {
     setLoading(true);
     try {
-      const response = await axios.get(`http://localhost:3000/timetable`, {
-        params: {
-          type: viewMode,
-          filter: selectedFilter
-        }
-      });
-      setTimeSlots(response.data);
+      let url;
+      if (viewMode === 'class') {
+        url = `http://localhost:3002/schedule/class/${selectedFilter}`;
+      } else if (viewMode === 'teacher') {
+        url = `http://localhost:3002/schedule/teacher/${encodeURIComponent(selectedFilter)}`;
+      } else {
+        url = `http://localhost:3002/schedule/room/${encodeURIComponent(selectedFilter)}`;
+      }
+      
+      const response = await axios.get(url);
+      const data = response.data;
+      
+      // Mapper les données du backend vers le format attendu
+      const mappedSlots: TimeSlot[] = Array.isArray(data) ? data.map((slot: any) => ({
+        id: slot.id?.toString() || `temp-${Math.random()}`,
+        day: DAYS[slot.dayOfWeek - 1] || 'Lundi',
+        startTime: slot.startTime?.substring(0, 5) || '08:00',
+        endTime: slot.endTime?.substring(0, 5) || '09:00',
+        subject: slot.subjectName || slot.subject || '',
+        teacher: slot.teacherName || slot.teacher || '',
+        teacherId: slot.teacherId || '',
+        class: slot.className || slot.class || '',
+        classId: slot.classId || '',
+        room: slot.room || '',
+        color: SUBJECT_COLORS.find(s => s.name === slot.subjectName)?.color || '#3b82f6',
+      })) : [];
+      
+      setTimeSlots(mappedSlots);
     } catch (error) {
       console.error('Erreur lors du chargement de l\'emploi du temps', error);
+      setTimeSlots([]);
     } finally {
       setLoading(false);
     }
@@ -321,10 +343,10 @@ export const Timetable = () => {
       };
 
       if (selectedSlot) {
-        await axios.put(`http://localhost:3000/timetable/${selectedSlot.id}`, newSlot);
+        await axios.put(`http://localhost:3002/schedule/${selectedSlot.id}`, newSlot);
       } else {
-        // Pour création, utiliser l'endpoint POST avec teacherId
-        await axios.post(`http://localhost:3000/timetable/${formData.teacherId}`, newSlot);
+        // Pour création, utiliser l'endpoint POST
+        await axios.post(`http://localhost:3002/schedule`, newSlot);
       }
       
       setShowModal(false);
@@ -351,7 +373,7 @@ export const Timetable = () => {
     if (!confirm('Êtes-vous sûr de vouloir supprimer ce créneau ?')) return;
     
     try {
-      await axios.delete(`http://localhost:3000/timetable/${slotId}`);
+      await axios.delete(`http://localhost:3002/schedule/${slotId}`);
       fetchTimetable();
     } catch (error) {
       alert('Erreur lors de la suppression');
@@ -376,7 +398,7 @@ export const Timetable = () => {
         room: draggedSlot.room,
       };
       
-      await axios.put(`http://localhost:3000/timetable/${draggedSlot.id}`, updateData);
+      await axios.put(`http://localhost:3002/schedule/${draggedSlot.id}`, updateData);
       fetchTimetable();
     } catch (error) {
       console.error('Erreur lors du déplacement:', error);
