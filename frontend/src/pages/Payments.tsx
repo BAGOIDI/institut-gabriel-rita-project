@@ -20,7 +20,7 @@ import {
   Check
 } from 'lucide-react';
 import { useTheme } from '../contexts/ThemeContext';
-import axios from 'axios';
+import api from '../services/api.service';
 import { translations } from '../lib/translations';
 
 interface Student {
@@ -107,7 +107,7 @@ export const Payments = () => {
     const searchStudents = async () => {
       if (studentSearch.length >= 2) {
         try {
-          const response = await axios.get(`http://localhost:3000/students/search?q=${studentSearch}&limit=10`);
+          const response = await api.get(`/api/core/students/search?q=${studentSearch}&limit=10`);
           setStudentResults(response.data.hits || []);
           setShowStudentDropdown(true);
         } catch (error) {
@@ -129,7 +129,7 @@ export const Payments = () => {
     const searchTeachers = async () => {
       if (teacherSearch.length >= 2) {
         try {
-          const response = await axios.get(`http://localhost:3000/teachers/search?q=${teacherSearch}&limit=10`);
+          const response = await api.get(`/api/core/teachers/search?q=${teacherSearch}&limit=10`);
           setTeacherResults(response.data.hits || []);
           setShowTeacherDropdown(true);
         } catch (error) {
@@ -149,7 +149,7 @@ export const Payments = () => {
   const fetchPayments = async () => {
     setLoading(true);
     try {
-      const response = await axios.get('http://localhost:3000/payments');
+      const response = await api.get('/api/finance/payments');
       const data = response.data;
       
       // Filtrer par date sélectionnée
@@ -267,7 +267,7 @@ export const Payments = () => {
         teacherId: payeeCategory === 'TEACHER' ? formData.teacherId : null,
       };
 
-      await axios.post(`http://localhost:3000/payments`, paymentData);
+      await api.post(`/api/finance/payments`, paymentData);
       
       setShowModal(false);
       setFormData({

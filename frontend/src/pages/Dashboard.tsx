@@ -29,7 +29,7 @@ import {
 } from 'recharts';
 import { useTheme } from '../contexts/ThemeContext';
 import { translations } from '../lib/translations';
-import axios from 'axios';
+import api from '../services/api.service';
 import { MapChart } from '../components/MapChart';
 
 export const Dashboard = () => {
@@ -46,7 +46,7 @@ export const Dashboard = () => {
   const fetchDashboardData = async () => {
     setLoading(true);
     try {
-      const response = await axios.get('http://localhost:3000/dashboard/stats');
+      const response = await api.get('/api/dashboard/stats');
       setData(response.data);
     } catch (error) {
       console.error('Erreur lors du chargement des données du dashboard', error);

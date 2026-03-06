@@ -1,13 +1,13 @@
-import axios from 'axios';
+import api from './api.service';
 
-const REPORT_SERVICE_BASE_URL = import.meta.env.VITE_REPORT_SERVICE_URL || 'http://localhost:8000';
+const REPORT_SERVICE_BASE_URL = import.meta.env.VITE_REPORT_SERVICE_URL || '/api/reports';
 
 const reportService = {
   async generateScheduleReport(scheduleData: any, format: 'pdf' | 'xlsx' | 'docx' | 'csv' | 'html' = 'pdf') {
     try {
       // Utiliser l'endpoint direct du report-service pour les emplois du temps
       const className = scheduleData.filter || scheduleData.class || '';
-      const response = await axios.get(
+      const response = await api.get(
         `${REPORT_SERVICE_BASE_URL}/api/reports/schedule/${className}`,
         {
           responseType: 'blob',
@@ -41,7 +41,7 @@ const reportService = {
 
   async healthCheck() {
     try {
-      const response = await axios.get(`${REPORT_SERVICE_BASE_URL}/health`);
+      const response = await api.get(`${REPORT_SERVICE_BASE_URL}/health`);
       return response.data;
     } catch (error) {
       console.error('Erreur lors de la vérification de l\'état du service de rapports:', error);

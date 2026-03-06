@@ -2,7 +2,7 @@ import Keycloak from 'keycloak-js';
 
 // Configuration pour Keycloak
 const keycloakConfig = {
-  url: 'http://localhost:8080',
+  url: import.meta.env.VITE_KEYCLOAK_URL || window.location.origin.replace(/:[0-9]+$/, ':8081'),
   realm: 'institut-gabriel-rita',
   clientId: 'frontend-client'
 };

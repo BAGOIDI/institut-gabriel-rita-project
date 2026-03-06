@@ -33,7 +33,7 @@ import {
   XCircle
 } from 'lucide-react';
 import * as XLSX from 'xlsx';
-import axios from 'axios';
+import api from '../services/api.service';
 import { useTheme } from '../contexts/ThemeContext';
 import { translations } from '../lib/translations';
 
@@ -150,8 +150,8 @@ export const Teachers = () => {
       params.append('page', pagination.page.toString());
       params.append('limit', pagination.limit.toString());
 
-      const url = `http://localhost:3000/teachers?${params.toString()}`;
-      const response = await axios.get(url);
+      const url = `/api/core/teachers?${params.toString()}`;
+      const response = await api.get(url);
       
       setTeachers(response.data.items || []);
       setPagination(prev => ({
@@ -191,7 +191,7 @@ export const Teachers = () => {
       const data = XLSX.utils.sheet_to_json(ws);
       
       try {
-        await axios.post('http://localhost:3000/teachers/import', data);
+        await api.post('/api/core/teachers/import', data);
         fetchTeachers();
         alert('Importation réussie !');
       } catch (error) {
@@ -205,9 +205,9 @@ export const Teachers = () => {
     e.preventDefault();
     try {
       if (selectedTeacher) {
-        await axios.put(`http://localhost:3000/teachers/${selectedTeacher.id}`, formData);
+        await api.put(`/api/core/teachers/${selectedTeacher.id}`, formData);
       } else {
-        await axios.post('http://localhost:3000/teachers', formData);
+        await api.post('/api/core/teachers', formData);
       }
       setShowModal(false);
       setSelectedTeacher(null);
@@ -229,7 +229,7 @@ export const Teachers = () => {
     if (!confirm('Êtes-vous sûr de vouloir supprimer cet enseignant ?')) return;
     
     try {
-      await axios.delete(`http://localhost:3000/teachers/${teacherId}`);
+      await api.delete(`/api/core/teachers/${teacherId}`);
       fetchTeachers();
       alert('Enseignant supprimé avec succès');
     } catch (error) {

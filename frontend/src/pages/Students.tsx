@@ -25,7 +25,7 @@ import {
 } from 'lucide-react';
 import { QRCodeSVG } from 'qrcode.react';
 import * as XLSX from 'xlsx';
-import axios from 'axios';
+import api from '../services/api.service';
 import { useTheme } from '../contexts/ThemeContext';
 import { translations } from '../lib/translations';
 
@@ -98,10 +98,10 @@ export const Students = () => {
       params.append('limit', pagination.limit.toString());
 
       const url = searchTerm || Object.values(filters).some(v => v) 
-        ? `http://localhost:3000/students/search?${params.toString()}`
-        : `http://localhost:3000/students?${params.toString()}`;
+        ? `/api/core/students/search?${params.toString()}`
+        : `/api/core/students?${params.toString()}`;
 
-      const response = await axios.get(url);
+      const response = await api.get(url);
       
       if (response.data.hits) {
         // Typesense response
@@ -152,7 +152,7 @@ export const Students = () => {
       const data = XLSX.utils.sheet_to_json(ws);
       
       try {
-        await axios.post('http://localhost:3000/students/import', data);
+        await api.post('/api/core/students/import', data);
         fetchStudents();
         alert('Importation réussie !');
       } catch (error) {
@@ -718,7 +718,7 @@ const StudentForm = ({ onClose, onSave, translations }: { onClose: () => void, o
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
-      await axios.post('http://localhost:3000/students', formData);
+      await api.post('/api/core/students', formData);
       onSave();
     } catch (error) {
       alert('Erreur lors de la création de l\'étudiant');

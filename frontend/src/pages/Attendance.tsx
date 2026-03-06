@@ -20,7 +20,7 @@ import {
 } from 'lucide-react';
 import { useTheme } from '../contexts/ThemeContext';
 import { translations } from '../lib/translations';
-import axios from 'axios';
+import api from '../services/api.service';
 
 interface Teacher {
   id: string;
@@ -71,7 +71,7 @@ export const Attendance = () => {
   const fetchAttendances = async () => {
     setLoading(true);
     try {
-      const response = await axios.get('http://localhost:3000/attendance');
+      const response = await api.get('/api/core/attendance');
       const data = response.data;
       
       // Filtrer par date sélectionnée

@@ -16,7 +16,7 @@ import {
   X,
   Save
 } from 'lucide-react';
-import axios from 'axios';
+import api from '../services/api.service';
 import SchedulePrintModal from '../components/SchedulePrintModal';
 
 interface TimeSlot {
@@ -103,7 +103,7 @@ export const Timetable = () => {
 
   const fetchTeachers = async () => {
     try {
-      const response = await axios.get('http://localhost:3000/teachers');
+      const response = await api.get('/api/core/teachers');
       setTeachers(response.data.items || response.data);
     } catch (error) {
       console.error('Erreur lors du chargement des enseignants', error);
@@ -275,14 +275,14 @@ export const Timetable = () => {
     try {
       let url;
       if (viewMode === 'class') {
-        url = `http://localhost:3002/schedule/class/${selectedFilter}`;
+        url = `/api/planning/schedule/class/${selectedFilter}`;
       } else if (viewMode === 'teacher') {
-        url = `http://localhost:3002/schedule/teacher/${encodeURIComponent(selectedFilter)}`;
+        url = `/api/planning/schedule/teacher/${encodeURIComponent(selectedFilter)}`;
       } else {
-        url = `http://localhost:3002/schedule/room/${encodeURIComponent(selectedFilter)}`;
+        url = `/api/planning/schedule/room/${encodeURIComponent(selectedFilter)}`;
       }
       
-      const response = await axios.get(url);
+      const response = await api.get(url);
       const data = response.data;
       
       // Mapper les données du backend vers le format attendu
@@ -343,10 +343,10 @@ export const Timetable = () => {
       };
 
       if (selectedSlot) {
-        await axios.put(`http://localhost:3002/schedule/${selectedSlot.id}`, newSlot);
+        await api.put(`/api/planning/schedule/${selectedSlot.id}`, newSlot);
       } else {
         // Pour création, utiliser l'endpoint POST
-        await axios.post(`http://localhost:3002/schedule`, newSlot);
+        await api.post(`/api/planning/schedule`, newSlot);
       }
       
       setShowModal(false);
@@ -373,7 +373,7 @@ export const Timetable = () => {
     if (!confirm('Êtes-vous sûr de vouloir supprimer ce créneau ?')) return;
     
     try {
-      await axios.delete(`http://localhost:3002/schedule/${slotId}`);
+      await api.delete(`/api/planning/schedule/${slotId}`);
       fetchTimetable();
     } catch (error) {
       alert('Erreur lors de la suppression');
@@ -398,7 +398,7 @@ export const Timetable = () => {
         room: draggedSlot.room,
       };
       
-      await axios.put(`http://localhost:3002/schedule/${draggedSlot.id}`, updateData);
+      await api.put(`/api/planning/schedule/${draggedSlot.id}`, updateData);
       fetchTimetable();
     } catch (error) {
       console.error('Erreur lors du déplacement:', error);
