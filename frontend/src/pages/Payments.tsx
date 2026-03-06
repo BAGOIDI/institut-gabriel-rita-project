@@ -129,7 +129,7 @@ export const Payments = () => {
     const searchTeachers = async () => {
       if (teacherSearch.length >= 2) {
         try {
-          const response = await api.get(`/api/core/teachers/search?q=${teacherSearch}&limit=10`);
+          const response = await api.get(`/api/core/staff/search?q=${teacherSearch}&limit=10`);
           setTeacherResults(response.data.hits || []);
           setShowTeacherDropdown(true);
         } catch (error) {
@@ -149,7 +149,7 @@ export const Payments = () => {
   const fetchPayments = async () => {
     setLoading(true);
     try {
-      const response = await api.get('/api/finance/payments');
+      const response = await api.get('/api/finance/finance');
       const data = response.data;
       
       // Filtrer par date sélectionnée
@@ -267,7 +267,7 @@ export const Payments = () => {
         teacherId: payeeCategory === 'TEACHER' ? formData.teacherId : null,
       };
 
-      await api.post(`/api/finance/payments`, paymentData);
+      await api.post(`/api/finance/finance`, paymentData);
       
       setShowModal(false);
       setFormData({

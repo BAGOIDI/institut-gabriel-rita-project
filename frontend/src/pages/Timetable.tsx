@@ -103,7 +103,7 @@ export const Timetable = () => {
 
   const fetchTeachers = async () => {
     try {
-      const response = await api.get('/api/core/teachers');
+      const response = await api.get('/api/core/staff');
       setTeachers(response.data.items || response.data);
     } catch (error) {
       console.error('Erreur lors du chargement des enseignants', error);

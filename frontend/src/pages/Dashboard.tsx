@@ -46,7 +46,7 @@ export const Dashboard = () => {
   const fetchDashboardData = async () => {
     setLoading(true);
     try {
-      const response = await api.get('/api/dashboard/stats');
+      const response = await api.get('/api/dashboard/dashboard/stats');
       setData(response.data);
     } catch (error) {
       console.error('Erreur lors du chargement des données du dashboard', error);

@@ -24,6 +24,7 @@ async function bootstrap() {
   });
 
   await app.startAllMicroservices();
+  app.enableCors();
   await app.listen(3000);
   console.log(`Dashboard service is running on: ${await app.getUrl()}`);
 }

@@ -1,3 +1,6 @@
+import { AttendanceModule } from './modules/attendance/attendance.module';
+import { SystemOptionsModule } from './modules/system-options/system-options.module';
+import { SystemOption } from './modules/system-options/system-option.entity';
 import { UserModule } from './modules/users/users.module';
 import { SubjectModule } from './modules/subjects/subjects.module';
 import { StudentModule } from './modules/students/students.module';
@@ -30,6 +33,8 @@ import { Subject } from './entities/subject.entity';
 
 @Module({
   imports: [
+    AttendanceModule,
+    SystemOptionsModule,
     UserModule,
     SubjectModule,
     StudentModule,
@@ -52,6 +57,7 @@ import { Subject } from './entities/subject.entity';
       password: process.env.DATABASE_PASSWORD || 'postgres',
       database: process.env.DATABASE_NAME || 'scolarite_db',
       entities: [
+        SystemOption,
         User,
         Campus,
         Role,

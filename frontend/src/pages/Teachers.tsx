@@ -34,6 +34,7 @@ import {
 } from 'lucide-react';
 import * as XLSX from 'xlsx';
 import api from '../services/api.service';
+import { useSystemOptions } from '../hooks/useSystemOptions';
 import { useTheme } from '../contexts/ThemeContext';
 import { translations } from '../lib/translations';
 
@@ -150,7 +151,7 @@ export const Teachers = () => {
       params.append('page', pagination.page.toString());
       params.append('limit', pagination.limit.toString());
 
-      const url = `/api/core/teachers?${params.toString()}`;
+      const url = `/api/core/staff?${params.toString()}`;
       const response = await api.get(url);
       
       setTeachers(response.data.items || []);
@@ -191,7 +192,7 @@ export const Teachers = () => {
       const data = XLSX.utils.sheet_to_json(ws);
       
       try {
-        await api.post('/api/core/teachers/import', data);
+        await api.post('/api/core/staff/import', data);
         fetchTeachers();
         alert('Importation réussie !');
       } catch (error) {
@@ -205,9 +206,9 @@ export const Teachers = () => {
     e.preventDefault();
     try {
       if (selectedTeacher) {
-        await api.put(`/api/core/teachers/${selectedTeacher.id}`, formData);
+        await api.put(`/api/core/staff/${selectedTeacher.id}`, formData);
       } else {
-        await api.post('/api/core/teachers', formData);
+        await api.post('/api/core/staff', formData);
       }
       setShowModal(false);
       setSelectedTeacher(null);
@@ -229,7 +230,7 @@ export const Teachers = () => {
     if (!confirm('Êtes-vous sûr de vouloir supprimer cet enseignant ?')) return;
     
     try {
-      await api.delete(`/api/core/teachers/${teacherId}`);
+      await api.delete(`/api/core/staff/${teacherId}`);
       fetchTeachers();
       alert('Enseignant supprimé avec succès');
     } catch (error) {

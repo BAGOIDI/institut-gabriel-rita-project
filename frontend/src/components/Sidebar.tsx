@@ -1,7 +1,7 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
-import { useAuth } from '../contexts/AuthContext';
-import { RoleBasedComponent } from './RoleBasedComponent';
+import { Settings as SettingsIcon, Link } from 'react-router-dom';
+import { Settings as SettingsIcon, useAuth } from '../contexts/AuthContext';
+import { Settings as SettingsIcon, RoleBasedComponent } from './RoleBasedComponent';
 
 export const Sidebar: React.FC = () => {
   const { user, logout } = useAuth();

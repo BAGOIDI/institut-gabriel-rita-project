@@ -2,6 +2,7 @@ version: '3.8'
 
 services:
   # --- INFRASTRUCTURE ---
+
   keycloak:
     image: quay.io/keycloak/keycloak:22.0.5
     container_name: school-keycloak
@@ -83,6 +84,10 @@ services:
     ports: ["3003:3000"]
     environment:
       - DATABASE_HOST=postgres
+      - DATABASE_PORT=5432
+      - DATABASE_USER=${POSTGRES_USER:-admin}
+      - DATABASE_PASSWORD=${POSTGRES_PASSWORD:-admin}
+      - DATABASE_NAME=scolarite_db
       - RABBITMQ_URL=amqp://admin:admin@rabbitmq:5672
     depends_on:
       postgres: { condition: service_healthy }
@@ -101,6 +106,10 @@ services:
     ports: ["3004:3000"]
     environment:
       - DATABASE_HOST=postgres
+      - DATABASE_PORT=5432
+      - DATABASE_USER=${POSTGRES_USER:-admin}
+      - DATABASE_PASSWORD=${POSTGRES_PASSWORD:-admin}
+      - DATABASE_NAME=scolarite_db
       - RABBITMQ_URL=amqp://admin:admin@rabbitmq:5672
     depends_on:
       postgres: { condition: service_healthy }
@@ -130,6 +139,10 @@ services:
     ports: ["3000:3000"]
     environment:
       - DATABASE_HOST=postgres
+      - DATABASE_PORT=5432
+      - DATABASE_USER=${POSTGRES_USER:-admin}
+      - DATABASE_PASSWORD=${POSTGRES_PASSWORD:-admin}
+      - DATABASE_NAME=scolarite_db
       - RABBITMQ_URL=amqp://admin:admin@rabbitmq:5672
     depends_on:
       postgres: { condition: service_healthy }
@@ -148,6 +161,10 @@ services:
     ports: ["3002:3000"]
     environment:
       - DATABASE_HOST=postgres
+      - DATABASE_PORT=5432
+      - DATABASE_USER=${POSTGRES_USER:-admin}
+      - DATABASE_PASSWORD=${POSTGRES_PASSWORD:-admin}
+      - DATABASE_NAME=scolarite_db
       - RABBITMQ_URL=amqp://admin:admin@rabbitmq:5672
     depends_on:
       postgres: { condition: service_healthy }
@@ -166,6 +183,10 @@ services:
     ports: ["3005:3000"]
     environment:
       - DATABASE_HOST=postgres
+      - DATABASE_PORT=5432
+      - DATABASE_USER=${POSTGRES_USER:-admin}
+      - DATABASE_PASSWORD=${POSTGRES_PASSWORD:-admin}
+      - DATABASE_NAME=scolarite_db
       - RABBITMQ_URL=amqp://admin:admin@rabbitmq:5672
     depends_on:
       postgres: { condition: service_healthy }
@@ -181,7 +202,8 @@ services:
   school-frontend:
     build: ./frontend
     container_name: school-frontend
-    ports: ["5173:80"]
+    expose:
+      - "80"
     depends_on:
       - service-dashboard
     networks: [school-network]

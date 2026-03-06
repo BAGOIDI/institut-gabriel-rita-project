@@ -26,6 +26,7 @@ import {
 import { QRCodeSVG } from 'qrcode.react';
 import * as XLSX from 'xlsx';
 import api from '../services/api.service';
+import { useSystemOptions } from '../hooks/useSystemOptions';
 import { useTheme } from '../contexts/ThemeContext';
 import { translations } from '../lib/translations';
 

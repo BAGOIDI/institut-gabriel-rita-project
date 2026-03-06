@@ -12,6 +12,7 @@ import { Payments } from './pages/Payments';
 import { PaymentRules } from './pages/PaymentRules';
 import Reports from './pages/Reports';
 import { Settings } from './pages/Settings';
+import { Configurations } from './pages/Configurations';
 
 import { ThemeProvider } from './contexts/ThemeContext';
 import { NotificationProvider } from './contexts/NotificationContext';
@@ -45,6 +46,7 @@ function App() {
                         <Route path="/payment-rules" element={<PaymentRules />} />
                         <Route path="/reports" element={<Reports />} />
                         <Route path="/settings" element={<Settings />} />
+              <Route path="/configurations" element={<Configurations />} />
                       </Routes>
                     </BancoLayout>
                   </ProtectedRoute>
