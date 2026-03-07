@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete, Query } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, Query, HttpCode, HttpStatus } from '@nestjs/common';
 import { ScheduleService } from './schedule.service';
 import { CreateScheduleDto } from './dto/create-schedule.dto';
 import { UpdateScheduleDto } from './dto/update-schedule.dto';
@@ -8,6 +8,7 @@ export class ScheduleController {
   constructor(private readonly scheduleService: ScheduleService) {}
 
   @Post()
+  @HttpCode(HttpStatus.CREATED)
   create(@Body() createScheduleDto: CreateScheduleDto) {
     return this.scheduleService.create(createScheduleDto);
   }
@@ -22,6 +23,16 @@ export class ScheduleController {
     return this.scheduleService.findByClass(className);
   }
 
+  @Get('teacher/:teacherName')
+  findByTeacher(@Param('teacherName') teacherName: string) {
+    return this.scheduleService.findByTeacher(teacherName);
+  }
+
+  @Get('room/:room')
+  findByRoom(@Param('room') room: string) {
+    return this.scheduleService.findByRoom(room);
+  }
+
   @Get(':id')
   findById(@Param('id') id: string) {
     return this.scheduleService.findById(id);
@@ -33,6 +44,7 @@ export class ScheduleController {
   }
 
   @Delete(':id')
+  @HttpCode(HttpStatus.NO_CONTENT)
   remove(@Param('id') id: string) {
     return this.scheduleService.remove(id);
   }

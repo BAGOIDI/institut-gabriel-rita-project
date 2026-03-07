@@ -1,90 +1,46 @@
-import api from './api.service';
+/**
+ * ReportsService — compatibilité avec ReportGenerator.tsx
+ */
+import reportService, { ReportFormat } from './report.service';
 
-export interface ReportParams {
-  [key: string]: any;
-}
+export class ReportsService {
+  static async getAvailableReports(): Promise<string[]> {
+    const reports = await reportService.getAvailableReports();
+    return reports.map(r => r.id);
+  }
 
-export interface ReportData {
-  [key: string]: any;
-}
-
-export const ReportsService = {
-  /**
-   * Récupère la liste des rapports disponibles
-   */
-  getAvailableReports: async (): Promise<string[]> => {
-    try {
-      const response = await api.get('/reports/available');
-      return response.data;
-    } catch (error) {
-      console.error('Erreur lors de la récupération des rapports disponibles:', error);
-      throw error;
+  static async generateReport(reportId: string, format: string, params: any = {}): Promise<Blob> {
+    const fmt = format as ReportFormat;
+    switch (reportId) {
+      case 'schedule':
+        return reportService.downloadSchedule(params.class_name || params.className || 'Terminale C', fmt);
+      case 'student':
+        return reportService.downloadStudentReport(params.matricule || '', fmt);
+      case 'global-school':
+        return reportService.downloadGlobalSchool(fmt);
+      case 'late-payments':
+        return reportService.downloadLatePayments(fmt);
+      case 'moratoriums':
+        return reportService.downloadMoratoriums(fmt);
+      case 'payments-by-class':
+        return reportService.downloadPaymentsByClass(params.class_name || params.className || '', fmt);
+      default:
+        throw new Error(`Rapport inconnu: ${reportId}`);
     }
-  },
+  }
 
-  /**
-   * Génère un rapport au format spécifié
-   */
-  generateReport: async (
-    reportName: string,
-    format: 'pdf' | 'xlsx' | 'docx' | 'csv' | 'html',
-    params?: ReportParams
-  ): Promise<Blob> => {
-    try {
-      const response = await api.get(`/reports/${reportName}/generate`, {
-        params: {
-          format,
-          ...(params && { params: JSON.stringify(params) })
-        },
-        responseType: 'blob' // Important pour télécharger les fichiers
-      });
-      
-      return response.data;
-    } catch (error) {
-      console.error(`Erreur lors de la génération du rapport ${reportName} au format ${format}:`, error);
-      throw error;
-    }
-  },
+  static async generateReportWithData(reportId: string, format: string, data: any[], params: any = {}): Promise<Blob> {
+    return ReportsService.generateReport(reportId, format, params);
+  }
 
-  /**
-   * Génère un rapport avec des données spécifiques
-   */
-  generateReportWithData: async (
-    reportName: string,
-    format: 'pdf' | 'xlsx' | 'docx' | 'csv' | 'html',
-    data: ReportData[],
-    params?: ReportParams
-  ): Promise<Blob> => {
-    try {
-      const response = await api.post(`/reports/${reportName}/generate-with-data`, 
-        data,
-        {
-          params: {
-            format,
-            ...(params && { params: JSON.stringify(params) })
-          },
-          responseType: 'blob' // Important pour télécharger les fichiers
-        }
-      );
-      
-      return response.data;
-    } catch (error) {
-      console.error(`Erreur lors de la génération du rapport ${reportName} avec données au format ${format}:`, error);
-      throw error;
-    }
-  },
-
-  /**
-   * Télécharge un rapport généré
-   */
-  downloadReport: (blob: Blob, filename: string) => {
+  static downloadReport(blob: Blob, filename: string) {
     const url = window.URL.createObjectURL(blob);
-    const link = document.createElement('a');
-    link.href = url;
-    link.setAttribute('download', filename);
-    document.body.appendChild(link);
-    link.click();
-    link.remove();
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = filename;
+    document.body.appendChild(a);
+    a.click();
+    a.remove();
     window.URL.revokeObjectURL(url);
   }
-};
+}

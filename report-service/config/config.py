@@ -1,22 +1,29 @@
 import os
 
-class Config:
-    
-    # Tentative de récupération de l'URL
+def _build_db_uri():
+    """Construire l'URI de base de données depuis les variables d'environnement"""
+    # Priorité à DATABASE_URL
     uri = os.environ.get('DATABASE_URL')
-    
-    # Si l'URL commence par 'postgres://' (ancien format Heroku/SQLAlchemy), on le corrige en 'postgresql://'
-    if uri and uri.startswith('postgres://'):
-        uri = uri.replace('postgres://', 'postgresql://', 1)
-        
-    # Si aucune URL n'est fournie, on utilise une valeur par défaut pour éviter le crash
-    if not uri:
-        # Valeur par défaut basée sur votre docker-compose
-        uri = 'postgresql://postgres:postgres@school-db:5432/institut_gabriel_rita_db'
-        print(f"ATTENTION: DATABASE_URL non trouvée. Utilisation de la valeur par défaut: {uri}")
+    if uri:
+        if uri.startswith('postgres://'):
+            uri = uri.replace('postgres://', 'postgresql://', 1)
+        return uri
 
-    SQLALCHEMY_DATABASE_URI = uri
+    # Sinon construire depuis les variables individuelles
+    host     = os.environ.get('DATABASE_HOST', 'postgres')
+    port     = os.environ.get('DATABASE_PORT', '5432')
+    user     = os.environ.get('DATABASE_USER', 'admin')
+    password = os.environ.get('DATABASE_PASSWORD', 'admin')
+    dbname   = os.environ.get('DATABASE_NAME', 'scolarite_db')
+
+    return f'postgresql://{user}:{password}@{host}:{port}/{dbname}'
+
+
+class Config:
+    SQLALCHEMY_DATABASE_URI = _build_db_uri()
     SQLALCHEMY_TRACK_MODIFICATIONS = False
+    SECRET_KEY = os.environ.get('SECRET_KEY', 'igr-report-secret-key')
+    MAX_CONTENT_LENGTH = 50 * 1024 * 1024  # 50 MB
 
 class ProductionConfig(Config):
     DEBUG = False

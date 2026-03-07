@@ -1,7 +1,7 @@
-import { Controller, Get } from '@nestjs/common';
+import { Controller, Get, Query } from '@nestjs/common';
 import { EventPattern, Payload } from '@nestjs/microservices';
 import { DashboardService } from './dashboard.service';
-import { EventsGateway } from './events.gateway';
+import { EventsGateway } from './dashboard/events.gateway';
 
 @Controller('dashboard')
 export class DashboardController {
@@ -10,19 +10,19 @@ export class DashboardController {
     private readonly eventsGateway: EventsGateway,
   ) {}
 
-  /** GET /api/dashboard/dashboard/summary — health check */
+  // GET /dashboard/stats — Données complètes pour le frontend Dashboard.tsx
+  @Get('stats')
+  async getStats(@Query('period') period = 'month') {
+    return this.dashboardService.getStats(period);
+  }
+
+  // GET /dashboard/summary — Route legacy
   @Get('summary')
   async getSummary() {
     return this.dashboardService.getSummary();
   }
 
-  /** GET /api/dashboard/dashboard/stats — full dashboard payload */
-  @Get('stats')
-  async getStats() {
-    return this.dashboardService.getFullStats();
-  }
-
-  // ─── RabbitMQ listeners → WebSocket broadcast ──────────────────────────
+  // --- RABBITMQ LISTENERS ---
   @EventPattern('payment_created')
   async handlePaymentCreated(@Payload() data: any) {
     this.eventsGateway.broadcast('payment_update', data);
@@ -33,8 +33,13 @@ export class DashboardController {
     this.eventsGateway.broadcast('attendance_update', data);
   }
 
-  @EventPattern('student_enrolled')
-  async handleStudentEnrolled(@Payload() data: any) {
-    this.eventsGateway.broadcast('stats_refresh', { trigger: 'student_enrolled', data });
+  @EventPattern('student.created')
+  async handleStudentCreated(@Payload() data: any) {
+    this.eventsGateway.broadcast('student_update', data);
+  }
+
+  @EventPattern('student.updated')
+  async handleStudentUpdated(@Payload() data: any) {
+    this.eventsGateway.broadcast('student_update', data);
   }
 }

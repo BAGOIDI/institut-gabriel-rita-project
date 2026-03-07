@@ -11,8 +11,8 @@ services:
       KEYCLOAK_ADMIN_PASSWORD: admin
       KC_DB: postgres
       KC_DB_URL: jdbc:postgresql://postgres:5432/scolarite_db
-      KC_DB_USERNAME: ${POSTGRES_USER:-admin}
-      KC_DB_PASSWORD: ${POSTGRES_PASSWORD:-admin}
+      KC_DB_USERNAME: ${POSTGRES_USER:-postgres}
+      KC_DB_PASSWORD: ${POSTGRES_PASSWORD:-postgres}
     command: start-dev --import-realm
     volumes:
       - ./keycloak-realm.json:/opt/keycloak/data/import/realm.json
@@ -30,18 +30,21 @@ services:
     image: postgres:15-alpine
     container_name: school-db
     environment:
-      POSTGRES_USER: ${POSTGRES_USER:-admin}
-      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-admin}
+      POSTGRES_USER: ${POSTGRES_USER:-postgres}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-postgres}
       POSTGRES_DB: scolarite_db
+    ports:
+      - "5432:5432"
     volumes:
       - postgres_data:/var/lib/postgresql/data
       - ./database/update_schema.sql:/docker-entrypoint-initdb.d/99-update.sql
     healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U admin -d scolarite_db"]
+      test: ["CMD-SHELL", "pg_isready -U postgres -d scolarite_db"]
       interval: 5s
       timeout: 5s
       retries: 10
-    networks: [school-network]
+    networks:
+      - school-network
 
   rabbitmq:
     image: rabbitmq:3-management
@@ -85,8 +88,8 @@ services:
     environment:
       - DATABASE_HOST=postgres
       - DATABASE_PORT=5432
-      - DATABASE_USER=${POSTGRES_USER:-admin}
-      - DATABASE_PASSWORD=${POSTGRES_PASSWORD:-admin}
+      - DATABASE_USER=${POSTGRES_USER:-postgres}
+      - DATABASE_PASSWORD=${POSTGRES_PASSWORD:-postgres}
       - DATABASE_NAME=scolarite_db
       - RABBITMQ_URL=amqp://admin:admin@rabbitmq:5672
     depends_on:
@@ -107,8 +110,8 @@ services:
     environment:
       - DATABASE_HOST=postgres
       - DATABASE_PORT=5432
-      - DATABASE_USER=${POSTGRES_USER:-admin}
-      - DATABASE_PASSWORD=${POSTGRES_PASSWORD:-admin}
+      - DATABASE_USER=${POSTGRES_USER:-postgres}
+      - DATABASE_PASSWORD=${POSTGRES_PASSWORD:-postgres}
       - DATABASE_NAME=scolarite_db
       - RABBITMQ_URL=amqp://admin:admin@rabbitmq:5672
     depends_on:
@@ -122,16 +125,25 @@ services:
       - "traefik.http.services.finance.loadbalancer.server.port=3000"
 
   service-reports:
-    build: ./service-reports
+    build: ./report-service
     container_name: service-reports
-    ports: ["8000:8000"]
+    ports: ["8000:5000"]
+    environment:
+      - DATABASE_HOST=postgres
+      - DATABASE_PORT=5432
+      - DATABASE_USER=${POSTGRES_USER:-postgres}
+      - DATABASE_PASSWORD=${POSTGRES_PASSWORD:-postgres}
+      - DATABASE_NAME=scolarite_db
+      - FLASK_ENV=production
     networks: [school-network]
+    depends_on:
+      - postgres
     labels:
       - "traefik.enable=true"
       - "traefik.http.routers.reports.rule=Host(`localhost`) && PathPrefix(`/api/reports`)"
       - "traefik.http.middlewares.reports-strip.stripprefix.prefixes=/api/reports"
       - "traefik.http.routers.reports.middlewares=reports-strip"
-      - "traefik.http.services.reports.loadbalancer.server.port=8000"
+      - "traefik.http.services.reports.loadbalancer.server.port=5000"
 
   service-core-scolarite:
     build: ./service-core-scolarite
@@ -140,8 +152,8 @@ services:
     environment:
       - DATABASE_HOST=postgres
       - DATABASE_PORT=5432
-      - DATABASE_USER=${POSTGRES_USER:-admin}
-      - DATABASE_PASSWORD=${POSTGRES_PASSWORD:-admin}
+      - DATABASE_USER=${POSTGRES_USER:-postgres}
+      - DATABASE_PASSWORD=${POSTGRES_PASSWORD:-postgres}
       - DATABASE_NAME=scolarite_db
       - RABBITMQ_URL=amqp://admin:admin@rabbitmq:5672
     depends_on:
@@ -162,8 +174,8 @@ services:
     environment:
       - DATABASE_HOST=postgres
       - DATABASE_PORT=5432
-      - DATABASE_USER=${POSTGRES_USER:-admin}
-      - DATABASE_PASSWORD=${POSTGRES_PASSWORD:-admin}
+      - DATABASE_USER=${POSTGRES_USER:-postgres}
+      - DATABASE_PASSWORD=${POSTGRES_PASSWORD:-postgres}
       - DATABASE_NAME=scolarite_db
       - RABBITMQ_URL=amqp://admin:admin@rabbitmq:5672
     depends_on:
@@ -184,8 +196,8 @@ services:
     environment:
       - DATABASE_HOST=postgres
       - DATABASE_PORT=5432
-      - DATABASE_USER=${POSTGRES_USER:-admin}
-      - DATABASE_PASSWORD=${POSTGRES_PASSWORD:-admin}
+      - DATABASE_USER=${POSTGRES_USER:-postgres}
+      - DATABASE_PASSWORD=${POSTGRES_PASSWORD:-postgres}
       - DATABASE_NAME=scolarite_db
       - RABBITMQ_URL=amqp://admin:admin@rabbitmq:5672
     depends_on:

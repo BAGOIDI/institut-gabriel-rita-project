@@ -1,103 +1,131 @@
 import React, { useState } from 'react';
-import reportService from '../services/report.service';
+import { X, Download, FileText, FileSpreadsheet, File, Loader2 } from 'lucide-react';
+import reportService, { ReportFormat } from '../services/report.service';
 
 interface SchedulePrintModalProps {
-  scheduleData: any;
+  scheduleData: {
+    title: string;
+    period: string;
+    slots: any[];
+    viewMode: string;
+    filter: string;
+    dateGenerated: string;
+  };
   isOpen: boolean;
   onClose: () => void;
 }
 
-const SchedulePrintModal: React.FC<SchedulePrintModalProps> = ({ 
-  scheduleData, 
-  isOpen, 
-  onClose 
-}) => {
-  const [selectedFormat, setSelectedFormat] = useState<'pdf' | 'xlsx' | 'docx' | 'csv' | 'html'>('pdf');
+const FORMAT_OPTIONS: { value: ReportFormat; label: string; icon: React.ReactNode; color: string; desc: string }[] = [
+  { value: 'pdf',  label: 'PDF',       icon: <File className="w-5 h-5" />,            color: '#DC2626', desc: 'Document imprimable, idéal pour affichage' },
+  { value: 'docx', label: 'Word',      icon: <FileText className="w-5 h-5" />,        color: '#2563EB', desc: 'Document modifiable Microsoft Word' },
+  { value: 'xlsx', label: 'Excel',     icon: <FileSpreadsheet className="w-5 h-5" />, color: '#059669', desc: 'Feuille de calcul Microsoft Excel' },
+];
+
+const SchedulePrintModal: React.FC<SchedulePrintModalProps> = ({ scheduleData, isOpen, onClose }) => {
+  const [selectedFormat, setSelectedFormat] = useState<ReportFormat>('pdf');
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [success, setSuccess] = useState(false);
 
   if (!isOpen) return null;
 
-  const handleGenerateReport = async () => {
+  const className = scheduleData.filter || 'Classe';
+
+  const handleGenerate = async () => {
     setIsLoading(true);
     setError(null);
-    
+    setSuccess(false);
     try {
-      await reportService.generateScheduleReport(scheduleData, selectedFormat);
-      onClose();
+      await reportService.downloadSchedule(className, selectedFormat);
+      setSuccess(true);
+      setTimeout(() => {
+        onClose();
+        setSuccess(false);
+      }, 1500);
     } catch (err: any) {
-      console.error('Erreur lors de la génération du rapport:', err);
-      setError(err.message || 'Une erreur est survenue lors de la génération du rapport');
+      setError(err?.response?.data?.error || err.message || 'Erreur lors de la génération');
     } finally {
       setIsLoading(false);
     }
   };
 
   return (
-    <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
-      <div className="bg-white rounded-lg p-6 w-full max-w-md">
-        <div className="flex justify-between items-center mb-4">
-          <h3 className="text-lg font-semibold text-gray-900">Imprimer l'emploi du temps</h3>
-          <button 
-            onClick={onClose}
-            className="text-gray-400 hover:text-gray-500"
-          >
-            <span className="sr-only">Fermer</span>
-            <svg className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-            </svg>
+    <div className="fixed inset-0 bg-black/60 backdrop-blur-sm flex items-center justify-center z-50 p-4">
+      <div className="bg-white dark:bg-slate-800 rounded-lg border border-gray-200 dark:border-slate-700 shadow-2xl w-full max-w-md">
+        {/* Header */}
+        <div className="flex justify-between items-center px-5 py-4 border-b border-gray-200 dark:border-slate-700">
+          <div>
+            <h3 className="text-base font-bold text-gray-900 dark:text-white">Exporter l'emploi du temps</h3>
+            <p className="text-xs text-gray-500 dark:text-gray-400 mt-0.5">{className} — {scheduleData.period}</p>
+          </div>
+          <button onClick={onClose} className="p-1.5 hover:bg-gray-100 dark:hover:bg-slate-700 rounded-md transition-colors">
+            <X className="w-4 h-4 text-gray-500" />
           </button>
         </div>
 
-        <div className="mb-4">
-          <label htmlFor="format" className="block text-sm font-medium text-gray-700 mb-2">
-            Sélectionnez le format d'impression
-          </label>
-          <select
-            id="format"
-            value={selectedFormat}
-            onChange={(e) => setSelectedFormat(e.target.value as any)}
-            className="w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
-          >
-            <option value="pdf">PDF</option>
-            <option value="xlsx">Excel (XLSX)</option>
-            <option value="docx">Word (DOCX)</option>
-            <option value="csv">CSV</option>
-            <option value="html">HTML</option>
-          </select>
+        {/* Sélecteur de format */}
+        <div className="p-5 space-y-3">
+          <p className="text-xs font-semibold text-gray-600 dark:text-gray-400 uppercase tracking-wide">Choisir le format</p>
+          <div className="space-y-2">
+            {FORMAT_OPTIONS.map(opt => (
+              <label
+                key={opt.value}
+                className={`flex items-center gap-3 p-3 rounded-md border cursor-pointer transition-all ${
+                  selectedFormat === opt.value
+                    ? 'border-2 bg-blue-50 dark:bg-blue-900/20'
+                    : 'border-gray-200 dark:border-slate-600 hover:border-gray-300 dark:hover:border-slate-500'
+                }`}
+                style={selectedFormat === opt.value ? { borderColor: opt.color } : {}}
+              >
+                <input
+                  type="radio"
+                  name="format"
+                  value={opt.value}
+                  checked={selectedFormat === opt.value}
+                  onChange={() => setSelectedFormat(opt.value)}
+                  className="sr-only"
+                />
+                <span style={{ color: opt.color }}>{opt.icon}</span>
+                <div className="flex-1">
+                  <p className="text-sm font-semibold text-gray-900 dark:text-white">{opt.label}</p>
+                  <p className="text-xs text-gray-500 dark:text-gray-400">{opt.desc}</p>
+                </div>
+                {selectedFormat === opt.value && (
+                  <div className="w-4 h-4 rounded-full border-2 flex items-center justify-center" style={{ borderColor: opt.color }}>
+                    <div className="w-2 h-2 rounded-full" style={{ backgroundColor: opt.color }} />
+                  </div>
+                )}
+              </label>
+            ))}
+          </div>
+
+          {error && (
+            <div className="p-2.5 bg-red-50 border border-red-200 rounded-md text-xs text-red-700">
+              {error}
+            </div>
+          )}
+          {success && (
+            <div className="p-2.5 bg-green-50 border border-green-200 rounded-md text-xs text-green-700">
+              ✅ Document téléchargé avec succès !
+            </div>
+          )}
         </div>
 
-        {error && (
-          <div className="mb-4 p-3 bg-red-100 text-red-700 rounded-md text-sm">
-            {error}
-          </div>
-        )}
-
-        <div className="flex justify-end space-x-3">
+        {/* Footer */}
+        <div className="flex justify-end gap-2 px-5 py-4 border-t border-gray-200 dark:border-slate-700">
           <button
-            type="button"
             onClick={onClose}
-            className="px-4 py-2 text-sm font-medium text-gray-700 bg-gray-100 rounded-md hover:bg-gray-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500"
+            className="px-4 py-2 text-sm text-gray-700 dark:text-gray-300 bg-gray-100 dark:bg-slate-700 rounded-md hover:bg-gray-200 dark:hover:bg-slate-600 transition-colors"
           >
             Annuler
           </button>
           <button
-            type="button"
-            onClick={handleGenerateReport}
-            disabled={isLoading}
-            className="px-4 py-2 text-sm font-medium text-white bg-indigo-600 rounded-md hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 disabled:opacity-50"
+            onClick={handleGenerate}
+            disabled={isLoading || success}
+            className="flex items-center gap-2 px-4 py-2 text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 disabled:bg-blue-400 rounded-md transition-colors"
           >
-            {isLoading ? (
-              <>
-                <svg className="animate-spin -ml-1 mr-2 h-4 w-4 text-white inline" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-                  <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
-                  <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
-                </svg>
-                Génération...
-              </>
-            ) : (
-              'Imprimer'
-            )}
+            {isLoading ? <Loader2 className="w-4 h-4 animate-spin" /> : <Download className="w-4 h-4" />}
+            {isLoading ? 'Génération...' : success ? 'Téléchargé !' : 'Télécharger'}
           </button>
         </div>
       </div>

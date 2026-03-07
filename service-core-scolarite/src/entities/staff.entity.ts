@@ -25,6 +25,9 @@ export class Staff {
   @Column({ nullable: true })
   department: string;
 
+  @Column({ type: 'decimal', precision: 10, scale: 2, nullable: true })
+  hourlyRate: number;
+
   @Column({ default: true })
   isActive: boolean;
 }
