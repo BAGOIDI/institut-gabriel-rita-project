@@ -22,10 +22,14 @@ interface MenuItem {
   submenu?: MenuItem[];
 }
 
-export const BancoSidebar = () => {
+interface BancoSidebarProps {
+  isOpen: boolean;
+  onClose: () => void;
+}
+
+export const BancoSidebar: React.FC<BancoSidebarProps> = ({ isOpen, onClose }) => {
   const location = useLocation();
   const { language } = useTheme();
-  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const [openSubmenus, setOpenSubmenus] = useState<Record<string, boolean>>({});
   const t = translations[language];
 
@@ -170,17 +174,17 @@ export const BancoSidebar = () => {
   return (
     <>
       {/* Overlay mobile */}
-      {isSidebarOpen && (
+      {isOpen && (
         <div 
           className="fixed inset-0 bg-black/50 z-40 lg:hidden backdrop-blur-sm"
-          onClick={() => setIsSidebarOpen(false)}
+          onClick={onClose}
         />
       )}
 
       {/* Sidebar */}
       <aside 
         className={`fixed lg:static inset-y-0 left-0 z-50 banco-sidebar flex flex-col transition-all duration-300 transform ${
-          isSidebarOpen ? 'translate-x-0' : '-translate-x-full lg:translate-x-0'
+          isOpen ? 'translate-x-0' : '-translate-x-full lg:translate-x-0'
         }`}
         style={{ width: 'var(--sidebar-width)' }}
       >
@@ -195,7 +199,7 @@ export const BancoSidebar = () => {
             </div>
           </div>
           <button 
-            onClick={() => setIsSidebarOpen(false)}
+            onClick={onClose}
             className="lg:hidden p-2 hover:bg-gray-100 dark:hover:bg-slate-700 rounded-lg text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white transition-colors"
           >
             <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -223,16 +227,6 @@ export const BancoSidebar = () => {
           </div>
         </div>
       </aside>
-
-      {/* Bouton menu mobile */}
-      <button
-        onClick={() => setIsSidebarOpen(true)}
-        className="lg:hidden fixed top-4 left-4 z-30 p-2 bg-white dark:bg-slate-800 rounded-lg shadow-lg border border-gray-200 dark:border-slate-700"
-      >
-        <svg className="w-6 h-6 text-gray-600 dark:text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
-        </svg>
-      </button>
     </>
   );
 };

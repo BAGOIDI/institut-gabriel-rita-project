@@ -98,29 +98,67 @@ export const Students = () => {
       params.append('page', pagination.page.toString());
       params.append('limit', pagination.limit.toString());
 
-      const url = searchTerm || Object.values(filters).some(v => v) 
+      const url = searchTerm || Object.values(filters).some(v => v)
         ? `/api/core/students/search?${params.toString()}`
         : `/api/core/students?${params.toString()}`;
 
       const response = await api.get(url);
-      
-      if (response.data.hits) {
-        // Typesense response
-        setStudents(response.data.hits.map((hit: any) => hit.document));
+      const data = response?.data ?? {};
+
+      // Typesense-like response
+      if (Array.isArray(data.hits)) {
+        const docs = data.hits.map((hit: any) => hit.document).filter(Boolean);
+        setStudents(docs);
         setPagination(prev => ({
           ...prev,
-          total: response.data.found,
-          lastPage: Math.ceil(response.data.found / pagination.limit)
+          total: typeof data.found === 'number' ? data.found : docs.length,
+          lastPage: Math.max(
+            1,
+            Math.ceil(
+              (typeof data.found === 'number' ? data.found : docs.length) /
+                pagination.limit
+            )
+          ),
         }));
-      } else {
-        // Regular API response
-        setStudents(response.data.items);
-        setPagination(prev => ({
-          ...prev,
-          total: response.data.total,
-          lastPage: response.data.lastPage
-        }));
+        return;
       }
+
+      // Standard paginated response: { items: [], total, lastPage }
+      if (Array.isArray(data.items)) {
+        setStudents(data.items);
+        setPagination(prev => ({
+          ...prev,
+          total: typeof data.total === 'number' ? data.total : data.items.length,
+          lastPage:
+            typeof data.lastPage === 'number' && data.lastPage > 0
+              ? data.lastPage
+              : Math.max(
+                  1,
+                  Math.ceil(
+                    (typeof data.total === 'number'
+                      ? data.total
+                      : data.items.length) / pagination.limit
+                  )
+                ),
+        }));
+        return;
+      }
+
+      // Fallback: direct array or unexpected shape
+      if (Array.isArray(data)) {
+        setStudents(data);
+        setPagination(prev => ({
+          ...prev,
+          total: data.length,
+          lastPage: Math.max(1, Math.ceil(data.length / pagination.limit)),
+        }));
+        return;
+      }
+
+      // If we reach here, data shape is invalid
+      console.error('Réponse inattendue pour /students', data);
+      setBackendError(true);
+      setStudents([]);
     } catch (error) {
       console.error('Erreur lors du chargement des étudiants', error);
       setBackendError(true);
@@ -163,7 +201,9 @@ export const Students = () => {
     reader.readAsBinaryString(file);
   };
 
-  const filteredStudents = students.filter(s => 
+  const safeStudents = Array.isArray(students) ? students : [];
+
+  const filteredStudents = safeStudents.filter(s => 
     `${s.firstName} ${s.lastName} ${s.matricule}`.toLowerCase().includes(searchTerm.toLowerCase())
   );
 
@@ -389,7 +429,7 @@ export const Students = () => {
               )}
             </thead>
             <tbody className="divide-y divide-gray-100 dark:divide-slate-700">
-              {students
+              {safeStudents
                 .filter(student => {
                   const matchName = columnFilters.name === '' || 
                     `${student.firstName} ${student.lastName}`.toLowerCase().includes(columnFilters.name.toLowerCase());
@@ -477,7 +517,7 @@ export const Students = () => {
           style={{ gap: 'var(--card-spacing)' }}
           className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4"
         >
-          {students.map(student => (
+              {safeStudents.map(student => (
             <div 
               key={student.id} 
               style={{ padding: 'var(--card-spacing)' }}

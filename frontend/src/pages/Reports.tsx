@@ -167,7 +167,9 @@ const Reports: React.FC = () => {
     init();
   }, []);
 
-  const filteredStudents = students.filter(s =>
+  const safeStudents = Array.isArray(students) ? students : [];
+
+  const filteredStudents = safeStudents.filter(s =>
     `${s.firstName} ${s.lastName} ${s.matricule}`.toLowerCase().includes(studentSearch.toLowerCase())
   );
 

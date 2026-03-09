@@ -1,14 +1,15 @@
 import React, { useState, useEffect } from 'react';
+import { useLocation } from 'react-router-dom';
 import { BancoSidebar } from './BancoSidebar';
 import { BancoTopbar } from './BancoTopbar';
 
 export const BancoLayout = ({ children }: { children: React.ReactNode }) => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const location = useLocation();
 
-  // Fermer le menu mobile quand la route change
   useEffect(() => {
     setIsMobileMenuOpen(false);
-  }, [window.location.pathname]);
+  }, [location.pathname]);
 
   const handleMenuClick = () => {
     setIsMobileMenuOpen(true);
@@ -17,7 +18,10 @@ export const BancoLayout = ({ children }: { children: React.ReactNode }) => {
   return (
     <div className="flex h-screen w-full overflow-hidden transition-all duration-300 bg-background">
       {/* Sidebar */}
-      <BancoSidebar />
+      <BancoSidebar
+        isOpen={isMobileMenuOpen}
+        onClose={() => setIsMobileMenuOpen(false)}
+      />
       
       {/* Contenu principal */}
       <div className="flex-1 flex flex-col overflow-hidden relative">
