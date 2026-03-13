@@ -1,6 +1,7 @@
 import React, { useMemo } from 'react';
+import { Trash2 } from 'lucide-react';
 
-const ClassTimetableView = ({ timeSlots, classes, days, timeSlotOptions, onEditSlot, onCreateSlot }) => {
+const ClassTimetableView = ({ timeSlots, classes, days, timeSlotOptions, onEditSlot, onCreateSlot, onDeleteSlot }) => {
   const grid = useMemo(() => {
     // On prépare la structure de la grille : [dayId][timeSlotValue][classId]
     const res = {};
@@ -106,8 +107,19 @@ const ClassTimetableView = ({ timeSlots, classes, days, timeSlotOptions, onEditS
                                       }}
                                       className="group relative p-2 rounded border-l-4 cursor-pointer hover:shadow-md transition-all bg-blue-50/50 dark:bg-blue-900/20 border-blue-500 hover:bg-blue-100 dark:hover:bg-blue-900/30"
                                     >
-                                      <div className="font-bold text-[10px] text-blue-700 dark:text-blue-300 leading-tight mb-1">
-                                        {slot.subjectName}
+                                      <div className="flex justify-between items-start mb-1">
+                                        <div className="font-bold text-[10px] text-blue-700 dark:text-blue-300 leading-tight truncate mr-4">
+                                          {slot.subjectName}
+                                        </div>
+                                        <button
+                                          onClick={(e) => {
+                                            e.stopPropagation();
+                                            onDeleteSlot?.(slot.id);
+                                          }}
+                                          className="p-1 text-gray-400 hover:text-red-500 hover:bg-red-50 dark:hover:bg-red-900/20 rounded transition-colors opacity-0 group-hover:opacity-100"
+                                        >
+                                          <Trash2 className="w-2.5 h-2.5" />
+                                        </button>
                                       </div>
                                       <div className="text-[9px] text-gray-600 dark:text-gray-400 flex items-center gap-1">
                                         <span className="opacity-70 truncate">{slot.teacherName}</span>

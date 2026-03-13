@@ -1056,7 +1056,7 @@ export const Timetable = () => {
                 Filtrer par Classe
               </button>
               {showSpecialtySelector && (
-                <div className="absolute z-10 mt-2 w-56 rounded-md shadow-lg bg-white dark:bg-slate-800 ring-1 ring-black ring-opacity-5 focus:outline-none">
+                <div className="absolute z-[100] mt-2 w-56 rounded-md shadow-lg bg-white dark:bg-slate-800 ring-1 ring-black ring-opacity-5 focus:outline-none">
                   <div className="py-1">
                     <div className="px-4 py-2 flex justify-between">
                       <button onClick={handleSelectAllSynthesisClasses} className="text-xs text-blue-600 hover:underline">Tout</button>
@@ -1126,6 +1126,7 @@ export const Timetable = () => {
           timeSlotOptions={timeSlotOptions}
           onEditSlot={handleEditSlot}
           onCreateSlot={handleCreateNewSlot}
+          onDeleteSlot={handleDeleteSlot}
         />
       ) : calendarView === 'month' ? (
         // Vue mois : grille avec jours en colonnes et semaines en lignes
