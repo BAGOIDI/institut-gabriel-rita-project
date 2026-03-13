@@ -768,6 +768,21 @@ export const Timetable = () => {
     setSelectedSynthesisClasses([]);
   };
 
+  const handleCreateNewSlot = (dayId: string, startTime: string, classId: string) => {
+    setSelectedSlot(null);
+    const ts = LOCAL_TIME_SLOTS.find(s => s.value === startTime);
+    setFormData({
+      dayOfWeek: dayId,
+      startTime: startTime,
+      endTime: ts?.end || '',
+      subjectId: '',
+      staffId: '',
+      classId: classId,
+      roomName: 'TBD',
+    });
+    setShowModal(true);
+  };
+
   const handleEditSlot = (slot: TimeSlot) => {
     setSelectedSlot(slot);
     setFormData({
@@ -1106,10 +1121,11 @@ export const Timetable = () => {
       ) : viewMode === 'synthesis_class' ? (
         <ClassTimetableView 
           timeSlots={timeSlots}
-          classes={classes.filter(c => selectedSynthesisClasses.length === 0 || selectedSynthesisClasses.includes(String(c.id)))}
+          classes={classes.filter(c => selectedSynthesisClasses.includes(String(c.id)))}
           days={days}
           timeSlotOptions={timeSlotOptions}
           onEditSlot={handleEditSlot}
+          onCreateSlot={handleCreateNewSlot}
         />
       ) : calendarView === 'month' ? (
         // Vue mois : grille avec jours en colonnes et semaines en lignes
