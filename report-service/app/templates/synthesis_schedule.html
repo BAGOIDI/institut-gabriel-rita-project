@@ -1,0 +1,144 @@
+{% extends "base_report.html" %}
+
+{% block title %}Synthèse des Emplois du Temps{% endblock %}
+{% block report_title %}{{ report_title }}{% endblock %}
+
+{% block container_class %}landscape{% endblock %}
+
+{% block extra_css %}
+<style>
+    @page { size: A4 landscape; margin: 2mm; }
+
+    .schedule-table {
+        width: 100%;
+        border-collapse: collapse;
+        table-layout: fixed;
+        border: 0.5px solid var(--border);
+    }
+
+    .schedule-table th, .schedule-table td {
+        border: 0.3px solid var(--border);
+        padding: 1px 2px;
+        text-align: center;
+        vertical-align: middle !important;
+        overflow: hidden;
+    }
+
+    .schedule-table thead th {
+        background-color: var(--primary-light);
+        color: var(--white);
+        font-weight: 700;
+        text-transform: uppercase;
+        font-size: 7px;
+        padding: 3px 1px;
+    }
+
+    .day-col {
+        width: 45px;
+        background-color: var(--bg-soft);
+        font-weight: 700;
+        font-size: 7.5px;
+        color: var(--primary-light);
+        text-transform: uppercase;
+        white-space: nowrap;
+        text-align: center;
+        vertical-align: middle !important;
+    }
+
+    td.day-col {
+        padding: 4px 2px !important;
+    }
+
+    .time-col {
+        width: 60px;
+        background-color: var(--bg-soft);
+        font-weight: 600;
+        font-size: 6.5px;
+        color: var(--secondary);
+    }
+
+    .course-cell {
+        height: 18px;
+        padding: 0.5px !important;
+        background-color: #fdfdfe;
+    }
+
+    .course-item {
+        text-align: left;
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        padding: 1px 2px;
+        background-color: #f8fafc;
+        overflow: hidden;
+    }
+
+    .course-subject {
+        font-weight: 800;
+        font-size: 6.5px;
+        color: var(--primary);
+        line-height: 0.9;
+        text-transform: uppercase;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+        overflow: hidden;
+        margin-bottom: 2px;
+    }
+
+    .course-teacher {
+        font-size: 6px;
+        color: var(--secondary);
+        font-weight: 500;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+        overflow: hidden;
+        line-height: 0.9;
+    }
+
+    .empty-cell {
+        background-color: #f1f5f9;
+        opacity: 0.15;
+        height: 100%;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<table class="schedule-table">
+    <thead>
+        <tr>
+            <th class="day-col">JOUR</th>
+            <th class="time-col">HORAIRE</th>
+            {% for cls in classes %}
+            <th>{{ cls.name|upper }}</th>
+            {% endfor %}
+        </tr>
+    </thead>
+    <tbody>
+        {% for day in days %}
+            {% for time_slot in time_slots %}
+            <tr>
+                {% if loop.first %}
+                <td class="day-col" rowspan="{{ time_slots|length }}">{{ day }}</td>
+                {% endif %}
+                <td class="time-col">{{ time_slot }}</td>
+                {% for cls in classes %}
+                    {% set course = grid.get(day, {}).get(time_slot, {}).get(cls.id) %}
+                    <td class="course-cell">
+                        {% if course %}
+                        <div class="course-item">
+                            <div class="course-subject">{{ course.subject }}</div>
+                            <div class="course-teacher">{{ course.teacher_name }}</div>
+                        </div>
+                        {% else %}
+                        <div class="empty-cell"></div>
+                        {% endif %}
+                    </td>
+                {% endfor %}
+            </tr>
+            {% endfor %}
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock %}

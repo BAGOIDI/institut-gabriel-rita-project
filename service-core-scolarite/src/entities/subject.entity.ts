@@ -2,6 +2,7 @@ import { Entity, Column, PrimaryGeneratedColumn, ManyToOne, JoinColumn, OneToMan
 import { Class } from './class.entity';
 import { Semester } from './semester.entity';
 import { Grade } from './grade.entity';
+import { Staff } from './staff.entity';
 
 @Entity({ name: 'subjects' })
 export class Subject {
@@ -23,6 +24,10 @@ export class Subject {
   @ManyToOne(() => Class, { nullable: true })
   @JoinColumn({ name: 'class_id' })
   class: Class;
+
+  @ManyToOne(() => Staff, { nullable: true })
+  @JoinColumn({ name: 'teacher_id' })
+  teacher: Staff;
 
   @ManyToOne(() => Semester, { nullable: true })
   @JoinColumn({ name: 'semester_id' })

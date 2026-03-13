@@ -77,7 +77,9 @@ export class SubjectService implements OnModuleInit {
   }
 
   async findAll(): Promise<Subject[]> {
-    return await this.subjectRepository.find();
+    return await this.subjectRepository.find({
+      relations: ['class', 'teacher']
+    });
   }
 
   async findOne(id: string): Promise<Subject> {

@@ -73,7 +73,7 @@ def get_classes():
         logger.info("Fetching all classes...")
         classes = Class.query.all()
         logger.info(f"Found {len(classes)} classes")
-        return jsonify([{'id': str(c.id), 'name': c.name, 'specialty_id': str(c.specialty_id)} for c in classes])
+        return jsonify([{'id': str(c.id), 'name': c.name, 'level': c.level, 'specialty_id': str(c.specialty_id)} for c in classes])
     except Exception as e:
         logger.error(f"Error in get_classes: {str(e)}")
         return jsonify({'error': str(e)}), 500
@@ -150,7 +150,6 @@ def get_schedule_report(class_ref):
         class_name = class_obj.name
         class_id = str(class_obj.id)
         
-        # ... (rest of the logic for class schedule)
         return _process_schedule_request(class_id, class_name, 'class', fmt, OFFICIAL_TIME_SLOTS)
     except Exception as e:
         logger.error(f"Error in get_schedule_report: {str(e)}")
@@ -171,10 +170,17 @@ def get_teacher_schedule_report(staff_ref):
             ('19:35', '21:00'),
         ]
         
-        teacher = Staff.query.get(staff_ref) if staff_ref.isdigit() else Staff.query.filter(
-            (Staff.first_name + " " + Staff.last_name == staff_ref) | 
-            (Staff.last_name + " " + Staff.first_name == staff_ref)
-        ).first()
+        # Resolve teacher
+        import re
+        is_uuid = re.match(r'^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$', staff_ref.lower())
+        
+        if is_uuid:
+            teacher = Staff.query.get(staff_ref)
+        else:
+            teacher = Staff.query.filter(
+                (Staff.first_name + " " + Staff.last_name == staff_ref) | 
+                (Staff.last_name + " " + Staff.first_name == staff_ref)
+            ).first()
         
         if not teacher:
             return jsonify({'error': f'Enseignant non trouvé: {staff_ref}'}), 404
@@ -282,6 +288,7 @@ def _process_schedule_request(target_id, target_name, filter_type, fmt, OFFICIAL
         data = {
             'target_name': target_name,
             'filter_type': filter_type,
+            'report_title': f"EMPLOI DU TEMPS : {target_name.upper()}",
             'class_name': target_name if filter_type == 'class' else 'N/A',
             'school_year': '2025-2026',
             'current_date': datetime.now().strftime('%d/%m/%Y'),
@@ -313,10 +320,11 @@ def get_synthesis_schedule_report():
     fmt = _get_format()
     class_id = request.args.get('class_id')
     staff_id = request.args.get('staff_id')
-    specialty_ids_param = request.args.get('specialty_ids')  # liste d'IDs séparés par des virgules
+    # On supporte les IDs de classes séparés par des virgules
+    class_ids_param = request.args.get('specialty_ids') or request.args.get('class_ids')
     
     try:
-        logger.info(f"Generating synthesis schedule report in format {fmt} (class_id={class_id}, staff_id={staff_id})")
+        logger.info(f"Generating synthesis schedule report in format {fmt} (class_id={class_id}, class_ids={class_ids_param})")
         OFFICIAL_TIME_SLOTS = [
             ('08:00', '09:50'),
             ('10:05', '12:00'),
@@ -326,78 +334,50 @@ def get_synthesis_schedule_report():
             ('19:35', '21:00'),
         ]
         
-        def format_time_label(start, end):
-            s_h = int(start.split(':')[0])
-            e_h = int(end.split(':')[0])
-            return f"{s_h}H - {e_h}H"
-
-        # 1. Fetch all schedules from planning service
-        # If class_id or staff_id is provided, we filter by it
+        # 1. Fetch all relevant schedules
         url = PLANNING_SERVICE_URL
-        if class_id:
-            url = f"{PLANNING_SERVICE_URL}/class/{class_id}"
-        elif staff_id:
-            url = f"{PLANNING_SERVICE_URL}/staff/{staff_id}"
-            
         response = requests.get(url, timeout=5)
         response.raise_for_status()
         schedules_raw = response.json()
+
+        # 2. Identify target classes
+        target_class_ids = set()
+        if class_id:
+            target_class_ids.add(class_id)
+        elif class_ids_param:
+            target_class_ids = {x.strip() for x in class_ids_param.split(',') if x.strip()}
         
-        # If we filtered by class, we might still want to filter by staff if both are provided
-        if class_id and staff_id:
-            schedules_raw = [s for s in schedules_raw if str(s.get('staffId') or s.get('teacherId')) == staff_id]
-
-        # 2. Identify active specialties (for columns and legend)
-        active_spec_ids = set()
-        for s in schedules_raw or []:
-            cls_id = s.get('classId')
-            if cls_id:
-                cls = Class.query.get(cls_id)
-                if cls and cls.specialty_id:
-                    active_spec_ids.add(cls.specialty_id)
-
-        # If caller provided an explicit list of specialties, intersect it with active ones
-        explicit_spec_ids = set()
-        if specialty_ids_param:
-            try:
-                explicit_spec_ids = {int(x) for x in specialty_ids_param.split(',') if x.strip().isdigit()}
-            except Exception as e:
-                logger.error(f"Error parsing specialty_ids: {str(e)}")
-                explicit_spec_ids = set()
-
-        if explicit_spec_ids:
-            # We garde seulement les filières demandées qui sont effectivement actives
-            effective_spec_ids = active_spec_ids & explicit_spec_ids if active_spec_ids else explicit_spec_ids
+        # 3. Get class objects for headers
+        if target_class_ids:
+            classes = Class.query.filter(Class.id.in_(target_class_ids)).all()
         else:
-            effective_spec_ids = active_spec_ids
-
-        specialties = Specialty.query.filter(Specialty.id.in_(effective_spec_ids)).order_by(Specialty.code).all() if effective_spec_ids else []
-        spec_list = [{'id': s.id, 'name': s.name, 'code': s.code} for s in specialties]
+            # If no selection, we could show all active classes in schedules
+            active_ids = {str(s.get('classId')) for s in schedules_raw if s.get('classId')}
+            classes = Class.query.filter(Class.id.in_(active_ids)).all()
         
-        # 3. Prepare data structure: Days -> TimeSlots -> Specialties
+        # On trie les classes par nom pour un affichage cohérent
+        classes.sort(key=lambda x: x.name)
+        
+        class_list = [{'id': str(c.id), 'name': c.name} for c in classes]
+        class_ids = [c['id'] for c in class_list]
+
+        # 4. Prepare Grid: Days -> TimeSlots -> Classes
         DAYS = ['Lundi', 'Mardi', 'Mercredi', 'Jeudi', 'Vendredi', 'Samedi']
-        time_slots = [format_time_label(start, end) for start, end in OFFICIAL_TIME_SLOTS]
-        ts_map = {f"{start} - {end}": format_time_label(start, end) for start, end in OFFICIAL_TIME_SLOTS}
+        time_slots = [f"{start} - {end}" for start, end in OFFICIAL_TIME_SLOTS]
         
         grid = {}
         for d in DAYS:
             grid[d] = {}
-            for tsl in time_slots:
-                grid[d][tsl] = {}
-                for spec in spec_list:
-                    grid[d][tsl][spec['id']] = ""
+            for ts in time_slots:
+                grid[d][ts] = {}
+                for cid in class_ids:
+                    grid[d][ts][cid] = None
 
-        # Fill the grid
+        # 5. Fill the grid
         for s in schedules_raw or []:
             try:
-                cls_id = s.get('classId')
-                if not cls_id: continue
-                cls = Class.query.get(cls_id)
-                if not cls or not cls.specialty_id: continue
-                spec_id = cls.specialty_id
-                # Ignore specialties that are not part of the selected/effective list
-                if spec_id not in {sp['id'] for sp in spec_list}:
-                    continue
+                cid = str(s.get('classId'))
+                if cid not in class_ids: continue
                 
                 day_idx = int(s.get('dayOfWeek', 1)) - 1
                 if not (0 <= day_idx < len(DAYS)): continue
@@ -405,48 +385,37 @@ def get_synthesis_schedule_report():
                 
                 start = (s.get('startTime') or '')[:5]
                 end = (s.get('endTime') or '')[:5]
-                orig_ts = f"{start} - {end}"
+                ts_key = f"{start} - {end}"
                 
-                if orig_ts in ts_map:
-                    ts_label = ts_map[orig_ts]
+                if ts_key in time_slots:
                     subj_id = s.get('subjectId')
-                    subj = Subject.query.get(subj_id) if subj_id else None
-                    course_name = subj.name if subj else "N/A"
+                    staff_id = s.get('staffId') or s.get('teacherId')
                     
-                    # If multiple classes in same specialty/slot, join them
-                    existing = grid[day_name][ts_label].get(spec_id, "")
-                    if existing:
-                        grid[day_name][ts_label][spec_id] = f"{existing}, {course_name}"
-                    else:
-                        grid[day_name][ts_label][spec_id] = course_name
+                    subj = Subject.query.get(subj_id) if subj_id else None
+                    teacher = Staff.query.get(staff_id) if staff_id else None
+                    
+                    grid[day_name][ts_key][cid] = {
+                        'subject': subj.name if subj else "N/A",
+                        'teacher_name': f"{teacher.first_name} {teacher.last_name}" if teacher else "N/A"
+                    }
             except Exception as e:
                 logger.error(f"Error processing schedule item: {str(e)}")
                 continue
 
-        # Dynamic title based on filters
-        report_title = "SYNTHÈSE GLOBALE DES EMPLOIS DU TEMPS"
-        if class_id:
-            cls = Class.query.get(class_id)
-            if cls: report_title += f" - CLASSE: {cls.name}"
-        if staff_id:
-            stf = Staff.query.get(staff_id)
-            if stf: report_title += f" - ENSEIGNANT: {stf.first_name} {stf.last_name}"
-
         data = {
             'school_name': "INSTITUT GABRIEL RITA",
-            'report_title': report_title,
+            'report_title': "SYNTHÈSE DES EMPLOIS DU TEMPS PAR CLASSE",
             'school_year': '2025-2026',
             'current_date': datetime.now().strftime('%d/%m/%Y'),
             'generated_at': datetime.now().strftime('%d/%m/%Y %H:%M'),
             'days': DAYS,
             'time_slots': time_slots,
-            'specialties': spec_list,
-            'grid': grid,
-            'abbreviations': spec_list
+            'classes': class_list,
+            'grid': grid
         }
 
-        filename = f'synthese_edt_{datetime.now().strftime("%Y%m%d")}'
-        return _send_file_response(PDFService.generate_pdf('complex_schedule.html', data, landscape=True), f'{filename}.pdf', 'pdf')
+        filename = f'synthese_classes_{datetime.now().strftime("%Y%m%d")}'
+        return _send_file_response(PDFService.generate_pdf('synthesis_schedule.html', data, landscape=True), f'{filename}.pdf', 'pdf')
 
     except Exception as e:
         logger.error(f"Error in get_synthesis_schedule_report: {str(e)}")

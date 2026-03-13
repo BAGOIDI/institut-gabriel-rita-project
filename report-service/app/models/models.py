@@ -132,6 +132,7 @@ class Class(db.Model):
     
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String, nullable=False)
+    level = db.Column(db.String)
     specialty_id = db.Column(db.Integer, db.ForeignKey('specialties.id'))
     academic_year_id = db.Column(db.Integer, db.ForeignKey('academic_years.id'))
     campus_id = db.Column(db.Integer) # Loose link, no FK in DB

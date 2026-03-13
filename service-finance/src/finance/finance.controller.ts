@@ -1,8 +1,9 @@
 import { Controller, Get, Post, Put, Delete, Body, Param, ParseIntPipe, Query } from '@nestjs/common';
 import { ApiTags, ApiOperation, ApiResponse } from '@nestjs/swagger';
-import { FinanceService } from './finance.service';
+import { FinanceService, PaginatedResult } from './finance.service';
 import { CreatePaymentDto } from './dto/create-payment.dto';
 import { UpdatePaymentDto } from './dto/update-payment.dto';
+import { Payment } from './entities/payment.entity';
 
 @ApiTags('finance')
 @Controller('finance')
@@ -16,15 +17,35 @@ export class FinanceController {
   @ApiResponse({ status: 201, description: 'Payment created successfully.' })
   @ApiResponse({ status: 400, description: 'Validation failed.' })
   @ApiResponse({ status: 404, description: 'Student Fee record not found.' })
-  async createPayment(@Body() createPaymentDto: CreatePaymentDto) {
+  async createPayment(@Body() createPaymentDto: CreatePaymentDto): Promise<Payment> {
     return this.financeService.createPayment(createPaymentDto);
   }
 
   @Get('payments')
-  @ApiOperation({ summary: 'Get all payments' })
-  @ApiResponse({ status: 200, description: 'Returns all payments.' })
-  async findAllPayments() {
-    return this.financeService.findAllPayments();
+  @ApiOperation({ summary: 'Get all payments with pagination' })
+  @ApiResponse({ status: 200, description: 'Returns paginated payments.' })
+  async findAllPayments(
+    @Query('page') page?: number,
+    @Query('limit') limit?: number,
+  ): Promise<PaginatedResult<Payment>> {
+    return this.financeService.findAllPayments({
+      page: page ? Number(page) : 1,
+      limit: limit ? Number(limit) : 50,
+    });
+  }
+
+  @Get('payments/search')
+  @ApiOperation({ summary: 'Search payments' })
+  @ApiResponse({ status: 200, description: 'Returns search results.' })
+  async searchPayments(
+    @Query('q') query: string,
+    @Query('page') page?: number,
+    @Query('limit') limit?: number,
+  ): Promise<PaginatedResult<Payment>> {
+    return this.financeService.searchPayments(query, {
+      page: page ? Number(page) : 1,
+      limit: limit ? Number(limit) : 50,
+    });
   }
 
   @Get('payments/:id')
@@ -47,12 +68,20 @@ export class FinanceController {
   }
 
   @Delete('payments/:id')
-  @ApiOperation({ summary: 'Delete a payment' })
+  @ApiOperation({ summary: 'Soft delete a payment' })
   @ApiResponse({ status: 200, description: 'Payment deleted successfully.' })
   @ApiResponse({ status: 404, description: 'Payment not found.' })
   async deletePayment(@Param('id', ParseIntPipe) id: number) {
     await this.financeService.deletePayment(id);
     return { message: 'Payment deleted successfully' };
+  }
+
+  @Post('payments/:id/restore')
+  @ApiOperation({ summary: 'Restore a soft-deleted payment' })
+  @ApiResponse({ status: 200, description: 'Payment restored successfully.' })
+  @ApiResponse({ status: 404, description: 'Payment not found.' })
+  async restorePayment(@Param('id', ParseIntPipe) id: number) {
+    return this.financeService.restorePayment(id);
   }
 
   // ========== STUDENT FEES CRUD ==========
@@ -119,15 +148,21 @@ export class FinanceController {
   }
 
   @Get('payments/by-date')
-  @ApiOperation({ summary: 'Get payments by date range' })
+  @ApiOperation({ summary: 'Get payments by date range with pagination' })
   @ApiResponse({ status: 200, description: 'Returns payments in date range.' })
   async getPaymentsByDateRange(
     @Query('startDate') startDate: string,
     @Query('endDate') endDate: string,
+    @Query('page') page?: number,
+    @Query('limit') limit?: number,
   ) {
     return this.financeService.getPaymentsByDateRange(
       new Date(startDate),
       new Date(endDate),
+      {
+        page: page ? Number(page) : 1,
+        limit: limit ? Number(limit) : 50,
+      },
     );
   }
 }

@@ -52,11 +52,11 @@ export default function Finance() {
     setLoading(true);
     try {
       const [reportRes, paymentsRes] = await Promise.all([
-        financeApi.get('/reports/global'),
-        financeApi.get('/payments')
+        financeApi.get('finance/reports/global'),
+        financeApi.get('finance/payments')
       ]);
       setReport(reportRes.data);
-      setPayments(paymentsRes.data);
+      setPayments(paymentsRes.data.data || paymentsRes.data); // Handle paginated or direct array
     } catch (err) {
       console.error("Erreur chargement données:", err);
     } finally {
@@ -130,9 +130,9 @@ export default function Finance() {
       };
 
       if (editingPayment) {
-        await financeApi.put(`/payments/${editingPayment.id}`, payload);
+        await financeApi.put(`finance/payments/${editingPayment.id}`, payload);
       } else {
-        const res = await financeApi.post('/payments', payload);
+        const res = await financeApi.post('finance/payments', payload);
         setLastPayment({ ...formData, id: res.data.id });
       }
 
@@ -151,7 +151,7 @@ export default function Finance() {
     
     setLoading(true);
     try {
-      await financeApi.delete(`/payments/${id}`);
+      await financeApi.delete(`finance/payments/${id}`);
       await loadData();
     } catch (err) {
       console.error("Erreur suppression:", err);

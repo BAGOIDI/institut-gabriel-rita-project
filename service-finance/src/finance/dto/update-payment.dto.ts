@@ -7,6 +7,12 @@ export enum PaymentMethod {
   BANK_TRANSFER = 'BANK_TRANSFER',
 }
 
+export enum PaymentStatus {
+  PENDING = 'PENDING',
+  COMPLETED = 'COMPLETED',
+  CANCELLED = 'CANCELLED',
+}
+
 export class UpdatePaymentDto {
   @ApiProperty({ description: 'The ID of the student fee record', example: 1, required: false })
   @IsOptional()
@@ -29,4 +35,14 @@ export class UpdatePaymentDto {
   @IsOptional()
   @IsInt()
   userId?: number;
+
+  @ApiProperty({ enum: PaymentStatus, required: false })
+  @IsOptional()
+  @IsEnum(PaymentStatus)
+  status?: PaymentStatus;
+
+  @ApiProperty({ description: 'Additional notes', required: false })
+  @IsOptional()
+  @IsString()
+  notes?: string;
 }

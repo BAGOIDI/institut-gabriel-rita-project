@@ -26,6 +26,7 @@ import { financeApi } from '../services/api';
 import { translations } from '../lib/translations';
 import { ConfirmDialog } from '../components/ConfirmDialog';
 import { useNotification } from '../contexts/NotificationContext';
+import { useDebounce } from '../hooks/useDebounce';
 
 interface Payment {
   id: string;
@@ -61,6 +62,7 @@ export const Payments = () => {
   const [selectedDate, setSelectedDate] = useState(new Date());
   const [filterMethod, setFilterMethod] = useState<string>('ALL');
   const [searchQuery, setSearchQuery] = useState('');
+  const debouncedSearchQuery = useDebounce(searchQuery, 300);
   const [viewMode, setViewMode] = useState<'list' | 'card'>('list');
   const [showModal, setShowModal] = useState(false);
   const [editPayment, setEditPayment] = useState<Payment | null>(null);
@@ -74,11 +76,27 @@ export const Payments = () => {
     userId: '1',
   });
 
-  const fetchPayments = useCallback(async () => {
+  // Pagination state
+  const [currentPage, setCurrentPage] = useState(1);
+  const [totalPages, setTotalPages] = useState(1);
+  const [totalItems, setTotalItems] = useState(0);
+  const itemsPerPage = 50;
+
+  // Sorting state
+  const [sortField, setSortField] = useState<string>('payment_date');
+  const [sortOrder, setSortOrder] = useState<'asc' | 'desc'>('desc');
+
+  const fetchPayments = useCallback(async (page: number = 1) => {
     setLoading(true);
     try {
-      const response = await financeApi.get('/payments');
-      let data = response.data;
+      const response = await financeApi.get('finance/payments', {
+        params: {
+          page,
+          limit: itemsPerPage,
+        }
+      });
+      
+      const { data, meta } = response.data;
       
       // Filtrer par date sélectionnée
       const startOfDay = new Date(selectedDate);
@@ -96,15 +114,18 @@ export const Payments = () => {
         filtered = filtered.filter((p: Payment) => p.payment_method === filterMethod);
       }
 
-      // Filtrer par recherche texte
-      if (searchQuery) {
+      // Filtrer par recherche texte (debounced)
+      if (debouncedSearchQuery) {
         filtered = filtered.filter((p: Payment) => 
-          p.id.toString().includes(searchQuery.toLowerCase()) ||
-          p.student_fee_id.toString().includes(searchQuery.toLowerCase())
+          p.id.toString().includes(debouncedSearchQuery.toLowerCase()) ||
+          p.student_fee_id.toString().includes(debouncedSearchQuery.toLowerCase())
         );
       }
 
       setPayments(filtered);
+      setCurrentPage(meta.page);
+      setTotalPages(meta.totalPages);
+      setTotalItems(meta.total);
 
       // Calculer les statistiques
       const cashPayments = filtered.filter((p: Payment) => p.payment_method === 'CASH').length;
@@ -127,11 +148,17 @@ export const Payments = () => {
     } finally {
       setLoading(false);
     }
-  }, [selectedDate, filterMethod, searchQuery, notify]);
+  }, [selectedDate, filterMethod, debouncedSearchQuery, notify]);
 
   useEffect(() => {
-    fetchPayments();
+    fetchPayments(1);
   }, [fetchPayments]);
+
+  const handlePageChange = (page: number) => {
+    if (page >= 1 && page <= totalPages) {
+      fetchPayments(page);
+    }
+  };
 
   const goToPreviousDay = () => {
     const newDate = new Date(selectedDate);
@@ -182,10 +209,10 @@ export const Payments = () => {
       };
 
       if (editPayment) {
-        await financeApi.put(`/payments/${editPayment.id}`, paymentData);
+        await financeApi.put(`finance/payments/${editPayment.id}`, paymentData);
         notify.success('Paiement mis à jour avec succès');
       } else {
-        await financeApi.post('/payments', paymentData);
+        await financeApi.post('finance/payments', paymentData);
         notify.success('Paiement créé avec succès');
       }
       
@@ -208,7 +235,7 @@ export const Payments = () => {
     if (!targetDeleteId) return;
     setDeleteLoading(true);
     try {
-      await financeApi.delete(`/payments/${targetDeleteId}`);
+      await financeApi.delete(`finance/payments/${targetDeleteId}`);
       notify.success('Paiement supprimé avec succès');
       fetchPayments();
     } catch (err) {
@@ -253,8 +280,32 @@ export const Payments = () => {
     });
   };
 
+  const handleExportCSV = () => {
+    const headers = ['ID', 'Student Fee ID', 'Amount', 'Method', 'Date', 'Reference'];
+    const rows = filteredPayments.map(p => [
+      p.id,
+      p.student_fee_id,
+      p.amount_paid,
+      p.payment_method,
+      new Date(p.payment_date).toLocaleDateString('fr-FR'),
+      p.reference || '-'
+    ]);
+    
+    const csvContent = [
+      headers.join(','),
+      ...rows.map(row => row.join(','))
+    ].join('\n');
+    
+    const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+    const link = document.createElement('a');
+    link.href = URL.createObjectURL(blob);
+    link.download = `payments_${new Date().toISOString().split('T')[0]}.csv`;
+    link.click();
+    notify.success('Export CSV réussi');
+  };
+
   const filteredPayments = payments.filter(payment => {
-    const searchLower = searchQuery.toLowerCase();
+    const searchLower = debouncedSearchQuery.toLowerCase();
     return (
       payment.id.toString().includes(searchLower) ||
       payment.student_fee_id.toString().includes(searchLower) ||
@@ -285,9 +336,47 @@ export const Payments = () => {
 
   if (loading) {
     return (
-      <div className="flex flex-col items-center justify-center py-20 h-full">
-        <div className="w-10 h-10 border-4 border-blue-500 border-t-transparent rounded-full animate-spin mb-4"></div>
-        <p className="text-gray-500 font-medium">Chargement des paiements...</p>
+      <div className="w-full">
+        {/* Header Skeleton */}
+        <div className="flex justify-between items-center mb-6">
+          <div className="space-y-2">
+            <div className="w-48 h-8 bg-gray-200 dark:bg-slate-700 rounded animate-pulse"></div>
+            <div className="w-32 h-4 bg-gray-200 dark:bg-slate-700 rounded animate-pulse"></div>
+          </div>
+          <div className="flex gap-2">
+            <div className="w-24 h-8 bg-gray-200 dark:bg-slate-700 rounded animate-pulse"></div>
+            <div className="w-24 h-8 bg-gray-200 dark:bg-slate-700 rounded animate-pulse"></div>
+            <div className="w-32 h-8 bg-gray-200 dark:bg-slate-700 rounded animate-pulse"></div>
+          </div>
+        </div>
+        
+        {/* Stats Cards Skeleton */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
+          {[1, 2, 3, 4].map(i => (
+            <div key={i} className="bg-white dark:bg-slate-800 rounded-md border border-gray-200 dark:border-slate-700 p-4">
+              <div className="flex justify-between items-start mb-3">
+                <div className="w-10 h-10 bg-gray-200 dark:bg-slate-700 rounded animate-pulse"></div>
+                <div className="w-16 h-4 bg-gray-200 dark:bg-slate-700 rounded animate-pulse"></div>
+              </div>
+              <div className="w-24 h-3 bg-gray-200 dark:bg-slate-700 rounded animate-pulse mb-2"></div>
+              <div className="w-32 h-6 bg-gray-200 dark:bg-slate-700 rounded animate-pulse"></div>
+            </div>
+          ))}
+        </div>
+        
+        {/* Table Skeleton */}
+        <div className="bg-white dark:bg-slate-800 rounded-md border border-gray-200 dark:border-slate-700 overflow-hidden">
+          <div className="h-12 bg-gray-50 dark:bg-slate-700/50 border-b border-gray-200 dark:border-slate-700"></div>
+          {[1, 2, 3, 4, 5].map(i => (
+            <div key={i} className="h-16 border-b border-gray-200 dark:border-slate-700 px-4 flex items-center gap-4">
+              <div className="w-8 h-8 bg-gray-200 dark:bg-slate-700 rounded-full animate-pulse"></div>
+              <div className="flex-1 space-y-2">
+                <div className="w-32 h-4 bg-gray-200 dark:bg-slate-700 rounded animate-pulse"></div>
+                <div className="w-24 h-3 bg-gray-200 dark:bg-slate-700 rounded animate-pulse"></div>
+              </div>
+            </div>
+          ))}
+        </div>
       </div>
     );
   }
@@ -305,13 +394,14 @@ export const Payments = () => {
         </div>
         <div className="flex gap-2">
           <button 
-            onClick={fetchPayments}
+            onClick={() => fetchPayments(currentPage)}
             className="flex items-center gap-2 bg-blue-600 hover:bg-blue-700 text-white px-3 py-1.5 rounded-md transition-colors text-xs font-normal border border-blue-700"
           >
             <RefreshCw className="w-3.5 h-3.5" />
             <span>{t.refresh}</span>
           </button>
           <button 
+            onClick={handleExportCSV}
             className="flex items-center gap-2 bg-emerald-600 hover:bg-emerald-700 text-white px-3 py-1.5 rounded-md transition-colors text-xs font-normal border border-emerald-700"
           >
             <Download className="w-3.5 h-3.5" />
@@ -842,6 +932,89 @@ export const Payments = () => {
             {t.total}: <span className="font-bold text-emerald-600 dark:text-emerald-400">
               {formatAmount(filteredPayments.reduce((sum, p) => sum + Number(p.amount), 0))}
             </span>
+          </div>
+        </div>
+      )}
+
+      {/* Pagination */}
+      {totalPages > 1 && (
+        <div 
+          style={{ marginTop: 'var(--card-spacing)' }}
+          className="flex items-center justify-between bg-white dark:bg-slate-800 rounded-md border border-gray-200 dark:border-slate-700 p-3"
+        >
+          <div className="text-xs text-gray-600 dark:text-gray-400">
+            Page <span className="font-bold">{currentPage}</span> sur <span className="font-bold">{totalPages}</span>
+            {' '}({totalItems} total)
+          </div>
+          
+          <div className="flex items-center gap-1">
+            <button
+              onClick={() => handlePageChange(1)}
+              disabled={currentPage === 1}
+              className="p-1.5 rounded-md hover:bg-gray-100 dark:hover:bg-slate-700 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+              title="Première page"
+            >
+              <ChevronLeft className="w-4 h-4" />
+              <ChevronLeft className="w-4 h-4 -ml-2" />
+            </button>
+            
+            <button
+              onClick={() => handlePageChange(currentPage - 1)}
+              disabled={currentPage === 1}
+              className="p-1.5 rounded-md hover:bg-gray-100 dark:hover:bg-slate-700 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+              title="Page précédente"
+            >
+              <ChevronLeft className="w-4 h-4" />
+            </button>
+            
+            {/* Page numbers */}
+            <div className="flex items-center gap-1 mx-2">
+              {Array.from({ length: Math.min(5, totalPages) }, (_, i) => {
+                let pageNum;
+                if (totalPages <= 5) {
+                  pageNum = i + 1;
+                } else if (currentPage <= 3) {
+                  pageNum = i + 1;
+                } else if (currentPage >= totalPages - 2) {
+                  pageNum = totalPages - 4 + i;
+                } else {
+                  pageNum = currentPage - 2 + i;
+                }
+                
+                return (
+                  <button
+                    key={pageNum}
+                    onClick={() => handlePageChange(pageNum)}
+                    className={`w-8 h-8 rounded-md text-xs font-medium transition-colors ${
+                      currentPage === pageNum
+                        ? 'bg-blue-600 text-white'
+                        : 'hover:bg-gray-100 dark:hover:bg-slate-700 text-gray-700 dark:text-gray-300'
+                    }`}
+                  >
+                    {pageNum}
+                  </button>
+                );
+              })}
+            </div>
+            
+            <button
+              onClick={() => handlePageChange(currentPage + 1)}
+              disabled={currentPage === totalPages}
+              className="p-1.5 rounded-md hover:bg-gray-100 dark:hover:bg-slate-700 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+              title="Page suivante"
+            >
+              <ChevronRight className="w-4 h-4" />
+            </button>
+            
+            <button
+              onClick={() => handlePageChange(totalPages)}
+              disabled={currentPage === totalPages}
+              className="p-1.5 rounded-md hover:bg-gray-100 dark:hover:bg-slate-700 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+              title="Dernière page"
+            >
+              <ChevronRight className="w-4 h-4" />
+              <ChevronRight className="w-4 h-4 -ml-2" />
+            </button>
           </div>
         </div>
       )}

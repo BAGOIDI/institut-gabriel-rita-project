@@ -3,6 +3,7 @@ import { Specialty } from './specialty.entity';
 import { AcademicYear } from './academic-year.entity';
 import { Campus } from '../modules/campus/campus.entity';
 import { Student } from './student.entity';
+import { Subject } from './subject.entity';
 
 @Entity({ name: 'classes' })
 export class Class {
@@ -29,4 +30,7 @@ export class Class {
 
   @OneToMany(() => Student, student => student.class)
   students: Student[];
+
+  @OneToMany(() => Subject, subject => subject.class)
+  subjects: Subject[];
 }

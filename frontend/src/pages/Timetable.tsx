@@ -50,6 +50,9 @@ interface TimeSlot {
 export const Timetable = () => {
   const { language } = useTheme();
   const notify = useNotification();
+
+  // 1. Tous les states en premier
+  const [loading, setLoading] = useState(false);
   const [timeSlots, setTimeSlots] = useState<TimeSlot[]>([]);
   const [selectedClass, setSelectedClass] = useState('');
   const [viewMode, setViewMode] = useState<'class' | 'teacher' | 'synthesis_class' | 'free_slot'>(
@@ -63,7 +66,6 @@ export const Timetable = () => {
   const [showModal, setShowModal] = useState(false);
   const [selectedSlot, setSelectedSlot] = useState<TimeSlot | null>(null);
   const [draggedSlot, setDraggedSlot] = useState<TimeSlot | null>(null);
-  const [loading, setLoading] = useState(false);
   const [showPrintModal, setShowPrintModal] = useState(false);
   const [confirmOpen, setConfirmOpen] = useState(false);
   const [targetDeleteId, setTargetDeleteId] = useState<string | null>(null);
@@ -73,38 +75,91 @@ export const Timetable = () => {
   const [hoveredSlot, setHoveredSlot] = useState<TimeSlot | null>(null);
   const [conflictingSlot, setConflictingSlot] = useState<TimeSlot | null>(null);
 
-  // Listes dynamiques depuis les options système et le core
   const [teachers, setTeachers] = useState<any[]>([]);
   const [classes, setClasses] = useState<any[]>([]);
   const [rooms, setRooms] = useState<SystemOption[]>([]);
   const [days, setDays] = useState<SystemOption[]>([]);
   const [timeSlotOptions, setTimeSlotOptions] = useState<SystemOption[]>([]);
   const [subjects, setSubjects] = useState<any[]>([]);
-  const [filteredSubjects, setFilteredSubjects] = useState<any[]>([]);
-  const [filteredTeachers, setFilteredTeachers] = useState<any[]>([]);
   const [specialties, setSpecialties] = useState<any[]>([]);
+
   const [selectedSpecialties, setSelectedSpecialties] = useState<string[]>(
     () => {
-      const saved = localStorage.getItem('timetable_selectedSpecialties');
-      if (saved) {
-        return JSON.parse(saved);
+      try {
+        const saved = localStorage.getItem('timetable_selectedSpecialties');
+        return saved ? JSON.parse(saved) : [];
+      } catch (e) {
+        return [];
       }
-      return specialties.map(s => s.id);
     }
   );
+  
   const [selectedSynthesisClasses, setSelectedSynthesisClasses] = useState<string[]>(
     () => {
-      const saved = localStorage.getItem('timetable_selectedSynthesisClasses');
-      if (saved) {
-        return JSON.parse(saved);
+      try {
+        const saved = localStorage.getItem('timetable_selectedSynthesisClasses');
+        return saved ? JSON.parse(saved) : [];
+      } catch (e) {
+        return [];
       }
-      return [];
     }
   );
 
-  // Intervalles horaires codés côté frontend (Jour + Soir)
+  const [formData, setFormData] = useState({
+    dayOfWeek: '',
+    startTime: '',
+    endTime: '',
+    subjectId: '',
+    staffId: '',
+    classId: '',
+    roomName: '',
+  });
+
+  // 2. Tous les useMemo après les states
+  const filteredClasses = useMemo(() => {
+    let result = classes;
+    if (formData.subjectId) {
+      const subject = subjects.find(s => String(s.id) === formData.subjectId);
+      if (subject?.class) {
+        result = result.filter(c => String(c.id) === String(subject.class.id));
+      }
+    }
+    if (formData.staffId) {
+      const teacherSubjects = subjects.filter(s => s.teacher && String(s.teacher.id) === formData.staffId);
+      const classIds = new Set(teacherSubjects.map(s => s.class ? String(s.class.id) : null).filter(Boolean));
+      result = result.filter(c => classIds.has(String(c.id)));
+    }
+    return result;
+  }, [classes, subjects, formData.subjectId, formData.staffId]);
+
+  const filteredSubjects = useMemo(() => {
+    let result = subjects;
+    if (formData.classId) {
+      result = result.filter(s => s.class && String(s.class.id) === formData.classId);
+    }
+    if (formData.staffId) {
+      result = result.filter(s => s.teacher && String(s.teacher.id) === formData.staffId);
+    }
+    return result;
+  }, [subjects, formData.classId, formData.staffId]);
+
+  const filteredTeachers = useMemo(() => {
+    let result = teachers;
+    if (formData.classId) {
+      const classSubjects = subjects.filter(s => s.class && String(s.class.id) === formData.classId);
+      const teacherIds = new Set(classSubjects.map(s => s.teacher ? String(s.teacher.id) : null).filter(Boolean));
+      result = result.filter(t => teacherIds.has(String(t.id)));
+    }
+    if (formData.subjectId) {
+      const subject = subjects.find(s => String(s.id) === formData.subjectId);
+      if (subject?.teacher) {
+        result = result.filter(t => String(t.id) === String(subject.teacher.id));
+      }
+    }
+    return result;
+  }, [teachers, subjects, formData.classId, formData.subjectId]);
+
   const LOCAL_TIME_SLOTS = useMemo(() => ([
-    // Jour
     { type: 'Cours', value: '08:00', end: '09:50', labelFr: '08:00 - 09:50', labelEn: '08:00 - 09:50' },
     { type: 'PP',    value: '09:50', end: '10:05', labelFr: '09:50 - 10:05', labelEn: '09:50 - 10:05' },
     { type: 'Cours', value: '10:05', end: '12:00', labelFr: '10:05 - 12:00', labelEn: '10:05 - 12:00' },
@@ -112,11 +167,11 @@ export const Timetable = () => {
     { type: 'Cours', value: '13:00', end: '14:50', labelFr: '13:00 - 14:50', labelEn: '13:00 - 14:50' },
     { type: 'PP',    value: '14:50', end: '15:05', labelFr: '14:50 - 15:05', labelEn: '14:50 - 15:05' },
     { type: 'Cours', value: '15:05', end: '17:00', labelFr: '15:05 - 17:00', labelEn: '15:05 - 17:00' },
-    // Soir
     { type: 'Cours', value: '17:30', end: '19:20', labelFr: '17:30 - 19:20', labelEn: '17:30 - 19:20' },
     { type: 'PP',    value: '19:20', end: '19:35', labelFr: '19:20 - 19:35', labelEn: '19:20 - 19:35' },
     { type: 'Cours', value: '19:35', end: '21:00', labelFr: '19:35 - 21:00', labelEn: '19:35 - 21:00' },
   ]), []);
+
   const LOCAL_TIME_OPTIONS: SystemOption[] = useMemo(() => {
     return LOCAL_TIME_SLOTS.map((s, idx) => ({
       id: idx + 1,
@@ -128,22 +183,12 @@ export const Timetable = () => {
       isActive: true,
     }));
   }, [LOCAL_TIME_SLOTS]);
+
   const LOCAL_END_TIMES = useMemo(() => {
-    const ends = Array.from(new Set(LOCAL_TIME_SLOTS.map(s => s.end)));
-    return ends;
+    return Array.from(new Set(LOCAL_TIME_SLOTS.map(s => s.end)));
   }, [LOCAL_TIME_SLOTS]);
 
-  // Formulaire
-  const [formData, setFormData] = useState({
-    dayOfWeek: '',
-    startTime: '',
-    endTime: '',
-    subjectId: '',
-    staffId: '',
-    classId: '',
-    roomName: '',
-  });
-
+  // 3. Tous les useEffect après les useMemo
   useEffect(() => {
     const checkConflicts = () => {
       if (!showModal) {
@@ -192,40 +237,6 @@ export const Timetable = () => {
   useEffect(() => {
     localStorage.setItem('timetable_selectedSynthesisClasses', JSON.stringify(selectedSynthesisClasses));
   }, [selectedSynthesisClasses]);
-
-  useEffect(() => {
-    const fetchSubjects = async () => {
-      if (formData.classId) {
-        try {
-          const subjects = await CoreService.getSubjectsByClass(formData.classId);
-          setFilteredSubjects(subjects);
-        } catch (error) {
-          console.error('Erreur lors du chargement des matières', error);
-          setFilteredSubjects([]);
-        }
-      } else {
-        setFilteredSubjects(subjects);
-      }
-    };
-    fetchSubjects();
-  }, [formData.classId, subjects]);
-
-  useEffect(() => {
-    const fetchTeachers = async () => {
-      if (formData.classId) {
-        try {
-          const teachers = await CoreService.getTeachersByClass(formData.classId);
-          setFilteredTeachers(teachers);
-        } catch (error) {
-          console.error('Erreur lors du chargement des enseignants', error);
-          setFilteredTeachers([]);
-        }
-      } else {
-        setFilteredTeachers(teachers);
-      }
-    };
-    fetchTeachers();
-  }, [formData.classId, teachers]);
 
   useEffect(() => {
     loadDynamicOptions();
@@ -1599,7 +1610,7 @@ export const Timetable = () => {
                     className="w-full px-3 py-2 border border-gray-200 dark:border-slate-600 rounded-md bg-gray-50 dark:bg-slate-700 text-sm dark:text-white focus:ring-2 focus:ring-blue-500"
                   >
                     <option value="">Sélectionner une classe...</option>
-                    {classes.map((c) => (
+                    {filteredClasses.map((c) => (
                       <option key={c.id || c.name} value={String(c.id)}>
                         {c.name}
                       </option>

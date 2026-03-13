@@ -48,7 +48,7 @@ const reportService = {
   },
 
   /** Liste les classes disponibles */
-  async getClasses(): Promise<{id: string; name: string; specialty_id: string}[]> {
+  async getClasses(): Promise<{id: string; name: string; level?: string; specialty_id: string}[]> {
     const res = await api.get(`${BASE}/classes`);
     return res.data;
   },

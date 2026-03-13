@@ -73,7 +73,7 @@ import { Subject } from './entities/subject.entity';
         Subject
       ],
       autoLoadEntities: true,
-      // Désactivé pour éviter que TypeORM modifie un schéma déjà existant (PK, FK, NOT NULL, etc.)
+      // Désactivé après application des nouvelles relations
       synchronize: false,
     }),
     CampusModule,

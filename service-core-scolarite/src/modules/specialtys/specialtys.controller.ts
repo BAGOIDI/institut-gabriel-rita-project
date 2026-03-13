@@ -3,7 +3,7 @@ import { SpecialtyService } from './specialtys.service';
 import { CreateSpecialtyDto } from './dto/create-specialtys.dto';
 import { UpdateSpecialtyDto } from './dto/update-specialtys.dto';
 
-@Controller('specialtys')
+@Controller('specialties')
 export class SpecialtyController {
   constructor(private readonly specialtyService: SpecialtyService) {}
 

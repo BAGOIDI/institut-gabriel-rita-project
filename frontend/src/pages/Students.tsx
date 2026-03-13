@@ -100,7 +100,7 @@ export const Students = () => {
     const loadDynamicOptions = async () => {
       try {
         const classesRes = await CoreService.getAll('classes');
-        const specialtiesRes = await CoreService.getAll('specialtys');
+        const specialtiesRes = await CoreService.getAll('specialties');
         const classesData = (classesRes as any).items || classesRes || [];
         const specialtiesData = (specialtiesRes as any).items || specialtiesRes || [];
         setClassesList(classesData);
