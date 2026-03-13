@@ -1,44 +1,102 @@
 {% extends "base_report.html" %}
+
 {% block title %}État des Paiements - {{ class_name }}{% endblock %}
+{% block report_title %}ÉTAT DES PAIEMENTS PAR CLASSE : {{ class_name }}{% endblock %}
+
+{% block extra_css %}
+<style>
+    .kpi-row {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 10px;
+        margin-bottom: 15px;
+    }
+
+    .kpi-card {
+        border: 0.5px solid var(--border);
+        padding: 10px;
+        text-align: center;
+        background: var(--bg-light);
+    }
+
+    .kpi-val {
+        display: block;
+        font-size: 14px;
+        font-weight: 800;
+        color: var(--primary);
+    }
+
+    .kpi-lbl {
+        font-size: 8px;
+        text-transform: uppercase;
+        color: var(--secondary);
+    }
+
+    .data-table {
+        width: 100%;
+        border-collapse: collapse;
+    }
+
+    .data-table th, .data-table td {
+        border: 0.5px solid var(--border);
+        padding: 5px 8px;
+        text-align: left;
+        font-size: 8.5px;
+    }
+
+    .data-table th {
+        background: var(--bg-light);
+        font-weight: 800;
+        text-transform: uppercase;
+        font-size: 8px;
+    }
+
+    .amount-cell {
+        text-align: right !important;
+        font-weight: 700;
+    }
+</style>
+{% endblock %}
+
 {% block content %}
-<div class="columns mb-5">
-    <div class="column is-6">
-        <h2 class="monday-title">État des Paiements</h2>
-        <span class="status-pill status-working" style="background-color: #fff; color: var(--monday-dark); border: 1px solid var(--monday-border); margin-top: 5px;">
-            <i class="fas fa-users mr-1"></i> Classe : {{ class_name }}
-        </span>
+<div class="kpi-row">
+    <div class="kpi-card">
+        <span class="kpi-val">{{ "{:,.0f}".format(total_invoiced) }}</span>
+        <span class="kpi-lbl">Total Facturé (FCFA)</span>
     </div>
-    <div class="column is-6">
-        <div class="monday-card" style="padding: 15px; display: flex; justify-content: space-around; align-items: center; background-color: #f5f6f8; border: none;">
-            <div style="text-align: center;"><div class="kpi-label">Total Facturé</div><div class="kpi-value" style="font-size: 20px;">{{ "{:,.0f}".format(total_invoiced) }}</div></div>
-            <div style="height: 40px; border-left: 1px solid #d0d4e4;"></div>
-            <div style="text-align: center;"><div class="kpi-label">Total Payé</div><div class="kpi-value" style="font-size: 20px; color: var(--monday-green);">{{ "{:,.0f}".format(total_paid) }}</div></div>
-            <div style="height: 40px; border-left: 1px solid #d0d4e4;"></div>
-            <div style="text-align: center;"><div class="kpi-label">Solde</div><div class="kpi-value" style="font-size: 20px; color: var(--monday-red);">{{ "{:,.0f}".format(total_invoiced - total_paid) }}</div></div>
-        </div>
+    <div class="kpi-card">
+        <span class="kpi-val" style="color: #059669;">{{ "{:,.0f}".format(total_paid) }}</span>
+        <span class="kpi-lbl">Total Payé (FCFA)</span>
+    </div>
+    <div class="kpi-card" style="border: 1px solid var(--primary);">
+        <span class="kpi-val" style="color: #dc2626;">{{ "{:,.0f}".format(total_invoiced - total_paid) }}</span>
+        <span class="kpi-lbl">Solde Global (FCFA)</span>
     </div>
 </div>
-<div class="table-container">
-    <table class="monday-table">
-        <thead><tr><th style="width: 10%;">Matricule</th><th style="width: 25%;">Nom & Prénoms</th><th style="text-align: right;">Facturé</th><th style="text-align: right;">Payé</th><th style="text-align: right;">Solde</th><th style="text-align: center; width: 20%;">Progression</th></tr></thead>
-        <tbody>
-            {% for student in students %}
-            {% set progress = (student.balance / student.totalFeesDue * 100) if student.totalFeesDue > 0 else 0 %}
-            <tr>
-                <td><span style="font-family: monospace; color: var(--monday-grey);">{{ student.matricule }}</span></td>
-                <td style="font-weight: 600;">{{ student.lastName }} {{ student.firstName }}</td>
-                <td style="text-align: right;">{{ "{:,.0f}".format(student.totalFeesDue) }}</td>
-                <td style="text-align: right; color: var(--monday-green);">{{ "{:,.0f}".format(student.totalFeesPaid) }}</td>
-                <td style="text-align: right; font-weight: 700; color: {{ 'var(--monday-red)' if student.balance > 0 else 'var(--monday-grey)' }};">{{ "{:,.0f}".format(student.balance) }}</td>
-                <td style="vertical-align: middle; padding: 10px 20px;">
-                    <div style="display: flex; align-items: center;">
-                        <progress class="progress is-small {{ 'is-success' if student.balance <= 0 else 'is-warning' if student.balance <= student.totalFeesDue/2 else 'is-danger' }}" value="{{ student.balance }}" max="{{ student.totalFeesDue }}" style="margin-bottom: 0; height: 8px; border-radius: 4px; flex-grow: 1;"></progress>
-                        <span style="font-size: 10px; margin-left: 10px; min-width: 30px; text-align: right;">{{ "{:.0f}".format((student.totalFeesPaid / student.totalFeesDue * 100) if student.totalFeesDue > 0 else 0) }}%</span>
-                    </div>
-                </td>
-            </tr>
-            {% endfor %}
-        </tbody>
-    </table>
-</div>
+
+<table class="data-table">
+    <thead>
+        <tr>
+            <th>Matricule</th>
+            <th>Nom & Prénoms</th>
+            <th class="amount-cell">Facturé</th>
+            <th class="amount-cell">Payé</th>
+            <th class="amount-cell">Solde</th>
+            <th style="text-align: center;">% Payé</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for student in students %}
+        {% set pct = (student.totalFeesPaid / student.totalFeesDue * 100) if student.totalFeesDue > 0 else 0 %}
+        <tr>
+            <td><code>{{ student.matricule }}</code></td>
+            <td style="font-weight: 600;">{{ student.lastName }} {{ student.firstName }}</td>
+            <td class="amount-cell">{{ "{:,.0f}".format(student.totalFeesDue) }}</td>
+            <td class="amount-cell" style="color: #059669;">{{ "{:,.0f}".format(student.totalFeesPaid) }}</td>
+            <td class="amount-cell" style="color: {{ '#dc2626' if student.balance > 0 else 'inherit' }}; font-weight: 800;">{{ "{:,.0f}".format(student.balance) }}</td>
+            <td style="text-align: center; font-weight: 700;">{{ "{:.0f}".format(pct) }}%</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
 {% endblock %}

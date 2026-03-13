@@ -1,59 +1,227 @@
 {% extends "base_report.html" %}
+
 {% block title %}Relevé de Compte - {{ student.firstName }} {{ student.lastName }}{% endblock %}
+{% block report_title %}RELEVÉ DE COMPTE ÉTUDIANT{% endblock %}
+
+{% block extra_css %}
+<style>
+    .info-section {
+        display: grid;
+        grid-template-columns: 1.2fr 1.8fr;
+        gap: 15px;
+        margin-bottom: 20px;
+    }
+
+    .student-card {
+        border: 1px solid var(--border);
+        padding: 12px;
+        background: var(--white);
+        border-radius: 6px;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+    }
+
+    .info-row {
+        display: flex;
+        justify-content: space-between;
+        margin-bottom: 6px;
+        padding-bottom: 4px;
+        border-bottom: 1px dashed var(--border);
+    }
+
+    .info-row:last-child { border-bottom: none; }
+
+    .info-label {
+        color: var(--secondary);
+        font-weight: 600;
+        font-size: 8px;
+        text-transform: uppercase;
+    }
+
+    .info-value {
+        font-weight: 700;
+        color: var(--primary);
+        font-size: 9px;
+    }
+
+    .summary-grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 10px;
+    }
+
+    .summary-card {
+        border: 1px solid var(--border);
+        padding: 12px 8px;
+        text-align: center;
+        border-radius: 6px;
+        background: var(--bg-soft);
+        position: relative;
+        overflow: hidden;
+    }
+
+    .summary-card.highlight {
+        border: 1.5px solid var(--primary);
+        background: var(--white);
+    }
+
+    .summary-val {
+        display: block;
+        font-size: 14px;
+        font-weight: 800;
+        color: var(--primary);
+        margin-bottom: 2px;
+    }
+
+    .summary-lbl {
+        font-size: 7.5px;
+        text-transform: uppercase;
+        color: var(--secondary);
+        font-weight: 600;
+        letter-spacing: 0.5px;
+    }
+
+    .section-header {
+        font-size: 10px;
+        font-weight: 800;
+        margin: 18px 0 10px 0;
+        padding-bottom: 5px;
+        border-bottom: 2px solid var(--primary);
+        color: var(--primary);
+        display: flex;
+        align-items: center;
+        gap: 8px;
+    }
+
+    .data-table {
+        width: 100%;
+        border-collapse: collapse;
+        border: 1px solid var(--border);
+        border-radius: 4px;
+        overflow: hidden;
+    }
+
+    .data-table th {
+        background: var(--bg-soft);
+        color: var(--primary);
+        font-weight: 800;
+        text-transform: uppercase;
+        font-size: 8px;
+        padding: 8px 10px;
+        text-align: left;
+        border-bottom: 1.5px solid var(--border);
+    }
+
+    .data-table td {
+        padding: 7px 10px;
+        font-size: 8.5px;
+        border-bottom: 0.5px solid var(--border);
+        color: var(--primary-light);
+    }
+
+    .amount-col {
+        text-align: right !important;
+        font-weight: 700;
+        font-family: 'Courier New', Courier, monospace;
+    }
+
+    .status-badge {
+        padding: 2px 6px;
+        border-radius: 3px;
+        font-size: 7px;
+        font-weight: 800;
+        text-transform: uppercase;
+    }
+
+    .status-paid { background: #dcfce7; color: #166534; border: 0.5px solid #86efac; }
+    .status-unpaid { background: #fee2e2; color: #991b1b; border: 0.5px solid #fca5a5; }
+</style>
+{% endblock %}
+
 {% block content %}
-<div class="columns mb-5">
-    <div class="column is-6">
-        <div class="monday-card" style="height: 100%;">
-            <div class="monday-card-header"><i class="fas fa-user-graduate"></i> Informations Étudiant</div>
-            <table style="width: 100%;">
-                <tr><td style="padding: 8px 0; color: var(--monday-grey);">Nom Complet</td><td style="padding: 8px 0; font-weight: 600; text-align: right;">{{ student.firstName }} {{ student.lastName }}</td></tr>
-                <tr><td style="padding: 8px 0; color: var(--monday-grey);">Matricule</td><td style="padding: 8px 0; font-weight: 600; text-align: right;">{{ student.matricule }}</td></tr>
-                <tr><td style="padding: 8px 0; color: var(--monday-grey);">Classe</td><td style="padding: 8px 0; font-weight: 600; text-align: right;"><span class="status-pill status-info">{{ student.className }}</span></td></tr>
-            </table>
+<div class="info-section">
+    <div class="student-card">
+        <div class="info-row">
+            <span class="info-label">Étudiant</span>
+            <span class="info-value">{{ student.firstName }} {{ student.lastName }}</span>
+        </div>
+        <div class="info-row">
+            <span class="info-label">Matricule</span>
+            <span class="info-value font-bold">{{ student.matricule }}</span>
+        </div>
+        <div class="info-row">
+            <span class="info-label">Classe</span>
+            <span class="info-value">{{ student.className }}</span>
         </div>
     </div>
-    <div class="column is-6">
-        <div class="monday-card" style="height: 100%; background-color: #f5f6f8; border: none;">
-            <div class="monday-card-header"><i class="fas fa-wallet"></i> Synthèse Financière</div>
-            <div class="columns is-mobile has-text-centered">
-                <div class="column"><div class="kpi-value" style="color: var(--monday-blue);">{{ "{:,.0f}".format(student.totalFeesDue) }}</div><div class="kpi-label">Total Dû</div></div>
-                <div class="column" style="border-left: 1px solid #d0d4e4;"><div class="kpi-value" style="color: var(--monday-green);">{{ "{:,.0f}".format(student.totalFeesPaid) }}</div><div class="kpi-label">Payé</div></div>
-                <div class="column" style="border-left: 1px solid #d0d4e4;"><div class="kpi-value" style="color: var(--monday-red);">{{ "{:,.0f}".format(student.balance) }}</div><div class="kpi-label">Reste</div></div>
-            </div>
+    
+    <div class="summary-grid">
+        <div class="summary-card">
+            <span class="summary-val">{{ "{:,.0f}".format(student.totalFeesDue) }}</span>
+            <span class="summary-lbl">Total Dû</span>
+        </div>
+        <div class="summary-card">
+            <span class="summary-val" style="color: #059669;">{{ "{:,.0f}".format(student.totalFeesPaid) }}</span>
+            <span class="summary-lbl">Total Payé</span>
+        </div>
+        <div class="summary-card highlight">
+            <span class="summary-val" style="color: #dc2626;">{{ "{:,.0f}".format(student.balance) }}</span>
+            <span class="summary-lbl">Reste à Payer</span>
         </div>
     </div>
 </div>
-<h3 class="monday-title" style="font-size: 18px; margin-bottom: 15px;">Historique des Transactions</h3>
-<h4 class="monday-title" style="font-size: 16px; margin-top: 20px; margin-bottom: 10px;">Factures</h4>
-<table class="monday-table">
-    <thead><tr><th>Date</th><th>Titre</th><th>Montant</th><th>Statut</th></tr></thead>
+
+<div class="section-header">ÉTAT DES FACTURES</div>
+<table class="styled-table">
+    <thead>
+        <tr>
+            <th style="width: 15%;">Date Échéance</th>
+            <th>Désignation</th>
+            <th class="text-right" style="width: 20%;">Montant (FCFA)</th>
+            <th style="text-align: center; width: 15%;">Statut</th>
+        </tr>
+    </thead>
     <tbody>
         {% for invoice in invoices %}
         <tr>
             <td>{{ invoice.due_date.strftime('%d/%m/%Y') if invoice.due_date else '-' }}</td>
-            <td>{{ invoice.title or '-' }}</td>
-            <td style="text-align: right; font-weight: 700;">{{ "{:,.0f}".format(invoice.amount) }} FCFA</td>
-            <td>{% if invoice.status == 'PAID' %}<span class="status-pill status-done">Payé</span>{% elif invoice.status == 'PARTIAL' %}<span class="status-pill status-in-progress">Partiel</span>{% else %}<span class="status-pill status-todo">Impayé</span>{% endif %}</td>
+            <td class="font-bold">{{ invoice.title or 'Frais de scolarité' }}</td>
+            <td class="text-right font-mono">{{ "{:,.0f}".format(invoice.amount) }}</td>
+            <td style="text-align: center;">
+                {% if invoice.status == 'PAID' %}
+                <span class="badge badge-success">Réglé</span>
+                {% else %}
+                <span class="badge badge-danger">Impayé</span>
+                {% endif %}
+            </td>
         </tr>
         {% else %}
-        <tr><td colspan="4" style="text-align: center; padding: 30px; color: var(--monday-grey);">Aucune facture enregistrée.</td></tr>
+        <tr><td colspan="4" style="text-align: center; color: var(--secondary); padding: 20px;">Aucune facture disponible.</td></tr>
         {% endfor %}
     </tbody>
 </table>
 
-<h4 class="monday-title" style="font-size: 16px; margin-top: 20px; margin-bottom: 10px;">Paiements</h4>
-<table class="monday-table">
-    <thead><tr><th>Date</th><th>Référence</th><th>Méthode</th><th style="text-align: right;">Montant</th></tr></thead>
+<div class="section-header" style="margin-top: 25px;">HISTORIQUE DES PAIEMENTS</div>
+<table class="styled-table">
+    <thead>
+        <tr>
+            <th style="width: 15%;">Date Paiement</th>
+            <th>Description</th>
+            <th class="text-right" style="width: 20%;">Montant (FCFA)</th>
+            <th style="width: 15%;">Méthode</th>
+        </tr>
+    </thead>
     <tbody>
         {% for payment in payments %}
         <tr>
-            <td>{{ payment.paymentDate.strftime('%d/%m/%Y') if payment.paymentDate else '-' }}</td>
-            <td><span style="font-family: monospace; background: #f0f0f0; padding: 2px 6px; border-radius: 4px;">{{ payment.reference or '-' }}</span></td>
-            <td>{{ payment.method or '-' }}</td>
-            <td style="text-align: right; font-weight: 700;">{{ "{:,.0f}".format(payment.amount) }} FCFA</td>
+            <td>{{ payment.payment_date.strftime('%d/%m/%Y') if payment.payment_date else '-' }}</td>
+            <td>{{ payment.description or 'Versement scolarité' }}</td>
+            <td class="text-right font-mono" style="color: var(--success);">{{ "{:,.0f}".format(payment.amount) }}</td>
+            <td>{{ payment.method or 'N/A' }}</td>
         </tr>
         {% else %}
-        <tr><td colspan="4" style="text-align: center; padding: 30px; color: var(--monday-grey);">Aucun paiement enregistré.</td></tr>
+        <tr><td colspan="4" style="text-align: center; color: var(--secondary); padding: 20px;">Aucun paiement enregistré.</td></tr>
         {% endfor %}
     </tbody>
 </table>

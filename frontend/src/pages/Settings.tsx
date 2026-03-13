@@ -231,7 +231,7 @@ export const Settings = () => {
               <p className="font-medium text-gray-900 dark:text-white font-inter">Chrome sur Windows</p>
               <p className="text-sm text-gray-500 dark:text-gray-400 font-inter">Votre appareil actuel • En ligne</p>
             </div>
-            <span className="px-2.5 py-0.5 bg-emerald-100 text-emerald-800 text-xs font-medium rounded-full font-inter">
+            <span className="px-2.5 py-0.5 bg-emerald-100 text-emerald-800 dark:bg-emerald-900/30 dark:text-emerald-200 text-xs font-medium rounded-full font-inter">
               Actif
             </span>
           </div>
@@ -387,7 +387,7 @@ export const Settings = () => {
             </div>
             <div className="text-right">
               <p className="font-bold text-gray-900 dark:text-white font-inter">150.000 FCFA</p>
-              <span className="px-2.5 py-0.5 bg-emerald-100 text-emerald-800 text-xs font-medium rounded-full font-inter">
+              <span className="px-2.5 py-0.5 bg-emerald-100 text-emerald-800 dark:bg-emerald-900/30 dark:text-emerald-200 text-xs font-medium rounded-full font-inter">
                 Payé
               </span>
             </div>
@@ -435,8 +435,8 @@ export const Settings = () => {
                     onClick={() => setActiveTab(tab.id)}
                     className={`w-full flex items-center gap-3 px-4 py-3 rounded-lg text-left transition-all font-inter ${
                       activeTab === tab.id
-                        ? 'bg-primary text-white shadow-md'
-                        : 'text-gray-700 dark:text-gray-300 hover:bg-primary-light dark:hover:bg-primary-dark/20 hover:text-primary dark:hover:text-primary'
+                        ? 'bg-primary text-white shadow-lg shadow-blue-500/10'
+                        : 'text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-slate-800/60 hover:text-primary dark:hover:text-white'
                     }`}
                   >
                     <IconComponent className="w-5 h-5" />

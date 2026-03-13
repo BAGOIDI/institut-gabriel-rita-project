@@ -2,6 +2,7 @@ import axios from 'axios';
 
 // Création d'une instance Axios avec une configuration de base
 const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || ''; // URL de base de votre API backend
+const DISABLE_AUTH = (((import.meta as any).env?.VITE_DISABLE_AUTH) || 'false') === 'true';
 
 const api = axios.create({
   baseURL: API_BASE_URL,
@@ -31,16 +32,12 @@ api.interceptors.response.use(
   (error) => {
     // Gérer les erreurs spécifiques liées à l'authentification
     if (error.response?.status === 401) {
-      // Token probablement expiré, supprimer le token local et rediriger vers la page de login
-      console.error('Token expiré ou non valide. Déconnexion de l\'utilisateur.');
-      localStorage.removeItem('token');
-      localStorage.removeItem('refreshToken');
-      
-      // Supprimer le header d'authentification
-      delete axios.defaults.headers.common['Authorization'];
-      
-      // Rediriger vers la page de login
-      window.location.href = '/login';
+      if (!DISABLE_AUTH) {
+        localStorage.removeItem('token');
+        localStorage.removeItem('refreshToken');
+        delete axios.defaults.headers.common['Authorization'];
+        window.location.href = '/login';
+      }
     }
     
     return Promise.reject(error);

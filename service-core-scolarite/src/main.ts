@@ -8,7 +8,9 @@ async function bootstrap() {
   
   app.useGlobalPipes(new ValidationPipe({
     whitelist: true,
-    forbidNonWhitelisted: true,
+    // On garde le whitelist, mais on n'interdit plus les paramètres inconnus
+    // pour éviter les 400 quand le frontend envoie des query params comme "limit".
+    forbidNonWhitelisted: false,
     transform: true,
   }));
   

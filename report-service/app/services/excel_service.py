@@ -151,13 +151,11 @@ class ExcelService:
 
             for j, day in enumerate(days):
                 cell = ws.cell(row=next_row, column=j + 2)
-                if day in schedule and ts in schedule[day]:
-                    slot = schedule[day][ts]
+                slot = schedule.get(day, {}).get(ts)
+                if slot:
                     val = f"{slot.get('subject', '')}\n{slot.get('teacher_name', '')}"
-                    if slot.get('room'):
-                        val += f"\n📍{slot['room']}"
                     cell.value = val
-                    cell.font = Font(name='Calibri', bold=True, color='1E40AF', size=8)
+                    cell.font = Font(name='Calibri', bold=True, color='1E40AF', size=9)
                     cell.fill = LIGHT_FILL
                 else:
                     cell.fill = row_fill

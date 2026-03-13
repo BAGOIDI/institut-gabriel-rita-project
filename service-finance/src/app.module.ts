@@ -17,7 +17,7 @@ import { StudentFee } from './finance/entities/student-fee.entity';
       port: 5432,
       username: process.env.DATABASE_USER || 'postgres',
       password: process.env.DATABASE_PASSWORD || 'postgres',
-      database: process.env.DATABASE_NAME || 'scolarite_db',
+      database: process.env.DATABASE_NAME || 'institut_gabriel_rita_db',
       entities: [Payment, StudentFee], // Register Entities
       synchronize: true, // Auto-create tables (Dev only, use migrations in Prod)
     }),

@@ -9,11 +9,13 @@ export class AcademicYear {
   @Column()
   name: string;
 
-  @Column({ type: 'date' })
-  startDate: Date;
+  // Nullable pour éviter l'échec de synchronize sur des lignes existantes sans dates
+  @Column({ type: 'date', nullable: true })
+  startDate: Date | null;
 
-  @Column({ type: 'date' })
-  endDate: Date;
+  // Nullable pour éviter l'échec de synchronize sur des lignes existantes sans dates
+  @Column({ type: 'date', nullable: true })
+  endDate: Date | null;
 
   @Column({ default: false })
   isCurrent: boolean;

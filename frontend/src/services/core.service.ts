@@ -20,6 +20,16 @@ export const CoreService = {
     const response = await api.get(`${BASE_PATH}/${resource}/${id}`);
     return response.data;
   },
+
+  getSubjectsByClass: async (classId: string | number) => {
+    const response = await api.get(`${BASE_PATH}/classes/${classId}/subjects`);
+    return response.data;
+  },
+
+  getTeachersByClass: async (classId: string | number) => {
+    const response = await api.get(`${BASE_PATH}/classes/${classId}/teachers`);
+    return response.data;
+  },
   
   // UPDATE
   update: async (resource: string, id: string | number, data: any) => {

@@ -6,8 +6,9 @@ export class Role {
   @PrimaryGeneratedColumn('uuid')
   id: string;
 
-  @Column({ unique: true })
-  name: string;
+  // Nullable pour éviter l'échec de synchronize si des lignes existantes ont name = NULL
+  @Column({ unique: true, nullable: true })
+  name: string | null;
 
   @Column('jsonb', { nullable: true })
   permissions: any;

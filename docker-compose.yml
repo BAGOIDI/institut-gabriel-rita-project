@@ -1,5 +1,3 @@
-version: '3.8'
-
 services:
   # --- INFRASTRUCTURE ---
 
@@ -10,7 +8,7 @@ services:
       KEYCLOAK_ADMIN: admin
       KEYCLOAK_ADMIN_PASSWORD: admin
       KC_DB: postgres
-      KC_DB_URL: jdbc:postgresql://postgres:5432/scolarite_db
+      KC_DB_URL: jdbc:postgresql://postgres:5432/institut_gabriel_rita_db
       KC_DB_USERNAME: ${POSTGRES_USER:-postgres}
       KC_DB_PASSWORD: ${POSTGRES_PASSWORD:-postgres}
     command: start-dev --import-realm
@@ -28,23 +26,43 @@ services:
 
   postgres:
     image: postgres:15-alpine
-    container_name: school-db
+    container_name: institut_gabriel_rita_db
     environment:
       POSTGRES_USER: ${POSTGRES_USER:-postgres}
       POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-postgres}
-      POSTGRES_DB: scolarite_db
+      POSTGRES_DB: institut_gabriel_rita_db
     ports:
       - "5432:5432"
     volumes:
       - postgres_data:/var/lib/postgresql/data
       - ./database/update_schema.sql:/docker-entrypoint-initdb.d/99-update.sql
     healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U postgres -d scolarite_db"]
+      test: ["CMD-SHELL", "pg_isready -U postgres -d institut_gabriel_rita_db"]
       interval: 5s
       timeout: 5s
       retries: 10
     networks:
       - school-network
+    restart: unless-stopped
+
+  # Applique (idempotent) les scripts SQL à chaque lancement
+  db-bootstrap:
+    image: postgres:15-alpine
+    container_name: db-bootstrap
+    depends_on:
+      postgres: { condition: service_healthy }
+    environment:
+      PGPASSWORD: ${POSTGRES_PASSWORD:-postgres}
+    volumes:
+      - ./database/update_schema.sql:/scripts/update_schema.sql:ro
+    command:
+      [
+        "sh",
+        "-lc",
+        "psql -h postgres -U ${POSTGRES_USER:-postgres} -d ${POSTGRES_DB:-institut_gabriel_rita_db} -f /scripts/update_schema.sql"
+      ]
+    networks: [school-network]
+    restart: "on-failure"
 
   rabbitmq:
     image: rabbitmq:3-management
@@ -59,12 +77,14 @@ services:
       timeout: 5s
       retries: 10
     networks: [school-network]
+    restart: unless-stopped
 
   redis:
     image: redis:alpine
     container_name: school-redis
     ports: ["6379:6379"]
     networks: [school-network]
+    restart: unless-stopped
 
   traefik:
     image: traefik:v2.10
@@ -78,6 +98,7 @@ services:
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock:ro
     networks: [school-network]
+    restart: unless-stopped
 
   # --- MICROSERVICES ---
   
@@ -90,12 +111,14 @@ services:
       - DATABASE_PORT=5432
       - DATABASE_USER=${POSTGRES_USER:-postgres}
       - DATABASE_PASSWORD=${POSTGRES_PASSWORD:-postgres}
-      - DATABASE_NAME=scolarite_db
+      - DATABASE_NAME=institut_gabriel_rita_db
       - RABBITMQ_URL=amqp://admin:admin@rabbitmq:5672
     depends_on:
       postgres: { condition: service_healthy }
       rabbitmq: { condition: service_healthy }
+      db-bootstrap: { condition: service_completed_successfully }
     networks: [school-network]
+    restart: unless-stopped
     labels:
       - "traefik.enable=true"
       - "traefik.http.routers.dashboard.rule=Host(`localhost`) && PathPrefix(`/api/dashboard`)"
@@ -112,11 +135,13 @@ services:
       - DATABASE_PORT=5432
       - DATABASE_USER=${POSTGRES_USER:-postgres}
       - DATABASE_PASSWORD=${POSTGRES_PASSWORD:-postgres}
-      - DATABASE_NAME=scolarite_db
+      - DATABASE_NAME=institut_gabriel_rita_db
       - RABBITMQ_URL=amqp://admin:admin@rabbitmq:5672
     depends_on:
       postgres: { condition: service_healthy }
+      db-bootstrap: { condition: service_completed_successfully }
     networks: [school-network]
+    restart: unless-stopped
     labels:
       - "traefik.enable=true"
       - "traefik.http.routers.finance.rule=Host(`localhost`) && PathPrefix(`/api/finance`)"
@@ -128,22 +153,24 @@ services:
     build: ./report-service
     container_name: service-reports
     ports: ["8000:5000"]
+    volumes:
+      - ./report-service:/app
     environment:
       - DATABASE_HOST=postgres
       - DATABASE_PORT=5432
       - DATABASE_USER=${POSTGRES_USER:-postgres}
       - DATABASE_PASSWORD=${POSTGRES_PASSWORD:-postgres}
-      - DATABASE_NAME=scolarite_db
+      - DATABASE_NAME=institut_gabriel_rita_db
       - FLASK_ENV=production
     networks: [school-network]
     depends_on:
       - postgres
+      - db-bootstrap
     labels:
       - "traefik.enable=true"
       - "traefik.http.routers.reports.rule=Host(`localhost`) && PathPrefix(`/api/reports`)"
-      - "traefik.http.middlewares.reports-strip.stripprefix.prefixes=/api/reports"
-      - "traefik.http.routers.reports.middlewares=reports-strip"
       - "traefik.http.services.reports.loadbalancer.server.port=5000"
+    restart: unless-stopped
 
   service-core-scolarite:
     build: ./service-core-scolarite
@@ -154,12 +181,14 @@ services:
       - DATABASE_PORT=5432
       - DATABASE_USER=${POSTGRES_USER:-postgres}
       - DATABASE_PASSWORD=${POSTGRES_PASSWORD:-postgres}
-      - DATABASE_NAME=scolarite_db
+      - DATABASE_NAME=institut_gabriel_rita_db
       - RABBITMQ_URL=amqp://admin:admin@rabbitmq:5672
     depends_on:
       postgres: { condition: service_healthy }
       rabbitmq: { condition: service_healthy }
+      db-bootstrap: { condition: service_completed_successfully }
     networks: [school-network]
+    restart: unless-stopped
     labels:
       - "traefik.enable=true"
       - "traefik.http.routers.core.rule=Host(`localhost`) && PathPrefix(`/api/core`)"
@@ -176,11 +205,13 @@ services:
       - DATABASE_PORT=5432
       - DATABASE_USER=${POSTGRES_USER:-postgres}
       - DATABASE_PASSWORD=${POSTGRES_PASSWORD:-postgres}
-      - DATABASE_NAME=scolarite_db
+      - DATABASE_NAME=institut_gabriel_rita_db
       - RABBITMQ_URL=amqp://admin:admin@rabbitmq:5672
     depends_on:
       postgres: { condition: service_healthy }
+      db-bootstrap: { condition: service_completed_successfully }
     networks: [school-network]
+    restart: unless-stopped
     labels:
       - "traefik.enable=true"
       - "traefik.http.routers.planning.rule=Host(`localhost`) && PathPrefix(`/api/planning`)"
@@ -198,11 +229,13 @@ services:
       - DATABASE_PORT=5432
       - DATABASE_USER=${POSTGRES_USER:-postgres}
       - DATABASE_PASSWORD=${POSTGRES_PASSWORD:-postgres}
-      - DATABASE_NAME=scolarite_db
+      - DATABASE_NAME=institut_gabriel_rita_db
       - RABBITMQ_URL=amqp://admin:admin@rabbitmq:5672
     depends_on:
       postgres: { condition: service_healthy }
+      db-bootstrap: { condition: service_completed_successfully }
     networks: [school-network]
+    restart: unless-stopped
     labels:
       - "traefik.enable=true"
       - "traefik.http.routers.bulletins.rule=Host(`localhost`) && PathPrefix(`/api/bulletins`)"
@@ -212,16 +245,25 @@ services:
 
   # --- FRONTEND ---
   school-frontend:
-    build: ./frontend
+    build:
+      context: ./frontend
+      args:
+        VITE_API_BASE_URL: ${VITE_API_BASE_URL:-}
+        VITE_DISABLE_AUTH: ${VITE_DISABLE_AUTH:-true}
+        VITE_DEFAULT_USERNAME: ${VITE_DEFAULT_USERNAME:-admin}
+        VITE_DEFAULT_PASSWORD: ${VITE_DEFAULT_PASSWORD:-changeme}
+        VITE_DEFAULT_ROLES: ${VITE_DEFAULT_ROLES:-admin,teacher}
     container_name: school-frontend
     expose:
       - "80"
     depends_on:
       - service-dashboard
     networks: [school-network]
+    restart: unless-stopped
     labels:
       - "traefik.enable=true"
-      - "traefik.http.routers.front.rule=Host(`localhost`)"
+      - "traefik.http.routers.front.rule=Host(`localhost`) && PathPrefix(`/`)"
+      - "traefik.http.routers.front.priority=-1"
       - "traefik.http.services.front.loadbalancer.server.port=80"
 
   school-waha:
@@ -229,6 +271,7 @@ services:
     container_name: school-waha
     ports: ["3001:3000"]
     networks: [school-network]
+    restart: unless-stopped
 
   typesense:
     image: typesense/typesense:0.25.2
@@ -237,6 +280,7 @@ services:
     command: --data-dir /data --api-key xyz --enable-cors
     volumes: [typesense_data:/data]
     networks: [school-network]
+    restart: unless-stopped
 
 volumes:
   postgres_data:

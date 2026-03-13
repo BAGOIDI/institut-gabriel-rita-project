@@ -34,9 +34,13 @@ import {
 } from 'lucide-react';
 import * as XLSX from 'xlsx';
 import api from '../services/api.service';
+import { SearchService } from '../services/search.service';
+import { CoreService } from '../services/core.service';
 import { useSystemOptions } from '../hooks/useSystemOptions';
 import { useTheme } from '../contexts/ThemeContext';
 import { translations } from '../lib/translations';
+import { ConfirmDialog } from '../components/ConfirmDialog';
+import { useNotification } from '../contexts/NotificationContext';
 
 interface Teacher {
   id: string;
@@ -97,9 +101,24 @@ export const Teachers = () => {
     status: '',
     contact: ''
   });
+  const [confirmOpen, setConfirmOpen] = useState(false);
+  const [targetDeleteId, setTargetDeleteId] = useState<string | null>(null);
+  const [deleteLoading, setDeleteLoading] = useState(false);
   
   const { language } = useTheme();
   const t = translations[language];
+  const notify = useNotification();
+  const { data: genderOptions } = useSystemOptions('GENDER');
+  const { data: maritalOptions } = useSystemOptions('MARITAL_STATUS');
+  const { data: specialtyOptions } = useSystemOptions('SPECIALTY');
+  const { data: degreeOptions } = useSystemOptions('DEGREE');
+  const { data: statusOptions } = useSystemOptions('TEACHER_STATUS');
+  const { data: contractOptions } = useSystemOptions('CONTRACT_TYPE');
+  const [subjectsList, setSubjectsList] = useState<any[]>([]);
+  const [classesList, setClassesList] = useState<any[]>([]);
+
+  const getOptionLabel = (opt: any) =>
+    language === 'fr' ? opt?.labelFr || opt?.label || opt?.value : opt?.labelEn || opt?.label || opt?.value;
 
   // Formulaire pour nouveau/édition enseignant
   const [formData, setFormData] = useState<Partial<Teacher>>({
@@ -143,23 +162,83 @@ export const Teachers = () => {
     setLoading(true);
     setBackendError(false);
     try {
-      const params = new URLSearchParams();
-      if (searchTerm) params.append('q', searchTerm);
-      if (filters.status) params.append('status', filters.status);
-      if (filters.specialty) params.append('specialty', filters.specialty);
-      if (filters.contractType) params.append('contractType', filters.contractType);
-      params.append('page', pagination.page.toString());
-      params.append('limit', pagination.limit.toString());
+      // Si une recherche texte est saisie, on interroge Typesense directement
+      if (searchTerm.trim()) {
+        const result = await SearchService.search(
+          'teachers',
+          searchTerm.trim(),
+          'full_name,matricule,email,phone_number,specialty',
+          {
+            page: pagination.page,
+            per_page: pagination.limit,
+          }
+        );
 
-      const url = `/api/core/staff?${params.toString()}`;
-      const response = await api.get(url);
-      
-      setTeachers(response.data.items || []);
-      setPagination(prev => ({
-        ...prev,
-        total: response.data.total || 0,
-        lastPage: response.data.lastPage || 1
-      }));
+        const hits = Array.isArray((result as any).hits) ? (result as any).hits : [];
+        const docs: Teacher[] = hits
+          .map((hit: any) => hit.document)
+          .filter(Boolean)
+          .map((doc: any) => ({
+            id: doc.id,
+            firstName: doc.first_name || doc.firstName || '',
+            lastName: doc.last_name || doc.lastName || '',
+            matricule: doc.matricule || '',
+            email: doc.email || '',
+            phoneNumber: doc.phone_number || doc.phoneNumber || '',
+            address: doc.address || '',
+            dateOfBirth: doc.date_of_birth || doc.dateOfBirth || '',
+            placeOfBirth: doc.place_of_birth || doc.placeOfBirth || '',
+            nationality: doc.nationality || '',
+            gender: doc.gender || '',
+            maritalStatus: doc.marital_status || doc.maritalStatus || '',
+            hireDate: doc.hire_date || doc.hireDate || '',
+            status: doc.status || '',
+            specialty: doc.specialty || '',
+            diploma: doc.diploma || '',
+            subjects: doc.subjects || [],
+            classes: doc.classes || [],
+            photo: doc.photo || '',
+            idCardNumber: doc.id_card_number || doc.idCardNumber || '',
+            socialSecurityNumber: doc.social_security_number || doc.socialSecurityNumber || '',
+            bankAccount: doc.bank_account || doc.bankAccount || '',
+            salary: doc.salary || 0,
+            contractType: doc.contract_type || doc.contractType || '',
+            emergencyContact: doc.emergencyContact || {
+              name: '',
+              phone: '',
+              relationship: '',
+            },
+          }));
+
+        setTeachers(docs);
+        const totalFound =
+          typeof (result as any).found === 'number'
+            ? (result as any).found
+            : docs.length;
+        setPagination(prev => ({
+          ...prev,
+          total: totalFound,
+          lastPage: Math.max(1, Math.ceil(totalFound / prev.limit)),
+        }));
+      } else {
+        // Sinon, on utilise l'API backend classique
+        const params = new URLSearchParams();
+        if (filters.status) params.append('status', filters.status);
+        if (filters.specialty) params.append('specialty', filters.specialty);
+        if (filters.contractType) params.append('contractType', filters.contractType);
+        params.append('page', pagination.page.toString());
+        params.append('limit', pagination.limit.toString());
+
+        const url = `/api/core/staff?${params.toString()}`;
+        const response = await api.get(url);
+        
+        setTeachers(response.data.items || []);
+        setPagination(prev => ({
+          ...prev,
+          total: response.data.total || 0,
+          lastPage: response.data.lastPage || 1
+        }));
+      }
     } catch (error) {
       console.error('Erreur lors du chargement des enseignants', error);
       setBackendError(true);
@@ -169,6 +248,19 @@ export const Teachers = () => {
     }
   };
 
+  useEffect(() => {
+    const loadDynamicOptions = async () => {
+      try {
+        const subjectsRes = await CoreService.getAll('subjects');
+        const classesRes = await CoreService.getAll('classes');
+        const subjectsData = subjectsRes.items || subjectsRes || [];
+        const classesData = classesRes.items || classesRes || [];
+        setSubjectsList(subjectsData);
+        setClassesList(classesData);
+      } catch {}
+    };
+    loadDynamicOptions();
+  }, []);
   const handlePageChange = (newPage: number) => {
     if (newPage >= 1 && newPage <= pagination.lastPage) {
       setPagination({ ...pagination, page: newPage });
@@ -194,9 +286,9 @@ export const Teachers = () => {
       try {
         await api.post('/api/core/staff/import', data);
         fetchTeachers();
-        alert('Importation réussie !');
+        notify.success('Importation réussie');
       } catch (error) {
-        alert('Erreur lors de l\'importation');
+        notify.error("Erreur lors de l'importation");
       }
     };
     reader.readAsBinaryString(file);
@@ -214,9 +306,9 @@ export const Teachers = () => {
       setSelectedTeacher(null);
       setFormData({});
       fetchTeachers();
-      alert('Enseignant enregistré avec succès !');
+      notify.success('Enseignant enregistré avec succès');
     } catch (error) {
-      alert('Erreur lors de l\'enregistrement');
+      notify.error("Erreur lors de l'enregistrement");
     }
   };
 
@@ -226,15 +318,18 @@ export const Teachers = () => {
     setShowModal(true);
   };
 
-  const handleDelete = async (teacherId: string) => {
-    if (!confirm('Êtes-vous sûr de vouloir supprimer cet enseignant ?')) return;
-    
+  const deleteTeacher = async () => {
+    if (!targetDeleteId) return;
+    setDeleteLoading(true);
     try {
-      await api.delete(`/api/core/staff/${teacherId}`);
+      await api.delete(`/api/core/staff/${targetDeleteId}`);
       fetchTeachers();
-      alert('Enseignant supprimé avec succès');
     } catch (error) {
-      alert('Erreur lors de la suppression');
+      notify.error('Erreur lors de la suppression');
+    } finally {
+      setDeleteLoading(false);
+      setConfirmOpen(false);
+      setTargetDeleteId(null);
     }
   };
 
@@ -249,7 +344,7 @@ export const Teachers = () => {
           <p className="text-[11px] text-gray-500 dark:text-gray-400">{t.teacherManagementDesc}</p>
         </div>
         <div className="flex gap-2">
-          <label className="flex items-center gap-2 bg-emerald-600 hover:bg-emerald-700 text-white px-3 py-1.5 rounded-md cursor-pointer transition-colors text-xs font-normal border border-emerald-700">
+          <label className="flex items-center gap-2 bg-primary hover:bg-primary/90 text-white px-3 py-1.5 rounded-md cursor-pointer transition-colors text-xs font-semibold border border-primary/30 shadow-sm shadow-blue-500/10">
             <Upload className="w-3.5 h-3.5" />
             <span>{t.importExcel}</span>
             <input type="file" className="hidden" accept=".xlsx, .xls" onChange={handleFileUpload} />
@@ -295,11 +390,10 @@ export const Teachers = () => {
               value={filters.status}
               onChange={(e) => setFilters({...filters, status: e.target.value})}
             >
-              <option value="">{t.allStatuses}</option>
-              <option value="Permanent">{t.permanent}</option>
-              <option value="Vacataire">{t.partTime}</option>
-              <option value="Contractuel">{t.contractual}</option>
-              <option value="Stagiaire">{t.trainee}</option>
+            <option value="">{t.allStatuses}</option>
+            {(statusOptions || []).map((opt: any) => (
+              <option key={opt.id} value={opt.value}>{getOptionLabel(opt)}</option>
+            ))}
             </select>
           </div>
 
@@ -309,13 +403,9 @@ export const Teachers = () => {
             onChange={(e) => setFilters({...filters, specialty: e.target.value})}
           >
             <option value="">{t.allSpecialties}</option>
-            <option value="Mathématiques">{t.math}</option>
-            <option value="Physique-Chimie">{t.physicsChemistry}</option>
-            <option value="Français">{t.french}</option>
-            <option value="Anglais">{t.english}</option>
-            <option value="SVT">{t.biology}</option>
-            <option value="Histoire-Géo">{t.historyGeography}</option>
-            <option value="EPS">{t.pe}</option>
+            {(specialtyOptions || []).map((opt: any) => (
+              <option key={opt.id} value={opt.value}>{getOptionLabel(opt)}</option>
+            ))}
           </select>
 
           <select 
@@ -324,9 +414,9 @@ export const Teachers = () => {
             onChange={(e) => setFilters({...filters, contractType: e.target.value})}
           >
             <option value="">{t.allContracts}</option>
-            <option value="CDI">{t.fullTime}</option>
-            <option value="CDD">{t.partTimeContract}</option>
-            <option value="Vacation">{t.temporary}</option>
+            {(contractOptions || []).map((opt: any) => (
+              <option key={opt.id} value={opt.value}>{getOptionLabel(opt)}</option>
+            ))}
           </select>
 
           <div className="h-6 w-px bg-gray-200 dark:bg-slate-700 mx-1"></div>
@@ -461,7 +551,7 @@ export const Teachers = () => {
                             ? 'bg-blue-100 text-blue-700 dark:bg-blue-900/30 dark:text-blue-400' 
                             : 'bg-pink-100 text-pink-700 dark:bg-pink-900/30 dark:text-pink-400'
                         }`}>
-                          {teacher.gender === 'M' ? '👨 Masculin' : '👩 Féminin'}
+                          {teacher.gender === 'M' ? 'Masculin' : 'Féminin'}
                         </span>
                       </td>
                       <td className="px-6 py-4">
@@ -492,7 +582,10 @@ export const Teachers = () => {
                             <Edit className="w-4 h-4" />
                           </button>
                           <button 
-                            onClick={() => handleDelete(teacher.id)}
+                            onClick={() => {
+                              setTargetDeleteId(teacher.id);
+                              setConfirmOpen(true);
+                            }}
                             className="p-2 text-red-600 hover:bg-red-50 dark:hover:bg-red-900/20 rounded-md transition-colors border border-red-200 dark:border-red-700"
                             title={t.delete}
                           >
@@ -554,7 +647,7 @@ export const Teachers = () => {
                     <span className={`text-xs font-normal ${
                       teacher.gender === 'M' ? 'text-blue-600' : 'text-pink-600'
                     }`}>
-                      {teacher.gender === 'M' ? '👨 Masculin' : '👩 Féminin'}
+                      {teacher.gender === 'M' ? 'Masculin' : 'Féminin'}
                     </span>
                   </div>
                   <div className="flex items-center gap-2 text-sm text-gray-900 dark:text-white font-semibold">
@@ -582,7 +675,10 @@ export const Teachers = () => {
                     {t.modify}
                   </button>
                   <button 
-                    onClick={() => handleDelete(teacher.id)}
+                    onClick={() => {
+                      setTargetDeleteId(teacher.id);
+                      setConfirmOpen(true);
+                    }}
                     className="text-xs text-red-600 font-normal flex items-center gap-1 hover:underline"
                   >
                     <Trash2 className="w-3.5 h-3.5" />
@@ -747,8 +843,9 @@ export const Teachers = () => {
                       onChange={(e) => setFormData({...formData, gender: e.target.value})}
                       className="w-full px-3 py-2 border border-gray-200 dark:border-slate-600 rounded-md bg-gray-50 dark:bg-slate-700 text-sm dark:text-white focus:ring-2 focus:ring-blue-500"
                     >
-                      <option value="M">{t.maleLabel}</option>
-                      <option value="F">{t.femaleLabel}</option>
+                      {(genderOptions || []).map((opt: any) => (
+                        <option key={opt.id} value={opt.value}>{getOptionLabel(opt)}</option>
+                      ))}
                     </select>
                   </div>
                   <div>
@@ -758,10 +855,9 @@ export const Teachers = () => {
                       onChange={(e) => setFormData({...formData, maritalStatus: e.target.value})}
                       className="w-full px-3 py-2 border border-gray-200 dark:border-slate-600 rounded-md bg-gray-50 dark:bg-slate-700 text-sm dark:text-white focus:ring-2 focus:ring-blue-500"
                     >
-                      <option value="Célibataire">{t.single}</option>
-                      <option value="Marié(e)">{t.married}</option>
-                      <option value="Divorcé(e)">{t.divorced}</option>
-                      <option value="Veuf(ve)">{t.widowed}</option>
+                      {(maritalOptions || []).map((opt: any) => (
+                        <option key={opt.id} value={opt.value}>{getOptionLabel(opt)}</option>
+                      ))}
                     </select>
                   </div>
                   <div>
@@ -838,15 +934,9 @@ export const Teachers = () => {
                       className="w-full px-3 py-2 border border-gray-200 dark:border-slate-600 rounded-md bg-gray-50 dark:bg-slate-700 text-sm dark:text-white focus:ring-2 focus:ring-blue-500"
                     >
                       <option value="">{t.select}</option>
-                      <option value="Mathématiques">{t.math}</option>
-                      <option value="Physique-Chimie">{t.physicsChemistry}</option>
-                      <option value="Français">{t.french}</option>
-                      <option value="Anglais">{t.english}</option>
-                      <option value="SVT">{t.biology}</option>
-                      <option value="Histoire-Géo">{t.historyGeography}</option>
-                      <option value="EPS">{t.pe}</option>
-                      <option value="Philosophie">{t.philosophy}</option>
-                      <option value="Informatique">{t.computerScience}</option>
+                      {(specialtyOptions || []).map((opt: any) => (
+                        <option key={opt.id} value={opt.value}>{getOptionLabel(opt)}</option>
+                      ))}
                     </select>
                   </div>
                   <div>
@@ -857,12 +947,9 @@ export const Teachers = () => {
                       className="w-full px-3 py-2 border border-gray-200 dark:border-slate-600 rounded-md bg-gray-50 dark:bg-slate-700 text-sm dark:text-white focus:ring-2 focus:ring-blue-500"
                     >
                       <option value="">{t.select}</option>
-                      <option value="BAC">{t.bachelor}</option>
-                      <option value="Licence">{t.license}</option>
-                      <option value="Master">{t.master}</option>
-                      <option value="Doctorat">{t.doctorate}</option>
-                      <option value="CAPES">{t.capes}</option>
-                      <option value="CAFOP">{t.cafop}</option>
+                      {(degreeOptions || []).map((opt: any) => (
+                        <option key={opt.id} value={opt.value}>{getOptionLabel(opt)}</option>
+                      ))}
                     </select>
                   </div>
                   <div>
@@ -873,10 +960,9 @@ export const Teachers = () => {
                       onChange={(e) => setFormData({...formData, status: e.target.value})}
                       className="w-full px-3 py-2 border border-gray-200 dark:border-slate-600 rounded-md bg-gray-50 dark:bg-slate-700 text-sm dark:text-white focus:ring-2 focus:ring-blue-500"
                     >
-                      <option value="Permanent">{t.permanent}</option>
-                      <option value="Vacataire">{t.partTime}</option>
-                      <option value="Contractuel">{t.contractual}</option>
-                      <option value="Stagiaire">{t.trainee}</option>
+                      {(statusOptions || []).map((opt: any) => (
+                        <option key={opt.id} value={opt.value}>{getOptionLabel(opt)}</option>
+                      ))}
                     </select>
                   </div>
                   <div>
@@ -886,9 +972,9 @@ export const Teachers = () => {
                       onChange={(e) => setFormData({...formData, contractType: e.target.value})}
                       className="w-full px-3 py-2 border border-gray-200 dark:border-slate-600 rounded-md bg-gray-50 dark:bg-slate-700 text-sm dark:text-white focus:ring-2 focus:ring-blue-500"
                     >
-                      <option value="CDI">{t.fullTime}</option>
-                      <option value="CDD">{t.partTimeContract}</option>
-                      <option value="Vacation">{t.temporary}</option>
+                      {(contractOptions || []).map((opt: any) => (
+                        <option key={opt.id} value={opt.value}>{getOptionLabel(opt)}</option>
+                      ))}
                     </select>
                   </div>
                   <div>
@@ -911,6 +997,61 @@ export const Teachers = () => {
                   </div>
                 </div>
               </div>
+
+          <div>
+            <h3 className="text-sm font-bold text-gray-900 dark:text-white mb-3 uppercase border-b border-gray-200 dark:border-slate-700 pb-2">
+              {t.subjectsTaught}
+            </h3>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-2">
+              {(subjectsList || []).map((s: any) => {
+                const val = s.name || s.value || s.id;
+                const label = s.name || getOptionLabel(s);
+                const checked = (formData.subjects || []).includes(val);
+                return (
+                  <label key={val} className="flex items-center gap-2 text-sm">
+                    <input
+                      type="checkbox"
+                      checked={checked}
+                      onChange={(e) => {
+                        const current = new Set(formData.subjects || []);
+                        if (e.target.checked) current.add(val);
+                        else current.delete(val);
+                        setFormData({ ...formData, subjects: Array.from(current) });
+                      }}
+                    />
+                    <span className="text-gray-700 dark:text-gray-300">{label}</span>
+                  </label>
+                );
+              })}
+            </div>
+          </div>
+          <div>
+            <h3 className="text-sm font-bold text-gray-900 dark:text-white mb-3 uppercase border-b border-gray-200 dark:border-slate-700 pb-2">
+              {t.assignedClasses}
+            </h3>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-2">
+              {(classesList || []).map((c: any) => {
+                const val = c.name || c.value || c.id;
+                const label = c.name || getOptionLabel(c);
+                const checked = (formData.classes || []).includes(val);
+                return (
+                  <label key={val} className="flex items-center gap-2 text-sm">
+                    <input
+                      type="checkbox"
+                      checked={checked}
+                      onChange={(e) => {
+                        const current = new Set(formData.classes || []);
+                        if (e.target.checked) current.add(val);
+                        else current.delete(val);
+                        setFormData({ ...formData, classes: Array.from(current) });
+                      }}
+                    />
+                    <span className="text-gray-700 dark:text-gray-300">{label}</span>
+                  </label>
+                );
+              })}
+            </div>
+          </div>
 
               {/* {t.bankingInfo} */}
               <div>
@@ -1008,6 +1149,21 @@ export const Teachers = () => {
           </div>
         </div>
       )}
+      <ConfirmDialog
+        isOpen={confirmOpen}
+        onClose={() => {
+          if (deleteLoading) return;
+          setConfirmOpen(false);
+          setTargetDeleteId(null);
+        }}
+        onConfirm={deleteTeacher}
+        title="Supprimer l'enseignant"
+        message="Cette action est irréversible. Voulez-vous vraiment supprimer cet enseignant ?"
+        confirmText="Supprimer"
+        cancelText="Annuler"
+        type="danger"
+        loading={deleteLoading}
+      />
     </div>
   );
 };

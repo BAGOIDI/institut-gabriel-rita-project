@@ -8,7 +8,14 @@ export class CreateSystemOptionDto {
   value: string;
 
   @IsString()
-  label: string;
+  labelFr: string;
+
+  @IsString()
+  labelEn: string;
+
+  @IsOptional()
+  @IsString()
+  label?: string;
 
   @IsBoolean()
   @IsOptional()

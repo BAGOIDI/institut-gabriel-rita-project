@@ -2,8 +2,8 @@ import { Entity, PrimaryGeneratedColumn, Column, CreateDateColumn, UpdateDateCol
 
 @Entity('system_options')
 export class SystemOption {
-  @PrimaryGeneratedColumn('uuid')
-  id: string;
+  @PrimaryGeneratedColumn()
+  id: number;
 
   @Column()
   category: string;
@@ -11,7 +11,15 @@ export class SystemOption {
   @Column()
   value: string;
 
-  @Column()
+  // Nullable to avoid failing schema sync on existing rows
+  @Column({ name: 'label_fr', nullable: true })
+  labelFr: string | null;
+
+  // Nullable to avoid failing schema sync on existing rows
+  @Column({ name: 'label_en', nullable: true })
+  labelEn: string | null;
+
+  @Column({ nullable: true })
   label: string;
 
   @Column({ default: true })

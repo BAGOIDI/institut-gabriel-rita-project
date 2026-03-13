@@ -1,5 +1,5 @@
 import { ReactNode } from 'react';
-import { Navigate } from 'react-router-dom';
+import { Navigate, useLocation } from 'react-router-dom';
 import { useAuth } from '../contexts/AuthContext';
 
 interface ProtectedRouteProps {
@@ -7,7 +7,7 @@ interface ProtectedRouteProps {
 }
 
 export const ProtectedRoute = ({ children }: ProtectedRouteProps) => {
-  // Pour le moment, permettre l'accès sans authentification
-  // La sécurité sera gérée ultérieurement
+  // Auth is disabled for now: always allow access.
+  // (We keep this component to avoid breaking imports in other branches/files.)
   return <>{children}</>;
 };

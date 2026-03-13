@@ -26,9 +26,12 @@ import {
 import { QRCodeSVG } from 'qrcode.react';
 import * as XLSX from 'xlsx';
 import api from '../services/api.service';
+import { CoreService } from '../services/core.service';
 import { useSystemOptions } from '../hooks/useSystemOptions';
 import { useTheme } from '../contexts/ThemeContext';
 import { translations } from '../lib/translations';
+import { ConfirmDialog } from '../components/ConfirmDialog';
+import { useNotification } from '../contexts/NotificationContext';
 
 interface Student {
   id: string;
@@ -77,6 +80,13 @@ export const Students = () => {
   
   const { language } = useTheme();
   const t = translations[language];
+  const notify = useNotification();
+  const [confirmOpen, setConfirmOpen] = useState(false);
+  const [targetDeleteId, setTargetDeleteId] = useState<string | null>(null);
+  const [deleteLoading, setDeleteLoading] = useState(false);
+  const [studentToEdit, setStudentToEdit] = useState<Student | null>(null);
+  const [classesList, setClassesList] = useState<any[]>([]);
+  const [specialtiesList, setSpecialtiesList] = useState<any[]>([]);
 
   useEffect(() => {
     const delayDebounceFn = setTimeout(() => {
@@ -85,6 +95,22 @@ export const Students = () => {
 
     return () => clearTimeout(delayDebounceFn);
   }, [searchTerm, filters, pagination.page, pagination.limit]);
+
+  useEffect(() => {
+    const loadDynamicOptions = async () => {
+      try {
+        const classesRes = await CoreService.getAll('classes');
+        const specialtiesRes = await CoreService.getAll('specialtys');
+        const classesData = (classesRes as any).items || classesRes || [];
+        const specialtiesData = (specialtiesRes as any).items || specialtiesRes || [];
+        setClassesList(classesData);
+        setSpecialtiesList(specialtiesData);
+      } catch {
+        // en cas d'erreur, on laisse simplement les listes vides
+      }
+    };
+    loadDynamicOptions();
+  }, []);
 
   const fetchStudents = async () => {
     setLoading(true);
@@ -193,9 +219,9 @@ export const Students = () => {
       try {
         await api.post('/api/core/students/import', data);
         fetchStudents();
-        alert('Importation réussie !');
+        notify.success('Importation réussie');
       } catch (error) {
-        alert('Erreur lors de l\'importation');
+        notify.error("Erreur lors de l'importation");
       }
     };
     reader.readAsBinaryString(file);
@@ -218,13 +244,16 @@ export const Students = () => {
           <p className="text-[11px] text-gray-500 dark:text-gray-400">{t.studentManagementDesc}</p>
         </div>
         <div className="flex gap-2">
-          <label className="flex items-center gap-2 bg-emerald-600 hover:bg-emerald-700 text-white px-3 py-1.5 rounded-md cursor-pointer transition-colors text-xs font-normal border border-emerald-700">
+          <label className="flex items-center gap-2 bg-primary hover:bg-primary/90 text-white px-3 py-1.5 rounded-md cursor-pointer transition-colors text-xs font-semibold border border-primary/30 shadow-sm shadow-blue-500/10">
             <Upload className="w-3.5 h-3.5" />
             <span>{t.importExcel}</span>
             <input type="file" className="hidden" accept=".xlsx, .xls" onChange={handleFileUpload} />
           </label>
           <button 
-            onClick={() => setShowModal(true)}
+            onClick={() => {
+              setStudentToEdit(null);
+              setShowModal(true);
+            }}
             className="flex items-center gap-2 bg-blue-600 hover:bg-blue-700 text-white px-3 py-1.5 rounded-md transition-colors text-xs font-normal border border-blue-700"
           >
             <Plus className="w-3.5 h-3.5" />
@@ -261,10 +290,9 @@ export const Students = () => {
               onChange={(e) => setFilters({...filters, classRoom: e.target.value})}
             >
               <option value="">{t.allClasses}</option>
-              <option value="Terminale C">Terminale C</option>
-              <option value="1ère D">1ère D</option>
-              <option value="2nde A">2nde A</option>
-              <option value="3ème">3ème</option>
+              {classesList.map((c: any) => (
+                <option key={c.id} value={c.name}>{c.name}</option>
+              ))}
             </select>
           </div>
 
@@ -501,8 +529,25 @@ export const Students = () => {
                       >
                         <QrCode className="w-4 h-4" />
                       </button>
-                      <button className="p-2 text-gray-400 hover:bg-gray-100 dark:hover:bg-slate-700 rounded-lg transition-colors">
-                        <MoreVertical className="w-4 h-4" />
+                      <button 
+                        onClick={() => {
+                          setStudentToEdit(student);
+                          setShowModal(true);
+                        }}
+                        className="p-2 text-blue-600 hover:bg-blue-50 dark:hover:bg-blue-900/20 rounded-lg transition-colors border border-blue-200 dark:border-blue-700"
+                        title="Modifier"
+                      >
+                        <UserPlus className="w-4 h-4" />
+                      </button>
+                      <button 
+                        onClick={() => {
+                          setTargetDeleteId(student.id);
+                          setConfirmOpen(true);
+                        }}
+                        className="p-2 text-red-600 hover:bg-red-50 dark:hover:bg-red-900/20 rounded-lg transition-colors border border-red-200 dark:border-red-700"
+                        title="Supprimer"
+                      >
+                        <X className="w-4 h-4" />
                       </button>
                     </div>
                   </td>
@@ -711,19 +756,55 @@ export const Students = () => {
       {/* Modal Ajout Étudiant */}
       {showModal && (
         <StudentForm 
-          onClose={() => setShowModal(false)} 
+          onClose={() => {
+            setShowModal(false);
+            setStudentToEdit(null);
+          }} 
           onSave={() => {
             setShowModal(false);
+            setStudentToEdit(null);
             fetchStudents();
           }} 
           translations={t}
+          initialStudent={studentToEdit || undefined}
+          classesList={classesList}
+          specialtiesList={specialtiesList}
         />
       )}
+      <ConfirmDialog
+        isOpen={confirmOpen}
+        onClose={() => {
+          if (deleteLoading) return;
+          setConfirmOpen(false);
+          setTargetDeleteId(null);
+        }}
+        onConfirm={async () => {
+          if (!targetDeleteId) return;
+          setDeleteLoading(true);
+          try {
+            await api.delete(`/api/core/students/${targetDeleteId}`);
+            fetchStudents();
+          } catch (err) {
+            notify.error('Erreur lors de la suppression');
+          } finally {
+            setDeleteLoading(false);
+            setConfirmOpen(false);
+            setTargetDeleteId(null);
+          }
+        }}
+        title="Supprimer l'étudiant"
+        message="Cette action est irréversible. Voulez-vous vraiment supprimer cet étudiant ?"
+        confirmText="Supprimer"
+        cancelText="Annuler"
+        type="danger"
+        loading={deleteLoading}
+      />
     </div>
   );
 };
 
-const StudentForm = ({ onClose, onSave, translations }: { onClose: () => void, onSave: () => void, translations: any }) => {
+const StudentForm = ({ onClose, onSave, translations, initialStudent, classesList, specialtiesList }: { onClose: () => void, onSave: () => void, translations: any, initialStudent?: any, classesList: any[], specialtiesList: any[] }) => {
+  const notify = useNotification();
   const [formData, setFormData] = useState({
     firstName: '',
     lastName: '',
@@ -737,12 +818,30 @@ const StudentForm = ({ onClose, onSave, translations }: { onClose: () => void, o
     photo: ''
   });
   const [isuploading, setIsUploading] = useState(false);
+  const isEdit = Boolean(initialStudent && initialStudent.id);
+
+  React.useEffect(() => {
+    if (initialStudent) {
+      setFormData({
+        firstName: initialStudent.firstName || '',
+        lastName: initialStudent.lastName || '',
+        dateOfBirth: initialStudent.dateOfBirth ? String(initialStudent.dateOfBirth).substring(0, 10) : '',
+        gender: initialStudent.gender || 'M',
+        phoneNumber: initialStudent.phoneNumber || '',
+        parentPhoneNumber: initialStudent.parentPhoneNumber || '',
+        classRoom: initialStudent.classRoom || '',
+        filiere: initialStudent.filiere || '',
+        specialStatus: initialStudent.specialStatus || '',
+        photo: initialStudent.photo || ''
+      });
+    }
+  }, [initialStudent]);
 
   const handlePhotoChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (file) {
       if (!file.type.startsWith('image/')) {
-        alert('Veuillez sélectionner une image valide');
+        notify.error('Veuillez sélectionner une image valide');
         return;
       }
       
@@ -759,10 +858,26 @@ const StudentForm = ({ onClose, onSave, translations }: { onClose: () => void, o
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
-      await api.post('/api/core/students', formData);
+      if (isEdit && initialStudent?.id) {
+        await api.put(`/api/core/students/${initialStudent.id}`, formData);
+      } else {
+        await api.post('/api/core/students', formData);
+      }
+      setFormData({
+        firstName: '',
+        lastName: '',
+        dateOfBirth: '',
+        gender: 'M',
+        phoneNumber: '',
+        parentPhoneNumber: '',
+        classRoom: '',
+        filiere: '',
+        specialStatus: '',
+        photo: ''
+      });
       onSave();
     } catch (error) {
-      alert('Erreur lors de la création de l\'étudiant');
+      notify.error(isEdit ? "Erreur lors de la mise à jour de l'étudiant" : "Erreur lors de la création de l'étudiant");
     }
   };
 
@@ -773,7 +888,7 @@ const StudentForm = ({ onClose, onSave, translations }: { onClose: () => void, o
           <Plus className="w-6 h-6 rotate-45" />
         </button>
 
-        <h2 className="text-xl font-bold text-gray-900 dark:text-white mb-6 uppercase">{translations.newStudentRecord}</h2>
+        <h2 className="text-xl font-bold text-gray-900 dark:text-white mb-6 uppercase">{isEdit ? 'Modifier le dossier étudiant' : translations.newStudentRecord}</h2>
 
         <form onSubmit={handleSubmit} className="grid grid-cols-1 md:grid-cols-2 gap-4">
           {/* Photo Upload Section */}
@@ -860,21 +975,30 @@ const StudentForm = ({ onClose, onSave, translations }: { onClose: () => void, o
           </div>
           <div className="space-y-1">
             <label className="text-xs font-bold text-gray-500 uppercase">{translations.class}</label>
-            <input 
+            <select 
               required
-              placeholder="Ex: Terminale C"
               className="w-full px-4 py-2 bg-gray-50 dark:bg-slate-700 border-none rounded-lg dark:text-white"
               value={formData.classRoom}
               onChange={e => setFormData({...formData, classRoom: e.target.value})}
-            />
+            >
+              <option value="">{translations.select}</option>
+              {classesList.map((c: any) => (
+                <option key={c.id} value={c.name}>{c.name}</option>
+              ))}
+            </select>
           </div>
           <div className="space-y-1">
             <label className="text-xs font-bold text-gray-500 uppercase">{translations.major}</label>
-            <input 
+            <select 
               className="w-full px-4 py-2 bg-gray-50 dark:bg-slate-700 border-none rounded-lg dark:text-white"
               value={formData.filiere || ''}
               onChange={e => setFormData({...formData, filiere: e.target.value})}
-            />
+            >
+              <option value="">{translations.select}</option>
+              {specialtiesList.map((s: any) => (
+                <option key={s.id} value={s.name}>{s.name}</option>
+              ))}
+            </select>
           </div>
           <div className="space-y-1">
             <label className="text-xs font-bold text-gray-500 uppercase">{translations.studentPhone}</label>
@@ -912,7 +1036,7 @@ const StudentForm = ({ onClose, onSave, translations }: { onClose: () => void, o
               type="submit"
               className="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 rounded-xl transition-colors"
             >
-              {translations.registerStudentRecord}
+              {isEdit ? 'Mettre à jour' : translations.registerStudentRecord}
             </button>
           </div>
         </form>

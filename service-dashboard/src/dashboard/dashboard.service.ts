@@ -17,81 +17,146 @@ export class DashboardService {
 
   async getFullStats() {
     try {
-      const q = (sql: string) => this.dataSource.query(sql).catch(() => [{ count: '0' }]);
+      const qNum = async (sql: string) => {
+        const [row] = await this.dataSource.query(sql).catch(() => [{ count: '0' }]);
+        const val = Object.values(row ?? {})[0] as any;
+        const n = parseFloat(String(val ?? 0));
+        return isNaN(n) ? 0 : n;
+      };
 
-      const [studentRow]   = await q(`SELECT COUNT(*) FROM public.students WHERE is_active = true`);
-      const [staffRow]     = await q(`SELECT COUNT(*) FROM public.staff`);
-      const [latesRow]     = await q(`SELECT COUNT(*) FROM public.grades WHERE is_absent = true`);
-      const [alertsRow]    = await q(`SELECT COUNT(*) FROM public.students WHERE balance > 0 AND is_active = true`);
+      const totalStudents = await qNum(`SELECT COUNT(*) FROM public.students`);
+      const totalStaff    = await qNum(`SELECT COUNT(*) FROM public.staff`);
+      const presentToday  = await qNum(`SELECT COUNT(DISTINCT staff_id) FROM public.attendance_records WHERE date = CURRENT_DATE AND status = 'PRESENT'`);
+      const totalLates    = await qNum(`SELECT COUNT(DISTINCT staff_id) FROM public.attendance_records WHERE date = CURRENT_DATE AND status = 'LATE'`);
+      const totalAlerts   = await qNum(`SELECT COUNT(DISTINCT student_id) FROM public.finance_student_fees WHERE is_fully_paid = FALSE`);
 
-      const totalStudents  = parseInt(studentRow.count);
-      const totalStaff     = parseInt(staffRow.count);
-      const totalLates     = parseInt(latesRow.count);
-      const totalAlerts    = parseInt(alertsRow.count);
-
-      const [finRow] = await this.dataSource.query(`
+      const fin = await this.dataSource.query(`
+        WITH pay AS (
+          SELECT f.id, COALESCE(SUM(p.amount_paid),0) AS paid
+          FROM public.finance_student_fees f
+          LEFT JOIN public.finance_payments p ON p.student_fee_id = f.id
+          GROUP BY f.id
+        )
         SELECT
-          COALESCE(SUM(CASE WHEN s.balance = 0 THEN c.tuition_fee ELSE c.tuition_fee - s.balance END), 0) as received,
-          COALESCE(SUM(s.balance), 0) as remaining,
-          COALESCE(SUM(c.tuition_fee), 1) as total_due
-        FROM public.students s
-        JOIN public.classes c ON c.id = s.class_id
-        WHERE s.is_active = true
-      `).catch(() => [{ received: 0, remaining: 0, total_due: 1 }]);
+          COALESCE(SUM(f.total_due),0)::float AS total_due,
+          COALESCE(SUM(pay.paid),0)::float    AS received,
+          COALESCE(SUM(f.total_due - pay.paid),0)::float AS remaining
+        FROM public.finance_student_fees f
+        LEFT JOIN pay ON pay.id = f.id
+      `).catch(() => [{ total_due: 0, received: 0, remaining: 0 }]);
 
-      const received  = parseFloat(finRow?.received  ?? 0);
-      const remaining = parseFloat(finRow?.remaining ?? 0);
-      const totalDue  = parseFloat(finRow?.total_due ?? 1);
+      const totalDue  = parseFloat(fin?.[0]?.total_due ?? 0);
+      const received  = parseFloat(fin?.[0]?.received ?? 0);
+      const remaining = parseFloat(fin?.[0]?.remaining ?? Math.max(totalDue - received, 0));
       const recRate   = totalDue > 0 ? ((received / totalDue) * 100).toFixed(1) : '0';
 
       const classSummary = await this.dataSource.query(`
-        SELECT c.name as class, COUNT(s.id)::int as students,
-          SUM(c.tuition_fee) as due,
-          SUM(CASE WHEN s.balance = 0 THEN c.tuition_fee ELSE c.tuition_fee - s.balance END) as paid
+        WITH per_fee AS (
+          SELECT f.id, f.student_id, f.total_due, COALESCE(SUM(p.amount_paid),0) AS paid
+          FROM public.finance_student_fees f
+          LEFT JOIN public.finance_payments p ON p.student_fee_id = f.id
+          GROUP BY f.id, f.student_id, f.total_due
+        )
+        SELECT c.name AS class,
+               COUNT(DISTINCT s.id)::int AS students,
+               COALESCE(SUM(per_fee.total_due),0)::float AS due,
+               COALESCE(SUM(per_fee.paid),0)::float      AS paid
         FROM public.classes c
-        JOIN public.students s ON s.class_id = c.id
-        JOIN public.academic_years ay ON ay.id = c.academic_year_id
-        WHERE ay.is_current = true AND s.is_active = true
-        GROUP BY c.id, c.name ORDER BY c.name LIMIT 6
+        LEFT JOIN public.students s ON s.class_id = c.id
+        LEFT JOIN per_fee ON per_fee.student_id = s.id
+        GROUP BY c.id, c.name
+        ORDER BY c.name
+        LIMIT 6
       `).catch(() => []);
 
       const latePayments = await this.dataSource.query(`
-        SELECT s.first_name || ' ' || s.last_name as name, c.name as class,
-          s.balance::float as amount, ROUND(s.balance * 0.05)::float as penalty, 30 as days
-        FROM public.students s JOIN public.classes c ON c.id = s.class_id
-        WHERE s.balance > 50000 AND s.is_active = true
-        ORDER BY s.balance DESC LIMIT 5
+        WITH per_fee AS (
+          SELECT f.id, f.student_id, f.total_due, COALESCE(SUM(p.amount_paid),0) AS paid
+          FROM public.finance_student_fees f
+          LEFT JOIN public.finance_payments p ON p.student_fee_id = f.id
+          GROUP BY f.id, f.student_id, f.total_due
+        ), by_student AS (
+          SELECT s.id AS student_id,
+                 (COALESCE(SUM(per_fee.total_due),0) - COALESCE(SUM(per_fee.paid),0))::float AS amount
+          FROM public.students s
+          LEFT JOIN per_fee ON per_fee.student_id = s.id
+          GROUP BY s.id
+        )
+        SELECT (s.first_name || ' ' || s.last_name) AS name,
+               c.name AS class,
+               bs.amount::float AS amount,
+               ROUND(bs.amount * 0.05)::float AS penalty,
+               30 AS days
+        FROM by_student bs
+        JOIN public.students s ON s.id = bs.student_id
+        LEFT JOIN public.classes c ON c.id = s.class_id
+        WHERE bs.amount > 0
+        ORDER BY bs.amount DESC
+        LIMIT 5
       `).catch(() => []);
 
       const moratoires = await this.dataSource.query(`
-        SELECT s.first_name || ' ' || s.last_name as name, c.name as class,
-          s.balance::float as amount,
-          TO_CHAR(CURRENT_DATE + INTERVAL '30 days', 'DD/MM/YYYY') as "newDate",
-          'Report accordé par la direction' as reason
-        FROM public.students s JOIN public.classes c ON c.id = s.class_id
-        WHERE s.balance > 0 AND s.is_active = true
-        ORDER BY s.balance DESC LIMIT 3
+        WITH per_fee AS (
+          SELECT f.id, f.student_id, f.total_due, COALESCE(SUM(p.amount_paid),0) AS paid
+          FROM public.finance_student_fees f
+          LEFT JOIN public.finance_payments p ON p.student_fee_id = f.id
+          GROUP BY f.id, f.student_id, f.total_due
+        ), by_student AS (
+          SELECT s.id AS student_id,
+                 (COALESCE(SUM(per_fee.total_due),0) - COALESCE(SUM(per_fee.paid),0))::float AS amount
+          FROM public.students s
+          LEFT JOIN per_fee ON per_fee.student_id = s.id
+          GROUP BY s.id
+        )
+        SELECT (s.first_name || ' ' || s.last_name) AS name,
+               c.name AS class,
+               bs.amount::float AS amount,
+               TO_CHAR(CURRENT_DATE + INTERVAL '30 days', 'DD/MM/YYYY') AS "newDate",
+               'Report accordé par la direction' AS reason
+        FROM by_student bs
+        JOIN public.students s ON s.id = bs.student_id
+        LEFT JOIN public.classes c ON c.id = s.class_id
+        WHERE bs.amount > 0
+        ORDER BY bs.amount DESC
+        LIMIT 3
       `).catch(() => []);
 
       const recentAttendance = await this.dataSource.query(`
-        SELECT s.first_name || ' ' || s.last_name as name, sub.name as subject,
-          TO_CHAR(e.date, 'HH24:MI') as time,
-          CASE WHEN g.is_absent THEN 'LATE' ELSE 'PRESENT' END as status
-        FROM public.grades g
-        JOIN public.students s ON s.id = g.student_id
-        JOIN public.evaluations e ON e.id = g.evaluation_id
-        JOIN public.subjects sub ON sub.id = e.subject_id
-        ORDER BY e.date DESC LIMIT 8
+        SELECT (s.first_name || ' ' || s.last_name) AS name,
+               COALESCE(adl.punch_type, 'IN') AS subject,
+               TO_CHAR(adl.punch_time, 'HH24:MI') AS time,
+               'PRESENT' AS status
+        FROM public.attendance_device_logs adl
+        JOIN public.staff s ON s.biometric_id = adl.biometric_id
+        ORDER BY adl.punch_time DESC
+        LIMIT 8
       `).catch(() => []);
 
       const partialPayments = await this.dataSource.query(`
-        SELECT s.first_name || ' ' || s.last_name as name, c.name as class,
-          c.tuition_fee::float as total, (c.tuition_fee - s.balance)::float as paid,
-          2 as installments,
-          TO_CHAR(CURRENT_DATE - INTERVAL '7 days', 'DD/MM/YYYY') as "lastDate"
-        FROM public.students s JOIN public.classes c ON c.id = s.class_id
-        WHERE s.balance > 0 AND s.balance < c.tuition_fee AND s.is_active = true
-        ORDER BY s.balance DESC LIMIT 4
+        WITH per_fee AS (
+          SELECT f.id, f.student_id, f.total_due, COALESCE(SUM(p.amount_paid),0) AS paid,
+                 COALESCE(SUM(p.amount_paid),0) AS paid_total
+          FROM public.finance_student_fees f
+          LEFT JOIN public.finance_payments p ON p.student_fee_id = f.id
+          GROUP BY f.id, f.student_id, f.total_due
+        ), agg AS (
+          SELECT s.id AS student_id, c.name AS class,
+                 COALESCE(SUM(per_fee.total_due),0)::float AS total_due,
+                 COALESCE(SUM(per_fee.paid_total),0)::float AS paid
+          FROM public.students s
+          LEFT JOIN public.classes c ON c.id = s.class_id
+          LEFT JOIN per_fee ON per_fee.student_id = s.id
+          GROUP BY s.id, c.name
+        )
+        SELECT (s.first_name || ' ' || s.last_name) AS name, a.class,
+               a.total_due AS total, a.paid AS paid,
+               2 AS installments,
+               TO_CHAR(CURRENT_DATE - INTERVAL '7 days', 'DD/MM/YYYY') AS "lastDate"
+        FROM agg a
+        JOIN public.students s ON s.id = a.student_id
+        WHERE a.paid > 0 AND a.paid < a.total_due
+        ORDER BY (a.total_due - a.paid) DESC
+        LIMIT 4
       `).catch(() => []);
 
       const months = ['Sep','Oct','Nov','Déc','Jan','Fév','Mar'];
@@ -101,20 +166,22 @@ export class DashboardService {
         paye:  Math.round(received * ((i + 1) / months.length)),
       }));
 
-      const attendanceData = [
-        { name: 'Lun', presents: Math.floor(totalStudents * 0.92), retard: Math.floor(totalStudents * 0.05) },
-        { name: 'Mar', presents: Math.floor(totalStudents * 0.88), retard: Math.floor(totalStudents * 0.08) },
-        { name: 'Mer', presents: Math.floor(totalStudents * 0.95), retard: Math.floor(totalStudents * 0.03) },
-        { name: 'Jeu', presents: Math.floor(totalStudents * 0.91), retard: Math.floor(totalStudents * 0.06) },
-        { name: 'Ven', presents: Math.floor(totalStudents * 0.85), retard: Math.floor(totalStudents * 0.09) },
-      ];
+      const attendanceData = await this.dataSource.query(`
+        SELECT TO_CHAR(date, 'Dy') AS name,
+               COUNT(*) FILTER (WHERE status = 'PRESENT')::int AS presents,
+               COUNT(*) FILTER (WHERE status = 'LATE')::int    AS retard
+        FROM public.attendance_records
+        WHERE date >= CURRENT_DATE - INTERVAL '6 days'
+        GROUP BY date
+        ORDER BY date ASC
+      `).catch(() => []);
 
       return {
         stats: {
-          teachersPresent:  { value: totalStaff,   change: '+2',      isPositive: true },
-          studentsEnrolled: { value: totalStudents, change: '+12',     isPositive: true },
-          latesToday:       { value: totalLates,    change: totalLates > 10 ? `+${totalLates - 10}` : '-3', isPositive: totalLates <= 10 },
-          paymentAlerts:    { value: totalAlerts,   change: totalAlerts > 5  ? `+${totalAlerts - 5}`  : '-2', isPositive: totalAlerts <= 5 },
+          teachersPresent:  { value: presentToday,  change: '+0',  isPositive: true },
+          studentsEnrolled: { value: totalStudents, change: '+0',  isPositive: true },
+          latesToday:       { value: totalLates,    change: '+0',  isPositive: totalLates <= 10 },
+          paymentAlerts:    { value: totalAlerts,   change: '0',   isPositive: totalAlerts <= 5 },
         },
         financialStats: {
           totalReceived:   { value: `${(received  / 1_000_000).toFixed(1)}M`, subValue: 'FCFA', change: '+12.4%', isPositive: true },
@@ -122,15 +189,17 @@ export class DashboardService {
           recoveryRate:    { value: `${recRate}%`, subValue: 'recouvré', change: '+3.2%', isPositive: parseFloat(recRate) >= 70 },
           penalties:       { value: `${((remaining * 0.05) / 1000).toFixed(0)}K`, subValue: 'FCFA', change: '-1.5%', isPositive: false },
         },
-        classSummary: classSummary.map((r: any) => ({
-          class: r.class, students: parseInt(r.students),
-          due: parseFloat(r.due ?? 0), paid: parseFloat(r.paid ?? 0),
+        classSummary: (classSummary as any[]).map((r) => ({
+          class: r.class,
+          students: parseInt(r.students),
+          due: parseFloat(r.due ?? 0),
+          paid: parseFloat(r.paid ?? 0),
           rate: r.due > 0 ? Math.round((r.paid / r.due) * 100) : 0,
         })),
-        latePayments:      latePayments.map((r: any) => ({ name: r.name, class: r.class, amount: parseFloat(r.amount), penalty: parseFloat(r.penalty), days: parseInt(r.days) })),
-        moratoires:        moratoires.map((r: any) => ({ name: r.name, class: r.class, amount: parseFloat(r.amount), newDate: r.newDate, reason: r.reason })),
-        recentAttendance:  recentAttendance.map((r: any) => ({ name: r.name, subject: r.subject, time: r.time ?? '08:00', status: r.status })),
-        partialPayments:   partialPayments.map((r: any) => ({ name: r.name, class: r.class, total: parseFloat(r.total ?? 0), paid: parseFloat(r.paid ?? 0), installments: parseInt(r.installments), lastDate: r.lastDate })),
+        latePayments:     (latePayments as any[]).map((r) => ({ name: r.name, class: r.class, amount: parseFloat(r.amount), penalty: parseFloat(r.penalty), days: parseInt(r.days) })),
+        moratoires:       (moratoires as any[]).map((r) => ({ name: r.name, class: r.class, amount: parseFloat(r.amount), newDate: r.newDate, reason: r.reason })),
+        recentAttendance: (recentAttendance as any[]).map((r) => ({ name: r.name, subject: r.subject, time: r.time ?? '08:00', status: r.status })),
+        partialPayments:  (partialPayments as any[]).map((r) => ({ name: r.name, class: r.class, total: parseFloat(r.total ?? 0), paid: parseFloat(r.paid ?? 0), installments: parseInt(r.installments), lastDate: r.lastDate })),
         attendanceData,
         paymentData,
         generatedAt: new Date().toISOString(),

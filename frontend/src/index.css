@@ -31,13 +31,15 @@
 
 /* Variables CSS pour la charte BanCo */
 :root {
-  /* Couleurs principales BanCo */
-  --primary: #22c55e;
-  --primary-light: #b7ffd1;
-  --primary-dark: #16a34a;
-  --secondary: #1a202c;
-  --background: #fafafa;
+  /* Charte moderne / high-tech */
+  --primary: #2563eb;        /* blue-600 */
+  --primary-light: #dbeafe;  /* blue-100 */
+  --primary-dark: #1d4ed8;   /* blue-700 */
+  --secondary: #0f172a;      /* slate-900 */
+  --background: #f8fafc;     /* slate-50 */
   --card-bg: #ffffff;
+  --ring: rgba(37, 99, 235, 0.22);
+  --shadow-primary: rgba(37, 99, 235, 0.14);
   
   /* Interface Sizes */
   --sidebar-width: 16rem;
@@ -47,9 +49,11 @@
 }
 
 .dark {
-  --background: #0f172a;
-  --card-bg: #1e293b;
-  --secondary: #ffffff;
+  --background: #070b18;
+  --card-bg: #0b1224;
+  --secondary: #e5e7eb;
+  --ring: rgba(59, 130, 246, 0.25);
+  --shadow-primary: rgba(59, 130, 246, 0.10);
 }
 
 /* Essential scrollbar styles for dropdown */
@@ -91,14 +95,14 @@ body,
   background: var(--card-bg);
   border-radius: 20px;
   border: 1px solid #e2e8f0;
-  box-shadow: 0 10px 15px -3px rgba(34, 197, 94, 0.1), 0 4px 6px -2px rgba(34, 197, 94, 0.05);
+  box-shadow: 0 10px 20px -8px var(--shadow-primary), 0 4px 10px -6px rgba(2, 6, 23, 0.10);
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   overflow: hidden;
 }
 
 .banco-card-hover:hover {
   transform: translateY(-4px);
-  box-shadow: 0 20px 25px -5px rgba(34, 197, 94, 0.15), 0 10px 10px -5px rgba(34, 197, 94, 0.1);
+  box-shadow: 0 24px 36px -18px var(--shadow-primary), 0 12px 22px -16px rgba(2, 6, 23, 0.16);
 }
 
 .dark .banco-card {
@@ -132,7 +136,7 @@ body,
 
 .banco-button:hover {
   transform: translateY(-2px);
-  box-shadow: 0 10px 25px rgba(34, 197, 94, 0.3);
+  box-shadow: 0 14px 30px rgba(37, 99, 235, 0.22);
 }
 
 /* Hover effect avec background fill */
@@ -180,6 +184,18 @@ body,
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
 }
 
+/* RTL adjustments */
+.dir-rtl .layout-root {
+  flex-direction: row-reverse;
+}
+.dir-rtl .banco-sidebar {
+  border-left: 1px solid #e2e8f0;
+  border-right: none;
+}
+.dir-rtl.dark .banco-sidebar {
+  border-left-color: #334155;
+}
+
 /* Topbar styles BanCo */
 .banco-topbar {
   background: var(--card-bg);
@@ -197,13 +213,13 @@ body,
   border-radius: 16px;
   border: 1px solid #e2e8f0;
   padding: var(--card-spacing);
-  box-shadow: 0 4px 6px rgba(34, 197, 94, 0.1);
+  box-shadow: 0 10px 18px -14px var(--shadow-primary), 0 6px 16px -14px rgba(2, 6, 23, 0.18);
   transition: all 0.3s ease;
 }
 
 .banco-stat-card:hover {
   transform: translateY(-2px);
-  box-shadow: 0 10px 15px rgba(34, 197, 94, 0.15);
+  box-shadow: 0 22px 30px -22px var(--shadow-primary), 0 14px 26px -22px rgba(2, 6, 23, 0.22);
 }
 
 .dark .banco-stat-card {
@@ -222,7 +238,7 @@ body,
 
 .banco-input:focus {
   border-color: var(--primary);
-  box-shadow: 0 0 0 3px rgba(34, 197, 94, 0.2);
+  box-shadow: 0 0 0 4px var(--ring);
   outline: none;
 }
 
@@ -232,7 +248,7 @@ body,
 
 .dark .banco-input:focus {
   border-color: var(--primary);
-  box-shadow: 0 0 0 3px rgba(34, 197, 94, 0.2);
+  box-shadow: 0 0 0 4px var(--ring);
 }
 
 /* Toggle Switch Styles */
@@ -331,6 +347,12 @@ body {
   transition-duration: 300ms;
 }
 
+/* Accessible focus ring */
+:where(a, button, input, select, textarea, [role="button"], [tabindex]):focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 4px var(--ring);
+}
+
 /* Disable transitions on elements that shouldn't animate */
 *:focus,
 *:active,
@@ -352,13 +374,13 @@ body {
   background: var(--card-bg);
   border-radius: 16px;
   border: 1px solid #e2e8f0;
-  box-shadow: 0 4px 6px rgba(34, 197, 94, 0.1), 0 1px 3px rgba(0, 0, 0, 0.05);
+  box-shadow: 0 14px 26px -22px var(--shadow-primary), 0 6px 16px -14px rgba(2, 6, 23, 0.18);
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 /* Modern card hover effect - Style BanCo */
 .modern-card-hover:hover {
-  box-shadow: 0 10px 25px rgba(34, 197, 94, 0.15), 0 4px 10px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 26px 44px -30px var(--shadow-primary), 0 16px 30px -24px rgba(2, 6, 23, 0.22);
   transform: translateY(-4px);
 }
 
@@ -384,7 +406,7 @@ body {
 
 .modern-input:focus {
   border-color: var(--primary);
-  box-shadow: 0 0 0 3px rgba(34, 197, 94, 0.2);
+  box-shadow: 0 0 0 4px var(--ring);
   outline: none;
 }
 
@@ -395,7 +417,7 @@ body {
 
 .dark .modern-input:focus {
   border-color: var(--primary);
-  box-shadow: 0 0 0 3px rgba(34, 197, 94, 0.2);
+  box-shadow: 0 0 0 4px var(--ring);
 }
 
 /* Modern buttons - Style BanCo */
@@ -405,14 +427,14 @@ body {
   border-radius: 12px;
   color: white;
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-  box-shadow: 0 2px 4px rgba(34, 197, 94, 0.2);
+  box-shadow: 0 10px 18px -14px var(--shadow-primary), 0 6px 16px -14px rgba(2, 6, 23, 0.18);
   font-family: 'Inter', sans-serif;
   font-weight: 600;
 }
 
 .modern-button:hover {
   background: var(--primary-dark);
-  box-shadow: 0 4px 8px rgba(34, 197, 94, 0.3);
+  box-shadow: 0 22px 30px -22px var(--shadow-primary), 0 14px 26px -22px rgba(2, 6, 23, 0.22);
   transform: translateY(-1px);
 }
 
@@ -424,7 +446,7 @@ body {
 .modern-sidebar {
   background: var(--card-bg);
   border-right: 1px solid #e2e8f0;
-  box-shadow: inset -1px 0 0 rgba(34, 197, 94, 0.1);
+  box-shadow: inset -1px 0 0 rgba(37, 99, 235, 0.10);
   transition: all 0.3s ease;
 }
 
@@ -437,7 +459,7 @@ body {
 .modern-topbar {
   background: var(--card-bg);
   border-bottom: 1px solid #e2e8f0;
-  box-shadow: 0 1px 3px rgba(34, 197, 94, 0.1);
+  box-shadow: 0 10px 18px -16px var(--shadow-primary);
 }
 
 .dark .modern-topbar {
@@ -481,13 +503,13 @@ body {
   background: var(--card-bg);
   border-radius: 16px;
   border: 1px solid #e2e8f0;
-  box-shadow: 0 10px 15px -3px rgba(34, 197, 94, 0.1), 0 4px 6px -2px rgba(34, 197, 94, 0.05);
+  box-shadow: 0 20px 34px -26px var(--shadow-primary), 0 12px 22px -18px rgba(2, 6, 23, 0.20);
   transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .modern-card-enhanced:hover {
   transform: translateY(-4px);
-  box-shadow: 0 20px 25px -5px rgba(34, 197, 94, 0.15), 0 10px 10px -5px rgba(34, 197, 94, 0.1);
+  box-shadow: 0 36px 54px -40px var(--shadow-primary), 0 18px 34px -26px rgba(2, 6, 23, 0.26);
 }
 
 /* Shimmer effect for loading states */

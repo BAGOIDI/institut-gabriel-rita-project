@@ -131,9 +131,14 @@ const ReportCard: React.FC<ReportCardProps> = ({title, description, icon, format
 
 const Reports: React.FC = () => {
   const [classes, setClasses] = useState<{id: string; name: string}[]>([]);
+  const [teachers, setTeachers] = useState<{id: string; name: string}[]>([]);
   const [students, setStudents] = useState<any[]>([]);
   const [selectedClass, setSelectedClass] = useState('');
   const [selectedMatricule, setSelectedMatricule] = useState('');
+  const [selectedClassSynthesis, setSelectedClassSynthesis] = useState<string>('');
+  const [selectedTeacherSynthesis, setSelectedTeacherSynthesis] = useState<string>('');
+  const [specialties, setSpecialties] = useState<{id: string; name: string; code: string}[]>([]);
+  const [selectedSpecialtyIds, setSelectedSpecialtyIds] = useState<string[]>([]);
   const [studentSearch, setStudentSearch] = useState('');
   const [serviceStatus, setServiceStatus] = useState<'unknown' | 'ok' | 'error'>('unknown');
   const [loadingMeta, setLoadingMeta] = useState(true);
@@ -150,8 +155,14 @@ const Reports: React.FC = () => {
       }
 
       try {
-        const cls = await reportService.getClasses().catch(() => []);
+        const [cls, tchr, specs] = await Promise.all([
+          reportService.getClasses().catch(() => []),
+          reportService.getTeachers().catch(() => []),
+          reportService.getSpecialties().catch(() => []),
+        ]);
         setClasses(cls);
+        setTeachers(tchr);
+        setSpecialties(specs);
         if (cls.length > 0) setSelectedClass(cls[0].name);
       } catch {}
 
@@ -246,6 +257,79 @@ const Reports: React.FC = () => {
               icon={<FileText className="w-5 h-5 text-orange-500" />}
               formats={['pdf', 'docx', 'xlsx']}
               onDownload={(fmt) => reportService.downloadMoratoriums(fmt)}
+            />
+            <ReportCard
+              title="Synthèse des Emplois du Temps"
+              description="Tableau complexe regroupant tous les emplois du temps par filière (EDT Global)."
+              icon={<FileSpreadsheet className="w-5 h-5 text-amber-600" />}
+              formats={['pdf']}
+              params={
+                <div className="space-y-2">
+                  <div className="grid grid-cols-2 gap-2">
+                    <div>
+                      <label className="block text-[10px] font-medium text-gray-500 mb-1">Filtrer par Classe</label>
+                      <select
+                        value={selectedClassSynthesis}
+                        onChange={e => setSelectedClassSynthesis(e.target.value)}
+                        className="w-full text-[11px] px-2 py-1 bg-white dark:bg-slate-700 border border-gray-200 dark:border-slate-600 rounded focus:ring-1 focus:ring-blue-500 outline-none"
+                      >
+                        <option value="">Toutes les classes</option>
+                        {classes.map(c => <option key={c.id} value={c.id}>{c.name}</option>)}
+                      </select>
+                    </div>
+                    <div>
+                      <label className="block text-[10px] font-medium text-gray-500 mb-1">Filtrer par Enseignant</label>
+                      <select
+                        value={selectedTeacherSynthesis}
+                        onChange={e => setSelectedTeacherSynthesis(e.target.value)}
+                        className="w-full text-[11px] px-2 py-1 bg-white dark:bg-slate-700 border border-gray-200 dark:border-slate-600 rounded focus:ring-1 focus:ring-blue-500 outline-none"
+                      >
+                        <option value="">Tous les enseignants</option>
+                        {teachers.map(t => <option key={t.id} value={t.id}>{t.name}</option>)}
+                      </select>
+                    </div>
+                  </div>
+                  <div>
+                    <label className="block text-[10px] font-medium text-gray-500 mb-1">Filières à inclure</label>
+                    <div className="max-h-32 overflow-auto border border-gray-200 dark:border-slate-600 rounded-md p-2 bg-white dark:bg-slate-700">
+                      {specialties.length === 0 && (
+                        <p className="text-[11px] text-gray-400">Aucune filière trouvée</p>
+                      )}
+                      {specialties.map(spec => {
+                        const checked = selectedSpecialtyIds.includes(String(spec.id));
+                        return (
+                          <label key={spec.id} className="flex items-center gap-1.5 text-[11px] text-gray-700 dark:text-gray-200">
+                            <input
+                              type="checkbox"
+                              className="rounded border-gray-300 text-blue-600 focus:ring-blue-500"
+                              checked={checked}
+                              onChange={(e) => {
+                                const id = String(spec.id);
+                                setSelectedSpecialtyIds(prev => {
+                                  const set = new Set(prev);
+                                  if (e.target.checked) set.add(id);
+                                  else set.delete(id);
+                                  return Array.from(set);
+                                });
+                              }}
+                            />
+                            <span className="font-semibold text-blue-600">{spec.code}</span>
+                            <span className="text-gray-500 dark:text-gray-400">— {spec.name}</span>
+                          </label>
+                        );
+                      })}
+                    </div>
+                  </div>
+                </div>
+              }
+              onDownload={(fmt) =>
+                reportService.downloadSynthesisSchedule(
+                  selectedClassSynthesis || undefined,
+                  selectedTeacherSynthesis || undefined,
+                  fmt,
+                  selectedSpecialtyIds,
+                )
+              }
             />
           </div>
         </section>

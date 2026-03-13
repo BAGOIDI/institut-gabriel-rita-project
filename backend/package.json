@@ -24,7 +24,8 @@
     "amqp-connection-manager": "^4.1.14",
     "axios": "^1.5.0",
     "reflect-metadata": "^0.1.13",
-    "rxjs": "^7.8.1"
+    "rxjs": "^7.8.1",
+    "typesense": "^1.8.0"
   },
   "devDependencies": {
     "@nestjs/cli": "^10.0.0",

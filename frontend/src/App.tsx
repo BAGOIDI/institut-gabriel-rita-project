@@ -1,9 +1,7 @@
 import React from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import { Layout } from './components/Layout';
 import { BancoLayout } from './components/BancoLayout';
-import { ProtectedRoute } from './components/ProtectedRoute';
-import Dashboard from './pages/Dashboard';
+import { Dashboard } from './pages/Dashboard';
 import { Students } from './pages/Students';
 import { Teachers } from './pages/Teachers';
 import { Timetable } from './pages/Timetable';
@@ -34,22 +32,20 @@ function App() {
               <Route
                 path="/*"
                 element={
-                  <ProtectedRoute>
-                    <BancoLayout>
-                      <Routes>
-                        <Route path="/" element={<Dashboard />} />
-                        <Route path="/teachers" element={<Teachers />}/>
-                        <Route path="/students" element={<Students />} />
-                        <Route path="/timetable" element={<Timetable />} />
-                        <Route path="/attendance" element={<Attendance />} />
-                        <Route path="/payments" element={<Payments />} />
-                        <Route path="/payment-rules" element={<PaymentRules />} />
-                        <Route path="/reports" element={<Reports />} />
-                        <Route path="/settings" element={<Settings />} />
-              <Route path="/configurations" element={<Configurations />} />
-                      </Routes>
-                    </BancoLayout>
-                  </ProtectedRoute>
+                  <BancoLayout>
+                    <Routes>
+                      <Route path="/" element={<Dashboard />} />
+                      <Route path="/teachers" element={<Teachers />}/>
+                      <Route path="/students" element={<Students />} />
+                      <Route path="/timetable" element={<Timetable />} />
+                      <Route path="/attendance" element={<Attendance />} />
+                      <Route path="/payments" element={<Payments />} />
+                      <Route path="/payment-rules" element={<PaymentRules />} />
+                      <Route path="/reports" element={<Reports />} />
+                      <Route path="/settings" element={<Settings />} />
+                      <Route path="/configurations" element={<Configurations />} />
+                    </Routes>
+                  </BancoLayout>
                 }
               />
             </Routes>

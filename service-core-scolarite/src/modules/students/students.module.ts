@@ -4,10 +4,11 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { StudentService } from './students.service';
 import { StudentController } from './students.controller';
 import { Student } from '../../entities/student.entity';
+import { Class } from '../../entities/class.entity';
 
 @Module({
   imports: [
-    TypeOrmModule.forFeature([Student]),
+    TypeOrmModule.forFeature([Student, Class]),
     ClientsModule.register([
       {
         name: 'RABBITMQ_SERVICE',

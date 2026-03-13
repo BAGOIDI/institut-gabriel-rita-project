@@ -13,10 +13,16 @@ from app.services.excel_service import ExcelService
 from datetime import datetime
 import io
 import requests
+import logging
+
+# Configure logging
+logging.basicConfig(level=logging.INFO)
+logger = logging.getLogger(__name__)
 
 reports_bp = Blueprint('reports', __name__)
 
-PLANNING_SERVICE_URL = 'http://service-planning:3000/schedule'
+# Align with NestJS planning service controller: /schedules
+PLANNING_SERVICE_URL = 'http://service-planning:3000/schedules'
 
 MIME_TYPES = {
     'pdf':  'application/pdf',
@@ -49,7 +55,10 @@ def health_check():
 @reports_bp.route('/available', methods=['GET'])
 def get_available_reports():
     return jsonify([
-        {'id': 'schedule', 'name': "Emploi du Temps", 'description': "EDT d'une classe", 'params': ['class_name'], 'formats': ['pdf', 'docx', 'xlsx'], 'route': '/api/reports/schedule/{class_name}'},
+        {'id': 'schedule-class', 'name': "Emploi du Temps (Classe)", 'description': "EDT d'une classe", 'params': ['class_name'], 'formats': ['pdf', 'docx', 'xlsx'], 'route': '/api/reports/schedule/{class_name}'},
+        {'id': 'schedule-teacher', 'name': "Emploi du Temps (Enseignant)", 'description': "EDT d'un enseignant", 'params': ['teacher_name'], 'formats': ['pdf', 'docx', 'xlsx'], 'route': '/api/reports/schedule/teacher/{teacher_name}'},
+        {'id': 'schedule-subject', 'name': "Emploi du Temps (Matière)", 'description': "EDT d'une matière", 'params': ['subject_name'], 'formats': ['pdf', 'docx', 'xlsx'], 'route': '/api/reports/schedule/subject/{subject_name}'},
+        {'id': 'schedule-synthesis', 'name': "Synthèse des Emplois du Temps", 'description': "EDT Global par Filière", 'params': [], 'formats': ['pdf'], 'route': '/api/reports/schedule/synthesis'},
         {'id': 'student', 'name': "Relevé de Compte Étudiant", 'description': "Historique paiements étudiant", 'params': ['matricule'], 'formats': ['pdf', 'docx', 'xlsx'], 'route': '/api/reports/student/{matricule}'},
         {'id': 'global-school', 'name': "Rapport Global École", 'description': "Vue d'ensemble", 'params': [], 'formats': ['pdf', 'docx', 'xlsx'], 'route': '/api/reports/global-school'},
         {'id': 'late-payments', 'name': "Paiements en Retard", 'description': "Élèves avec retard de paiement", 'params': [], 'formats': ['pdf', 'docx', 'xlsx'], 'route': '/api/reports/late-payments'},
@@ -61,63 +70,386 @@ def get_available_reports():
 @reports_bp.route('/classes', methods=['GET'])
 def get_classes():
     try:
+        logger.info("Fetching all classes...")
         classes = Class.query.all()
-        return jsonify([{'id': str(c.id), 'name': c.name} for c in classes])
+        logger.info(f"Found {len(classes)} classes")
+        return jsonify([{'id': str(c.id), 'name': c.name, 'specialty_id': str(c.specialty_id)} for c in classes])
     except Exception as e:
+        logger.error(f"Error in get_classes: {str(e)}")
         return jsonify({'error': str(e)}), 500
 
 
-@reports_bp.route('/schedule/<class_name>', methods=['GET'])
-def get_schedule_report(class_name):
+@reports_bp.route('/teachers', methods=['GET'])
+def get_teachers():
+    try:
+        logger.info("Fetching all teachers...")
+        teachers = Staff.query.all()
+        logger.info(f"Found {len(teachers)} teachers")
+        return jsonify([{'id': str(t.id), 'name': f"{t.first_name} {t.last_name}"} for t in teachers])
+    except Exception as e:
+        logger.error(f"Error in get_teachers: {str(e)}")
+        return jsonify({'error': str(e)}), 500
+
+
+@reports_bp.route('/subjects', methods=['GET'])
+def get_subjects():
+    try:
+        logger.info("Fetching all subjects...")
+        subjects = Subject.query.all()
+        logger.info(f"Found {len(subjects)} subjects")
+        return jsonify([{'id': str(s.id), 'name': s.name} for s in subjects])
+    except Exception as e:
+        logger.error(f"Error in get_subjects: {str(e)}")
+        return jsonify({'error': str(e)}), 500
+
+
+@reports_bp.route('/specialties', methods=['GET'])
+def get_specialties():
+    """
+    Retourne la liste des filières (specialties) disponibles pour les rapports de synthèse.
+    """
+    try:
+        logger.info("Fetching all specialties...")
+        specialties = Specialty.query.order_by(Specialty.code).all()
+        logger.info(f"Found {len(specialties)} specialties")
+        return jsonify([
+            {'id': str(s.id), 'name': s.name, 'code': s.code}
+            for s in specialties
+        ])
+    except Exception as e:
+        logger.error(f"Error in get_specialties: {str(e)}")
+        return jsonify({'error': str(e)}), 500
+
+
+@reports_bp.route('/schedule/<class_ref>', methods=['GET'])
+def get_schedule_report(class_ref):
     fmt = _get_format()
     try:
-        try:
-            response = requests.get(f'{PLANNING_SERVICE_URL}/class/{class_name}', timeout=5)
-            if response.status_code == 404:
-                return jsonify({'error': 'Classe non trouvée'}), 404
-            response.raise_for_status()
-            schedules = response.json()
-        except requests.exceptions.RequestException:
-            class_obj = Class.query.filter_by(name=class_name).first()
-            if not class_obj:
-                schedules = []
-            else:
-                schedules_db = CourseSchedule.query.filter_by(class_id=class_obj.id).all()
-                schedules = []
-                for s in schedules_db:
-                    teacher = Staff.query.get(s.teacher_id) if s.teacher_id else None
-                    subject = Subject.query.get(s.subject_id) if s.subject_id else None
-                    schedules.append({
-                        'className': class_name,
-                        'subjectName': subject.name if subject else 'N/A',
-                        'teacherName': f'{teacher.first_name} {teacher.last_name}' if teacher else 'N/A',
-                        'dayOfWeek': s.day_of_week,
-                        'startTime': s.start_time.strftime('%H:%M'),
-                        'endTime': s.end_time.strftime('%H:%M'),
-                        'room': s.room or '',
-                    })
+        logger.info(f"Generating schedule report for class {class_ref} in format {fmt}")
+        OFFICIAL_TIME_SLOTS = [
+            ('08:00', '09:50'),
+            ('10:05', '12:00'),
+            ('13:00', '14:50'),
+            ('15:05', '17:00'),
+            ('17:30', '19:20'),
+            ('19:35', '21:00'),
+        ]
+        
+        # Resolve class
+        import re
+        is_uuid = re.match(r'^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$', class_ref.lower())
+        
+        if is_uuid:
+            class_obj = Class.query.get(class_ref)
+        else:
+            class_obj = Class.query.filter_by(name=class_ref).first()
+            
+        if not class_obj:
+            return jsonify({'error': f'Classe non trouvée: {class_ref}'}), 404
+
+        class_name = class_obj.name
+        class_id = str(class_obj.id)
+        
+        # ... (rest of the logic for class schedule)
+        return _process_schedule_request(class_id, class_name, 'class', fmt, OFFICIAL_TIME_SLOTS)
+    except Exception as e:
+        logger.error(f"Error in get_schedule_report: {str(e)}")
+        return jsonify({'error': str(e)}), 500
+
+
+@reports_bp.route('/schedule/teacher/<staff_ref>', methods=['GET'])
+def get_teacher_schedule_report(staff_ref):
+    fmt = _get_format()
+    try:
+        logger.info(f"Generating schedule report for teacher {staff_ref} in format {fmt}")
+        OFFICIAL_TIME_SLOTS = [
+            ('08:00', '09:50'),
+            ('10:05', '12:00'),
+            ('13:00', '14:50'),
+            ('15:05', '17:00'),
+            ('17:30', '19:20'),
+            ('19:35', '21:00'),
+        ]
+        
+        teacher = Staff.query.get(staff_ref) if staff_ref.isdigit() else Staff.query.filter(
+            (Staff.first_name + " " + Staff.last_name == staff_ref) | 
+            (Staff.last_name + " " + Staff.first_name == staff_ref)
+        ).first()
+        
+        if not teacher:
+            return jsonify({'error': f'Enseignant non trouvé: {staff_ref}'}), 404
+            
+        teacher_name = f"{teacher.first_name} {teacher.last_name}"
+        teacher_id = str(teacher.id)
+        
+        return _process_schedule_request(teacher_id, teacher_name, 'staff', fmt, OFFICIAL_TIME_SLOTS)
+    except Exception as e:
+        logger.error(f"Error in get_teacher_schedule_report: {str(e)}")
+        return jsonify({'error': str(e)}), 500
+
+
+@reports_bp.route('/schedule/subject/<subject_ref>', methods=['GET'])
+def get_subject_schedule_report(subject_ref):
+    fmt = _get_format()
+    try:
+        logger.info(f"Generating schedule report for subject {subject_ref} in format {fmt}")
+        OFFICIAL_TIME_SLOTS = [
+            ('08:00', '09:50'),
+            ('10:05', '12:00'),
+            ('13:00', '14:50'),
+            ('15:05', '17:00'),
+            ('17:30', '19:20'),
+            ('19:35', '21:00'),
+        ]
+        
+        subject = Subject.query.get(subject_ref) if subject_ref.isdigit() else Subject.query.filter_by(name=subject_ref).first()
+        
+        if not subject:
+            return jsonify({'error': f'Matière non trouvée: {subject_ref}'}), 404
+            
+        subject_name = subject.name
+        subject_id = str(subject.id)
+        
+        return _process_schedule_request(subject_id, subject_name, 'subject', fmt, OFFICIAL_TIME_SLOTS)
+    except Exception as e:
+        logger.error(f"Error in get_subject_schedule_report: {str(e)}")
+        return jsonify({'error': str(e)}), 500
+
+
+def _process_schedule_request(target_id, target_name, filter_type, fmt, OFFICIAL_TIME_SLOTS):
+    try:
+        # Define base URL for planning service based on filter_type
+        if filter_type == 'class':
+            url = f'{PLANNING_SERVICE_URL}/class/{target_id}'
+        elif filter_type == 'staff':
+            url = f'{PLANNING_SERVICE_URL}/staff/{target_id}'
+        else:
+            # Planning service doesn't have direct /subject filter, fetch all and filter locally
+            url = PLANNING_SERVICE_URL
+            
+        response = requests.get(url, timeout=5)
+        response.raise_for_status()
+        schedules_raw = response.json()
+        
+        if filter_type == 'subject':
+            schedules_raw = [s for s in schedules_raw if str(s.get('subjectId')) == target_id]
+
+        schedules = []
+        for s in schedules_raw or []:
+            staff_id = s.get('staffId') or s.get('teacherId')
+            subj_id = s.get('subjectId')
+            cls_id = s.get('classId')
+            
+            teacher = Staff.query.get(staff_id) if staff_id else None
+            subject = Subject.query.get(subj_id) if subj_id else None
+            cls = Class.query.get(cls_id) if cls_id else None
+            
+            schedules.append({
+                'className': cls.name if cls else 'N/A',
+                'subjectName': subject.name if subject else 'N/A',
+                'teacherName': f'{teacher.first_name} {teacher.last_name}' if teacher else 'N/A',
+                'dayOfWeek': s.get('dayOfWeek'),
+                'startTime': (s.get('startTime') or '')[:5],
+                'endTime': (s.get('endTime') or '')[:5],
+                'room': s.get('roomName') or s.get('room') or '',
+            })
 
         DAYS = ['Lundi', 'Mardi', 'Mercredi', 'Jeudi', 'Vendredi', 'Samedi']
-        time_slots = ['08:00 - 09:00', '09:00 - 10:00', '10:00 - 11:00', '11:00 - 12:00',
-                      '14:00 - 15:00', '15:00 - 16:00', '16:00 - 17:00', '17:00 - 18:00']
         schedule_data = {}
+        for d in DAYS:
+            schedule_data[d] = {}
+            for start, end in OFFICIAL_TIME_SLOTS:
+                schedule_data[d][f"{start} - {end}"] = None
+
         for s in schedules:
-            idx = int(s['dayOfWeek']) - 1
+            try:
+                idx = int(s['dayOfWeek']) - 1
+            except Exception:
+                idx = 0
             day_key = DAYS[idx] if 0 <= idx < len(DAYS) else 'Lundi'
-            time_key = f"{s['startTime']} - {s['endTime']}"
-            if day_key not in schedule_data:
-                schedule_data[day_key] = {}
-            schedule_data[day_key][time_key] = {'subject': s['subjectName'], 'teacher_name': s['teacherName'], 'room': s.get('room', '')}
+            start = s['startTime'][:5]
+            end = s['endTime'][:5]
+            time_key = f"{start} - {end}"
+            if (start, end) in OFFICIAL_TIME_SLOTS:
+                schedule_data[day_key][time_key] = {
+                    'subject': s.get('subjectName', 'N/A'),
+                    'teacher_name': s.get('teacherName', 'N/A'),
+                    'room': s.get('room', ''),
+                    'class_name': s.get('className', 'N/A')
+                }
 
-        data = {'class_name': class_name, 'school_year': '2025-2026', 'current_date': datetime.now().strftime('%d/%m/%Y'), 'time_slots': time_slots, 'schedule': schedule_data}
+        time_slots = [f"{start} - {end}" for start, end in OFFICIAL_TIME_SLOTS]
+        data = {
+            'target_name': target_name,
+            'filter_type': filter_type,
+            'class_name': target_name if filter_type == 'class' else 'N/A',
+            'school_year': '2025-2026',
+            'current_date': datetime.now().strftime('%d/%m/%Y'),
+            'generated_at': datetime.now().strftime('%d/%m/%Y %H:%M'),
+            'days': DAYS,
+            'time_slots': time_slots,
+            'schedule': schedule_data
+        }
 
+        filename = f'edt_{filter_type}_{target_name.replace(" ", "_")}'
         if fmt == 'docx':
-            return _send_file_response(DocxService.generate_schedule(data), f'emploi_du_temps_{class_name}.docx', 'docx')
+            return _send_file_response(DocxService.generate_schedule(data), f'{filename}.docx', 'docx')
         elif fmt == 'xlsx':
-            return _send_file_response(ExcelService.generate_schedule(data), f'emploi_du_temps_{class_name}.xlsx', 'xlsx')
+            return _send_file_response(ExcelService.generate_schedule(data), f'{filename}.xlsx', 'xlsx')
         else:
-            return _send_file_response(PDFService.generate_pdf('schedule.html', data, landscape=True), f'emploi_du_temps_{class_name}.pdf', 'pdf')
+            return _send_file_response(PDFService.generate_pdf('schedule.html', data, landscape=True), f'{filename}.pdf', 'pdf')
     except Exception as e:
+        logger.error(f"Error in _process_schedule_request: {str(e)}")
+        return jsonify({'error': str(e)}), 500
+
+
+@reports_bp.route('/schedule/class/<class_ref>', methods=['GET'])
+def get_schedule_report_v2(class_ref):
+    return get_schedule_report(class_ref)
+
+
+@reports_bp.route('/schedule/synthesis', methods=['GET'])
+def get_synthesis_schedule_report():
+    fmt = _get_format()
+    class_id = request.args.get('class_id')
+    staff_id = request.args.get('staff_id')
+    specialty_ids_param = request.args.get('specialty_ids')  # liste d'IDs séparés par des virgules
+    
+    try:
+        logger.info(f"Generating synthesis schedule report in format {fmt} (class_id={class_id}, staff_id={staff_id})")
+        OFFICIAL_TIME_SLOTS = [
+            ('08:00', '09:50'),
+            ('10:05', '12:00'),
+            ('13:00', '14:50'),
+            ('15:05', '17:00'),
+            ('17:30', '19:20'),
+            ('19:35', '21:00'),
+        ]
+        
+        def format_time_label(start, end):
+            s_h = int(start.split(':')[0])
+            e_h = int(end.split(':')[0])
+            return f"{s_h}H - {e_h}H"
+
+        # 1. Fetch all schedules from planning service
+        # If class_id or staff_id is provided, we filter by it
+        url = PLANNING_SERVICE_URL
+        if class_id:
+            url = f"{PLANNING_SERVICE_URL}/class/{class_id}"
+        elif staff_id:
+            url = f"{PLANNING_SERVICE_URL}/staff/{staff_id}"
+            
+        response = requests.get(url, timeout=5)
+        response.raise_for_status()
+        schedules_raw = response.json()
+        
+        # If we filtered by class, we might still want to filter by staff if both are provided
+        if class_id and staff_id:
+            schedules_raw = [s for s in schedules_raw if str(s.get('staffId') or s.get('teacherId')) == staff_id]
+
+        # 2. Identify active specialties (for columns and legend)
+        active_spec_ids = set()
+        for s in schedules_raw or []:
+            cls_id = s.get('classId')
+            if cls_id:
+                cls = Class.query.get(cls_id)
+                if cls and cls.specialty_id:
+                    active_spec_ids.add(cls.specialty_id)
+
+        # If caller provided an explicit list of specialties, intersect it with active ones
+        explicit_spec_ids = set()
+        if specialty_ids_param:
+            try:
+                explicit_spec_ids = {int(x) for x in specialty_ids_param.split(',') if x.strip().isdigit()}
+            except Exception as e:
+                logger.error(f"Error parsing specialty_ids: {str(e)}")
+                explicit_spec_ids = set()
+
+        if explicit_spec_ids:
+            # We garde seulement les filières demandées qui sont effectivement actives
+            effective_spec_ids = active_spec_ids & explicit_spec_ids if active_spec_ids else explicit_spec_ids
+        else:
+            effective_spec_ids = active_spec_ids
+
+        specialties = Specialty.query.filter(Specialty.id.in_(effective_spec_ids)).order_by(Specialty.code).all() if effective_spec_ids else []
+        spec_list = [{'id': s.id, 'name': s.name, 'code': s.code} for s in specialties]
+        
+        # 3. Prepare data structure: Days -> TimeSlots -> Specialties
+        DAYS = ['Lundi', 'Mardi', 'Mercredi', 'Jeudi', 'Vendredi', 'Samedi']
+        time_slots = [format_time_label(start, end) for start, end in OFFICIAL_TIME_SLOTS]
+        ts_map = {f"{start} - {end}": format_time_label(start, end) for start, end in OFFICIAL_TIME_SLOTS}
+        
+        grid = {}
+        for d in DAYS:
+            grid[d] = {}
+            for tsl in time_slots:
+                grid[d][tsl] = {}
+                for spec in spec_list:
+                    grid[d][tsl][spec['id']] = ""
+
+        # Fill the grid
+        for s in schedules_raw or []:
+            try:
+                cls_id = s.get('classId')
+                if not cls_id: continue
+                cls = Class.query.get(cls_id)
+                if not cls or not cls.specialty_id: continue
+                spec_id = cls.specialty_id
+                # Ignore specialties that are not part of the selected/effective list
+                if spec_id not in {sp['id'] for sp in spec_list}:
+                    continue
+                
+                day_idx = int(s.get('dayOfWeek', 1)) - 1
+                if not (0 <= day_idx < len(DAYS)): continue
+                day_name = DAYS[day_idx]
+                
+                start = (s.get('startTime') or '')[:5]
+                end = (s.get('endTime') or '')[:5]
+                orig_ts = f"{start} - {end}"
+                
+                if orig_ts in ts_map:
+                    ts_label = ts_map[orig_ts]
+                    subj_id = s.get('subjectId')
+                    subj = Subject.query.get(subj_id) if subj_id else None
+                    course_name = subj.name if subj else "N/A"
+                    
+                    # If multiple classes in same specialty/slot, join them
+                    existing = grid[day_name][ts_label].get(spec_id, "")
+                    if existing:
+                        grid[day_name][ts_label][spec_id] = f"{existing}, {course_name}"
+                    else:
+                        grid[day_name][ts_label][spec_id] = course_name
+            except Exception as e:
+                logger.error(f"Error processing schedule item: {str(e)}")
+                continue
+
+        # Dynamic title based on filters
+        report_title = "SYNTHÈSE GLOBALE DES EMPLOIS DU TEMPS"
+        if class_id:
+            cls = Class.query.get(class_id)
+            if cls: report_title += f" - CLASSE: {cls.name}"
+        if staff_id:
+            stf = Staff.query.get(staff_id)
+            if stf: report_title += f" - ENSEIGNANT: {stf.first_name} {stf.last_name}"
+
+        data = {
+            'school_name': "INSTITUT GABRIEL RITA",
+            'report_title': report_title,
+            'school_year': '2025-2026',
+            'current_date': datetime.now().strftime('%d/%m/%Y'),
+            'generated_at': datetime.now().strftime('%d/%m/%Y %H:%M'),
+            'days': DAYS,
+            'time_slots': time_slots,
+            'specialties': spec_list,
+            'grid': grid,
+            'abbreviations': spec_list
+        }
+
+        filename = f'synthese_edt_{datetime.now().strftime("%Y%m%d")}'
+        return _send_file_response(PDFService.generate_pdf('complex_schedule.html', data, landscape=True), f'{filename}.pdf', 'pdf')
+
+    except Exception as e:
+        logger.error(f"Error in get_synthesis_schedule_report: {str(e)}")
         return jsonify({'error': str(e)}), 500
 
 
@@ -132,7 +464,7 @@ def get_student_report(matricule):
         invoices = Invoice.query.filter_by(student_id=student.id).all()
         data = {
             'student': {'firstName': student.first_name, 'lastName': student.last_name, 'matricule': student.matricule,
-                        'class_name': student.student_class.name if student.student_class else 'N/A',
+                        'class_name': student.class_obj.name if student.class_obj else 'N/A',
                         'totalFeesDue': sum(float(i.amount) for i in invoices),
                         'totalFeesPaid': sum(float(p.amount) for p in payments),
                         'balance': float(student.balance)},
@@ -160,10 +492,10 @@ def get_global_school_report():
         data = {
             'school_info': {'name': 'Institut Gabriel Rita', 'year': '2025-2026', 'report_date': datetime.now().strftime('%d/%m/%Y')},
             'statistics': {'total_students': len(students), 'active_students': len([s for s in students if s.is_active]),
-                           'total_staff': Staff.query.count(), 'total_classes': len(set([s.class_id for s in students if s.class_id])),
+                           'total_staff': Staff.query.count(), 'total_classes': Class.query.count(),
                            'total_revenue': sum(float(p.amount) for p in payments)},
             'students': [{'firstName': s.first_name, 'lastName': s.last_name, 'matricule': s.matricule,
-                          'className': s.student_class.name if s.student_class else 'N/A', 'balance': float(s.balance), 'isActive': s.is_active} for s in students],
+                          'className': s.class_obj.name if s.class_obj else 'N/A', 'balance': float(s.balance), 'isActive': s.is_active} for s in students],
         }
         if fmt == 'docx':
             return _send_file_response(DocxService.generate_global_school(data), 'rapport_global_ecole.docx', 'docx')
@@ -183,7 +515,7 @@ def get_late_payments_report():
         data = {
             'school_year': '2025-2026', 'current_date': datetime.now().strftime('%d/%m/%Y'),
             'late_payments': [{'firstName': s.first_name, 'lastName': s.last_name, 'matricule': s.matricule,
-                               'className': s.student_class.name if s.student_class else 'N/A', 'balance': float(s.balance)} for s in students],
+                               'className': s.class_obj.name if s.class_obj else 'N/A', 'balance': float(s.balance)} for s in students],
         }
         if fmt == 'docx':
             return _send_file_response(DocxService.generate_late_payments(data), 'paiements_en_retard.docx', 'docx')
@@ -203,7 +535,7 @@ def get_moratoriums_report():
         data = {
             'school_year': '2025-2026', 'current_date': datetime.now().strftime('%d/%m/%Y'),
             'students': [{'firstName': s.first_name, 'lastName': s.last_name, 'matricule': s.matricule,
-                          'className': s.student_class.name if s.student_class else 'N/A', 'balance': float(s.balance)} for s in students],
+                          'className': s.class_obj.name if s.class_obj else 'N/A', 'balance': float(s.balance)} for s in students],
         }
         if fmt == 'docx':
             return _send_file_response(DocxService.generate_moratoriums(data), 'rapport_moratoires.docx', 'docx')
@@ -215,24 +547,31 @@ def get_moratoriums_report():
         return jsonify({'error': str(e)}), 500
 
 
-@reports_bp.route('/payments-by-class/<class_name>', methods=['GET'])
-def get_payments_by_class_report(class_name):
+@reports_bp.route('/payments-by-class/<class_ref>', methods=['GET'])
+def get_payments_by_class_report(class_ref):
     fmt = _get_format()
     try:
-        class_obj = Class.query.filter_by(name=class_name).first()
+        # Resolve class
+        if class_ref.isdigit():
+            class_obj = Class.query.get(int(class_ref))
+        else:
+            class_obj = Class.query.filter_by(name=class_ref).first()
+            
         if not class_obj:
-            return jsonify({'error': 'Classe non trouvée'}), 404
+            return jsonify({'error': f'Classe non trouvée: {class_ref}'}), 404
+            
+        class_name = class_obj.name
         students = Student.query.filter_by(class_id=class_obj.id).all()
         student_ids = [s.id for s in students]
-        payments = Payment.query.filter(Payment.student_id.in_(student_ids)).all()
-        invoices = Invoice.query.filter(Invoice.student_id.in_(student_ids)).all()
+        payments = Payment.query.filter(Payment.student_id.in_(student_ids)).all() if student_ids else []
+        invoices = Invoice.query.filter(Invoice.student_id.in_(student_ids)).all() if student_ids else []
         data = {
             'class_name': class_name, 'school_year': '2025-2026', 'current_date': datetime.now().strftime('%d/%m/%Y'),
             'total_invoiced': sum(float(i.amount) for i in invoices),
             'total_paid': sum(float(p.amount) for p in payments),
             'students': [
                 {'firstName': s.first_name, 'lastName': s.last_name, 'matricule': s.matricule, 'balance': float(s.balance),
-                 'payments': [{'paymentDate': p.payment_date, 'reference': p.reference, 'method': p.method, 'amount': float(p.amount)} for p in payments if str(p.student_id) == str(s.id)],
+                 'payments': [{'paymentDate': p.payment_date, 'reference': p.reference, 'method': p.method, 'amount': float(p.amount)} for p in payments if p.student_id == s.id],
                  'invoices': [{'title': i.title, 'amount': float(i.amount), 'due_date': i.due_date, 'status': i.status} for i in Invoice.query.filter_by(student_id=s.id).all()]}
                 for s in students
             ],

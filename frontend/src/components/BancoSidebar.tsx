@@ -105,8 +105,8 @@ export const BancoSidebar: React.FC<BancoSidebarProps> = ({ isOpen, onClose }) =
           to={item.path}
           className={`flex items-center justify-between px-4 py-3 rounded-lg transition-all duration-200 group font-inter ${
             isActiveItem
-              ? 'bg-primary text-white shadow-md'
-              : 'text-gray-700 dark:text-gray-300 hover:bg-primary-light dark:hover:bg-primary-dark/20 hover:text-primary dark:hover:text-primary'
+              ? 'bg-primary text-white shadow-lg shadow-blue-500/10'
+              : 'text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-slate-800/60 hover:text-primary dark:hover:text-white'
           }`}
           onClick={() => hasSubmenu && toggleSubmenu(item.path)}
         >
@@ -114,7 +114,7 @@ export const BancoSidebar: React.FC<BancoSidebarProps> = ({ isOpen, onClose }) =
             <div className={`p-2 rounded-md transition-colors flex items-center justify-center ${
               isActiveItem 
                 ? 'bg-white/20' 
-                : 'bg-gray-100 dark:bg-slate-700 group-hover:bg-primary/10'
+                : 'bg-gray-100/80 dark:bg-slate-800/60 group-hover:bg-primary/10'
             }`} style={{ width: '36px', height: '36px' }}>
               <IconComponent className={`w-5 h-5 ${
                 isActiveItem ? 'text-white' : 'text-gray-600 dark:text-gray-400'
@@ -189,13 +189,13 @@ export const BancoSidebar: React.FC<BancoSidebarProps> = ({ isOpen, onClose }) =
         style={{ width: 'var(--sidebar-width)' }}
       >
         {/* Header */}
-        <div  style={{ height: 'var(--header-height)' }} className="px-4 border-b border-gray-200 dark:border-slate-700 flex items-center justify-between bg-white dark:bg-slate-800">
+        <div  style={{ height: 'var(--header-height)' }} className="px-4 border-b border-gray-200/70 dark:border-slate-700/60 flex items-center justify-between bg-white/80 dark:bg-slate-900/40 backdrop-blur-xl">
           <div >
-            <div className="text-lg font-black tracking-wider uppercase text-primary font-inter">
-              ADMIN ISGR
+            <div className="text-[10px] text-gray-500 dark:text-gray-400 font-semibold uppercase tracking-[0.22em] font-inter">
+              Institut Gabriel Rita
             </div>
-            <div className="text-[10px] text-gray-600 dark:text-gray-400 font-semibold uppercase tracking-widest mt-1 font-inter">
-              Système de Gestion
+            <div className="text-lg font-black tracking-tight uppercase text-gray-900 dark:text-white font-inter">
+              Admin ISGR
             </div>
           </div>
           <button 
@@ -216,7 +216,7 @@ export const BancoSidebar: React.FC<BancoSidebarProps> = ({ isOpen, onClose }) =
         </nav>
 
         {/* Footer */}
-        <div className="p-4 border-t border-gray-200 dark:border-slate-700 bg-white dark:bg-slate-800">
+        <div className="p-4 border-t border-gray-200/70 dark:border-slate-700/60 bg-white/70 dark:bg-slate-900/30 backdrop-blur-xl">
           <div className="text-center">
             <div className="text-[11px] text-gray-500 dark:text-gray-400 uppercase tracking-wider font-inter">
               Version 1.0.0

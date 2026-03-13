@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>Synthèse des Emplois du Temps</title>
+    <style>
+        body { font-family: sans-serif; }
+        table { width: 100%; border-collapse: collapse; }
+        th, td { border: 1px solid black; padding: 8px; text-align: left; }
+        th { background-color: #f2f2f2; }
+    </style>
+</head>
+<body>
+    <h1>Synthèse des Emplois du Temps</h1>
+    <p>Période: {{ school_year }}</p>
+    <table>
+        <thead>
+            <tr>
+                <th>JOURS</th>
+                <th>HORAIRES</th>
+                {% for specialty in specialties %}
+                <th>{{ specialty.name }}</th>
+                {% endfor %}
+            </tr>
+        </thead>
+        <tbody>
+            {% for day in days %}
+                {% for time_slot in time_slots %}
+                <tr>
+                    {% if loop.first %}
+                    <td rowspan="{{ time_slots|length }}">{{ day }}</td>
+                    {% endif %}
+                    <td>{{ time_slot }}</td>
+                    {% for specialty in specialties %}
+                    <td>{{ grid[day][time_slot][specialty.id] | safe }}</td>
+                    {% endfor %}
+                </tr>
+                {% endfor %}
+            {% endfor %}
+        </tbody>
+    </table>
+
+    <h2>Légende</h2>
+    <table>
+        <thead>
+            <tr>
+                <th>Code</th>
+                <th>Filière</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for specialty in specialties %}
+            <tr>
+                <td>{{ specialty.code }}</td>
+                <td>{{ specialty.name }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</body>
+</html>

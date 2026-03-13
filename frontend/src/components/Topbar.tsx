@@ -11,10 +11,15 @@ export const Topbar = ({ onMenuClick }: { onMenuClick: () => void }) => {
   const navigate = useNavigate();
   const t = translations[language];
   const [showUserMenu, setShowUserMenu] = useState(false);
+  const disableAuth = ((import.meta as any).env?.VITE_DISABLE_AUTH || 'false') === 'true';
 
   const handleLogout = () => {
     logout();
-    navigate('/login');
+    setShowUserMenu(false);
+    navigate('/', { replace: true });
+    if (!disableAuth) {
+      // Auth active: on pourra rediriger vers /login plus tard
+    }
   };
 
   return (

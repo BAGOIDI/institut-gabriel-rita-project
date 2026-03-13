@@ -6,46 +6,42 @@ import { Grade } from './grade.entity';
 
 @Entity({ name: 'students' })
 export class Student {
-  @PrimaryGeneratedColumn('uuid')
-  id: string;
+  @PrimaryGeneratedColumn()
+  id: number;
 
-  @OneToOne(() => User, { nullable: true })
-  @JoinColumn({ name: 'user_id' })
-  user: User;
-
-  @Column({ unique: true })
+  @Column({ unique: true, length: 50 })
   matricule: string;
 
-  @Column({ name: 'first_name' })
+  @Column({ name: 'first_name', length: 100 })
   firstName: string;
 
-  @Column({ name: 'last_name' })
+  @Column({ name: 'last_name', length: 100 })
   lastName: string;
+
+  @Column({ length: 20, nullable: true })
+  gender: string;
+
+  @Column({ name: 'date_of_birth', type: 'date', nullable: true })
+  dateOfBirth: Date;
+
+  @Column({ name: 'phone_number', length: 20, nullable: true })
+  phone: string;
+
+  @Column({ length: 100, nullable: true })
+  email: string;
+
+  @Column({ name: 'parent_phone_number', length: 20, nullable: true })
+  parentPhone: string;
 
   @ManyToOne(() => Class, { nullable: true })
   @JoinColumn({ name: 'class_id' })
   class: Class;
 
-  @Column({ type: 'date', nullable: true })
-  dateOfBirth: Date;
+  @Column({ name: 'special_status', length: 100, nullable: true })
+  specialStatus: string;
 
-  @Column({ length: 1, nullable: true })
-  gender: string;
-
-  @Column({ nullable: true })
-  phone: string;
-
-  @Column({ nullable: true })
-  parentPhone: string;
-
-  @Column({ type: 'decimal', precision: 10, scale: 2, default: 0 })
-  balance: number;
-
-  @Column({ name: 'photo_url', nullable: true })
+  @Column({ name: 'photo', type: 'text', nullable: true })
   photoUrl: string;
-
-  @Column({ default: true })
-  isActive: boolean;
 
   @OneToMany(() => Invoice, invoice => invoice.student)
   invoices: Invoice[];

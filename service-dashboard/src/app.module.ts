@@ -12,7 +12,7 @@ import { EventsGateway } from './dashboard/events.gateway';
       port: parseInt(process.env.DATABASE_PORT, 10) || 5432,
       username: process.env.DATABASE_USER || 'postgres',
       password: process.env.DATABASE_PASSWORD || 'postgres',
-      database: process.env.DATABASE_NAME || 'scolarite_db',
+      database: process.env.DATABASE_NAME || 'institut_gabriel_rita_db',
       entities: [],
       synchronize: false,
     }),

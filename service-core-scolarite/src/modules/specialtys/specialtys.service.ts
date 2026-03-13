@@ -22,7 +22,8 @@ export class SpecialtyService {
   }
 
   async findOne(id: string): Promise<Specialty> {
-    const specialty = await this.specialtyRepository.findOne({ where: { id } });
+    const numericId = Number(id);
+    const specialty = await this.specialtyRepository.findOne({ where: { id: numericId } });
     if (!specialty) {
       throw new NotFoundException(`Specialty with ID ${id} not found`);
     }
@@ -30,8 +31,9 @@ export class SpecialtyService {
   }
 
   async update(id: string, updateSpecialtyDto: UpdateSpecialtyDto): Promise<Specialty> {
+    const numericId = Number(id);
     const specialty = await this.specialtyRepository.preload({
-      id: id,
+      id: numericId,
       ...updateSpecialtyDto,
     });
     if (!specialty) {

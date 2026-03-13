@@ -1,122 +1,142 @@
 {% extends "base_report.html" %}
 
 {% block title %}Emploi du Temps - {{ class_name }}{% endblock %}
+{% block report_title %}EMPLOI DU TEMPS : <span class="text-accent">{{ class_name }}</span>{% endblock %}
 
 {% block container_class %}landscape{% endblock %}
 
 {% block extra_css %}
 <style>
-    @page { size: A4 landscape; margin: 0; }
-    
+    @page { size: A4 landscape; margin: 5mm; }
+
     .schedule-table {
         width: 100%;
-        border-collapse: collapse;
-        border: 1px solid var(--primary-blue);
+        border-collapse: separate;
+        border-spacing: 0;
         table-layout: fixed;
-    }
-    .schedule-table th {
-        background-color: var(--primary-blue);
-        color: white;
-        padding: 8px;
-        border: 0.5px solid white;
-    }
-    .schedule-table td {
-        border: 0.5px solid var(--primary-blue);
-        padding: 0;
-        height: 95px;
-        vertical-align: middle;
-    }
-    
-    .time-slot-cell {
-        background-color: #F3F4F6;
-        color: var(--primary-blue);
-        font-weight: 700;
-        font-size: 11px;
-        width: 80px;
-        text-align: center !important;
+        border: 1px solid var(--border);
+        border-radius: 6px;
+        overflow: hidden;
     }
 
-    .course-block {
+    .schedule-table th, .schedule-table td {
+        border: 0.5px solid var(--border);
+        padding: 4px 6px;
+        text-align: center;
+        vertical-align: top;
+    }
+
+    .schedule-table thead th {
+        background-color: var(--primary-light);
+        color: var(--white);
+        font-weight: 700;
+        text-transform: uppercase;
+        font-size: 9px; /* Larger font */
+        letter-spacing: 0.8px;
+        padding: 9px 4px;
+        border-color: var(--primary-light);
+    }
+
+    .time-col {
+        width: 80px;
+        background-color: var(--bg-soft);
+        font-weight: 700;
+        vertical-align: middle !important;
+        font-size: 8.5px; /* Slightly larger */
+        color: var(--primary-light);
+        border-right: 1px solid var(--border) !important;
+        border-top: 1px solid var(--border) !important;
+    }
+
+    .day-cell {
+        height: 70px; /* Adjusted height */
+        padding: 3px !important;
+        background-color: #fdfdfe; /* Off-white */
+    }
+
+    .course-item {
+        text-align: left;
         height: 100%;
-        padding: 8px 12px;
         display: flex;
         flex-direction: column;
         justify-content: center;
-        align-items: flex-start;
-        text-align: left;
+        padding: 6px 8px;
+        border-radius: 4px;
+        border-left: 4px solid var(--secondary);
     }
-    .course-subject { font-weight: 700; font-size: 11px; color: var(--text-main); margin-bottom: 4px; text-transform: uppercase; }
-    .course-detail { font-size: 10px; color: var(--text-muted); display: flex; align-items: center; gap: 6px; margin-bottom: 2px; }
-    
-    /* Background Colors */
-    .bg-tech { background-color: rgba(11, 75, 131, 0.08); }
-    .bg-elec { background-color: rgba(230, 166, 71, 0.08); }
-    .bg-mech { background-color: rgba(163, 140, 92, 0.08); }
-    .bg-info { background-color: rgba(16, 185, 129, 0.08); }
-    .bg-gen  { background-color: rgba(239, 68, 68, 0.08); }
-    .bg-default { background-color: #FAFAFA; }
+
+    .course-subject {
+        font-weight: 800;
+        font-size: 10px;
+        margin-bottom: 4px;
+        color: var(--primary);
+        line-height: 1.25;
+        display: -webkit-box;
+        -webkit-line-clamp: 2;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+        text-transform: uppercase;
+    }
+
+    .course-teacher {
+        font-size: 8.5px;
+        color: var(--secondary);
+        font-weight: 600;
+    }
+
+    /* Subject-based background and border colors */
+    .course-item[data-type="tech"] { 
+        border-left-color: #3b82f6; /* Blue 500 */
+        background-color: #eff6ff; /* Blue 50 */
+    }
+    .course-item[data-type="gen"] { 
+        border-left-color: #ec4899; /* Pink 500 */
+        background-color: #fdf2f8; /* Pink 50 */
+    }
+    .course-item[data-type="info"] { 
+        border-left-color: #10b981; /* Emerald 500 */
+        background-color: #f0fdf4; /* Emerald 50 */
+    }
+    .course-item[data-type="default"] { 
+        border-left-color: var(--secondary);
+        background-color: var(--bg-soft);
+    }
+
 </style>
 {% endblock %}
 
 {% block content %}
-<div class="report-title-section">
-    <h1 class="report-title">Emploi du Temps Hebdomadaire</h1>
-    <div class="info-group">
-        <div class="class-info-box">
-            <span class="class-label">Semaine du</span>
-            <span class="class-value">10 Juin 2026</span>
-        </div>
-        <div class="class-info-box">
-            <span class="class-label">Classe</span>
-            <span class="class-value">{{ class_name }}</span>
-        </div>
-    </div>
-</div>
-
 <table class="schedule-table">
     <thead>
         <tr>
-            <th style="width: 80px;">Heure</th>
-            <th style="width: 15.3%;">Lundi</th>
-            <th style="width: 15.3%;">Mardi</th>
-            <th style="width: 15.3%;">Mercredi</th>
-            <th style="width: 15.3%;">Jeudi</th>
-            <th style="width: 15.3%;">Vendredi</th>
-            <th style="width: 15.3%;">Samedi</th>
+            <th class="time-col">CRÉNEAU</th>
+            {% for day in days %}
+            <th>{{ day|upper }}</th>
+            {% endfor %}
         </tr>
     </thead>
     <tbody>
         {% for time_slot in time_slots %}
         <tr>
-            <td class="time-slot-cell">{{ time_slot }}</td>
-            {% for day in range(1, 7) %}
+            <td class="time-col">{{ time_slot }}</td>
+            {% for day in days %}
             {% set course = schedule.get(day, {}).get(time_slot) %}
-            <td>
+            <td class="day-cell">
                 {% if course %}
-                    {% set bg_class = 'bg-default' %}
-                    {% if 'Math' in course.subject or 'Auto' in course.subject %} {% set bg_class = 'bg-tech' %}
-                    {% elif 'Phys' in course.subject or 'Elec' in course.subject %} {% set bg_class = 'bg-elec' %}
-                    {% elif 'Hist' in course.subject or 'Mech' in course.subject %} {% set bg_class = 'bg-mech' %}
-                    {% elif 'SVT' in course.subject or 'Info' in course.subject or 'CAO' in course.subject %} {% set bg_class = 'bg-info' %}
-                    {% elif 'Anglais' in course.subject or 'Projet' in course.subject %} {% set bg_class = 'bg-gen' %}
-                    {% endif %}
-                    
-                    <div class="course-block {{ bg_class }}">
-                        <div class="course-subject">{{ course.subject }}</div>
-                        <div class="course-detail"><i class="fas fa-user-circle"></i> {{ course.teacher_name }}</div>
-                        <div class="course-detail"><i class="fas fa-map-marker-alt"></i> {{ course.room }}</div>
-                    </div>
+                {% set ctype = "default" %}
+                {% if "Math" in course.subject or "Phys" in course.subject %} {% set ctype = "tech" %}
+                {% elif "Français" in course.subject or "Anglais" in course.subject %} {% set ctype = "gen" %}
+                {% elif "Info" in course.subject or "Prog" in course.subject %} {% set ctype = "info" %}
+                {% endif %}
+                <div class="course-item" data-type="{{ ctype }}">
+                    <div class="course-subject">{{ course.subject }}</div>
+                    <div class="course-teacher">{{ course.teacher_name }}</div>
+                </div>
                 {% endif %}
             </td>
             {% endfor %}
         </tr>
-        <!-- Optional Pause Row Logic could go here if data supports it -->
         {% endfor %}
-        
-        <!-- Static Pause Row Example (can be moved inside loop if time_slots are split) -->
-        <tr style="height: 25px;">
-            <td colspan="7" style="background-color: #E5E7EB; text-align: center; font-weight: 800; color: var(--text-muted); padding: 4px; height: auto; letter-spacing: 15px; text-transform: uppercase; border: 0.5px solid var(--primary-blue);">PAUSE</td>
-        </tr>
     </tbody>
 </table>
 {% endblock %}

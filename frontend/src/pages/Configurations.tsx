@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { SystemOptionsService, SystemOption } from '../services/system-options.service';
 import { Plus, Trash2, Edit2, Save, X } from 'lucide-react';
+import { ConfirmDialog } from '../components/ConfirmDialog';
 
 export const Configurations = () => {
   const [options, setOptions] = useState<SystemOption[]>([]);
@@ -10,6 +11,9 @@ export const Configurations = () => {
   const [newForm, setNewForm] = useState({ category: 'GENDER', value: '', label: '', isActive: true });
   const [isAdding, setIsAdding] = useState(false);
   const [filterCategory, setFilterCategory] = useState<string>('ALL');
+  const [confirmOpen, setConfirmOpen] = useState(false);
+  const [targetDeleteId, setTargetDeleteId] = useState<string | null>(null);
+  const [deleteLoading, setDeleteLoading] = useState(false);
 
   const categories = ['GENDER', 'MARITAL_STATUS', 'DEGREE', 'SPECIALTY', 'CLASS_ROOM', 'BLOOD_GROUP'];
 
@@ -49,14 +53,22 @@ export const Configurations = () => {
     }
   };
 
-  const handleDelete = async (id: string) => {
-    if (window.confirm('Êtes-vous sûr de vouloir supprimer cette option ?')) {
-      try {
-        await SystemOptionsService.delete(id);
-        loadOptions();
-      } catch (error) {
-        console.error(error);
-      }
+  const handleDelete = (id: string) => {
+    setTargetDeleteId(id);
+    setConfirmOpen(true);
+  };
+  const deleteOption = async () => {
+    if (!targetDeleteId) return;
+    setDeleteLoading(true);
+    try {
+      await SystemOptionsService.delete(targetDeleteId);
+      await loadOptions();
+    } catch (error) {
+      console.error(error);
+    } finally {
+      setDeleteLoading(false);
+      setConfirmOpen(false);
+      setTargetDeleteId(null);
     }
   };
 
@@ -117,7 +129,7 @@ export const Configurations = () => {
               />
             </div>
             <div className="flex items-end">
-              <button onClick={handleAdd} className="bg-green-600 text-white px-4 py-2 rounded-lg w-full">
+              <button onClick={handleAdd} className="bg-primary hover:bg-primary/90 text-white px-4 py-2 rounded-lg w-full font-semibold shadow-sm shadow-blue-500/10">
                 Enregistrer
               </button>
             </div>
@@ -185,6 +197,21 @@ export const Configurations = () => {
           </tbody>
         </table>
       </div>
+      <ConfirmDialog
+        isOpen={confirmOpen}
+        onClose={() => {
+          if (deleteLoading) return;
+          setConfirmOpen(false);
+          setTargetDeleteId(null);
+        }}
+        onConfirm={deleteOption}
+        title="Supprimer l'option"
+        message="Cette action est irréversible. Voulez-vous vraiment supprimer cette option ?"
+        confirmText="Supprimer"
+        cancelText="Annuler"
+        type="danger"
+        loading={deleteLoading}
+      />
     </div>
   );
 };

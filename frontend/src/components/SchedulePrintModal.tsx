@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { X, Download, FileText, FileSpreadsheet, File, Loader2 } from 'lucide-react';
 import reportService, { ReportFormat } from '../services/report.service';
 
@@ -26,17 +26,75 @@ const SchedulePrintModal: React.FC<SchedulePrintModalProps> = ({ scheduleData, i
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [success, setSuccess] = useState(false);
+  
+  const [exportType, setExportType] = useState<'class' | 'teacher' | 'subject' | 'specialty'>('class');
+  const [options, setOptions] = useState<{ id: string; name: string; specialty_id: string }[]>([]);
+  const [selectedItemNames, setSelectedItemNames] = useState<string[]>([]);
+
+  useEffect(() => {
+    if (!isOpen) return;
+    let mounted = true;
+    
+    const loadOptions = async () => {
+      try {
+        let list: { id: string; name: string; specialty_id: string }[] = [];
+        if (exportType === 'class') list = await reportService.getClasses();
+        else if (exportType === 'teacher') list = (await reportService.getTeachers()).map(t => ({ ...t, specialty_id: '' }));
+        else if (exportType === 'subject') list = (await reportService.getSubjects()).map(s => ({ ...s, specialty_id: '' }));
+        else if (exportType === 'specialty') list = (await reportService.getSpecialties()).map(s => ({ ...s, specialty_id: s.id }));
+        
+        if (!mounted) return;
+        setOptions(list || []);
+        
+        let defaultNames: string[] = [];
+        if (exportType === 'class' && scheduleData.viewMode === 'class') {
+          const name = list.find(c => String(c.id) === String(scheduleData.filter))?.name;
+          if (name) defaultNames = [name];
+        } else if (exportType === 'teacher' && scheduleData.viewMode === 'teacher') {
+          const name = list.find(t => String(t.id) === String(scheduleData.filter))?.name;
+          if (name) defaultNames = [name];
+        }
+        
+        setSelectedItemNames(defaultNames);
+      } catch (e) {
+        if (mounted) setOptions([]);
+      }
+    };
+
+    loadOptions();
+    return () => { mounted = false; };
+  }, [isOpen, exportType, scheduleData.viewMode, scheduleData.filter]);
 
   if (!isOpen) return null;
-
-  const className = scheduleData.filter || 'Classe';
 
   const handleGenerate = async () => {
     setIsLoading(true);
     setError(null);
     setSuccess(false);
     try {
-      await reportService.downloadSchedule(className, selectedFormat);
+      if (selectedItemNames.length === 0) {
+        setError("Veuillez sélectionner au moins un élément pour l'export.");
+        return;
+      }
+
+      if ((exportType === 'class' && selectedItemNames.length > 1) || exportType === 'specialty') {
+        const specialtyIds = selectedItemNames.map(name => {
+          const option = options.find(opt => opt.name === name);
+          return option ? option.specialty_id : null;
+        }).filter(id => id !== null) as string[];
+        await reportService.downloadSynthesisSchedule(undefined, undefined, selectedFormat, specialtyIds);
+      } else {
+        for (const name of selectedItemNames) {
+          if (exportType === 'class') {
+            await reportService.downloadSchedule(name, selectedFormat);
+          } else if (exportType === 'teacher') {
+            await reportService.downloadTeacherSchedule(name, selectedFormat);
+          } else {
+            await reportService.downloadSubjectSchedule(name, selectedFormat);
+          }
+        }
+      }
+
       setSuccess(true);
       setTimeout(() => {
         onClose();
@@ -55,17 +113,86 @@ const SchedulePrintModal: React.FC<SchedulePrintModalProps> = ({ scheduleData, i
         {/* Header */}
         <div className="flex justify-between items-center px-5 py-4 border-b border-gray-200 dark:border-slate-700">
           <div>
-            <h3 className="text-base font-bold text-gray-900 dark:text-white">Exporter l'emploi du temps</h3>
-            <p className="text-xs text-gray-500 dark:text-gray-400 mt-0.5">{className} — {scheduleData.period}</p>
+            <h3 className="text-base font-bold text-gray-900 dark:text-white uppercase tracking-tight">Exporter l'emploi du temps</h3>
+            <p className="text-[10px] text-gray-500 dark:text-gray-400 mt-0.5 uppercase font-semibold tracking-wider">
+              {scheduleData.period}
+            </p>
           </div>
           <button onClick={onClose} className="p-1.5 hover:bg-gray-100 dark:hover:bg-slate-700 rounded-md transition-colors">
             <X className="w-4 h-4 text-gray-500" />
           </button>
         </div>
 
-        {/* Sélecteur de format */}
-        <div className="p-5 space-y-3">
-          <p className="text-xs font-semibold text-gray-600 dark:text-gray-400 uppercase tracking-wide">Choisir le format</p>
+        {/* Content */}
+        <div className="p-5 space-y-4">
+          {/* Sélecteur de type d'export */}
+          <div className="space-y-1.5">
+            <p className="text-[10px] font-bold text-gray-500 dark:text-gray-400 uppercase tracking-widest">Type d'exportation</p>
+            <div className="grid grid-cols-4 gap-2 p-1 bg-gray-50 dark:bg-slate-700 rounded-lg border border-gray-200 dark:border-slate-600">
+              <button
+                onClick={() => setExportType('class')}
+                className={`py-1.5 rounded-md text-[11px] font-bold transition-all uppercase ${
+                  exportType === 'class' ? 'bg-white dark:bg-slate-600 shadow-sm text-blue-600 border border-gray-200 dark:border-slate-500' : 'text-gray-500'
+                }`}
+              >
+                Classe
+              </button>
+              <button
+                onClick={() => setExportType('teacher')}
+                className={`py-1.5 rounded-md text-[11px] font-bold transition-all uppercase ${
+                  exportType === 'teacher' ? 'bg-white dark:bg-slate-600 shadow-sm text-blue-600 border border-gray-200 dark:border-slate-500' : 'text-gray-500'
+                }`}
+              >
+                Enseignant
+              </button>
+              <button
+                onClick={() => setExportType('subject')}
+                className={`py-1.5 rounded-md text-[11px] font-bold transition-all uppercase ${
+                  exportType === 'subject' ? 'bg-white dark:bg-slate-600 shadow-sm text-blue-600 border border-gray-200 dark:border-slate-500' : 'text-gray-500'
+                }`}
+              >
+                Matière
+              </button>
+              <button
+                onClick={() => setExportType('specialty')}
+                className={`py-1.5 rounded-md text-[11px] font-bold transition-all uppercase ${
+                  exportType === 'specialty' ? 'bg-white dark:bg-slate-600 shadow-sm text-blue-600 border border-gray-200 dark:border-slate-500' : 'text-gray-500'
+                }`}
+              >
+                Filière
+              </button>
+            </div>
+          </div>
+
+          {/* Sélecteur de l'élément spécifique */}
+          <div className="space-y-1.5">
+            <p className="text-[10px] font-bold text-gray-500 dark:text-gray-400 uppercase tracking-widest">
+              {exportType === 'class' ? 'Classe(s)' : exportType === 'teacher' ? 'Enseignant' : exportType === 'subject' ? 'Matière' : 'Filière(s)'} à exporter
+            </p>
+            <div className="w-full bg-gray-50 dark:bg-slate-700 border border-gray-200 dark:border-slate-600 rounded-lg text-xs font-semibold px-3 py-2.5 dark:text-white focus:ring-2 focus:ring-blue-500 outline-none max-h-48 overflow-y-auto">
+              {options.length === 0 && <p>Chargement...</p>}
+              {options.map((opt) => (
+                <div key={opt.id} className="flex items-center gap-2">
+                  <input
+                    type="checkbox"
+                    id={opt.id}
+                    value={opt.name}
+                    checked={selectedItemNames.includes(opt.name)}
+                    onChange={(e) => {
+                      if (e.target.checked) {
+                        setSelectedItemNames([...selectedItemNames, opt.name]);
+                      } else {
+                        setSelectedItemNames(selectedItemNames.filter(name => name !== opt.name));
+                      }
+                    }}
+                  />
+                  <label htmlFor={opt.id}>{opt.name}</label>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          <p className="text-[10px] font-bold text-gray-500 dark:text-gray-400 uppercase tracking-widest">Choisir le format</p>
           <div className="space-y-2">
             {FORMAT_OPTIONS.map(opt => (
               <label
@@ -105,8 +232,8 @@ const SchedulePrintModal: React.FC<SchedulePrintModalProps> = ({ scheduleData, i
             </div>
           )}
           {success && (
-            <div className="p-2.5 bg-green-50 border border-green-200 rounded-md text-xs text-green-700">
-              ✅ Document téléchargé avec succès !
+            <div className="p-2.5 bg-emerald-50 border border-emerald-200 dark:bg-emerald-900/30 dark:border-emerald-800 rounded-md text-xs text-emerald-700 dark:text-emerald-200">
+              Document téléchargé avec succès.
             </div>
           )}
         </div>

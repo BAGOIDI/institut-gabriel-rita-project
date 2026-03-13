@@ -14,6 +14,12 @@ export class Subject {
   @Column({ nullable: true })
   code: string;
 
+  @Column({ nullable: true })
+  color?: string;
+
+  @Column({ name: 'background_color', nullable: true })
+  backgroundColor?: string;
+
   @ManyToOne(() => Class, { nullable: true })
   @JoinColumn({ name: 'class_id' })
   class: Class;

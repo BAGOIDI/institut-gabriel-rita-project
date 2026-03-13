@@ -1,20 +1,24 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, Query } from '@nestjs/common';
 import { StudentService } from './students.service';
-import { CreateStudentDto } from './dto/create-students.dto';
-import { UpdateStudentDto } from './dto/update-students.dto';
 
 @Controller('students')
 export class StudentController {
   constructor(private readonly studentService: StudentService) {}
 
   @Post()
-  create(@Body() createStudentDto: CreateStudentDto) {
-    return this.studentService.create(createStudentDto);
+  create(@Body() body: any) {
+    return this.studentService.create(body);
   }
 
   @Get()
-  findAll() {
-    return this.studentService.findAll();
+  findAll(
+    @Query('page') page?: string,
+    @Query('limit') limit?: string,
+  ) {
+    return this.studentService.findAll({
+      page: page ? Number(page) : undefined,
+      limit: limit ? Number(limit) : undefined,
+    });
   }
 
   @Get(':id')
@@ -23,12 +27,29 @@ export class StudentController {
   }
 
   @Patch(':id')
-  update(@Param('id') id: string, @Body() updateStudentDto: UpdateStudentDto) {
-    return this.studentService.update(id, updateStudentDto);
+  update(@Param('id') id: string, @Body() body: any) {
+    return this.studentService.update(id, body);
   }
 
   @Delete(':id')
   remove(@Param('id') id: string) {
     return this.studentService.remove(id);
+  }
+
+  @Get('search')
+  search(
+    @Query('q') q?: string,
+    @Query('page') page?: string,
+    @Query('limit') limit?: string,
+  ) {
+    return this.studentService.search(q, {
+      page: page ? Number(page) : undefined,
+      limit: limit ? Number(limit) : undefined,
+    });
+  }
+
+  @Post('import')
+  import(@Body() rows: any[]) {
+    return this.studentService.importFromJson(rows);
   }
 }

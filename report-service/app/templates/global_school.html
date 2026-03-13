@@ -1,94 +1,162 @@
 {% extends "base_report.html" %}
 
-{% block title %}Rapport Global - Institut{% endblock %}
+{% block title %}Rapport Global - Institut Gabriel Rita{% endblock %}
+{% block report_title %}BILAN GÉNÉRAL DE L'ÉTABLISSEMENT{% endblock %}
 
 {% block extra_css %}
 <style>
-    .kpi-container {
+    .stats-container {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 12px;
+        margin-bottom: 25px;
+    }
+
+    .stats-card {
+        background: var(--white);
+        border: 1px solid var(--border);
+        padding: 15px 10px;
+        text-align: center;
+        border-radius: 8px;
+        position: relative;
+    }
+
+    .stats-card.featured {
+        background: var(--primary);
+        border-color: var(--primary);
+    }
+
+    .stats-card.featured .stats-val, 
+    .stats-card.featured .stats-lbl {
+        color: var(--white);
+    }
+
+    .stats-val {
+        display: block;
+        font-size: 18px;
+        font-weight: 800;
+        color: var(--primary);
+        margin-bottom: 4px;
+    }
+
+    .stats-lbl {
+        font-size: 8px;
+        text-transform: uppercase;
+        color: var(--secondary);
+        font-weight: 700;
+        letter-spacing: 0.5px;
+    }
+
+    .section-header {
+        font-size: 11px;
+        font-weight: 800;
+        margin-bottom: 12px;
+        padding: 6px 0;
+        border-bottom: 2px solid var(--primary);
         display: flex;
         justify-content: space-between;
-        margin-bottom: 30px;
-        border: 1px solid var(--border-color);
+        align-items: center;
     }
-    .kpi-box {
-        flex: 1;
-        padding: 15px;
-        text-align: center;
-        border-right: 1px solid var(--border-color);
+
+    .badge-count {
+        background: var(--bg-soft);
+        color: var(--primary);
+        padding: 2px 8px;
+        border-radius: 10px;
+        font-size: 8px;
+        border: 1px solid var(--border);
     }
-    .kpi-box:last-child { border-right: none; }
-    .kpi-label {
-        font-size: 10px;
+
+    .data-table {
+        width: 100%;
+        border-collapse: collapse;
+        border: 1px solid var(--border);
+        border-radius: 6px;
+        overflow: hidden;
+    }
+
+    .data-table th {
+        background: var(--bg-soft);
+        color: var(--primary);
+        font-weight: 800;
         text-transform: uppercase;
-        color: var(--text-muted);
-        font-weight: 600;
-        margin-bottom: 5px;
+        font-size: 8px;
+        padding: 10px;
+        text-align: left;
+        border-bottom: 1.5px solid var(--border);
     }
-    .kpi-value {
-        font-size: 24px;
-        font-weight: 700;
-        color: var(--primary-blue);
+
+    .data-table td {
+        padding: 8px 10px;
+        font-size: 8.5px;
+        border-bottom: 0.5px solid var(--border);
+        color: var(--primary-light);
     }
-    .section-header {
-        font-size: 14px;
+
+    tr:nth-child(even) {
+        background-color: #fcfcfc;
+    }
+
+    .status-active { color: #059669; font-weight: 700; }
+    .status-inactive { color: #dc2626; font-weight: 700; }
+
+    .balance-val {
+        text-align: right;
         font-weight: 700;
-        color: var(--secondary-blue);
-        margin-bottom: 10px;
-        text-transform: uppercase;
-        border-left: 5px solid var(--accent-orange);
-        padding-left: 10px;
+        font-family: 'Courier New', Courier, monospace;
     }
 </style>
 {% endblock %}
 
 {% block content %}
-<div class="report-title-section" style="display: block; text-align: center; border-bottom: none;">
-    <h1 class="report-title" style="margin-bottom: 10px;">Tableau de Bord Global</h1>
-    <div class="class-info-box" style="display: inline-flex;">
-        <span class="class-label">Année Académique</span>
-        <span class="class-value">{{ school_year|default('2025-2026') }}</span>
+<div class="stats-container">
+    <div class="stats-card">
+        <span class="stats-val">{{ statistics.total_students }}</span>
+        <span class="stats-lbl">Effectif Total</span>
+    </div>
+    <div class="stats-card">
+        <span class="stats-val">{{ statistics.active_students }}</span>
+        <span class="stats-lbl">Élèves Actifs</span>
+    </div>
+    <div class="stats-card">
+        <span class="stats-val">{{ statistics.total_staff }}</span>
+        <span class="stats-lbl">Personnel</span>
+    </div>
+    <div class="stats-card featured">
+        <span class="stats-val">{{ "{:,.0f}".format(statistics.total_revenue) }}</span>
+        <span class="stats-lbl">Recettes (FCFA)</span>
     </div>
 </div>
 
-<div class="kpi-container">
-    <div class="kpi-box">
-        <div class="kpi-label">Total Étudiants</div>
-        <div class="kpi-value">{{ statistics.total_students }}</div>
-    </div>
-    <div class="kpi-box">
-        <div class="kpi-label">Étudiants Actifs</div>
-        <div class="kpi-value">{{ statistics.active_students }}</div>
-    </div>
-    <div class="kpi-box">
-        <div class="kpi-label">Personnel</div>
-        <div class="kpi-value">{{ statistics.total_staff }}</div>
-    </div>
-    <div class="kpi-box">
-        <div class="kpi-label">Total Revenu</div>
-        <div class="kpi-value" style="font-size: 18px;">{{ "{:,.0f}".format(statistics.total_revenue) }}</div>
-    </div>
+<div class="section-header">
+    <span>LISTE NOMINATIVE DES ÉTUDIANTS</span>
+    <span class="badge-count">{{ students|length }} inscrits</span>
 </div>
 
-<div class="section-header">Liste des Étudiants</div>
-
-<table class="admin-table">
+<table class="data-table">
     <thead>
         <tr>
-            <th class="text-left">Nom</th>
-            <th class="text-left">Matricule</th>
-            <th class="text-left">Classe</th>
-            <th class="text-center">Actif</th>
-            <th class="text-right">Solde</th>
+            <th style="width: 25%;">Nom & Prénom</th>
+            <th style="width: 15%;">Matricule</th>
+            <th>Classe</th>
+            <th style="text-align: center; width: 12%;">Statut</th>
+            <th style="text-align: right; width: 18%;">Solde (FCFA)</th>
         </tr>
     </thead>
     <tbody>
         {% for student in students %}
         <tr>
-            <td class="font-bold text-blue">{{ student.firstName }} {{ student.lastName }}</td>
-            <td>{{ student.matricule }}</td>
+            <td class="font-bold">{{ student.firstName }} {{ student.lastName }}</td>
+            <td><code>{{ student.matricule }}</code></td>
             <td>{{ student.className }}</td>
-            <td class="text-center">{% if student.isActive %}<span class="status-pill status-done">Oui</span>{% else %}<span class="status-pill status-todo">Non</span>{% endif %}</td>
-            <td class="text-right status-warning">{{ "{:,.0f}".format(student.balance) }}</td>
+            <td style="text-align: center;">
+                {% if student.isActive %}
+                <span class="status-active">ACTIF</span>
+                {% else %}
+                <span class="status-inactive">INACTIF</span>
+                {% endif %}
+            </td>
+            <td class="balance-val">{{ "{:,.0f}".format(student.balance) }}</td>
         </tr>
         {% endfor %}
     </tbody>

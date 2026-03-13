@@ -36,6 +36,6 @@ export class User {
   @JoinColumn({ name: 'staff_profile_id' })
   staffProfile: Staff;
 
-  @OneToOne(() => Student, student => student.user, { nullable: true })
+  @OneToOne(() => Student, { nullable: true })
   studentProfile: Student;
 }

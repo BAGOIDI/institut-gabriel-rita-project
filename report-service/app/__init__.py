@@ -10,6 +10,14 @@ def create_app(config_name='default'):
 
     db.init_app(app)
 
+    @app.errorhandler(Exception)
+    def handle_exception(e):
+        # Log l'erreur complète
+        import traceback
+        app.logger.error(f"Unhandled Exception: {str(e)}")
+        app.logger.error(traceback.format_exc())
+        return {"error": "Internal Server Error", "message": str(e)}, 500
+
     # Route racine
     @app.route('/')
     def index():
@@ -34,12 +42,12 @@ def create_app(config_name='default'):
         <p>Bienvenue dans le service de génération de rapports de l'Institut Gabriel Rita.</p>
         <h2>Routes disponibles :</h2>
         <ul>
-            <li><a href="/api/reports/schedule/&lt;class_name&gt;">/api/reports/schedule/&lt;class_name&gt;</a> - Emploi du temps d'une classe</li>
-            <li><a href="/api/reports/student/&lt;matricule&gt;">/api/reports/student/&lt;matricule&gt;</a> - Relevé de compte d'un étudiant</li>
-            <li><a href="/api/reports/global-school">/api/reports/global-school</a> - Rapport global de l'école</li>
-            <li><a href="/api/reports/late-payments">/api/reports/late-payments</a> - Paiements en retard</li>
-            <li><a href="/api/reports/moratoriums">/api/reports/moratoriums</a> - Moratoires</li>
-            <li><a href="/api/reports/payments-by-class/&lt;class_name&gt;">/api/reports/payments-by-class/&lt;class_name&gt;</a> - Paiements par classe</li>
+            <li><a href="/schedule/&lt;class_name&gt;">/schedule/&lt;class_name&gt;</a> - Emploi du temps d'une classe</li>
+            <li><a href="/student/&lt;matricule&gt;">/student/&lt;matricule&gt;</a> - Relevé de compte d'un étudiant</li>
+            <li><a href="/global-school">/global-school</a> - Rapport global de l'école</li>
+            <li><a href="/late-payments">/late-payments</a> - Paiements en retard</li>
+            <li><a href="/moratoriums">/moratoriums</a> - Moratoires</li>
+            <li><a href="/payments-by-class/&lt;class_name&gt;">/payments-by-class/&lt;class_name&gt;</a> - Paiements par classe</li>
         </ul>
     </div>
 </body>
@@ -51,3 +59,6 @@ def create_app(config_name='default'):
     app.register_blueprint(reports_bp, url_prefix='/api/reports')
 
     return app
+
+# Exposer une instance Flask par défaut pour Gunicorn "app:app"
+app = create_app('default')

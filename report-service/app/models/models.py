@@ -46,17 +46,16 @@ class Campus(db.Model):
     name = db.Column(db.String, nullable=False)
     city = db.Column(db.String)
     address = db.Column(db.Text)
-    is_active = db.Column(db.Boolean, default=True)
+    is_active = db.Column('isActive', db.Boolean, default=True)
     
     # Relationships
-    classes = db.relationship('Class', backref='campus', lazy=True)
-    staff = db.relationship('Staff', backref='campus', lazy=True)
+    # (Removed loose links to models with Integer IDs to avoid errors)
 
 
 class Role(db.Model):
     __tablename__ = 'roles'
     
-    id = db.Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
+    id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String, unique=True, nullable=False)
     permissions = db.Column(db.JSON)
     description = db.Column(db.Text)
@@ -68,43 +67,25 @@ class Role(db.Model):
 class User(db.Model):
     __tablename__ = 'users'
     
-    id = db.Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
+    id = db.Column(db.Integer, primary_key=True)
     username = db.Column(db.String, unique=True, nullable=False)
     password_hash = db.Column(db.String, nullable=False)
-    email = db.Column(db.String, unique=True)
-    role_id = db.Column(UUID(as_uuid=True), db.ForeignKey('roles.id'))
-    campus_id = db.Column(UUID(as_uuid=True), db.ForeignKey('campuses.id'))
-    last_login = db.Column(db.DateTime)
+    role_id = db.Column(db.Integer, db.ForeignKey('roles.id'))
     is_active = db.Column(db.Boolean, default=True)
-    created_at = db.Column(db.DateTime, default=datetime.utcnow)
     
     # Relationships
     student = db.relationship('Student', backref='user', uselist=False, lazy=True)
-    audit_logs = db.relationship('AuditLog', backref='user', lazy=True)
     staff = db.relationship('Staff', backref='user', uselist=False, lazy=True)
-
-
-class AuditLog(db.Model):
-    __tablename__ = 'audit_logs'
-    
-    id = db.Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
-    user_id = db.Column(UUID(as_uuid=True), db.ForeignKey('users.id'))
-    action = db.Column(db.String, nullable=False)
-    table_name = db.Column(db.String)
-    record_id = db.Column(UUID(as_uuid=True))
-    details = db.Column(db.JSON)
-    ip_address = db.Column(db.String)
-    created_at = db.Column(db.DateTime, default=datetime.utcnow)
 
 
 class AcademicYear(db.Model):
     __tablename__ = 'academic_years'
     
-    id = db.Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
+    id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String, nullable=False)
-    start_date = db.Column(db.Date, nullable=False)
-    end_date = db.Column(db.Date, nullable=False)
-    is_current = db.Column(db.Boolean, default=False)
+    start_date = db.Column('startDate', db.Date)
+    end_date = db.Column('endDate', db.Date)
+    is_current = db.Column('isCurrent', db.Boolean, default=False)
     
     # Relationships
     classes = db.relationship('Class', backref='academic_year', lazy=True)
@@ -114,9 +95,9 @@ class AcademicYear(db.Model):
 class Semester(db.Model):
     __tablename__ = 'semesters'
     
-    id = db.Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
+    id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String, nullable=False)
-    academic_year_id = db.Column(UUID(as_uuid=True), db.ForeignKey('academic_years.id'))
+    academic_year_id = db.Column(db.Integer, db.ForeignKey('academic_years.id'))
     start_date = db.Column(db.Date)
     end_date = db.Column(db.Date)
     
@@ -127,26 +108,37 @@ class Semester(db.Model):
 class Specialty(db.Model):
     __tablename__ = 'specialties'
     
-    id = db.Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
+    id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String, nullable=False)
-    domain = db.Column(db.String)
-    code = db.Column(db.String)
+    code = db.Column(db.String, nullable=False)
+    description = db.Column(db.Text)
+    track_id = db.Column(db.Integer, db.ForeignKey('tracks.id'))
+
+
+class Track(db.Model):
+    __tablename__ = 'tracks'
+    
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String, nullable=False)
+    code = db.Column(db.String, nullable=False)
+    description = db.Column(db.Text)
     
     # Relationships
-    classes = db.relationship('Class', backref='specialty', lazy=True)
+    specialties = db.relationship('Specialty', backref='track', lazy=True)
 
 
 class Class(db.Model):
     __tablename__ = 'classes'
     
-    id = db.Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
+    id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String, nullable=False)
-    specialty_id = db.Column(UUID(as_uuid=True), db.ForeignKey('specialties.id'))
-    academic_year_id = db.Column(UUID(as_uuid=True), db.ForeignKey('academic_years.id'))
-    campus_id = db.Column(UUID(as_uuid=True), db.ForeignKey('campuses.id'))
-    tuition_fee = db.Column(db.Numeric(10, 2), default=0)
+    specialty_id = db.Column(db.Integer, db.ForeignKey('specialties.id'))
+    academic_year_id = db.Column(db.Integer, db.ForeignKey('academic_years.id'))
+    campus_id = db.Column(db.Integer) # Loose link, no FK in DB
+    tuition_fee = db.Column('tuitionFee', db.Numeric(10, 2), default=0)
     
     # Relationships
+    specialty = db.relationship('Specialty', backref='class_list', lazy=True)
     students = db.relationship('Student', backref='class_obj', lazy=True)
     subjects = db.relationship('Subject', backref='class_obj', lazy=True)
     course_schedules = db.relationship('CourseSchedule', backref='class_obj', lazy=True)
@@ -155,85 +147,45 @@ class Class(db.Model):
 class Subject(db.Model):
     __tablename__ = 'subjects'
     
-    id = db.Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
+    id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String, nullable=False)
-    code = db.Column(db.String)
-    class_id = db.Column(UUID(as_uuid=True), db.ForeignKey('classes.id'))
-    semester_id = db.Column(UUID(as_uuid=True), db.ForeignKey('semesters.id'))
+    code = db.Column(db.String, nullable=False)
+    credits = db.Column(db.Integer, default=0)
+    specialty_id = db.Column(db.Integer, db.ForeignKey('specialties.id'))
+    class_id = db.Column(db.Integer, db.ForeignKey('classes.id'))
+    semester_id = db.Column(db.Integer, db.ForeignKey('semesters.id'))
     coefficient = db.Column(db.Integer, default=1)
-    credits_ects = db.Column(db.Integer, default=0)
+    credits_ects = db.Column('creditsEcts', db.Integer, default=0)
+    color = db.Column(db.String)
+    background_color = db.Column('background_color', db.String)
     
     # Relationships
     evaluations = db.relationship('Evaluation', backref='subject', lazy=True)
-    course_materials = db.relationship('CourseMaterial', backref='subject', lazy=True)
-    online_assignments = db.relationship('OnlineAssignment', backref='subject', lazy=True)
     course_schedules = db.relationship('CourseSchedule', backref='subject', lazy=True)
-
-
-class Prospect(db.Model):
-    __tablename__ = 'prospects'
-    
-    id = db.Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
-    first_name = db.Column(db.String, nullable=False)
-    last_name = db.Column(db.String, nullable=False)
-    phone = db.Column(db.String)
-    interested_specialty_id = db.Column(UUID(as_uuid=True), db.ForeignKey('specialties.id'))
-    status = db.Column(db.String, default='NEW')
-    created_at = db.Column(db.DateTime, default=datetime.utcnow)
-    
-    # Relationships
-    exam_results = db.relationship('ExamResult', backref='prospect', lazy=True)
-
-
-class EntranceExam(db.Model):
-    __tablename__ = 'entrance_exams'
-    
-    id = db.Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
-    name = db.Column(db.String)
-    date = db.Column(db.Date)
-    campus_id = db.Column(UUID(as_uuid=True), db.ForeignKey('campuses.id'))
-    
-    # Relationships
-    exam_results = db.relationship('ExamResult', backref='exam', lazy=True)
-
-
-class ExamResult(db.Model):
-    __tablename__ = 'exam_results'
-    
-    id = db.Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
-    prospect_id = db.Column(UUID(as_uuid=True), db.ForeignKey('prospects.id'))
-    exam_id = db.Column(UUID(as_uuid=True), db.ForeignKey('entrance_exams.id'))
-    score = db.Column(db.Numeric(5, 2))
-    is_admitted = db.Column(db.Boolean, default=False)
 
 
 class Staff(db.Model):
     __tablename__ = 'staff'
     
-    id = db.Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
-    user_id = db.Column(UUID(as_uuid=True), db.ForeignKey('users.id'))
+    id = db.Column(db.Integer, primary_key=True)
+    user_id = db.Column(db.Integer, db.ForeignKey('users.id'))
     first_name = db.Column(db.String, nullable=False)
     last_name = db.Column(db.String, nullable=False)
     biometric_id = db.Column(db.String, unique=True)
-    job_title = db.Column(db.String)
     hourly_rate = db.Column(db.Numeric(10, 2))
-    phone = db.Column(db.String)
+    phone_number = db.Column(db.String)
     email = db.Column(db.String)
-    campus_id = db.Column(UUID(as_uuid=True), db.ForeignKey('campuses.id'))
     
     # Relationships
     attendances = db.relationship('Attendance', backref='staff_member', lazy=True)
-    course_sessions = db.relationship('CourseSession', backref='teacher', lazy=True)
     course_schedules = db.relationship('CourseSchedule', backref='teacher', lazy=True)
-    evaluations = db.relationship('TeacherEvaluation', backref='evaluator', lazy=True)
-    final_projects = db.relationship('FinalProject', backref='supervisor', lazy=True)
 
 
 class Attendance(db.Model):
-    __tablename__ = 'attendance'
+    __tablename__ = 'attendance_records'
     
-    id = db.Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
-    staff_id = db.Column(UUID(as_uuid=True), db.ForeignKey('staff.id'))
+    id = db.Column(db.Integer, primary_key=True)
+    staff_id = db.Column(db.Integer, db.ForeignKey('staff.id'))
     check_in = db.Column(db.DateTime)
     check_out = db.Column(db.DateTime)
     date = db.Column(db.Date, nullable=False)
@@ -243,12 +195,12 @@ class Attendance(db.Model):
 class Student(db.Model):
     __tablename__ = 'students'
     
-    id = db.Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
-    user_id = db.Column(UUID(as_uuid=True), db.ForeignKey('users.id'))
+    id = db.Column(db.Integer, primary_key=True)
+    user_id = db.Column(db.Integer, db.ForeignKey('users.id'))
     matricule = db.Column(db.String, unique=True, nullable=False)
     first_name = db.Column(db.String, nullable=False)
     last_name = db.Column(db.String, nullable=False)
-    class_id = db.Column(UUID(as_uuid=True), db.ForeignKey('classes.id'))
+    class_id = db.Column(db.Integer, db.ForeignKey('classes.id'))
     date_of_birth = db.Column(db.Date)
     gender = db.Column(db.String(1))
     phone = db.Column(db.String)
@@ -261,24 +213,20 @@ class Student(db.Model):
     invoices = db.relationship('Invoice', backref='student', lazy=True)
     payments = db.relationship('Payment', backref='student', lazy=True)
     grades = db.relationship('Grade', backref='student', lazy=True)
-    student_submissions = db.relationship('StudentSubmission', backref='student', lazy=True)
     medical_visits = db.relationship('MedicalVisit', backref='student', lazy=True)
     housing_allocations = db.relationship('HousingAllocation', backref='student', lazy=True)
     disciplinary_actions = db.relationship('DisciplinaryAction', backref='student', lazy=True)
     internships = db.relationship('Internship', backref='student', lazy=True)
-    cafeteria_transactions = db.relationship('CafeteriaTransaction', backref='student', lazy=True)
     official_documents = db.relationship('OfficialDocument', backref='student', lazy=True)
     final_projects = db.relationship('FinalProject', backref='student', lazy=True)
     teacher_evaluations = db.relationship('TeacherEvaluation', backref='student', lazy=True)
-    transport_subscriptions = db.relationship('TransportSubscription', backref='student', lazy=True)
-    book_loans = db.relationship('BookLoan', backref='student', lazy=True)
 
 
 class Invoice(db.Model):
-    __tablename__ = 'invoices'
+    __tablename__ = 'finance_student_fees'
     
-    id = db.Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
-    student_id = db.Column(UUID(as_uuid=True), db.ForeignKey('students.id'))
+    id = db.Column(db.Integer, primary_key=True)
+    student_id = db.Column(db.Integer, db.ForeignKey('students.id'))
     title = db.Column(db.String)
     amount = db.Column(db.Numeric(10, 2), nullable=False)
     due_date = db.Column(db.Date)
@@ -289,11 +237,11 @@ class Invoice(db.Model):
 
 
 class Payment(db.Model):
-    __tablename__ = 'payments'
+    __tablename__ = 'finance_payments'
     
-    id = db.Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
-    student_id = db.Column(UUID(as_uuid=True), db.ForeignKey('students.id'))
-    invoice_id = db.Column(UUID(as_uuid=True), db.ForeignKey('invoices.id'))
+    id = db.Column(db.Integer, primary_key=True)
+    student_id = db.Column(db.Integer, db.ForeignKey('students.id'))
+    invoice_id = db.Column(db.Integer, db.ForeignKey('finance_student_fees.id'))
     amount = db.Column(db.Numeric(10, 2), nullable=False)
     method = db.Column(db.String)
     reference = db.Column(db.String)
@@ -301,43 +249,25 @@ class Payment(db.Model):
 
 
 class CourseSchedule(db.Model):
-    __tablename__ = 'course_schedule'
+    __tablename__ = 'course_schedules'
     
-    id = db.Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
-    class_id = db.Column(UUID(as_uuid=True), db.ForeignKey('classes.id'))
-    subject_id = db.Column(UUID(as_uuid=True), db.ForeignKey('subjects.id'))
-    teacher_id = db.Column(UUID(as_uuid=True), db.ForeignKey('staff.id'))
-    day_of_week = db.Column(db.Integer)  # CHECK (day_of_week BETWEEN 1 AND 7)
+    id = db.Column(db.Integer, primary_key=True)
+    class_id = db.Column(db.Integer, db.ForeignKey('classes.id'))
+    subject_id = db.Column(db.Integer, db.ForeignKey('subjects.id'))
+    teacher_id = db.Column('staff_id', db.Integer, db.ForeignKey('staff.id'))
+    day_of_week = db.Column(db.Integer)
     start_time = db.Column(db.Time, nullable=False)
     end_time = db.Column(db.Time, nullable=False)
-    room = db.Column(db.String)
-    is_active = db.Column(db.Boolean, default=True)
-    
-    # Relationships
-    course_sessions = db.relationship('CourseSession', backref='schedule', lazy=True)
-
-
-class CourseSession(db.Model):
-    __tablename__ = 'course_sessions'
-    
-    id = db.Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
-    schedule_id = db.Column(UUID(as_uuid=True), db.ForeignKey('course_schedule.id'))
-    subject_id = db.Column(UUID(as_uuid=True), db.ForeignKey('subjects.id'))
-    teacher_id = db.Column(UUID(as_uuid=True), db.ForeignKey('staff.id'))
-    date = db.Column(db.Date, nullable=False)
-    start_time = db.Column(db.Time)
-    end_time = db.Column(db.Time)
-    topic_taught = db.Column(db.Text)
-    is_validated = db.Column(db.Boolean, default=False)
+    room = db.Column('room_name', db.String)
 
 
 class Evaluation(db.Model):
     __tablename__ = 'evaluations'
     
-    id = db.Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
-    subject_id = db.Column(UUID(as_uuid=True), db.ForeignKey('subjects.id'))
+    id = db.Column(db.Integer, primary_key=True)
+    subject_id = db.Column(db.Integer, db.ForeignKey('subjects.id'))
     name = db.Column(db.String, nullable=False)
-    type = db.Column(db.String, nullable=False)  # CC, EXAM, RATCH
+    type = db.Column(db.String, nullable=False)
     weight_percent = db.Column(db.Integer, default=100)
     max_score = db.Column(db.Numeric(5, 2), default=20)
     date = db.Column(db.Date)
@@ -349,123 +279,31 @@ class Evaluation(db.Model):
 class Grade(db.Model):
     __tablename__ = 'grades'
     
-    id = db.Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
-    student_id = db.Column(UUID(as_uuid=True), db.ForeignKey('students.id'))
-    evaluation_id = db.Column(UUID(as_uuid=True), db.ForeignKey('evaluations.id'))
+    id = db.Column(db.Integer, primary_key=True)
+    student_id = db.Column(db.Integer, db.ForeignKey('students.id'))
+    evaluation_id = db.Column(db.Integer, db.ForeignKey('evaluations.id'))
     score = db.Column(db.Numeric(5, 2))
     is_absent = db.Column(db.Boolean, default=False)
     comments = db.Column(db.Text)
 
 
-class CourseMaterial(db.Model):
-    __tablename__ = 'course_materials'
-    
-    id = db.Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
-    subject_id = db.Column(UUID(as_uuid=True), db.ForeignKey('subjects.id'))
-    title = db.Column(db.String)
-    file_url = db.Column(db.Text)
-    uploaded_at = db.Column(db.DateTime, default=datetime.utcnow)
-
-
-class OnlineAssignment(db.Model):
-    __tablename__ = 'online_assignments'
-    
-    id = db.Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
-    subject_id = db.Column(UUID(as_uuid=True), db.ForeignKey('subjects.id'))
-    title = db.Column(db.String)
-    due_date = db.Column(db.DateTime)
-    
-    # Relationships
-    submissions = db.relationship('StudentSubmission', backref='assignment', lazy=True)
-
-
-class StudentSubmission(db.Model):
-    __tablename__ = 'student_submissions'
-    
-    id = db.Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
-    assignment_id = db.Column(UUID(as_uuid=True), db.ForeignKey('online_assignments.id'))
-    student_id = db.Column(UUID(as_uuid=True), db.ForeignKey('students.id'))
-    file_url = db.Column(db.Text)
-    submitted_at = db.Column(db.DateTime, default=datetime.utcnow)
-    grade = db.Column(db.Numeric(5, 2))
-
-# Peripherals modules - Transport
-
-class TransportRoute(db.Model):
-    __tablename__ = 'transport_routes'
-    
-    id = db.Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
-    name = db.Column(db.String)
-    monthly_fee = db.Column(db.Numeric(10, 2))
-    
-    # Relationships
-    stops = db.relationship('TransportStop', backref='route', lazy=True)
-    subscriptions = db.relationship('TransportSubscription', backref='route', lazy=True)
-
-
-class TransportStop(db.Model):
-    __tablename__ = 'transport_stops'
-    
-    id = db.Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
-    route_id = db.Column(UUID(as_uuid=True), db.ForeignKey('transport_routes.id'))
-    name = db.Column(db.String)
-    pickup_time = db.Column(db.Time)
-
-
-class TransportSubscription(db.Model):
-    __tablename__ = 'transport_subscriptions'
-    
-    id = db.Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
-    student_id = db.Column(UUID(as_uuid=True), db.ForeignKey('students.id'))
-    route_id = db.Column(UUID(as_uuid=True), db.ForeignKey('transport_routes.id'))
-    start_date = db.Column(db.Date)
-    is_active = db.Column(db.Boolean, default=True)
-
-# Peripherals modules - Library
-
-class Book(db.Model):
-    __tablename__ = 'books'
-    
-    id = db.Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
-    title = db.Column(db.String)
-    author = db.Column(db.String)
-    isbn = db.Column(db.String)
-    total_copies = db.Column(db.Integer)
-    
-    # Relationships
-    loans = db.relationship('BookLoan', backref='book', lazy=True)
-
-
-class BookLoan(db.Model):
-    __tablename__ = 'book_loans'
-    
-    id = db.Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
-    book_id = db.Column(UUID(as_uuid=True), db.ForeignKey('books.id'))
-    student_id = db.Column(UUID(as_uuid=True), db.ForeignKey('students.id'))
-    loan_date = db.Column(db.Date)
-    due_date = db.Column(db.Date)
-    return_date = db.Column(db.Date)
-
-# Peripherals modules - Health
-
 class MedicalVisit(db.Model):
     __tablename__ = 'medical_visits'
     
-    id = db.Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
-    student_id = db.Column(UUID(as_uuid=True), db.ForeignKey('students.id'))
+    id = db.Column(db.Integer, primary_key=True)
+    student_id = db.Column(db.Integer, db.ForeignKey('students.id'))
     visit_date = db.Column(db.DateTime)
     diagnosis = db.Column(db.Text)
     treatment = db.Column(db.Text)
     is_confidential = db.Column(db.Boolean, default=True)
 
-# Peripherals modules - Housing
 
 class HousingBuilding(db.Model):
     __tablename__ = 'housing_buildings'
     
-    id = db.Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
+    id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String)
-    campus_id = db.Column(UUID(as_uuid=True), db.ForeignKey('campuses.id'))
+    campus_id = db.Column(db.Integer) # Loose link
     
     # Relationships
     rooms = db.relationship('HousingRoom', backref='building', lazy=True)
@@ -474,8 +312,8 @@ class HousingBuilding(db.Model):
 class HousingRoom(db.Model):
     __tablename__ = 'housing_rooms'
     
-    id = db.Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
-    building_id = db.Column(UUID(as_uuid=True), db.ForeignKey('housing_buildings.id'))
+    id = db.Column(db.Integer, primary_key=True)
+    building_id = db.Column(db.Integer, db.ForeignKey('housing_buildings.id'))
     room_number = db.Column(db.String)
     monthly_rent = db.Column(db.Numeric(10, 2))
     
@@ -486,30 +324,28 @@ class HousingRoom(db.Model):
 class HousingAllocation(db.Model):
     __tablename__ = 'housing_allocations'
     
-    id = db.Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
-    student_id = db.Column(UUID(as_uuid=True), db.ForeignKey('students.id'))
-    room_id = db.Column(UUID(as_uuid=True), db.ForeignKey('housing_rooms.id'))
+    id = db.Column(db.Integer, primary_key=True)
+    student_id = db.Column(db.Integer, db.ForeignKey('students.id'))
+    room_id = db.Column(db.Integer, db.ForeignKey('housing_rooms.id'))
     start_date = db.Column(db.Date)
     end_date = db.Column(db.Date)
 
-# Peripherals modules - Disciplinary
 
 class DisciplinaryAction(db.Model):
     __tablename__ = 'disciplinary_actions'
     
-    id = db.Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
-    student_id = db.Column(UUID(as_uuid=True), db.ForeignKey('students.id'))
+    id = db.Column(db.Integer, primary_key=True)
+    student_id = db.Column(db.Integer, db.ForeignKey('students.id'))
     incident_date = db.Column(db.Date)
     infraction_type = db.Column(db.String)
     sanction = db.Column(db.String)
     status = db.Column(db.String)
 
-# Peripherals modules - Internship
 
 class Company(db.Model):
     __tablename__ = 'companies'
     
-    id = db.Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
+    id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String)
     industry = db.Column(db.String)
     is_partner = db.Column(db.Boolean, default=False)
@@ -521,67 +357,41 @@ class Company(db.Model):
 class Internship(db.Model):
     __tablename__ = 'internships'
     
-    id = db.Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
-    student_id = db.Column(UUID(as_uuid=True), db.ForeignKey('students.id'))
-    company_id = db.Column(UUID(as_uuid=True), db.ForeignKey('companies.id'))
+    id = db.Column(db.Integer, primary_key=True)
+    student_id = db.Column(db.Integer, db.ForeignKey('students.id'))
+    company_id = db.Column(db.Integer, db.ForeignKey('companies.id'))
     start_date = db.Column(db.Date)
     end_date = db.Column(db.Date)
     topic = db.Column(db.Text)
     status = db.Column(db.String)
 
-# Peripherals modules - Cafeteria
-
-class CafeteriaItem(db.Model):
-    __tablename__ = 'cafeteria_items'
-    
-    id = db.Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
-    name = db.Column(db.String)
-    price = db.Column(db.Numeric(10, 2))
-    
-    # Relationships
-    transactions = db.relationship('CafeteriaTransaction', backref='item', lazy=True)
-
-
-class CafeteriaTransaction(db.Model):
-    __tablename__ = 'cafeteria_transactions'
-    
-    id = db.Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
-    student_id = db.Column(UUID(as_uuid=True), db.ForeignKey('students.id'))
-    item_id = db.Column(UUID(as_uuid=True), db.ForeignKey('cafeteria_items.id'))
-    quantity = db.Column(db.Integer)
-    total_amount = db.Column(db.Numeric(10, 2))
-    transaction_date = db.Column(db.DateTime, default=datetime.utcnow)
-
-# Peripherals modules - Documents
 
 class OfficialDocument(db.Model):
     __tablename__ = 'official_documents'
     
-    id = db.Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
-    student_id = db.Column(UUID(as_uuid=True), db.ForeignKey('students.id'))
+    id = db.Column(db.Integer, primary_key=True)
+    student_id = db.Column(db.Integer, db.ForeignKey('students.id'))
     type = db.Column(db.String)
     file_path = db.Column(db.Text)
     verification_hash = db.Column(db.String)
     generated_at = db.Column(db.DateTime, default=datetime.utcnow)
 
-# Peripherals modules - Final Projects
 
 class FinalProject(db.Model):
     __tablename__ = 'final_projects'
     
-    id = db.Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
+    id = db.Column(db.Integer, primary_key=True)
     title = db.Column(db.String)
-    student_id = db.Column(UUID(as_uuid=True), db.ForeignKey('students.id'))
-    supervisor_id = db.Column(UUID(as_uuid=True), db.ForeignKey('staff.id'))
+    student_id = db.Column(db.Integer, db.ForeignKey('students.id'))
+    supervisor_id = db.Column(db.Integer, db.ForeignKey('staff.id'))
     status = db.Column(db.String)
 
-# Peripherals modules - Teacher Evaluations
 
 class TeacherEvaluation(db.Model):
     __tablename__ = 'teacher_evaluations'
     
-    id = db.Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
-    student_id = db.Column(UUID(as_uuid=True), db.ForeignKey('students.id'))
-    staff_id = db.Column(UUID(as_uuid=True), db.ForeignKey('staff.id'))
+    id = db.Column(db.Integer, primary_key=True)
+    student_id = db.Column(db.Integer, db.ForeignKey('students.id'))
+    staff_id = db.Column(db.Integer, db.ForeignKey('staff.id'))
     rating = db.Column(db.Integer)
     comments = db.Column(db.Text)

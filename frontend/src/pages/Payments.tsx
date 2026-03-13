@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { 
   DollarSign,
   CreditCard,
@@ -17,41 +17,33 @@ import {
   Plus,
   X,
   AlertCircle,
-  Check
+  Check,
+  Banknote,
+  Smartphone
 } from 'lucide-react';
 import { useTheme } from '../contexts/ThemeContext';
-import api from '../services/api.service';
+import { financeApi } from '../services/api';
 import { translations } from '../lib/translations';
-
-interface Student {
-  id: string;
-  firstName: string;
-  lastName: string;
-  matricule: string;
-  classRoom: string;
-}
+import { ConfirmDialog } from '../components/ConfirmDialog';
+import { useNotification } from '../contexts/NotificationContext';
 
 interface Payment {
   id: string;
-  student: Student;
-  type: 'ENCAISSEMENT' | 'DECAISSEMENT';
-  amount: number;
-  penalty: number;
-  discount: number;
-  paymentDate: string;
-  method: 'CASH' | 'BANK_TRANSFER' | 'MOBILE_MONEY';
-  reference: string | null;
-  description: string | null;
-  createdAt: string;
+  student_fee_id: number;
+  amount_paid: number;
+  payment_method: 'CASH' | 'BANK_TRANSFER' | 'MOBILE_MONEY';
+  payment_date: string;
+  recorded_by: number;
+  studentFee?: {
+    id: number;
+    student_id: number;
+    total_due: number;
+  };
 }
 
 interface PaymentStats {
   totalPayments: number;
-  totalEncaissements: number;
-  totalDecaissements: number;
-  netAmount: number;
-  totalPenalties: number;
-  totalDiscounts: number;
+  totalCollected: number;
   cashPayments: number;
   bankTransfers: number;
   mobileMoney: number;
@@ -61,96 +53,32 @@ interface PaymentStats {
 export const Payments = () => {
   const { language } = useTheme();
   const t = translations[language];
+  const notify = useNotification();
   const [payments, setPayments] = useState<Payment[]>([]);
   const [stats, setStats] = useState<PaymentStats | null>(null);
   const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
   const [selectedDate, setSelectedDate] = useState(new Date());
   const [filterMethod, setFilterMethod] = useState<string>('ALL');
-  const [filterType, setFilterType] = useState<string>('ALL');
-  const [filterClass, setFilterClass] = useState<string>('ALL');
   const [searchQuery, setSearchQuery] = useState('');
   const [viewMode, setViewMode] = useState<'list' | 'card'>('list');
-  const [selectedYear, setSelectedYear] = useState(new Date().getFullYear());
-  const [selectedMonth, setSelectedMonth] = useState(new Date().getMonth());
   const [showModal, setShowModal] = useState(false);
-  const [studentSearch, setStudentSearch] = useState('');
-  const [studentResults, setStudentResults] = useState<Student[]>([]);
-  const [showStudentDropdown, setShowStudentDropdown] = useState(false);
-  const [teacherSearch, setTeacherSearch] = useState('');
-  const [teacherResults, setTeacherResults] = useState<any[]>([]);
-  const [showTeacherDropdown, setShowTeacherDropdown] = useState(false);
-  const [payeeCategory, setPayeeCategory] = useState<'STUDENT' | 'TEACHER'>('STUDENT');
+  const [editPayment, setEditPayment] = useState<Payment | null>(null);
+  const [confirmOpen, setConfirmOpen] = useState(false);
+  const [targetDeleteId, setTargetDeleteId] = useState<string | null>(null);
+  const [deleteLoading, setDeleteLoading] = useState(false);
   const [formData, setFormData] = useState({
-    studentId: '',
-    teacherId: '',
-    type: 'ENCAISSEMENT',
+    studentFeeId: '',
     amount: '',
-    penalty: '0',
-    discount: '0',
     method: 'CASH',
-    reference: '',
-    description: '',
-    paymentDate: new Date().toISOString().split('T')[0],
+    userId: '1',
   });
 
-  const classes = [
-    'Terminale C', 'Terminale D', '1ère C', '1ère D',
-    '2nde A', '2nde C', '3ème', '4ème', '5ème', '6ème'
-  ];
-
-  useEffect(() => {
-    fetchPayments();
-  }, [selectedDate, filterMethod, filterType, filterClass]);
-
-  // Search students with Typesense
-  useEffect(() => {
-    const searchStudents = async () => {
-      if (studentSearch.length >= 2) {
-        try {
-          const response = await api.get(`/api/core/students/search?q=${studentSearch}&limit=10`);
-          setStudentResults(response.data.hits || []);
-          setShowStudentDropdown(true);
-        } catch (error) {
-          console.error('Error searching students:', error);
-          setStudentResults([]);
-        }
-      } else {
-        setStudentResults([]);
-        setShowStudentDropdown(false);
-      }
-    };
-
-    const debounce = setTimeout(searchStudents, 300);
-    return () => clearTimeout(debounce);
-  }, [studentSearch]);
-
-  // Search teachers with Typesense
-  useEffect(() => {
-    const searchTeachers = async () => {
-      if (teacherSearch.length >= 2) {
-        try {
-          const response = await api.get(`/api/core/staff/search?q=${teacherSearch}&limit=10`);
-          setTeacherResults(response.data.hits || []);
-          setShowTeacherDropdown(true);
-        } catch (error) {
-          console.error('Error searching teachers:', error);
-          setTeacherResults([]);
-        }
-      } else {
-        setTeacherResults([]);
-        setShowTeacherDropdown(false);
-      }
-    };
-
-    const debounce = setTimeout(searchTeachers, 300);
-    return () => clearTimeout(debounce);
-  }, [teacherSearch]);
-
-  const fetchPayments = async () => {
+  const fetchPayments = useCallback(async () => {
     setLoading(true);
     try {
-      const response = await api.get('/api/finance/finance');
-      const data = response.data;
+      const response = await financeApi.get('/payments');
+      let data = response.data;
       
       // Filtrer par date sélectionnée
       const startOfDay = new Date(selectedDate);
@@ -159,59 +87,51 @@ export const Payments = () => {
       endOfDay.setHours(23, 59, 59, 999);
 
       let filtered = data.filter((payment: Payment) => {
-        const paymentDate = new Date(payment.paymentDate);
+        const paymentDate = new Date(payment.payment_date);
         return paymentDate >= startOfDay && paymentDate <= endOfDay;
       });
 
       // Filtrer par méthode
       if (filterMethod !== 'ALL') {
-        filtered = filtered.filter((p: Payment) => p.method === filterMethod);
+        filtered = filtered.filter((p: Payment) => p.payment_method === filterMethod);
       }
 
-      // Filtrer par type
-      if (filterType !== 'ALL') {
-        filtered = filtered.filter((p: Payment) => p.type === filterType);
-      }
-
-      // Filtrer par classe
-      if (filterClass !== 'ALL') {
-        filtered = filtered.filter((p: Payment) => p.student.classRoom === filterClass);
+      // Filtrer par recherche texte
+      if (searchQuery) {
+        filtered = filtered.filter((p: Payment) => 
+          p.id.toString().includes(searchQuery.toLowerCase()) ||
+          p.student_fee_id.toString().includes(searchQuery.toLowerCase())
+        );
       }
 
       setPayments(filtered);
 
       // Calculer les statistiques
-      const encaissements = filtered.filter((p: Payment) => p.type === 'ENCAISSEMENT');
-      const decaissements = filtered.filter((p: Payment) => p.type === 'DECAISSEMENT');
-      
-      const totalEncaissements = encaissements.reduce((sum: number, p: Payment) => sum + Number(p.amount), 0);
-      const totalDecaissements = decaissements.reduce((sum: number, p: Payment) => sum + Number(p.amount), 0);
-      const netAmount = totalEncaissements - totalDecaissements;
-      
-      const totalPenalties = filtered.reduce((sum: number, p: Payment) => sum + Number(p.penalty), 0);
-      const totalDiscounts = filtered.reduce((sum: number, p: Payment) => sum + Number(p.discount), 0);
-      const cashPayments = filtered.filter((p: Payment) => p.method === 'CASH').length;
-      const bankTransfers = filtered.filter((p: Payment) => p.method === 'BANK_TRANSFER').length;
-      const mobileMoney = filtered.filter((p: Payment) => p.method === 'MOBILE_MONEY').length;
+      const cashPayments = filtered.filter((p: Payment) => p.payment_method === 'CASH').length;
+      const bankTransfers = filtered.filter((p: Payment) => p.payment_method === 'BANK_TRANSFER').length;
+      const mobileMoney = filtered.filter((p: Payment) => p.payment_method === 'MOBILE_MONEY').length;
+      const totalCollected = filtered.reduce((sum: number, p: Payment) => sum + Number(p.amount_paid), 0);
 
       setStats({
         totalPayments: filtered.length,
-        totalEncaissements,
-        totalDecaissements,
-        netAmount,
-        totalPenalties,
-        totalDiscounts,
+        totalCollected,
         cashPayments,
         bankTransfers,
         mobileMoney,
-        averagePayment: filtered.length > 0 ? totalEncaissements / filtered.length : 0,
+        averagePayment: filtered.length > 0 ? totalCollected / filtered.length : 0,
       });
     } catch (error) {
       console.error('Erreur lors du chargement des paiements', error);
+      setError('Erreur lors du chargement des paiements');
+      notify.error('Erreur lors du chargement des paiements');
     } finally {
       setLoading(false);
     }
-  };
+  }, [selectedDate, filterMethod, searchQuery, notify]);
+
+  useEffect(() => {
+    fetchPayments();
+  }, [fetchPayments]);
 
   const goToPreviousDay = () => {
     const newDate = new Date(selectedDate);
@@ -255,48 +175,113 @@ export const Payments = () => {
     e.preventDefault();
     try {
       const paymentData = {
-        type: formData.type,
+        studentFeeId: parseInt(formData.studentFeeId),
         amount: parseFloat(formData.amount),
-        penalty: parseFloat(formData.penalty),
-        discount: parseFloat(formData.discount),
         method: formData.method,
-        reference: formData.reference || null,
-        description: formData.description || null,
-        paymentDate: new Date(formData.paymentDate),
-        studentId: payeeCategory === 'STUDENT' ? formData.studentId : null,
-        teacherId: payeeCategory === 'TEACHER' ? formData.teacherId : null,
+        userId: parseInt(formData.userId),
       };
 
-      await api.post(`/api/finance/finance`, paymentData);
+      if (editPayment) {
+        await financeApi.put(`/payments/${editPayment.id}`, paymentData);
+        notify.success('Paiement mis à jour avec succès');
+      } else {
+        await financeApi.post('/payments', paymentData);
+        notify.success('Paiement créé avec succès');
+      }
       
       setShowModal(false);
+      setEditPayment(null);
       setFormData({
-        studentId: '',
-        teacherId: '',
-        type: 'ENCAISSEMENT',
+        studentFeeId: '',
         amount: '',
-        penalty: '0',
-        discount: '0',
         method: 'CASH',
-        reference: '',
-        description: '',
-        paymentDate: new Date().toISOString().split('T')[0],
+        userId: '1',
       });
-      setStudentSearch('');
-      setTeacherSearch('');
-      setPayeeCategory('STUDENT');
       fetchPayments();
-    } catch (error) {
+    } catch (error: any) {
       console.error('Erreur lors de l\'enregistrement:', error);
-      alert('Erreur lors de l\'enregistrement du paiement');
+      notify.error(error.response?.data?.message || "Erreur lors de l'enregistrement du paiement");
     }
   };
 
+  const handleDelete = async () => {
+    if (!targetDeleteId) return;
+    setDeleteLoading(true);
+    try {
+      await financeApi.delete(`/payments/${targetDeleteId}`);
+      notify.success('Paiement supprimé avec succès');
+      fetchPayments();
+    } catch (err) {
+      notify.error('Erreur lors de la suppression du paiement');
+    } finally {
+      setDeleteLoading(false);
+      setConfirmOpen(false);
+      setTargetDeleteId(null);
+    }
+  };
+
+  const openEditModal = (payment: Payment) => {
+    setEditPayment(payment);
+    setFormData({
+      studentFeeId: payment.student_fee_id?.toString() || '',
+      amount: payment.amount_paid?.toString() || '',
+      method: payment.payment_method || 'CASH',
+      userId: payment.recorded_by?.toString() || '1',
+    });
+    setShowModal(true);
+  };
+
+  const openCreateModal = () => {
+    setEditPayment(null);
+    setFormData({
+      studentFeeId: '',
+      amount: '',
+      method: 'CASH',
+      userId: '1',
+    });
+    setShowModal(true);
+  };
+
+  const closeModal = () => {
+    setShowModal(false);
+    setEditPayment(null);
+    setFormData({
+      studentFeeId: '',
+      amount: '',
+      method: 'CASH',
+      userId: '1',
+    });
+  };
+
   const filteredPayments = payments.filter(payment => {
-    const fullName = `${payment.student.firstName} ${payment.student.lastName}`.toLowerCase();
-    const matricule = payment.student.matricule.toLowerCase();
-    return fullName.includes(searchQuery.toLowerCase()) || matricule.includes(searchQuery.toLowerCase());
+    const searchLower = searchQuery.toLowerCase();
+    return (
+      payment.id.toString().includes(searchLower) ||
+      payment.student_fee_id.toString().includes(searchLower) ||
+      payment.payment_method.toLowerCase().includes(searchLower)
+    );
   });
+
+  if (error) {
+    return (
+      <div className="flex flex-col items-center justify-center py-20 h-full">
+        <div className="w-16 h-16 rounded-full bg-red-100 dark:bg-red-900/30 flex items-center justify-center mb-4">
+          <AlertCircle className="w-8 h-8 text-red-600 dark:text-red-400" />
+        </div>
+        <p className="text-red-600 dark:text-red-400 font-medium mb-4">{error}</p>
+        <button 
+          onClick={() => {
+            setError(null);
+            fetchPayments();
+          }}
+          className="flex items-center gap-2 bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-md transition-colors text-sm"
+        >
+          <RefreshCw className="w-4 h-4" />
+          <span>Réessayer</span>
+        </button>
+      </div>
+    );
+  }
 
   if (loading) {
     return (
@@ -316,7 +301,7 @@ export const Payments = () => {
       >
         <div>
           <h1 className="text-xl font-bold text-gray-900 dark:text-white uppercase tracking-tight">{t.payments}</h1>
-          <p className="text-[11px] text-gray-500 dark:text-gray-400">{t.studentPaymentManagement}</p>
+          <p className="text-[11px] text-gray-500 dark:text-gray-400">Gestion des paiements des frais scolaires</p>
         </div>
         <div className="flex gap-2">
           <button 
@@ -333,47 +318,11 @@ export const Payments = () => {
             <span>{t.export}</span>
           </button>
           <button 
-            onClick={() => {
-              setFormData({ 
-                ...formData, 
-                type: 'ENCAISSEMENT', 
-                studentId: '', 
-                amount: '', 
-                penalty: '0', 
-                discount: '0', 
-                reference: '', 
-                description: '' 
-              });
-              setStudentSearch('');
-              setPayeeCategory('STUDENT');
-              setShowModal(true);
-            }}
+            onClick={openCreateModal}
             className="flex items-center gap-2 bg-emerald-600 hover:bg-emerald-700 text-white px-4 py-2 rounded-md transition-all shadow-md hover:shadow-lg text-sm font-normal border border-emerald-700 uppercase active:scale-95"
           >
-            <TrendingUp className="w-4 h-4" />
-            <span>{t.disbursement}</span>
-          </button>
-          <button 
-            onClick={() => {
-              setFormData({ 
-                ...formData, 
-                type: 'DECAISSEMENT', 
-                studentId: '', 
-                amount: '', 
-                penalty: '0', 
-                discount: '0', 
-                reference: '', 
-                description: '' 
-              });
-              setStudentSearch('');
-              setTeacherSearch('');
-              setPayeeCategory('STUDENT'); // Par défaut étudiant, peut être changé en enseignant
-              setShowModal(true);
-            }}
-            className="flex items-center gap-2 bg-rose-600 hover:bg-rose-700 text-white px-4 py-2 rounded-md transition-all shadow-md hover:shadow-lg text-sm font-normal border border-rose-700 uppercase active:scale-95"
-          >
-            <TrendingDown className="w-4 h-4" />
-            <span>{t.withdrawal}</span>
+            <Plus className="w-4 h-4" />
+            <span>Nouveau Paiement</span>
           </button>
         </div>
       </div>
@@ -393,48 +342,11 @@ export const Payments = () => {
                 <TrendingUp className="w-5 h-5 text-emerald-600 dark:text-emerald-400" />
               </div>
               <div className="text-xs font-bold text-gray-500 dark:text-gray-400">
-                {stats.totalPayments} {t.payments}
+                {stats.totalPayments} paiements
               </div>
             </div>
-            <div className="text-[10px] font-semibold tracking-wide text-gray-500 dark:text-gray-400 mb-0.5">{t.disbursements}</div>
-            <div className="text-xl font-black text-emerald-900 dark:text-emerald-400">{formatAmount(stats.totalEncaissements)}</div>
-          </div>
-
-          <div 
-            style={{ padding: 'var(--card-spacing)' }}
-            className="bg-white dark:bg-slate-800 rounded-md border border-gray-200 dark:border-slate-700 shadow-md"
-          >
-            <div className="flex items-start justify-between mb-3">
-              <div className="p-2 rounded-md bg-rose-100 dark:bg-rose-900/30">
-                <TrendingDown className="w-5 h-5 text-rose-600 dark:text-rose-400" />
-              </div>
-              <div className="text-xs font-bold text-gray-500 dark:text-gray-400">
-                {t.withdrawals}
-              </div>
-            </div>
-            <div className="text-[10px] font-semibold tracking-wide text-gray-500 dark:text-gray-400 mb-0.5">{t.withdrawals}</div>
-            <div className="text-xl font-black text-rose-900 dark:text-rose-400">{formatAmount(stats.totalDecaissements)}</div>
-          </div>
-
-          <div 
-            style={{ padding: 'var(--card-spacing)' }}
-            className="bg-white dark:bg-slate-800 rounded-md border border-gray-200 dark:border-slate-700 shadow-md"
-          >
-            <div className="flex items-start justify-between mb-3">
-              <div className="p-2 rounded-md bg-blue-100 dark:bg-blue-900/30">
-                <DollarSign className="w-5 h-5 text-blue-600 dark:text-blue-400" />
-              </div>
-              <div className={`flex items-center gap-1 text-[10px] font-bold ${
-                stats.netAmount >= 0 ? 'text-emerald-600 dark:text-emerald-400' : 'text-rose-600 dark:text-rose-400'
-              }`}>
-                {stats.netAmount >= 0 ? <TrendingUp className="w-2.5 h-2.5" /> : <TrendingDown className="w-2.5 h-2.5" />}
-                <span>{stats.netAmount >= 0 ? '+' : ''}{formatAmount(Math.abs(stats.netAmount))}</span>
-              </div>
-            </div>
-            <div className="text-[10px] font-semibold tracking-wide text-gray-500 dark:text-gray-400 mb-0.5">{t.netBalance}</div>
-            <div className={`text-xl font-black ${
-              stats.netAmount >= 0 ? 'text-blue-900 dark:text-blue-400' : 'text-rose-900 dark:text-rose-400'
-            }`}>{formatAmount(stats.netAmount)}</div>
+            <div className="text-[10px] font-semibold tracking-wide text-gray-500 dark:text-gray-400 mb-0.5">Total Collecté</div>
+            <div className="text-xl font-black text-emerald-900 dark:text-emerald-400">{formatAmount(stats.totalCollected)}</div>
           </div>
 
           <div 
@@ -443,15 +355,46 @@ export const Payments = () => {
           >
             <div className="flex items-start justify-between mb-3">
               <div className="p-2 rounded-md bg-amber-100 dark:bg-amber-900/30">
-                <AlertCircle className="w-5 h-5 text-amber-600 dark:text-amber-400" />
+                <Banknote className="w-5 h-5 text-amber-600 dark:text-amber-400" />
               </div>
               <div className="text-xs font-bold text-gray-500 dark:text-gray-400">
-                Pénalités/Remises
+                {stats.cashPayments}
               </div>
             </div>
-            <div className="text-[10px] font-semibold tracking-wide text-gray-500 dark:text-gray-400 mb-0.5">{t.penalties}</div>
-            <div className="text-lg font-black text-rose-900 dark:text-rose-400 mb-1">{formatAmount(stats.totalPenalties)}</div>
-            <div className="text-[9px] font-semibold tracking-wide text-gray-500 dark:text-gray-400">{t.discounts}: <span className="text-emerald-600 dark:text-emerald-400 font-black">{formatAmount(stats.totalDiscounts)}</span></div>
+            <div className="text-[10px] font-semibold tracking-wide text-gray-500 dark:text-gray-400 mb-0.5">Paiements en Espèces</div>
+            <div className="text-xl font-black text-amber-900 dark:text-amber-400">{stats.cashPayments}</div>
+          </div>
+
+          <div 
+            style={{ padding: 'var(--card-spacing)' }}
+            className="bg-white dark:bg-slate-800 rounded-md border border-gray-200 dark:border-slate-700 shadow-md"
+          >
+            <div className="flex items-start justify-between mb-3">
+              <div className="p-2 rounded-md bg-blue-100 dark:bg-blue-900/30">
+                <CreditCard className="w-5 h-5 text-blue-600 dark:text-blue-400" />
+              </div>
+              <div className="text-xs font-bold text-gray-500 dark:text-gray-400">
+                {stats.bankTransfers}
+              </div>
+            </div>
+            <div className="text-[10px] font-semibold tracking-wide text-gray-500 dark:text-gray-400 mb-0.5">Virements Bancaires</div>
+            <div className="text-xl font-black text-blue-900 dark:text-blue-400">{stats.bankTransfers}</div>
+          </div>
+
+          <div 
+            style={{ padding: 'var(--card-spacing)' }}
+            className="bg-white dark:bg-slate-800 rounded-md border border-gray-200 dark:border-slate-700 shadow-md"
+          >
+            <div className="flex items-start justify-between mb-3">
+              <div className="p-2 rounded-md bg-purple-100 dark:bg-purple-900/30">
+                <Smartphone className="w-5 h-5 text-purple-600 dark:text-purple-400" />
+              </div>
+              <div className="text-xs font-bold text-gray-500 dark:text-gray-400">
+                {stats.mobileMoney}
+              </div>
+            </div>
+            <div className="text-[10px] font-semibold tracking-wide text-gray-500 dark:text-gray-400 mb-0.5">Mobile Money</div>
+            <div className="text-xl font-black text-purple-900 dark:text-purple-400">{stats.mobileMoney}</div>
           </div>
         </div>
       )}
@@ -494,10 +437,9 @@ export const Payments = () => {
           <div className="flex items-center gap-2">
             <span className="text-xs font-medium text-gray-500 dark:text-gray-400">{t.year}:</span>
             <select 
-              value={selectedYear}
+              value={selectedDate.getFullYear()}
               onChange={(e) => {
                 const year = parseInt(e.target.value);
-                setSelectedYear(year);
                 const newDate = new Date(selectedDate);
                 newDate.setFullYear(year);
                 setSelectedDate(newDate);
@@ -512,10 +454,9 @@ export const Payments = () => {
             
             <span className="text-xs font-medium text-gray-500 dark:text-gray-400 ml-2">{t.month}:</span>
             <select 
-              value={selectedMonth}
+              value={selectedDate.getMonth()}
               onChange={(e) => {
                 const month = parseInt(e.target.value);
-                setSelectedMonth(month);
                 const newDate = new Date(selectedDate);
                 newDate.setMonth(month);
                 setSelectedDate(newDate);
@@ -579,16 +520,6 @@ export const Payments = () => {
           <div className="flex items-center gap-2">
             <Filter className="w-4 h-4 text-gray-400" />
             <select 
-              value={filterType}
-              onChange={(e) => setFilterType(e.target.value)}
-              className="bg-gray-50 dark:bg-slate-700 border border-gray-200 dark:border-slate-600 rounded-md text-xs px-3 py-1.5 dark:text-white focus:ring-2 focus:ring-blue-500"
-            >
-              <option value="ALL">{t.allTypes}</option>
-              <option value="ENCAISSEMENT">{t.disbursements}</option>
-              <option value="DECAISSEMENT">{t.withdrawals}</option>
-            </select>
-
-            <select 
               value={filterMethod}
               onChange={(e) => setFilterMethod(e.target.value)}
               className="bg-gray-50 dark:bg-slate-700 border border-gray-200 dark:border-slate-600 rounded-md text-xs px-3 py-1.5 dark:text-white focus:ring-2 focus:ring-blue-500"
@@ -597,17 +528,6 @@ export const Payments = () => {
               <option value="CASH">{t.cash}</option>
               <option value="BANK_TRANSFER">{t.bankTransfer}</option>
               <option value="MOBILE_MONEY">{t.mobileMoney}</option>
-            </select>
-
-            <select 
-              value={filterClass}
-              onChange={(e) => setFilterClass(e.target.value)}
-              className="bg-gray-50 dark:bg-slate-700 border border-gray-200 dark:border-slate-600 rounded-md text-xs px-3 py-1.5 dark:text-white focus:ring-2 focus:ring-blue-500"
-            >
-              <option value="ALL">{t.allClasses}</option>
-              {classes.map(className => (
-                <option key={className} value={className}>{className}</option>
-              ))}
             </select>
 
             <div className="relative">
@@ -744,6 +664,43 @@ export const Payments = () => {
                       <td className="px-4 py-3 text-center text-xs text-gray-600 dark:text-gray-400">
                         {new Date(payment.paymentDate).toLocaleDateString('fr-FR')}
                       </td>
+                      <td className="px-4 py-3 text-right">
+                        <div className="flex items-center justify-end gap-2">
+                          <button
+                            onClick={() => {
+                              setEditPayment(payment);
+                              setShowModal(true);
+                              setFormData({
+                                studentId: payment.student?.id || '',
+                                teacherId: (payment as any).teacher?.id || '',
+                                type: payment.type,
+                                amount: String(payment.amount),
+                                penalty: String(payment.penalty || 0),
+                                discount: String(payment.discount || 0),
+                                method: payment.method,
+                                reference: payment.reference || '',
+                                description: payment.description || '',
+                                paymentDate: new Date(payment.paymentDate).toISOString().split('T')[0],
+                              });
+                              setPayeeCategory(payment.student ? 'STUDENT' : 'TEACHER');
+                            }}
+                            className="p-2 text-blue-600 hover:bg-blue-50 dark:hover:bg-blue-900/20 rounded-md transition-colors border border-blue-200 dark:border-blue-700"
+                            title={t.edit}
+                          >
+                            <CreditCard className="w-4 h-4" />
+                          </button>
+                          <button
+                            onClick={() => {
+                              setTargetDeleteId(payment.id);
+                              setConfirmOpen(true);
+                            }}
+                            className="p-2 text-red-600 hover:bg-red-50 dark:hover:bg-red-900/20 rounded-md transition-colors border border-red-200 dark:border-red-700"
+                            title={t.delete}
+                          >
+                            <X className="w-4 h-4" />
+                          </button>
+                        </div>
+                      </td>
                     </tr>
                   ))
                 )}
@@ -832,6 +789,41 @@ export const Payments = () => {
                       </div>
                     )}
                   </div>
+                  <div className="flex items-center justify-end gap-2 mt-2">
+                    <button
+                      onClick={() => {
+                        setEditPayment(payment);
+                        setShowModal(true);
+                        setFormData({
+                          studentId: payment.student?.id || '',
+                          teacherId: (payment as any).teacher?.id || '',
+                          type: payment.type,
+                          amount: String(payment.amount),
+                          penalty: String(payment.penalty || 0),
+                          discount: String(payment.discount || 0),
+                          method: payment.method,
+                          reference: payment.reference || '',
+                          description: payment.description || '',
+                          paymentDate: new Date(payment.paymentDate).toISOString().split('T')[0],
+                        });
+                        setPayeeCategory(payment.student ? 'STUDENT' : 'TEACHER');
+                      }}
+                      className="px-2 py-1 text-xs text-blue-600 hover:underline"
+                      title={t.edit}
+                    >
+                      {t.edit}
+                    </button>
+                    <button
+                      onClick={() => {
+                        setTargetDeleteId(payment.id);
+                        setConfirmOpen(true);
+                      }}
+                      className="px-2 py-1 text-xs text-red-600 hover:underline"
+                      title={t.delete}
+                    >
+                      {t.delete}
+                    </button>
+                  </div>
                 </div>
               ))}
             </div>
@@ -860,10 +852,27 @@ export const Payments = () => {
           <div className="bg-white dark:bg-slate-800 rounded-md border border-gray-200 dark:border-slate-700 shadow-2xl max-w-2xl w-full max-h-[90vh] overflow-y-auto">
             <div className="sticky top-0 bg-white dark:bg-slate-800 border-b border-gray-200 dark:border-slate-700 px-6 py-4 flex justify-between items-center">
               <h2 className="text-lg font-bold text-gray-900 dark:text-white uppercase">
-                {formData.type === 'ENCAISSEMENT' ? t.newDisbursement : t.newWithdrawal}
+                {editPayment ? t.edit : (formData.type === 'ENCAISSEMENT' ? t.newDisbursement : t.newWithdrawal)}
               </h2>
               <button 
-                onClick={() => setShowModal(false)}
+                onClick={() => {
+                  setShowModal(false);
+                  setEditPayment(null);
+                  setFormData({
+                    studentId: '',
+                    teacherId: '',
+                    type: 'ENCAISSEMENT',
+                    amount: '',
+                    penalty: '0',
+                    discount: '0',
+                    method: 'CASH',
+                    reference: '',
+                    description: '',
+                    paymentDate: new Date().toISOString().split('T')[0],
+                  });
+                  setStudentSearch('');
+                  setTeacherSearch('');
+                }}
                 className="p-2 hover:bg-gray-100 dark:hover:bg-slate-700 rounded-md transition-colors"
               >
                 <X className="w-5 h-5" />
@@ -1099,7 +1108,24 @@ export const Payments = () => {
               <div className="flex gap-3 justify-end pt-4 border-t border-gray-200 dark:border-slate-700">
                 <button
                   type="button"
-                  onClick={() => setShowModal(false)}
+                  onClick={() => {
+                    setShowModal(false);
+                    setEditPayment(null);
+                    setFormData({
+                      studentId: '',
+                      teacherId: '',
+                      type: 'ENCAISSEMENT',
+                      amount: '',
+                      penalty: '0',
+                      discount: '0',
+                      method: 'CASH',
+                      reference: '',
+                      description: '',
+                      paymentDate: new Date().toISOString().split('T')[0],
+                    });
+                    setStudentSearch('');
+                    setTeacherSearch('');
+                  }}
                   className="px-4 py-2 text-sm font-medium text-gray-700 dark:text-gray-300 bg-gray-100 dark:bg-slate-700 hover:bg-gray-200 dark:hover:bg-slate-600 rounded-md transition-colors"
                 >
                   {t.cancel}
@@ -1108,13 +1134,41 @@ export const Payments = () => {
                   type="submit"
                   className="px-4 py-2 text-sm font-medium text-white bg-purple-600 hover:bg-purple-700 rounded-md transition-colors"
                 >
-                  {t.save}
+                  {editPayment ? t.update : t.save}
                 </button>
               </div>
             </form>
           </div>
         </div>
       )}
+      <ConfirmDialog
+        isOpen={confirmOpen}
+        onClose={() => {
+          if (deleteLoading) return;
+          setConfirmOpen(false);
+          setTargetDeleteId(null);
+        }}
+        onConfirm={async () => {
+          if (!targetDeleteId) return;
+          setDeleteLoading(true);
+          try {
+            await api.delete(`/api/finance/finance/${targetDeleteId}`);
+            fetchPayments();
+          } catch (err) {
+            notify.error('Erreur lors de la suppression du paiement');
+          } finally {
+            setDeleteLoading(false);
+            setConfirmOpen(false);
+            setTargetDeleteId(null);
+          }
+        }}
+        title="Supprimer le paiement"
+        message="Cette action est irréversible. Voulez-vous vraiment supprimer ce paiement ?"
+        confirmText="Supprimer"
+        cancelText="Annuler"
+        type="danger"
+        loading={deleteLoading}
+      />
     </div>
   );
 };

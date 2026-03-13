@@ -19,6 +19,8 @@ import {
 import { useNavigate } from 'react-router-dom';
 import { useTheme } from '../contexts/ThemeContext';
 import { translations } from '../lib/translations';
+import { useAuth } from '../contexts/AuthContext';
+import { useNotification } from '../contexts/NotificationContext';
 
 interface Notification {
   id: string;
@@ -30,12 +32,15 @@ interface Notification {
 }
 
 export const BancoTopbar = ({ onMenuClick }: { onMenuClick: () => void }) => {
-  const { theme, toggleTheme, language, toggleLanguage, interfaceSize, toggleInterfaceSize } = useTheme();
+  const { theme, toggleTheme, language, toggleLanguage, interfaceSize, toggleInterfaceSize, direction, toggleDirection } = useTheme();
   const navigate = useNavigate();
+  const { logout } = useAuth();
+  const { success } = useNotification();
   const t = translations[language];
   const [showUserMenu, setShowUserMenu] = useState(false);
   const [showNotifications, setShowNotifications] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
+  const disableAuth = ((import.meta as any).env?.VITE_DISABLE_AUTH || 'true') === 'true';
 
   // Notifications de démonstration
   const notifications: Notification[] = [
@@ -68,9 +73,10 @@ export const BancoTopbar = ({ onMenuClick }: { onMenuClick: () => void }) => {
   const unreadCount = notifications.filter(n => !n.read).length;
 
   const handleLogout = () => {
-    // Simuler la déconnexion
-    navigate('/');
+    logout();
     setShowUserMenu(false);
+    success('Déconnexion effectuée');
+    navigate('/', { replace: true });
   };
 
   const markAsRead = (id: string) => {
@@ -107,7 +113,7 @@ export const BancoTopbar = ({ onMenuClick }: { onMenuClick: () => void }) => {
   return (
     <header 
       style={{ height: 'var(--header-height)' }}
-      className="banco-topbar flex items-center justify-between px-4 sticky top-0 z-10 transition-all"
+      className="banco-topbar flex items-center justify-between px-4 sticky top-0 z-10 transition-all bg-white/70 dark:bg-slate-900/35 backdrop-blur-xl"
     >
       {/* Section gauche */}
       <div className="flex items-center gap-3 md:gap-4">
@@ -119,7 +125,7 @@ export const BancoTopbar = ({ onMenuClick }: { onMenuClick: () => void }) => {
         </button>
         
         {/* Barre de recherche améliorée */}
-        <div className="hidden sm:flex items-center bg-gray-50 dark:bg-slate-700 border border-transparent focus-within:border-primary/30 focus-within:bg-white dark:focus-within:bg-slate-700 focus-within:ring-4 focus-within:ring-primary/5 rounded-xl px-4 py-2.5 w-52 md:w-64 transition-all banco-input">
+        <div className="hidden sm:flex items-center bg-white/60 dark:bg-slate-900/30 border border-gray-200/70 dark:border-slate-700/60 focus-within:border-primary/40 focus-within:ring-4 focus-within:ring-primary/10 rounded-xl px-4 py-2.5 w-52 md:w-64 transition-all">
           <Search className="w-4 h-4 text-gray-400 dark:text-gray-500 mr-3 flex-shrink-0" />
           <input 
             type="text" 
@@ -173,6 +179,17 @@ export const BancoTopbar = ({ onMenuClick }: { onMenuClick: () => void }) => {
           </span>
         </button>
 
+        {/* Direction LTR/RTL */}
+        <button
+          onClick={toggleDirection}
+          className="p-2.5 text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-slate-700 rounded-lg transition-all flex items-center gap-2 hover:text-primary"
+          title={`Direction (actuel: ${direction.toUpperCase()})`}
+        >
+          <span className="text-xs font-medium uppercase hidden md:block font-inter">
+            {direction === 'rtl' ? 'RTL' : 'LTR'}
+          </span>
+        </button>
+
         {/* Toggle thème */}
         <button 
           onClick={toggleTheme}
@@ -211,7 +228,7 @@ export const BancoTopbar = ({ onMenuClick }: { onMenuClick: () => void }) => {
                 className="fixed inset-0 z-10" 
                 onClick={() => setShowNotifications(false)}
               />
-              <div className="absolute right-0 mt-2 w-80 bg-white dark:bg-slate-800 rounded-xl shadow-2xl border border-gray-200 dark:border-slate-700 z-20">
+              <div className="absolute right-0 mt-2 w-80 bg-white/90 dark:bg-slate-900/80 backdrop-blur-xl rounded-xl shadow-2xl border border-gray-200/70 dark:border-slate-700/60 z-20">
                 <div className="p-4 border-b border-gray-200 dark:border-slate-700">
                   <div className="flex items-center justify-between">
                     <h3 className="font-bold text-gray-900 dark:text-white font-inter">Notifications</h3>
@@ -275,7 +292,7 @@ export const BancoTopbar = ({ onMenuClick }: { onMenuClick: () => void }) => {
               </div>
             </div>
             <div className="relative">
-              <div className="w-9 h-9 bg-gradient-to-br from-primary to-primary-dark rounded-full flex items-center justify-center">
+              <div className="w-9 h-9 bg-gradient-to-br from-primary to-indigo-700 rounded-full flex items-center justify-center shadow-lg shadow-blue-500/15">
                 <User className="w-5 h-5 text-white" />
               </div>
               <div className="absolute bottom-0 right-0 w-3 h-3 bg-emerald-500 border-2 border-white dark:border-slate-800 rounded-full"></div>
@@ -290,10 +307,10 @@ export const BancoTopbar = ({ onMenuClick }: { onMenuClick: () => void }) => {
                 className="fixed inset-0 z-10" 
                 onClick={() => setShowUserMenu(false)}
               />
-              <div className="absolute right-0 mt-2 w-64 bg-white dark:bg-slate-800 rounded-xl shadow-xl border border-gray-200 dark:border-slate-700 z-20">
+              <div className="absolute right-0 mt-2 w-64 bg-white/90 dark:bg-slate-900/80 backdrop-blur-xl rounded-xl shadow-xl border border-gray-200/70 dark:border-slate-700/60 z-20">
                 <div className="p-4 border-b border-gray-200 dark:border-slate-700">
                   <div className="flex items-center gap-3">
-                    <div className="w-12 h-12 bg-gradient-to-br from-primary to-primary-dark rounded-full flex items-center justify-center">
+                    <div className="w-12 h-12 bg-gradient-to-br from-primary to-indigo-700 rounded-full flex items-center justify-center shadow-lg shadow-blue-500/15">
                       <User className="w-6 h-6 text-white" />
                     </div>
                     <div>

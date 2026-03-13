@@ -4,6 +4,7 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { AggregatorModule } from './modules/aggregator/aggregator.module';
 import { StudentsModule } from './modules/students/students.module';
 import { ExternalModule } from './external/external.module';
+import { SearchIndexerService } from './search-indexer.service';
 
 @Module({
   imports: [
@@ -21,5 +22,7 @@ import { ExternalModule } from './external/external.module';
     StudentsModule,
     ExternalModule,
   ],
+  controllers: [StudentEventsController],
+  providers: [SearchIndexerService],
 })
 export class AppModule {}

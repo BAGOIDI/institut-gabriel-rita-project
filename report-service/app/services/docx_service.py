@@ -185,8 +185,8 @@ class DocxService:
             # Jours
             for col_idx, day in enumerate(days):
                 cell = row.cells[col_idx + 1]
-                if day in schedule and time_slot in schedule[day]:
-                    slot = schedule[day][time_slot]
+                slot = schedule.get(day, {}).get(time_slot)
+                if slot:
                     # Fond alternant
                     _set_cell_bg(cell, 'EFF6FF')
                     p = cell.paragraphs[0]
@@ -196,11 +196,7 @@ class DocxService:
                     r_subj.font.color.rgb = COLOR_PRIMARY
 
                     p2 = cell.add_paragraph(f"👤 {slot.get('teacher_name', '')}")
-                    p2.runs[0].font.size = Pt(7) if p2.runs else None
-
-                    if slot.get('room'):
-                        p3 = cell.add_paragraph(f"📍 {slot.get('room', '')}")
-                        if p3.runs: p3.runs[0].font.size = Pt(7)
+                    if p2.runs: p2.runs[0].font.size = Pt(8.5)
                 else:
                     _set_cell_bg(cell, 'F9FAFB')
 

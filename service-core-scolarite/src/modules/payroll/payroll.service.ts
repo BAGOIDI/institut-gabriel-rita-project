@@ -14,7 +14,7 @@ export class PayrollService {
   ) {}
 
   async generateMonthlyPayslips(month: number, year: number) {
-    const teachers = await this.staffRepo.find({ where: { isActive: true } });
+    const teachers = await this.staffRepo.find();
     const generated = [];
 
     for (const teacher of teachers) {

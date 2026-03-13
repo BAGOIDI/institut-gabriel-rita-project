@@ -48,19 +48,99 @@ const reportService = {
   },
 
   /** Liste les classes disponibles */
-  async getClasses(): Promise<{id: string; name: string}[]> {
+  async getClasses(): Promise<{id: string; name: string; specialty_id: string}[]> {
     const res = await api.get(`${BASE}/classes`);
     return res.data;
   },
 
-  /** Génère et télécharge l'emploi du temps d'une classe */
-  async downloadSchedule(className: string, format: ReportFormat = 'pdf') {
+  /** Liste les enseignants disponibles */
+  async getTeachers(): Promise<{id: string; name: string}[]> {
+    const res = await api.get(`${BASE}/teachers`);
+    return res.data;
+  },
+
+  /** Liste les matières disponibles */
+  async getSubjects(): Promise<{id: string; name: string}[]> {
+    const res = await api.get(`${BASE}/subjects`);
+    return res.data;
+  },
+
+  /** Liste les filières (specialties) disponibles */
+  async getSpecialties(): Promise<{id: string; name: string; code: string}[]> {
+    const res = await api.get(`${BASE}/specialties`);
+    return res.data;
+  },
+
+  /** Génère l'emploi du temps d'une classe (Blob) */
+  async getScheduleBlob(className: string, format: ReportFormat = 'pdf'): Promise<Blob> {
     const res = await api.get(`${BASE}/schedule/${encodeURIComponent(className)}`, {
       params: { format },
       responseType: 'blob',
+      timeout: 120000,
+    });
+    return new Blob([res.data], { type: MIME[format] });
+  },
+
+  /** Génère l'emploi du temps d'un enseignant (Blob) */
+  async getTeacherScheduleBlob(teacherName: string, format: ReportFormat = 'pdf'): Promise<Blob> {
+    const res = await api.get(`${BASE}/schedule/teacher/${encodeURIComponent(teacherName)}`, {
+      params: { format },
+      responseType: 'blob',
+      timeout: 120000,
+    });
+    return new Blob([res.data], { type: MIME[format] });
+  },
+
+  /** Génère la synthèse (Blob) */
+  async getSynthesisBlob(classId?: string, staffId?: string, format: ReportFormat = 'pdf', specialtyIds?: string[]): Promise<Blob> {
+    const res = await api.get(`${BASE}/schedule/synthesis`, {
+      params: { 
+        format,
+        class_id: classId || undefined,
+        staff_id: staffId || undefined,
+        specialty_ids: specialtyIds && specialtyIds.length > 0 ? specialtyIds.join(',') : undefined,
+      },
+      responseType: 'blob',
+      timeout: 120000,
+    });
+    return new Blob([res.data], { type: MIME[format] });
+  },
+
+  /** Génère et télécharge l'emploi du temps d'une classe */
+  async downloadSchedule(className: string, format: ReportFormat = 'pdf') {
+    const blob = await reportService.getScheduleBlob(className, format);
+    triggerDownload(blob, `edt_classe_${className}.${format}`);
+    return blob;
+  },
+
+  /** Génère et télécharge l'emploi du temps d'un enseignant */
+  async downloadTeacherSchedule(teacherName: string, format: ReportFormat = 'pdf') {
+    const blob = await reportService.getTeacherScheduleBlob(teacherName, format);
+    triggerDownload(blob, `edt_enseignant_${teacherName.replace(/\s+/g, '_')}.${format}`);
+    return blob;
+  },
+
+  /** Génère et télécharge l'emploi du temps d'une matière */
+  async downloadSubjectSchedule(subjectName: string, format: ReportFormat = 'pdf') {
+    const res = await api.get(`${BASE}/schedule/subject/${encodeURIComponent(subjectName)}`, {
+      params: { format },
+      responseType: 'blob',
+      timeout: 120000,
     });
     const blob = new Blob([res.data], { type: MIME[format] });
-    triggerDownload(blob, `emploi_du_temps_${className}.${format}`);
+    triggerDownload(blob, `edt_matiere_${subjectName.replace(/\s+/g, '_')}.${format}`);
+    return blob;
+  },
+
+  /** Génère et télécharge la synthèse globale des emplois du temps (Tableau complexe) */
+  async downloadSynthesisSchedule(
+    classId?: string,
+    staffId?: string,
+    format: ReportFormat = 'pdf',
+    specialtyIds?: string[],
+  ) {
+    const blob = await reportService.getSynthesisBlob(classId, staffId, format, specialtyIds);
+    triggerDownload(blob, `synthese_emplois_du_temps.${format}`);
     return blob;
   },
 
@@ -69,6 +149,7 @@ const reportService = {
     const res = await api.get(`${BASE}/student/${encodeURIComponent(matricule)}`, {
       params: { format },
       responseType: 'blob',
+      timeout: 120000,
     });
     const blob = new Blob([res.data], { type: MIME[format] });
     triggerDownload(blob, `releve_compte_${matricule}.${format}`);
@@ -80,6 +161,7 @@ const reportService = {
     const res = await api.get(`${BASE}/global-school`, {
       params: { format },
       responseType: 'blob',
+      timeout: 120000,
     });
     const blob = new Blob([res.data], { type: MIME[format] });
     triggerDownload(blob, `rapport_global_ecole.${format}`);
@@ -91,6 +173,7 @@ const reportService = {
     const res = await api.get(`${BASE}/late-payments`, {
       params: { format },
       responseType: 'blob',
+      timeout: 120000,
     });
     const blob = new Blob([res.data], { type: MIME[format] });
     triggerDownload(blob, `paiements_en_retard.${format}`);
@@ -102,6 +185,7 @@ const reportService = {
     const res = await api.get(`${BASE}/moratoriums`, {
       params: { format },
       responseType: 'blob',
+      timeout: 120000,
     });
     const blob = new Blob([res.data], { type: MIME[format] });
     triggerDownload(blob, `moratoires.${format}`);
@@ -113,6 +197,7 @@ const reportService = {
     const res = await api.get(`${BASE}/payments-by-class/${encodeURIComponent(className)}`, {
       params: { format },
       responseType: 'blob',
+      timeout: 120000,
     });
     const blob = new Blob([res.data], { type: MIME[format] });
     triggerDownload(blob, `paiements_classe_${className}.${format}`);

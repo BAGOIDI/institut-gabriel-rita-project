@@ -11,11 +11,17 @@ const client = new Typesense.Client({
 });
 
 export const SearchService = {
-  search: async (collection: string, query: string, queryBy: string) => {
+  search: async (
+    collection: string,
+    query: string,
+    queryBy: string,
+    extraParams: Record<string, any> = {}
+  ) => {
     const searchParameters = {
       q: query,
       query_by: queryBy,
+      ...extraParams,
     };
     return await client.collections(collection).documents().search(searchParameters);
-  }
+  },
 };

@@ -3,6 +3,7 @@ import React, { createContext, useContext, useState, useEffect } from 'react';
 type Theme = 'light' | 'dark';
 type Language = 'fr' | 'en';
 type InterfaceSize = 'medium' | 'large';
+type Direction = 'ltr' | 'rtl';
 
 interface ThemeContextType {
   theme: Theme;
@@ -11,6 +12,8 @@ interface ThemeContextType {
   toggleLanguage: () => void;
   interfaceSize: InterfaceSize;
   toggleInterfaceSize: () => void;
+  direction: Direction;
+  toggleDirection: () => void;
 }
 
 const ThemeContext = createContext<ThemeContextType | undefined>(undefined);
@@ -34,6 +37,11 @@ export const ThemeProvider: React.FC<{ children: React.ReactNode }> = ({ childre
   const [interfaceSize, setInterfaceSizeState] = useState<InterfaceSize>(() => {
     const saved = localStorage.getItem('interfaceSize');
     return (saved as InterfaceSize) || 'medium';
+  });
+
+  const [direction, setDirection] = useState<Direction>(() => {
+    const saved = localStorage.getItem('direction');
+    return (saved as Direction) || 'ltr';
   });
 
   useEffect(() => {
@@ -91,6 +99,13 @@ export const ThemeProvider: React.FC<{ children: React.ReactNode }> = ({ childre
     root.style.fontSize = sizeMap[interfaceSize];
   }, [interfaceSize]);
 
+  useEffect(() => {
+    localStorage.setItem('direction', direction);
+    document.documentElement.setAttribute('dir', direction);
+    document.documentElement.classList.remove('dir-ltr', 'dir-rtl');
+    document.documentElement.classList.add(`dir-${direction}`);
+  }, [direction]);
+
   const toggleTheme = () => {
     setTheme(prev => prev === 'light' ? 'dark' : 'light');
   };
@@ -103,6 +118,10 @@ export const ThemeProvider: React.FC<{ children: React.ReactNode }> = ({ childre
     setInterfaceSizeState(prev => prev === 'medium' ? 'large' : 'medium');
   };
 
+  const toggleDirection = () => {
+    setDirection(prev => prev === 'ltr' ? 'rtl' : 'ltr');
+  };
+
   return (
     <ThemeContext.Provider value={{ 
       theme, 
@@ -110,7 +129,9 @@ export const ThemeProvider: React.FC<{ children: React.ReactNode }> = ({ childre
       language, 
       toggleLanguage, 
       interfaceSize, 
-      toggleInterfaceSize 
+      toggleInterfaceSize,
+      direction,
+      toggleDirection
     }}>
       {children}
     </ThemeContext.Provider>

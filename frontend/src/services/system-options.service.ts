@@ -3,10 +3,12 @@ import api from './api.service';
 const BASE_PATH = '/api/core/system-options';
 
 export interface SystemOption {
-  id: string;
+  id: number | string;
   category: string;
   value: string;
-  label: string;
+  label?: string;
+  labelFr?: string;
+  labelEn?: string;
   isActive: boolean;
 }
 

@@ -21,6 +21,28 @@ export default defineConfig({
       '.ngrok-free.dev',  // Autoriser tous les sous-domaines ngrok
       '127.0.0.1',
       '0.0.0.0'
-    ]
+    ],
+    proxy: {
+      '/api/core': {
+        target: 'http://localhost:3000',
+        changeOrigin: true,
+      },
+      '/api/planning': {
+        target: 'http://localhost:3002',
+        changeOrigin: true,
+      },
+      '/api/reports': {
+        target: 'http://localhost:8000',
+        changeOrigin: true,
+      },
+      '/api/finance': {
+        target: 'http://localhost:3004',
+        changeOrigin: true,
+      },
+      '/auth': {
+        target: 'http://localhost',
+        changeOrigin: true,
+      }
+    }
   }
 })

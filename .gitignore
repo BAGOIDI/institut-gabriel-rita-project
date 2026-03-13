@@ -7,3 +7,36 @@ node_modules/
 
 # Dossier gestscolxp
 gestscolxp/
+
+# Environnements / secrets (ne jamais versionner)
+.env
+**/.env
+!.env.example
+
+# Artefacts build
+dist/
+**/dist/
+**/dist/**
+build/
+**/build/
+**/build/**
+
+# Python
+__pycache__/
+**/__pycache__/
+**/__pycache__/**
+*.pyc
+**/*.pyc
+
+# IDE
+.idea/
+.vscode/
+
+# Assets/templates de démo (volumineux)
+RTL/
+
+# Dumps DB locaux
+backup.sql
+
+# Fichiers de contrôle/runtime (ex: gunicorn symlink/fifo)
+*.ctl

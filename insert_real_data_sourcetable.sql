@@ -2,22 +2,36 @@
 -- INSERTION DES DONNÉES RÉELLES (SPÉCIALITÉS ET MATIÈRES)
 -- =============================================
 
+-- 0. Insertion des Filières
+INSERT INTO public.tracks (name, code, description) VALUES ('Agroalimentaire', 'AGRO', 'Filière Agroalimentaire') ON CONFLICT DO NOTHING;
+INSERT INTO public.tracks (name, code, description) VALUES ('Bâtiment', 'BAT', 'Filière Bâtiment') ON CONFLICT DO NOTHING;
+INSERT INTO public.tracks (name, code, description) VALUES ('Génie Civil', 'GC', 'Filière Génie Civil') ON CONFLICT DO NOTHING;
+INSERT INTO public.tracks (name, code, description) VALUES ('Hôtellerie', 'HOTEL', 'Filière Hôtellerie') ON CONFLICT DO NOTHING;
+INSERT INTO public.tracks (name, code, description) VALUES ('Mécanique', 'MEC', 'Filière Mécanique') ON CONFLICT DO NOTHING;
+INSERT INTO public.tracks (name, code, description) VALUES ('Métallurgie', 'METAL', 'Filière Métallurgie') ON CONFLICT DO NOTHING;
+INSERT INTO public.tracks (name, code, description) VALUES ('Réseaux & Sécurité', 'RESEAUX', 'Filière Réseaux & Sécurité') ON CONFLICT DO NOTHING;
+INSERT INTO public.tracks (name, code, description) VALUES ('Télécommunications', 'TELECOM', 'Filière Télécommunications') ON CONFLICT DO NOTHING;
+INSERT INTO public.tracks (name, code, description) VALUES ('Topographie', 'TOPO', 'Filière Topographie') ON CONFLICT DO NOTHING;
+INSERT INTO public.tracks (name, code, description) VALUES ('Tourisme', 'TOUR', 'Filière Tourisme') ON CONFLICT DO NOTHING;
+INSERT INTO public.tracks (name, code, description) VALUES ('Urbanisme', 'URB', 'Filière Urbanisme') ON CONFLICT DO NOTHING;
+INSERT INTO public.tracks (name, code, description) VALUES ('Restauration', 'RESTO', 'Filière Restauration') ON CONFLICT DO NOTHING;
+
 -- 1. Insertion des Spécialités
-INSERT INTO public.specialties (id, name, code, description) VALUES (1, 'BAKERY AND FOOD PROCESSING', 'SPEC1', 'Département BAKERY AND FOOD PROCESSING') ON CONFLICT DO NOTHING;
-INSERT INTO public.specialties (id, name, code, description) VALUES (2, 'BUILDING SCIENCE AND TECHNOLOGY', 'SPEC2', 'Département BUILDING SCIENCE AND TECHNOLOGY') ON CONFLICT DO NOTHING;
-INSERT INTO public.specialties (id, name, code, description) VALUES (3, 'CIVIL ENGINEERING TECHNOLOGY', 'SPEC3', 'Département CIVIL ENGINEERING TECHNOLOGY') ON CONFLICT DO NOTHING;
-INSERT INTO public.specialties (id, name, code, description) VALUES (4, 'HÔTELLERIE : GESTION ET MANAGEMENT HÔTELIERS', 'SPEC4', 'Département HÔTELLERIE : GESTION ET MANAGEMENT HÔTELIERS') ON CONFLICT DO NOTHING;
-INSERT INTO public.specialties (id, name, code, description) VALUES (5, 'HÔTELLERIE : MANAGEMENT ET TECHNIQUES D’HÉBERGEMENTS', 'SPEC5', 'Département HÔTELLERIE : MANAGEMENT ET TECHNIQUES D’HÉBERGEMENTS') ON CONFLICT DO NOTHING;
-INSERT INTO public.specialties (id, name, code, description) VALUES (6, 'MECHANICAL CONSTRUCTION', 'SPEC6', 'Département MECHANICAL CONSTRUCTION') ON CONFLICT DO NOTHING;
-INSERT INTO public.specialties (id, name, code, description) VALUES (7, 'MECHANICAL MANUFACTURING', 'SPEC7', 'Département MECHANICAL MANUFACTURING') ON CONFLICT DO NOTHING;
-INSERT INTO public.specialties (id, name, code, description) VALUES (8, 'METAL CONSTRUCTION', 'SPEC8', 'Département METAL CONSTRUCTION') ON CONFLICT DO NOTHING;
-INSERT INTO public.specialties (id, name, code, description) VALUES (9, 'NETWORKS AND SECURITY', 'SPEC9', 'Département NETWORKS AND SECURITY') ON CONFLICT DO NOTHING;
-INSERT INTO public.specialties (id, name, code, description) VALUES (10, 'RESTAURATION : COMMERCIALISATION ET SERVICES DE RESTAURATION', 'SPEC10', 'Département RESTAURATION : COMMERCIALISATION ET SERVICES DE RESTAURATION') ON CONFLICT DO NOTHING;
-INSERT INTO public.specialties (id, name, code, description) VALUES (11, 'RESTAURATION : GÉNIE CULINAIRE', 'SPEC11', 'Département RESTAURATION : GÉNIE CULINAIRE') ON CONFLICT DO NOTHING;
-INSERT INTO public.specialties (id, name, code, description) VALUES (12, 'TELECOMMUNICATIONS', 'SPEC12', 'Département TELECOMMUNICATIONS') ON CONFLICT DO NOTHING;
-INSERT INTO public.specialties (id, name, code, description) VALUES (13, 'TOPOGRAPHY', 'SPEC13', 'Département TOPOGRAPHY') ON CONFLICT DO NOTHING;
-INSERT INTO public.specialties (id, name, code, description) VALUES (14, 'TOURISME : MANAGEMENT TOURISTIQUE', 'SPEC14', 'Département TOURISME : MANAGEMENT TOURISTIQUE') ON CONFLICT DO NOTHING;
-INSERT INTO public.specialties (id, name, code, description) VALUES (15, 'URBAN PLANNING', 'SPEC15', 'Département URBAN PLANNING') ON CONFLICT DO NOTHING;
+INSERT INTO public.specialties (id, name, code, description, track_id) VALUES (1, 'BAKERY AND FOOD PROCESSING', 'SPEC1', 'Département BAKERY AND FOOD PROCESSING', (SELECT id FROM public.tracks WHERE code='AGRO')) ON CONFLICT DO NOTHING;
+INSERT INTO public.specialties (id, name, code, description, track_id) VALUES (2, 'BUILDING SCIENCE AND TECHNOLOGY', 'SPEC2', 'Département BUILDING SCIENCE AND TECHNOLOGY', (SELECT id FROM public.tracks WHERE code='BAT')) ON CONFLICT DO NOTHING;
+INSERT INTO public.specialties (id, name, code, description, track_id) VALUES (3, 'CIVIL ENGINEERING TECHNOLOGY', 'SPEC3', 'Département CIVIL ENGINEERING TECHNOLOGY', (SELECT id FROM public.tracks WHERE code='GC')) ON CONFLICT DO NOTHING;
+INSERT INTO public.specialties (id, name, code, description, track_id) VALUES (4, 'HÔTELLERIE : GESTION ET MANAGEMENT HÔTELIERS', 'SPEC4', 'Département HÔTELLERIE : GESTION ET MANAGEMENT HÔTELIERS', (SELECT id FROM public.tracks WHERE code='HOTEL')) ON CONFLICT DO NOTHING;
+INSERT INTO public.specialties (id, name, code, description, track_id) VALUES (5, 'HÔTELLERIE : MANAGEMENT ET TECHNIQUES D’HÉBERGEMENTS', 'SPEC5', 'Département HÔTELLERIE : MANAGEMENT ET TECHNIQUES D’HÉBERGEMENTS', (SELECT id FROM public.tracks WHERE code='HOTEL')) ON CONFLICT DO NOTHING;
+INSERT INTO public.specialties (id, name, code, description, track_id) VALUES (6, 'MECHANICAL CONSTRUCTION', 'SPEC6', 'Département MECHANICAL CONSTRUCTION', (SELECT id FROM public.tracks WHERE code='MEC')) ON CONFLICT DO NOTHING;
+INSERT INTO public.specialties (id, name, code, description, track_id) VALUES (7, 'MECHANICAL MANUFACTURING', 'SPEC7', 'Département MECHANICAL MANUFACTURING', (SELECT id FROM public.tracks WHERE code='MEC')) ON CONFLICT DO NOTHING;
+INSERT INTO public.specialties (id, name, code, description, track_id) VALUES (8, 'METAL CONSTRUCTION', 'SPEC8', 'Département METAL CONSTRUCTION', (SELECT id FROM public.tracks WHERE code='METAL')) ON CONFLICT DO NOTHING;
+INSERT INTO public.specialties (id, name, code, description, track_id) VALUES (9, 'NETWORKS AND SECURITY', 'SPEC9', 'Département NETWORKS AND SECURITY', (SELECT id FROM public.tracks WHERE code='RESEAUX')) ON CONFLICT DO NOTHING;
+INSERT INTO public.specialties (id, name, code, description, track_id) VALUES (10, 'RESTAURATION : COMMERCIALISATION ET SERVICES DE RESTAURATION', 'SPEC10', 'Département RESTAURATION : COMMERCIALISATION ET SERVICES DE RESTAURATION', (SELECT id FROM public.tracks WHERE code='RESTO')) ON CONFLICT DO NOTHING;
+INSERT INTO public.specialties (id, name, code, description, track_id) VALUES (11, 'RESTAURATION : GÉNIE CULINAIRE', 'SPEC11', 'Département RESTAURATION : GÉNIE CULINAIRE', (SELECT id FROM public.tracks WHERE code='RESTO')) ON CONFLICT DO NOTHING;
+INSERT INTO public.specialties (id, name, code, description, track_id) VALUES (12, 'TELECOMMUNICATIONS', 'SPEC12', 'Département TELECOMMUNICATIONS', (SELECT id FROM public.tracks WHERE code='TELECOM')) ON CONFLICT DO NOTHING;
+INSERT INTO public.specialties (id, name, code, description, track_id) VALUES (13, 'TOPOGRAPHY', 'SPEC13', 'Département TOPOGRAPHY', (SELECT id FROM public.tracks WHERE code='TOPO')) ON CONFLICT DO NOTHING;
+INSERT INTO public.specialties (id, name, code, description, track_id) VALUES (14, 'TOURISME : MANAGEMENT TOURISTIQUE', 'SPEC14', 'Département TOURISME : MANAGEMENT TOURISTIQUE', (SELECT id FROM public.tracks WHERE code='TOUR')) ON CONFLICT DO NOTHING;
+INSERT INTO public.specialties (id, name, code, description, track_id) VALUES (15, 'URBAN PLANNING', 'SPEC15', 'Département URBAN PLANNING', (SELECT id FROM public.tracks WHERE code='URB')) ON CONFLICT DO NOTHING;
 
 -- 2. Insertion des Classes (Exemple: Niveau 1 et 2 pour chaque spécialité)
 INSERT INTO public.classes (id, name, level, specialty_id, capacity) VALUES (1, 'BAKERY AND FOOD PROCESSING - Niveau 1', 'L1', 1, 50) ON CONFLICT DO NOTHING;
