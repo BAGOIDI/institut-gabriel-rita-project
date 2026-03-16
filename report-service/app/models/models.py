@@ -154,6 +154,7 @@ class Subject(db.Model):
     credits = db.Column(db.Integer, default=0)
     specialty_id = db.Column(db.Integer, db.ForeignKey('specialties.id'))
     class_id = db.Column(db.Integer, db.ForeignKey('classes.id'))
+    teacher_id = db.Column(db.Integer, db.ForeignKey('staff.id'))
     semester_id = db.Column(db.Integer, db.ForeignKey('semesters.id'))
     coefficient = db.Column(db.Integer, default=1)
     credits_ects = db.Column('creditsEcts', db.Integer, default=0)
@@ -163,6 +164,7 @@ class Subject(db.Model):
     # Relationships
     evaluations = db.relationship('Evaluation', backref='subject', lazy=True)
     course_schedules = db.relationship('CourseSchedule', backref='subject', lazy=True)
+    teacher = db.relationship('Staff', backref='subjects', lazy=True)
 
 
 class Staff(db.Model):

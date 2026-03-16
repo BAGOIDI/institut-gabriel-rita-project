@@ -1,144 +1,154 @@
 {% extends "base_report.html" %}
-
 {% block title %}Synthèse des Emplois du Temps{% endblock %}
-{% block report_title %}{{ report_title }}{% endblock %}
-
 {% block container_class %}landscape{% endblock %}
 
 {% block extra_css %}
 <style>
-    @page { size: A4 landscape; margin: 2mm; }
+@page { size: A4 landscape; margin: 5mm; }
+body { background-color: #f5f6f8 !important; }
 
-    .schedule-table {
-        width: 100%;
-        border-collapse: collapse;
-        table-layout: fixed;
-        border: 0.5px solid var(--border);
-    }
+/* Titre élégant sans remplissage */
+.main-title-band {
+    border-top: 2px solid #0056b3;
+    border-bottom: 2px solid #0056b3;
+    color: #0056b3;
+    text-align: center;
+    padding: 10px 0;
+    font-size: 14px;
+    font-weight: 800;
+    text-transform: uppercase;
+    margin-bottom: 20px;
+    letter-spacing: 2px;
+    background-color: transparent;
+}
 
-    .schedule-table th, .schedule-table td {
-        border: 0.3px solid var(--border);
-        padding: 1px 2px;
-        text-align: center;
-        vertical-align: middle !important;
-        overflow: hidden;
-    }
+.schedule-table { 
+    width: 100%; 
+    border-collapse: collapse; /* Collapse pour les lignes continues */
+    font-family: 'Inter', sans-serif;
+}
+.schedule-table th { padding: 0 2px 10px 2px; border: none; }
 
-    .schedule-table thead th {
-        background-color: var(--primary-light);
-        color: var(--white);
-        font-weight: 700;
-        text-transform: uppercase;
-        font-size: 7px;
-        padding: 3px 1px;
-    }
+.slanted-header {
+    background-color: #f26522; /* Orange */
+    color: white;
+    padding: 6px 4px;
+    transform: skewX(-15deg);
+    display: block;
+    box-shadow: 1px 1px 3px rgba(0,0,0,0.1);
+    text-align: center;
+}
+.slanted-header span {
+    display: block;
+    transform: skewX(15deg);
+    font-weight: 700;
+    font-size: 8px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+.schedule-table th:nth-child(2) .slanted-header {
+    background-color: #0056b3; /* Bleu */
+}
 
-    .day-col {
-        width: 45px;
-        background-color: var(--bg-soft);
-        font-weight: 700;
-        font-size: 7.5px;
-        color: var(--primary-light);
-        text-transform: uppercase;
-        white-space: nowrap;
-        text-align: center;
-        vertical-align: middle !important;
-    }
+/* Lignes pointillées continues sur toute la largeur (row) */
+.schedule-table tr {
+    border-bottom: 1px solid #b0b0b0;
+}
+.schedule-table thead tr {
+    border-bottom: none;
+}
+.schedule-table td {
+    padding: 6px 4px;
+    border: none;
+    vertical-align: middle;
+}
 
-    td.day-col {
-        padding: 4px 2px !important;
-    }
+/* Jours à la verticale avec fond orange */
+.day-col { 
+    background-color: #f26522 !important; 
+    color: white; 
+    font-weight: 800; 
+    width: 25px; 
+    writing-mode: vertical-rl; 
+    text-orientation: mixed;
+    text-align: center; 
+    font-size: 9px; 
+    letter-spacing: 2px; 
+}
 
-    .time-col {
-        width: 60px;
-        background-color: var(--bg-soft);
-        font-weight: 600;
-        font-size: 6.5px;
-        color: var(--secondary);
-    }
+.time-col {
+    font-weight: 700;
+    color: #333;
+    font-size: 8px;
+    text-align: center;
+    width: 60px;
+}
 
-    .course-cell {
-        height: 18px;
-        padding: 0.5px !important;
-        background-color: #fdfdfe;
-    }
+.course-item { display: flex; flex-direction: column; justify-content: center; }
+.course-subject { font-weight: 800; font-size: 7px; color: #111; text-transform: uppercase; margin-bottom: 1px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.course-teacher { font-size: 6px; color: #666; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 
-    .course-item {
-        text-align: left;
-        height: 100%;
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        padding: 1px 2px;
-        background-color: #f8fafc;
-        overflow: hidden;
-    }
+.course-item[data-type="tech"] .course-subject { color: #0056b3; } /* Bleu */
+.course-item[data-type="gen"] .course-subject { color: #f26522; } /* Orange */
+.course-item[data-type="info"] .course-subject { color: #2b3a4a; }
 
-    .course-subject {
-        font-weight: 800;
-        font-size: 6.5px;
-        color: var(--primary);
-        line-height: 0.9;
-        text-transform: uppercase;
-        white-space: nowrap;
-        text-overflow: ellipsis;
-        overflow: hidden;
-        margin-bottom: 2px;
-    }
-
-    .course-teacher {
-        font-size: 6px;
-        color: var(--secondary);
-        font-weight: 500;
-        white-space: nowrap;
-        text-overflow: ellipsis;
-        overflow: hidden;
-        line-height: 0.9;
-    }
-
-    .empty-cell {
-        background-color: #f1f5f9;
-        opacity: 0.15;
-        height: 100%;
-    }
+.empty-slot { color: #ccc; font-size: 8px; text-align: center; }
 </style>
 {% endblock %}
 
 {% block content %}
+<div class="print-header-spacer"></div>
+
+<div class="main-title-band">
+    {{ report_title }}
+</div>
+
 <table class="schedule-table">
     <thead>
         <tr>
-            <th class="day-col">JOUR</th>
-            <th class="time-col">HORAIRE</th>
+            <th style="width: 25px;"></th>
+            <th style="width: 60px;"><div class="slanted-header"><span>HEURES</span></div></th>
             {% for cls in classes %}
-            <th>{{ cls.name|upper }}</th>
+                <th><div class="slanted-header"><span>{{ cls.name }}</span></div></th>
             {% endfor %}
         </tr>
     </thead>
-    <tbody>
-        {% for day in days %}
-            {% for time_slot in time_slots %}
-            <tr>
-                {% if loop.first %}
-                <td class="day-col" rowspan="{{ time_slots|length }}">{{ day }}</td>
-                {% endif %}
-                <td class="time-col">{{ time_slot }}</td>
-                {% for cls in classes %}
-                    {% set course = grid.get(day, {}).get(time_slot, {}).get(cls.id) %}
-                    <td class="course-cell">
-                        {% if course %}
-                        <div class="course-item">
+    {% for day in days %}
+    <tbody class="day-group" style="page-break-inside: avoid; break-inside: avoid;">
+        {% set day_loop = loop %}
+        {% for time_slot in time_slots %}
+        <tr>
+            {% if loop.first %}
+                <td rowspan="{{ time_slots|length }}" class="day-col">{{ day }}</td>
+            {% endif %}
+            <td class="time-col">{{ time_slot }}</td>
+            {% for cls in classes %}
+                {% set course = grid.get(day, {}).get(time_slot, {}).get(cls.id) %}
+                <td>
+                    {% if course %}
+                        {% set ctype = "default" %}
+                        {% set subj_lower = course.subject|lower %}
+                        {% if "math" in subj_lower or "phys" in subj_lower %} {% set ctype = "tech" %}
+                        {% elif "fran" in subj_lower or "anglais" in subj_lower %} {% set ctype = "gen" %}
+                        {% elif "info" in subj_lower or "prog" in subj_lower %} {% set ctype = "info" %}
+                        {% endif %}
+                        <div class="course-item" data-type="{{ ctype }}">
                             <div class="course-subject">{{ course.subject }}</div>
                             <div class="course-teacher">{{ course.teacher_name }}</div>
                         </div>
-                        {% else %}
-                        <div class="empty-cell"></div>
-                        {% endif %}
-                    </td>
-                {% endfor %}
-            </tr>
+                    {% else %}
+                        <div class="empty-slot">-</div>
+                    {% endif %}
+                </td>
             {% endfor %}
+        </tr>
         {% endfor %}
     </tbody>
+    {% endfor %}
 </table>
+
+<div class="print-footer-spacer"></div>
 {% endblock %}

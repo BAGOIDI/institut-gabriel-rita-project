@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { X, Download, FileText, FileSpreadsheet, File, Loader2 } from 'lucide-react';
-import reportService, { ReportFormat } from '../services/report.service';
+import reportService, { ReportFormat, ReportPeriod } from '../services/report.service';
 import SearchableSelect from './SearchableSelect';
 
 interface SchedulePrintModalProps {
@@ -14,6 +14,7 @@ interface SchedulePrintModalProps {
   };
   isOpen: boolean;
   onClose: () => void;
+  defaultPeriod?: ReportPeriod;
 }
 
 const FORMAT_OPTIONS: { value: ReportFormat; label: string; icon: React.ReactNode; color: string; desc: string }[] = [
@@ -22,11 +23,18 @@ const FORMAT_OPTIONS: { value: ReportFormat; label: string; icon: React.ReactNod
   { value: 'xlsx', label: 'Excel',     icon: <FileSpreadsheet className="w-5 h-5" />, color: '#059669', desc: 'Feuille de calcul Microsoft Excel' },
 ];
 
-const SchedulePrintModal: React.FC<SchedulePrintModalProps> = ({ scheduleData, isOpen, onClose }) => {
+const SchedulePrintModal: React.FC<SchedulePrintModalProps> = ({ scheduleData, isOpen, onClose, defaultPeriod = 'all' }) => {
   const [selectedFormat, setSelectedFormat] = useState<ReportFormat>('pdf');
+  const [selectedPeriod, setSelectedPeriod] = useState<ReportPeriod>(defaultPeriod);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [success, setSuccess] = useState(false);
+
+  useEffect(() => {
+    if (isOpen) {
+      setSelectedPeriod(defaultPeriod);
+    }
+  }, [isOpen, defaultPeriod]);
   
   const [exportType, setExportType] = useState<'class' | 'teacher' | 'synthesis_class'>('class');
   const [options, setOptions] = useState<{ id: string; name: string; level?: string; specialty_id?: string }[]>([]);
@@ -105,15 +113,16 @@ const SchedulePrintModal: React.FC<SchedulePrintModalProps> = ({ scheduleData, i
           classIds.length === 1 ? classIds[0] : undefined,
           undefined,
           selectedFormat,
-          classIds.length > 1 ? classIds : undefined
+          classIds.length > 1 ? classIds : undefined,
+          selectedPeriod
         );
       } else {
         // Pour Classe et Enseignant, c'est une sélection unique via SearchableSelect
         const name = selectedItemNames[0];
         if (exportType === 'class') {
-          await reportService.downloadSchedule(name, selectedFormat);
+          await reportService.downloadSchedule(name, selectedFormat, selectedPeriod);
         } else if (exportType === 'teacher') {
-          await reportService.downloadTeacherSchedule(name, selectedFormat);
+          await reportService.downloadTeacherSchedule(name, selectedFormat, selectedPeriod);
         }
       }
 
@@ -174,6 +183,37 @@ const SchedulePrintModal: React.FC<SchedulePrintModalProps> = ({ scheduleData, i
                 }`}
               >
                 Synthèse Classe
+              </button>
+            </div>
+          </div>
+
+          {/* Sélecteur de période (Jour / Soir) */}
+          <div className="space-y-1.5">
+            <p className="text-[10px] font-bold text-gray-500 dark:text-gray-400 uppercase tracking-widest">Période des cours</p>
+            <div className="grid grid-cols-3 gap-2 p-1 bg-gray-50 dark:bg-slate-700 rounded-lg border border-gray-200 dark:border-slate-600">
+              <button
+                onClick={() => setSelectedPeriod('all')}
+                className={`py-1.5 rounded-md text-[11px] font-bold transition-all uppercase ${
+                  selectedPeriod === 'all' ? 'bg-white dark:bg-slate-600 shadow-sm text-blue-600 border border-gray-200 dark:border-slate-500' : 'text-gray-500'
+                }`}
+              >
+                Tous
+              </button>
+              <button
+                onClick={() => setSelectedPeriod('day')}
+                className={`py-1.5 rounded-md text-[11px] font-bold transition-all uppercase ${
+                  selectedPeriod === 'day' ? 'bg-white dark:bg-slate-600 shadow-sm text-blue-600 border border-gray-200 dark:border-slate-500' : 'text-gray-500'
+                }`}
+              >
+                Jour
+              </button>
+              <button
+                onClick={() => setSelectedPeriod('evening')}
+                className={`py-1.5 rounded-md text-[11px] font-bold transition-all uppercase ${
+                  selectedPeriod === 'evening' ? 'bg-white dark:bg-slate-600 shadow-sm text-blue-600 border border-gray-200 dark:border-slate-500' : 'text-gray-500'
+                }`}
+              >
+                Soir
               </button>
             </div>
           </div>

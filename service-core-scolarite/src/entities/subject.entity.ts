@@ -6,8 +6,8 @@ import { Staff } from './staff.entity';
 
 @Entity({ name: 'subjects' })
 export class Subject {
-  @PrimaryGeneratedColumn('uuid')
-  id: string;
+  @PrimaryGeneratedColumn()
+  id: number;
 
   @Column()
   name: string;

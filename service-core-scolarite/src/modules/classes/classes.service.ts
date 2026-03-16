@@ -43,7 +43,7 @@ export class ClassService implements OnModuleInit {
     return await this.classRepository.find();
   }
 
-  async findOne(id: string): Promise<Class> {
+  async findOne(id: number): Promise<Class> {
     const foundClass = await this.classRepository.findOne({ where: { id } });
     if (!foundClass) {
       throw new NotFoundException(`Class with ID ${id} not found`);
@@ -51,7 +51,7 @@ export class ClassService implements OnModuleInit {
     return foundClass;
   }
 
-  async findSubjectsByClass(id: string): Promise<any[]> {
+  async findSubjectsByClass(id: number): Promise<any[]> {
     const foundClass = await this.classRepository.findOne({ where: { id }, relations: ['subjects'] });
     if (!foundClass) {
       throw new NotFoundException(`Class with ID ${id} not found`);
@@ -59,7 +59,7 @@ export class ClassService implements OnModuleInit {
     return foundClass.subjects;
   }
 
-  async update(id: string, updateClassDto: UpdateClassDto): Promise<Class> {
+  async update(id: number, updateClassDto: UpdateClassDto): Promise<Class> {
     const existingClass = await this.classRepository.preload({
       id: id,
       ...updateClassDto,
@@ -70,7 +70,7 @@ export class ClassService implements OnModuleInit {
     return await this.classRepository.save(existingClass);
   }
 
-  async remove(id: string): Promise<void> {
+  async remove(id: number): Promise<void> {
     const classToRemove = await this.findOne(id);
     await this.classRepository.remove(classToRemove);
   }

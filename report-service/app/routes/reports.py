@@ -124,16 +124,28 @@ def get_specialties():
 @reports_bp.route('/schedule/<class_ref>', methods=['GET'])
 def get_schedule_report(class_ref):
     fmt = _get_format()
+    period = request.args.get('period', 'all').lower()
+    
     try:
-        logger.info(f"Generating schedule report for class {class_ref} in format {fmt}")
-        OFFICIAL_TIME_SLOTS = [
+        logger.info(f"Generating schedule report for class {class_ref} in format {fmt}, period {period}")
+        
+        DAY_SLOTS = [
             ('08:00', '09:50'),
             ('10:05', '12:00'),
             ('13:00', '14:50'),
             ('15:05', '17:00'),
+        ]
+        EVENING_SLOTS = [
             ('17:30', '19:20'),
             ('19:35', '21:00'),
         ]
+        
+        if period == 'day':
+            OFFICIAL_TIME_SLOTS = DAY_SLOTS
+        elif period == 'evening':
+            OFFICIAL_TIME_SLOTS = EVENING_SLOTS
+        else:
+            OFFICIAL_TIME_SLOTS = DAY_SLOTS + EVENING_SLOTS
         
         # Resolve class
         import re
@@ -150,7 +162,7 @@ def get_schedule_report(class_ref):
         class_name = class_obj.name
         class_id = str(class_obj.id)
         
-        return _process_schedule_request(class_id, class_name, 'class', fmt, OFFICIAL_TIME_SLOTS)
+        return _process_schedule_request(class_id, class_name, 'class', fmt, OFFICIAL_TIME_SLOTS, period)
     except Exception as e:
         logger.error(f"Error in get_schedule_report: {str(e)}")
         return jsonify({'error': str(e)}), 500
@@ -159,16 +171,28 @@ def get_schedule_report(class_ref):
 @reports_bp.route('/schedule/teacher/<staff_ref>', methods=['GET'])
 def get_teacher_schedule_report(staff_ref):
     fmt = _get_format()
+    period = request.args.get('period', 'all').lower()
+    
     try:
-        logger.info(f"Generating schedule report for teacher {staff_ref} in format {fmt}")
-        OFFICIAL_TIME_SLOTS = [
+        logger.info(f"Generating schedule report for teacher {staff_ref} in format {fmt}, period {period}")
+        
+        DAY_SLOTS = [
             ('08:00', '09:50'),
             ('10:05', '12:00'),
             ('13:00', '14:50'),
             ('15:05', '17:00'),
+        ]
+        EVENING_SLOTS = [
             ('17:30', '19:20'),
             ('19:35', '21:00'),
         ]
+        
+        if period == 'day':
+            OFFICIAL_TIME_SLOTS = DAY_SLOTS
+        elif period == 'evening':
+            OFFICIAL_TIME_SLOTS = EVENING_SLOTS
+        else:
+            OFFICIAL_TIME_SLOTS = DAY_SLOTS + EVENING_SLOTS
         
         # Resolve teacher
         import re
@@ -188,7 +212,7 @@ def get_teacher_schedule_report(staff_ref):
         teacher_name = f"{teacher.first_name} {teacher.last_name}"
         teacher_id = str(teacher.id)
         
-        return _process_schedule_request(teacher_id, teacher_name, 'staff', fmt, OFFICIAL_TIME_SLOTS)
+        return _process_schedule_request(teacher_id, teacher_name, 'staff', fmt, OFFICIAL_TIME_SLOTS, period)
     except Exception as e:
         logger.error(f"Error in get_teacher_schedule_report: {str(e)}")
         return jsonify({'error': str(e)}), 500
@@ -197,16 +221,28 @@ def get_teacher_schedule_report(staff_ref):
 @reports_bp.route('/schedule/subject/<subject_ref>', methods=['GET'])
 def get_subject_schedule_report(subject_ref):
     fmt = _get_format()
+    period = request.args.get('period', 'all').lower()
+    
     try:
-        logger.info(f"Generating schedule report for subject {subject_ref} in format {fmt}")
-        OFFICIAL_TIME_SLOTS = [
+        logger.info(f"Generating schedule report for subject {subject_ref} in format {fmt}, period {period}")
+        
+        DAY_SLOTS = [
             ('08:00', '09:50'),
             ('10:05', '12:00'),
             ('13:00', '14:50'),
             ('15:05', '17:00'),
+        ]
+        EVENING_SLOTS = [
             ('17:30', '19:20'),
             ('19:35', '21:00'),
         ]
+        
+        if period == 'day':
+            OFFICIAL_TIME_SLOTS = DAY_SLOTS
+        elif period == 'evening':
+            OFFICIAL_TIME_SLOTS = EVENING_SLOTS
+        else:
+            OFFICIAL_TIME_SLOTS = DAY_SLOTS + EVENING_SLOTS
         
         subject = Subject.query.get(subject_ref) if subject_ref.isdigit() else Subject.query.filter_by(name=subject_ref).first()
         
@@ -216,13 +252,13 @@ def get_subject_schedule_report(subject_ref):
         subject_name = subject.name
         subject_id = str(subject.id)
         
-        return _process_schedule_request(subject_id, subject_name, 'subject', fmt, OFFICIAL_TIME_SLOTS)
+        return _process_schedule_request(subject_id, subject_name, 'subject', fmt, OFFICIAL_TIME_SLOTS, period)
     except Exception as e:
         logger.error(f"Error in get_subject_schedule_report: {str(e)}")
         return jsonify({'error': str(e)}), 500
 
 
-def _process_schedule_request(target_id, target_name, filter_type, fmt, OFFICIAL_TIME_SLOTS):
+def _process_schedule_request(target_id, target_name, filter_type, fmt, OFFICIAL_TIME_SLOTS, period='all'):
     try:
         # Define base URL for planning service based on filter_type
         if filter_type == 'class':
@@ -239,6 +275,12 @@ def _process_schedule_request(target_id, target_name, filter_type, fmt, OFFICIAL
         
         if filter_type == 'subject':
             schedules_raw = [s for s in schedules_raw if str(s.get('subjectId')) == target_id]
+
+        # Filtrage par période (Jour / Soir)
+        if period == 'day':
+            schedules_raw = [s for s in schedules_raw if (s.get('startTime') or '') <= '17:00']
+        elif period == 'evening':
+            schedules_raw = [s for s in schedules_raw if (s.get('startTime') or '') >= '17:30']
 
         schedules = []
         for s in schedules_raw or []:
@@ -285,6 +327,8 @@ def _process_schedule_request(target_id, target_name, filter_type, fmt, OFFICIAL
                 }
 
         time_slots = [f"{start} - {end}" for start, end in OFFICIAL_TIME_SLOTS]
+        
+        period_label = " (JOUR)" if period == 'day' else " (SOIR)" if period == 'evening' else ""
         data = {
             'target_name': target_name,
             'filter_type': filter_type,
@@ -318,27 +362,44 @@ def get_schedule_report_v2(class_ref):
 @reports_bp.route('/schedule/synthesis', methods=['GET'])
 def get_synthesis_schedule_report():
     fmt = _get_format()
+    period = request.args.get('period', 'all').lower()
     class_id = request.args.get('class_id')
     staff_id = request.args.get('staff_id')
     # On supporte les IDs de classes séparés par des virgules
     class_ids_param = request.args.get('specialty_ids') or request.args.get('class_ids')
     
     try:
-        logger.info(f"Generating synthesis schedule report in format {fmt} (class_id={class_id}, class_ids={class_ids_param})")
-        OFFICIAL_TIME_SLOTS = [
+        logger.info(f"Generating synthesis schedule report in format {fmt}, period {period} (class_id={class_id}, class_ids={class_ids_param})")
+        
+        DAY_SLOTS = [
             ('08:00', '09:50'),
             ('10:05', '12:00'),
             ('13:00', '14:50'),
             ('15:05', '17:00'),
+        ]
+        EVENING_SLOTS = [
             ('17:30', '19:20'),
             ('19:35', '21:00'),
         ]
+        
+        if period == 'day':
+            OFFICIAL_TIME_SLOTS = DAY_SLOTS
+        elif period == 'evening':
+            OFFICIAL_TIME_SLOTS = EVENING_SLOTS
+        else:
+            OFFICIAL_TIME_SLOTS = DAY_SLOTS + EVENING_SLOTS
         
         # 1. Fetch all relevant schedules
         url = PLANNING_SERVICE_URL
         response = requests.get(url, timeout=5)
         response.raise_for_status()
         schedules_raw = response.json()
+
+        # Filtrage par période (Jour / Soir)
+        if period == 'day':
+            schedules_raw = [s for s in schedules_raw if (s.get('startTime') or '') <= '17:00']
+        elif period == 'evening':
+            schedules_raw = [s for s in schedules_raw if (s.get('startTime') or '') >= '17:30']
 
         # 2. Identify target classes
         target_class_ids = set()
@@ -398,13 +459,13 @@ def get_synthesis_schedule_report():
                         'subject': subj.name if subj else "N/A",
                         'teacher_name': f"{teacher.first_name} {teacher.last_name}" if teacher else "N/A"
                     }
-            except Exception as e:
-                logger.error(f"Error processing schedule item: {str(e)}")
+            except Exception:
                 continue
 
+        period_label = " (JOUR)" if period == 'day' else " (SOIR)" if period == 'evening' else ""
         data = {
             'school_name': "INSTITUT GABRIEL RITA",
-            'report_title': "SYNTHÈSE DES EMPLOIS DU TEMPS PAR CLASSE",
+            'report_title': f"SYNTHÈSE DES EMPLOIS DU TEMPS",
             'school_year': '2025-2026',
             'current_date': datetime.now().strftime('%d/%m/%Y'),
             'generated_at': datetime.now().strftime('%d/%m/%Y %H:%M'),

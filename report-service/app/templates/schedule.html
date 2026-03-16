@@ -1,112 +1,101 @@
 {% extends "base_report.html" %}
-
 {% block title %}Emploi du Temps - {{ target_name }}{% endblock %}
-{% block report_title %}{{ report_title }}{% endblock %}
-
 {% block container_class %}landscape{% endblock %}
 
 {% block extra_css %}
 <style>
-    @page { size: A4 landscape; margin: 5mm; }
+@page { size: A4 landscape; margin: 10mm; }
+body { background-color: #f5f6f8 !important; }
 
-    .schedule-table {
-        width: 100%;
-        border-collapse: separate;
-        border-spacing: 0;
-        table-layout: fixed;
-        border: 1px solid var(--border);
-        border-radius: 6px;
-        overflow: hidden;
-    }
+/* Titre élégant sans remplissage */
+.main-title-band {
+    color: #0056b3;
+    text-align: center;
+    padding: 12px 0;
+    font-size: 16px;
+    font-weight: 800;
+    text-transform: uppercase;
+    margin-bottom: 30px;
+    letter-spacing: 3px;
+    background-color: transparent;
+}
 
-    .schedule-table th, .schedule-table td {
-        border: 0.5px solid var(--border);
-        padding: 4px 6px;
-        text-align: center;
-        vertical-align: top;
-    }
+.schedule-table { 
+    width: 100%; 
+    border-collapse: collapse; /* Collapse pour avoir des lignes continues */
+    font-family: 'Inter', sans-serif;
+}
+.schedule-table th { padding: 0 5px 15px 5px; border: none; }
 
-    .schedule-table thead th {
-        background-color: var(--primary-light);
-        color: var(--white);
-        font-weight: 700;
-        text-transform: uppercase;
-        font-size: 9px; /* Larger font */
-        letter-spacing: 0.8px;
-        padding: 9px 4px;
-        border-color: var(--primary-light);
-    }
+/* En-têtes en losange */
+.slanted-header {
+    background-color: #f26522; /* Orange */
+    color: white;
+    padding: 8px 10px;
+    transform: skewX(-15deg);
+    display: block;
+    box-shadow: 2px 2px 5px rgba(0,0,0,0.1);
+    text-align: center;
+}
+.slanted-header span {
+    display: block;
+    transform: skewX(15deg);
+    font-weight: 700;
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+.schedule-table th:first-child .slanted-header {
+    background-color: #0056b3; /* Bleu */
+}
 
-    .time-col {
-        width: 80px;
-        background-color: var(--bg-soft);
-        font-weight: 700;
-        vertical-align: middle !important;
-        font-size: 8.5px; /* Slightly larger */
-        color: var(--primary-light);
-        border-right: 1px solid var(--border) !important;
-        border-top: 1px solid var(--border) !important;
-    }
+/* Lignes pointillées continues sur toute la largeur (row) */
+.schedule-table tr {
+    border-bottom: 1px solid  #b0b0b0;
+}
+/* Pas de bordure sur le thead pour ne pas doubler */
+.schedule-table thead tr {
+    border-bottom: none;
+}
+/* Pas de bordure sur les td individuels */
+.schedule-table td {
+    padding: 12px 10px;
+    border: none;
+    vertical-align: middle;
+}
 
-    .day-cell {
-        height: 70px; /* Adjusted height */
-        padding: 3px !important;
-        background-color: #fdfdfe; /* Off-white */
-    }
+.time-col {
+    font-weight: 700;
+    color: #333;
+    font-size: 10px;
+    text-align: center;
+}
+.course-item { display: flex; flex-direction: column; justify-content: center; }
+.course-subject { font-weight: 800; font-size: 10px; color: #111; text-transform: uppercase; margin-bottom: 2px; }
+.course-teacher { font-size: 9px; color: #666; }
 
-    .course-item {
-        text-align: left;
-        height: 100%;
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        padding: 6px 8px;
-        border-radius: 4px;
-    }
+/* Couleurs du texte selon la matière */
+.course-item[data-type="tech"] .course-subject { color: #0056b3; } /* Bleu */
+.course-item[data-type="gen"] .course-subject { color: #f26522; } /* Orange */
+.course-item[data-type="info"] .course-subject { color: #2b3a4a; }
 
-    .course-subject {
-        font-weight: 800;
-        font-size: 10px;
-        margin-bottom: 6px;
-        color: var(--primary);
-        line-height: 1.25;
-        display: -webkit-box;
-        -webkit-line-clamp: 2;
-        -webkit-box-orient: vertical;
-        overflow: hidden;
-        text-transform: uppercase;
-    }
-
-    .course-teacher {
-        font-size: 8.5px;
-        color: var(--secondary);
-        font-weight: 600;
-    }
-
-    /* Subject-based background and border colors */
-    .course-item[data-type="tech"] { 
-        background-color: #eff6ff; /* Blue 50 */
-    }
-    .course-item[data-type="gen"] { 
-        background-color: #fdf2f8; /* Pink 50 */
-    }
-    .course-item[data-type="info"] { 
-        background-color: #f0fdf4; /* Emerald 50 */
-    }
-    .course-item[data-type="default"] { 
-        background-color: var(--bg-soft);
-    }
-
+.empty-slot { color: #ccc; font-size: 10px; text-align: center; }
 </style>
 {% endblock %}
 
 {% block content %}
+<div class="print-header-spacer"></div>
+
+<div class="main-title-band">
+    {{ report_title }}
+</div>
+
 <table class="schedule-table">
     <thead>
         <tr>
-            <th class="time-col">CRÉNEAU</th>
+            <th style="width: 100px;"><div class="slanted-header"><span>HEURES</span></div></th>
             {% for day in days %}
-            <th>{{ day|upper }}</th>
+                <th><div class="slanted-header"><span>{{ day }}</span></div></th>
             {% endfor %}
         </tr>
     </thead>
@@ -115,23 +104,28 @@
         <tr>
             <td class="time-col">{{ time_slot }}</td>
             {% for day in days %}
-            {% set course = schedule.get(day, {}).get(time_slot) %}
-            <td class="day-cell">
-                {% if course %}
-                {% set ctype = "default" %}
-                {% if "Math" in course.subject or "Phys" in course.subject %} {% set ctype = "tech" %}
-                {% elif "Français" in course.subject or "Anglais" in course.subject %} {% set ctype = "gen" %}
-                {% elif "Info" in course.subject or "Prog" in course.subject %} {% set ctype = "info" %}
-                {% endif %}
-                <div class="course-item" data-type="{{ ctype }}">
-                    <div class="course-subject">{{ course.subject }}</div>
-                    <div class="course-teacher">{{ course.teacher_name }}</div>
-                </div>
-                {% endif %}
-            </td>
+                {% set course = schedule.get(day, {}).get(time_slot) %}
+                <td>
+                    {% if course %}
+                        {% set ctype = "default" %}
+                        {% set subj_lower = course.subject|lower %}
+                        {% if "math" in subj_lower or "phys" in subj_lower %} {% set ctype = "tech" %}
+                        {% elif "fran" in subj_lower or "anglais" in subj_lower %} {% set ctype = "gen" %}
+                        {% elif "info" in subj_lower or "prog" in subj_lower %} {% set ctype = "info" %}
+                        {% endif %}
+                        <div class="course-item" data-type="{{ ctype }}">
+                            <div class="course-subject">{{ course.subject }}</div>
+                            <div class="course-teacher">{{ course.teacher_name }}</div>
+                        </div>
+                    {% else %}
+                        <div class="empty-slot">-</div>
+                    {% endif %}
+                </td>
             {% endfor %}
         </tr>
         {% endfor %}
     </tbody>
 </table>
+
+<div class="print-footer-spacer"></div>
 {% endblock %}

@@ -74,6 +74,9 @@ export const Timetable = () => {
   const [searchTerm, setSearchTerm] = useState('');
   const [hoveredSlot, setHoveredSlot] = useState<TimeSlot | null>(null);
   const [conflictingSlot, setConflictingSlot] = useState<TimeSlot | null>(null);
+  const [viewPeriod, setViewPeriod] = useState<'day' | 'evening' | 'all'>(
+    () => (localStorage.getItem('timetable_viewPeriod') as any) || 'all'
+  );
 
   const [teachers, setTeachers] = useState<any[]>([]);
   const [classes, setClasses] = useState<any[]>([]);
@@ -159,18 +162,27 @@ export const Timetable = () => {
     return result;
   }, [teachers, subjects, formData.classId, formData.subjectId]);
 
-  const LOCAL_TIME_SLOTS = useMemo(() => ([
-    { type: 'Cours', value: '08:00', end: '09:50', labelFr: '08:00 - 09:50', labelEn: '08:00 - 09:50' },
-    { type: 'PP',    value: '09:50', end: '10:05', labelFr: '09:50 - 10:05', labelEn: '09:50 - 10:05' },
-    { type: 'Cours', value: '10:05', end: '12:00', labelFr: '10:05 - 12:00', labelEn: '10:05 - 12:00' },
-    { type: 'GP',    value: '12:00', end: '13:00', labelFr: '12:00 - 13:00', labelEn: '12:00 - 13:00' },
-    { type: 'Cours', value: '13:00', end: '14:50', labelFr: '13:00 - 14:50', labelEn: '13:00 - 14:50' },
-    { type: 'PP',    value: '14:50', end: '15:05', labelFr: '14:50 - 15:05', labelEn: '14:50 - 15:05' },
-    { type: 'Cours', value: '15:05', end: '17:00', labelFr: '15:05 - 17:00', labelEn: '15:05 - 17:00' },
-    { type: 'Cours', value: '17:30', end: '19:20', labelFr: '17:30 - 19:20', labelEn: '17:30 - 19:20' },
-    { type: 'PP',    value: '19:20', end: '19:35', labelFr: '19:20 - 19:35', labelEn: '19:20 - 19:35' },
-    { type: 'Cours', value: '19:35', end: '21:00', labelFr: '19:35 - 21:00', labelEn: '19:35 - 21:00' },
-  ]), []);
+  const LOCAL_TIME_SLOTS = useMemo(() => {
+    const allSlots = [
+      { type: 'Cours', value: '08:00', end: '09:50', labelFr: '08:00 - 09:50', labelEn: '08:00 - 09:50' },
+      { type: 'PP',    value: '09:50', end: '10:05', labelFr: '09:50 - 10:05', labelEn: '09:50 - 10:05' },
+      { type: 'Cours', value: '10:05', end: '12:00', labelFr: '10:05 - 12:00', labelEn: '10:05 - 12:00' },
+      { type: 'GP',    value: '12:00', end: '13:00', labelFr: '12:00 - 13:00', labelEn: '12:00 - 13:00' },
+      { type: 'Cours', value: '13:00', end: '14:50', labelFr: '13:00 - 14:50', labelEn: '13:00 - 14:50' },
+      { type: 'PP',    value: '14:50', end: '15:05', labelFr: '14:50 - 15:05', labelEn: '14:50 - 15:05' },
+      { type: 'Cours', value: '15:05', end: '17:00', labelFr: '15:05 - 17:00', labelEn: '15:05 - 17:00' },
+      { type: 'Cours', value: '17:30', end: '19:20', labelFr: '17:30 - 19:20', labelEn: '17:30 - 19:20' },
+      { type: 'PP',    value: '19:20', end: '19:35', labelFr: '19:20 - 19:35', labelEn: '19:20 - 19:35' },
+      { type: 'Cours', value: '19:35', end: '21:00', labelFr: '19:35 - 21:00', labelEn: '19:35 - 21:00' },
+    ];
+    
+    if (viewPeriod === 'day') {
+      return allSlots.filter(s => s.value < '17:30');
+    } else if (viewPeriod === 'evening') {
+      return allSlots.filter(s => s.value >= '17:30');
+    }
+    return allSlots;
+  }, [viewPeriod]);
 
   const LOCAL_TIME_OPTIONS: SystemOption[] = useMemo(() => {
     return LOCAL_TIME_SLOTS.map((s, idx) => ({
@@ -237,6 +249,14 @@ export const Timetable = () => {
   useEffect(() => {
     localStorage.setItem('timetable_selectedSynthesisClasses', JSON.stringify(selectedSynthesisClasses));
   }, [selectedSynthesisClasses]);
+
+  useEffect(() => {
+    localStorage.setItem('timetable_viewPeriod', viewPeriod);
+  }, [viewPeriod]);
+
+  useEffect(() => {
+    setTimeSlotOptions(LOCAL_TIME_OPTIONS);
+  }, [LOCAL_TIME_OPTIONS]);
 
   useEffect(() => {
     loadDynamicOptions();
@@ -1056,6 +1076,42 @@ export const Timetable = () => {
           </div>
         </div>
 
+        <div className="flex flex-col md:flex-row md:items-center gap-4">
+          <span className="text-xs font-medium text-gray-500 dark:text-gray-400">Période:</span>
+          <div className="flex bg-gray-50 dark:bg-slate-700 p-0.5 rounded-md border border-gray-200 dark:border-slate-600 grid grid-cols-3">
+            <button 
+              onClick={() => setViewPeriod('all')}
+              className={`px-3 py-1.5 rounded-md text-xs font-normal transition-all ${
+                viewPeriod === 'all' 
+                  ? 'bg-white dark:bg-slate-600 shadow-sm text-blue-600' 
+                  : 'text-gray-600 dark:text-gray-400'
+              }`}
+            >
+              Complet
+            </button>
+            <button 
+              onClick={() => setViewPeriod('day')}
+              className={`px-3 py-1.5 rounded-md text-xs font-normal transition-all ${
+                viewPeriod === 'day' 
+                  ? 'bg-white dark:bg-slate-600 shadow-sm text-blue-600' 
+                  : 'text-gray-600 dark:text-gray-400'
+              }`}
+            >
+              Jour
+            </button>
+            <button 
+              onClick={() => setViewPeriod('evening')}
+              className={`px-3 py-1.5 rounded-md text-xs font-normal transition-all ${
+                viewPeriod === 'evening' 
+                  ? 'bg-white dark:bg-slate-600 shadow-sm text-blue-600' 
+                  : 'text-gray-600 dark:text-gray-400'
+              }`}
+            >
+              Soir
+            </button>
+          </div>
+        </div>
+
         <div className="flex items-center gap-2">
           <Search className="w-3.5 h-3.5 text-gray-400" />
           {viewMode === 'synthesis_class' ? (
@@ -1672,6 +1728,7 @@ export const Timetable = () => {
         }}
         isOpen={showPrintModal}
         onClose={() => setShowPrintModal(false)}
+        defaultPeriod={viewPeriod}
       />
       <ConfirmDialog
         isOpen={confirmOpen}

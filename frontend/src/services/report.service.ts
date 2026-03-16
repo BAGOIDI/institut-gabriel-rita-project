@@ -34,6 +34,8 @@ function triggerDownload(blob: Blob, filename: string) {
   window.URL.revokeObjectURL(url);
 }
 
+export type ReportPeriod = 'day' | 'evening' | 'all';
+
 const reportService = {
   /** Vérifie l'état du service */
   async healthCheck() {
@@ -72,9 +74,9 @@ const reportService = {
   },
 
   /** Génère l'emploi du temps d'une classe (Blob) */
-  async getScheduleBlob(className: string, format: ReportFormat = 'pdf'): Promise<Blob> {
+  async getScheduleBlob(className: string, format: ReportFormat = 'pdf', period: ReportPeriod = 'all'): Promise<Blob> {
     const res = await api.get(`${BASE}/schedule/${encodeURIComponent(className)}`, {
-      params: { format },
+      params: { format, period },
       responseType: 'blob',
       timeout: 120000,
     });
@@ -82,9 +84,9 @@ const reportService = {
   },
 
   /** Génère l'emploi du temps d'un enseignant (Blob) */
-  async getTeacherScheduleBlob(teacherName: string, format: ReportFormat = 'pdf'): Promise<Blob> {
+  async getTeacherScheduleBlob(teacherName: string, format: ReportFormat = 'pdf', period: ReportPeriod = 'all'): Promise<Blob> {
     const res = await api.get(`${BASE}/schedule/teacher/${encodeURIComponent(teacherName)}`, {
-      params: { format },
+      params: { format, period },
       responseType: 'blob',
       timeout: 120000,
     });
@@ -92,13 +94,14 @@ const reportService = {
   },
 
   /** Génère la synthèse (Blob) */
-  async getSynthesisBlob(classId?: string, staffId?: string, format: ReportFormat = 'pdf', specialtyIds?: string[]): Promise<Blob> {
+  async getSynthesisBlob(classId?: string, staffId?: string, format: ReportFormat = 'pdf', specialtyIds?: string[], period: ReportPeriod = 'all'): Promise<Blob> {
     const res = await api.get(`${BASE}/schedule/synthesis`, {
       params: { 
         format,
+        period,
         class_id: classId || undefined,
         staff_id: staffId || undefined,
-        specialty_ids: specialtyIds && specialtyIds.length > 0 ? specialtyIds.join(',') : undefined,
+        class_ids: specialtyIds?.join(',') || undefined
       },
       responseType: 'blob',
       timeout: 120000,
@@ -106,18 +109,16 @@ const reportService = {
     return new Blob([res.data], { type: MIME[format] });
   },
 
-  /** Génère et télécharge l'emploi du temps d'une classe */
-  async downloadSchedule(className: string, format: ReportFormat = 'pdf') {
-    const blob = await reportService.getScheduleBlob(className, format);
-    triggerDownload(blob, `edt_classe_${className}.${format}`);
-    return blob;
+  /** Déclenche le téléchargement de l'EDT d'une classe */
+  async downloadSchedule(className: string, format: ReportFormat = 'pdf', period: ReportPeriod = 'all') {
+    const blob = await this.getScheduleBlob(className, format, period);
+    triggerDownload(blob, `EDT_${className.replace(/\s+/g, '_')}.${format}`);
   },
 
-  /** Génère et télécharge l'emploi du temps d'un enseignant */
-  async downloadTeacherSchedule(teacherName: string, format: ReportFormat = 'pdf') {
-    const blob = await reportService.getTeacherScheduleBlob(teacherName, format);
-    triggerDownload(blob, `edt_enseignant_${teacherName.replace(/\s+/g, '_')}.${format}`);
-    return blob;
+  /** Déclenche le téléchargement de l'EDT d'un enseignant */
+  async downloadTeacherSchedule(teacherName: string, format: ReportFormat = 'pdf', period: ReportPeriod = 'all') {
+    const blob = await this.getTeacherScheduleBlob(teacherName, format, period);
+    triggerDownload(blob, `EDT_Enseignant_${teacherName.replace(/\s+/g, '_')}.${format}`);
   },
 
   /** Génère et télécharge l'emploi du temps d'une matière */
@@ -132,16 +133,10 @@ const reportService = {
     return blob;
   },
 
-  /** Génère et télécharge la synthèse globale des emplois du temps (Tableau complexe) */
-  async downloadSynthesisSchedule(
-    classId?: string,
-    staffId?: string,
-    format: ReportFormat = 'pdf',
-    specialtyIds?: string[],
-  ) {
-    const blob = await reportService.getSynthesisBlob(classId, staffId, format, specialtyIds);
-    triggerDownload(blob, `synthese_emplois_du_temps.${format}`);
-    return blob;
+  /** Déclenche le téléchargement de la synthèse */
+  async downloadSynthesisSchedule(classId?: string, staffId?: string, format: ReportFormat = 'pdf', specialtyIds?: string[], period: ReportPeriod = 'all') {
+    const blob = await this.getSynthesisBlob(classId, staffId, format, specialtyIds, period);
+    triggerDownload(blob, `Synthese_EDT.${format}`);
   },
 
   /** Génère et télécharge le relevé de compte d'un étudiant */

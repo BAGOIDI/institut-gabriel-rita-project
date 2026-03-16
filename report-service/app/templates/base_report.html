@@ -61,8 +61,96 @@
             margin: 0 !important;
             padding: 8mm !important;
             border: none;
+            display: table; /* Use table layout for repeating headers/footers */
         }
-        @page { margin: 0; }
+        @page { 
+            margin: 15mm; /* Global margin for every page */
+        }
+
+        thead { display: table-header-group; }
+        tfoot { display: table-footer-group; }
+        
+        /* Space between content and fixed header/footer on every page */
+        .print-header-spacer { height: 145px; }
+        .print-footer-spacer { height: 130px; }
+
+        .official-header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            width: 100%;
+            background: white;
+            z-index: 1000;
+            padding-top: 5mm; /* Margin before header on every page */
+            padding-bottom: 5mm;
+        }
+
+        .footer {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            width: 100%;
+            background: white;
+            z-index: 1000;
+            padding-top: 5mm;
+            padding-bottom: 5mm; /* Margin after footer on every page */
+        }
+
+        /* Intelligent slicing - prevent splitting rows */
+        tr { 
+            page-break-inside: avoid !important; 
+            break-inside: avoid !important;
+        }
+        td, th { 
+            page-break-inside: avoid !important; 
+            break-inside: avoid !important;
+        }
+        table { 
+            page-break-inside: auto; 
+            break-inside: auto;
+        }
+        .day-group { 
+            page-break-inside: avoid !important; 
+            break-inside: avoid !important;
+            display: table-row-group; /* Ensure it behaves as a tbody */
+        }
+    }
+
+    /* --- SIGNATURE AREA (In footer) --- */
+    .footer-content {
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-end;
+        width: 100%;
+        padding: 0 10mm;
+    }
+
+    .footer-text {
+        font-size: 7.5px;
+        color: var(--secondary);
+        font-weight: 400;
+        text-align: left;
+    }
+
+    .signature-box {
+        text-align: center;
+        width: 200px;
+    }
+
+    .signature-title {
+        font-weight: 800;
+        text-transform: uppercase;
+        font-size: 9px;
+        margin-bottom: 35px;
+        text-decoration: underline;
+    }
+
+    .signature-name {
+        font-weight: 700;
+        font-size: 9px;
+        padding-top: 3px;
     }
 
     /* --- PREMIUM HEADER --- */
@@ -73,7 +161,6 @@
         gap: 10px;
         padding-bottom: 10px;
         margin-bottom: 12px;
-        border-bottom: 1.5px solid var(--primary);
     }
 
     .header-col {
@@ -213,7 +300,6 @@
     .footer {
         margin-top: 20px;
         padding-top: 10px;
-        border-top: 1px solid var(--border);
         text-align: center;
         font-size: 7.5px;
         color: var(--secondary);
@@ -269,19 +355,22 @@
             </div>
         </header>
 
-        <div class="report-title-bar">
-            <div class="report-title">{% block report_title %}RAPPORT{% endblock %}</div>
-            <div class="report-meta">
-                Année Scolaire: <span class="font-bold">2025-2026</span> | Le: <span class="font-bold">{{ current_date }}</span>
-            </div>
-        </div>
 
         <main>
             {% block content %}{% endblock %}
         </main>
 
         <footer class="footer">
-            <span class="footer-bold">INSTITUT SUPÉRIEUR GABRIEL RITA</span> — DOCUMENT OFFICIEL DE L'ÉTABLISSEMENT — © 2026
+            <div class="footer-content">
+                <div class="footer-text">
+                    <span class="footer-bold">INSTITUT SUPÉRIEUR GABRIEL RITA</span><br>
+                    DOCUMENT OFFICIEL — © 2026 — Page <span class="page-number"></span>
+                </div>
+                <div class="signature-box">
+                    <div class="signature-title">LE DIRECTEUR</div>
+                    <div class="signature-name"></div>
+                </div>
+            </div>
         </footer>
     </div>
 </body>

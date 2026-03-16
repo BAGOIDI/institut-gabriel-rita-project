@@ -82,15 +82,18 @@ export class SubjectService implements OnModuleInit {
     });
   }
 
-  async findOne(id: string): Promise<Subject> {
-    const subject = await this.subjectRepository.findOne({ where: { id } });
+  async findOne(id: number): Promise<Subject> {
+    const subject = await this.subjectRepository.findOne({ 
+      where: { id },
+      relations: ['class', 'teacher']
+    });
     if (!subject) {
       throw new NotFoundException(`Subject with ID ${id} not found`);
     }
     return subject;
   }
 
-  async update(id: string, updateSubjectDto: UpdateSubjectDto): Promise<Subject> {
+  async update(id: number, updateSubjectDto: UpdateSubjectDto): Promise<Subject> {
     const subject = await this.subjectRepository.preload({
       id: id,
       ...updateSubjectDto,
@@ -101,7 +104,7 @@ export class SubjectService implements OnModuleInit {
     return await this.subjectRepository.save(subject);
   }
 
-  async remove(id: string): Promise<void> {
+  async remove(id: number): Promise<void> {
     const subject = await this.findOne(id);
     await this.subjectRepository.remove(subject);
   }
