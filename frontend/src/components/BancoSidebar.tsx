@@ -8,8 +8,7 @@ import {
   BancoStudentsIcon,
   BancoTimetableIcon,
   BancoAttendanceIcon,
-  BancoPaymentsIcon,
-  BancoPaymentRulesIcon,
+  BancoFinanceIcon,
   BancoReportsIcon,
   BancoSettingsIcon
 } from './BancoIcons';
@@ -61,14 +60,9 @@ export const BancoSidebar: React.FC<BancoSidebarProps> = ({ isOpen, onClose }) =
       path: '/attendance' 
     },
     { 
-      icon: BancoPaymentsIcon, 
-      label: t.payments, 
-      path: '/payments' 
-    },
-    { 
-      icon: BancoPaymentRulesIcon, 
-      label: t.paymentRules, 
-      path: '/payment-rules' 
+      icon: BancoFinanceIcon, 
+      label: t.finance, 
+      path: '/finance' 
     },
     { 
       icon: BancoReportsIcon, 

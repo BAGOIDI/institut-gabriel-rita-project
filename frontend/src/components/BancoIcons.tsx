@@ -159,6 +159,29 @@ export const BancoPaymentsIcon = ({ className = "w-5 h-5" }: { className?: strin
   </svg>
 );
 
+// Icône Finance (Gestion financière complète)
+export const BancoFinanceIcon = ({ className = "w-5 h-5" }: { className?: string }) => (
+  <svg className={className} viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path 
+      d="M10 2L3 6V16L10 20L17 16V6L10 2Z" 
+      stroke="currentColor" 
+      strokeWidth="1.5"
+      strokeLinejoin="round"
+    />
+    <path 
+      d="M10 14C11.1046 14 12 13.1046 12 12C12 10.8954 11.1046 10 10 10C8.89543 10 8 10.8954 8 12C8 13.1046 8.89543 14 10 14Z" 
+      fill="currentColor"
+    />
+    <path 
+      d="M7 8L10 6L13 8" 
+      stroke="currentColor" 
+      strokeWidth="1.5"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    />
+  </svg>
+);
+
 // Icône Règles de paiement
 export const BancoPaymentRulesIcon = ({ className = "w-5 h-5" }: { className?: string }) => (
   <svg className={className} viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">

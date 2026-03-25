@@ -113,6 +113,7 @@ services:
       - DATABASE_PASSWORD=${POSTGRES_PASSWORD:-postgres}
       - DATABASE_NAME=institut_gabriel_rita_db
       - RABBITMQ_URL=amqp://admin:admin@rabbitmq:5672
+      - BIOMETRIC_DEVICE_IP=${BIOMETRIC_DEVICE_IP:-192.168.1.201}
     depends_on:
       postgres: { condition: service_healthy }
       rabbitmq: { condition: service_healthy }

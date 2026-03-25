@@ -17,8 +17,12 @@ export class ScheduleController {
 
   @Get()
   @ApiOperation({ summary: 'Get all schedules' })
-  async findAll(@Query('classId') classId?: string, @Query('roomId') roomId?: string) {
-    return await this.service.findAll({ classId, roomId });
+  async findAll(
+    @Query('classId') classId?: string, 
+    @Query('roomId') roomId?: string,
+    @Query('staffId') staffId?: string,
+  ) {
+    return await this.service.findAll({ classId, roomId, staffId });
   }
 
   @Get('class/:classId')

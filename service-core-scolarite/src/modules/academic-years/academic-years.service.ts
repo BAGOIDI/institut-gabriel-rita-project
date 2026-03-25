@@ -21,7 +21,7 @@ export class AcademicYearService {
     return await this.academicYearRepository.find();
   }
 
-  async findOne(id: string): Promise<AcademicYear> {
+  async findOne(id: number): Promise<AcademicYear> {
     const academicYear = await this.academicYearRepository.findOne({ where: { id } });
     if (!academicYear) {
       throw new NotFoundException(`AcademicYear with ID ${id} not found`);
@@ -29,7 +29,7 @@ export class AcademicYearService {
     return academicYear;
   }
 
-  async update(id: string, updateAcademicYearDto: UpdateAcademicYearDto): Promise<AcademicYear> {
+  async update(id: number, updateAcademicYearDto: UpdateAcademicYearDto): Promise<AcademicYear> {
     const academicYear = await this.academicYearRepository.preload({
       id: id,
       ...updateAcademicYearDto,
@@ -40,7 +40,7 @@ export class AcademicYearService {
     return await this.academicYearRepository.save(academicYear);
   }
 
-  async remove(id: string): Promise<void> {
+  async remove(id: number): Promise<void> {
     const academicYear = await this.findOne(id);
     await this.academicYearRepository.remove(academicYear);
   }

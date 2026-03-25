@@ -2,9 +2,9 @@
 Routes du service de rapports — Institut Gabriel Rita
 Supporte les formats : PDF, DOCX (Word), XLSX (Excel)
 """
-from flask import Blueprint, send_file, request, jsonify
+from flask import Blueprint, send_file, request, jsonify, Response, send_from_directory, current_app
 from app.models.models import (
-    Student, Subject, Payment, Invoice, CourseSchedule, Staff, Class,
+    Student, Subject, Payment, StudentFee, CourseSchedule, Staff, Class,
     AcademicYear, Specialty, Attendance, Grade, Evaluation
 )
 from app.services.pdf_service import PDFService
@@ -14,12 +14,19 @@ from datetime import datetime
 import io
 import requests
 import logging
+import qrcode
+import base64
+import os
 
 # Configure logging
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
 reports_bp = Blueprint('reports', __name__)
+
+@reports_bp.route('/static/<path:filename>')
+def serve_static(filename):
+    return send_from_directory(os.path.join(current_app.root_path, 'static'), filename)
 
 # Align with NestJS planning service controller: /schedules
 PLANNING_SERVICE_URL = 'http://service-planning:3000/schedules'
@@ -47,6 +54,129 @@ def _get_format() -> str:
     return fmt
 
 
+@reports_bp.route('/invoice/<int:payment_id>', methods=['GET'])
+def get_payment_invoice(payment_id):
+    logger.info(f"Generating invoice PDF for payment_id: {payment_id}")
+    try:
+        # Récupération du paiement
+        payment = Payment.query.get(payment_id)
+        if not payment:
+            logger.warning(f"Payment {payment_id} not found")
+            return jsonify({'error': 'Payment not found'}), 404
+        
+        logger.debug(f"Found payment: {payment.reference}")
+        
+        # Récupération de l'étudiant via le student_fee_id
+        student_fee = StudentFee.query.get(payment.student_fee_id)
+        if not student_fee:
+            logger.warning(f"Student fee {payment.student_fee_id} not found for payment {payment_id}")
+            return jsonify({'error': 'Student fee not found'}), 404
+        
+        student = Student.query.get(student_fee.student_id)
+        if not student:
+            logger.warning(f"Student {student_fee.student_id} not found for fee {student_fee.id}")
+            return jsonify({'error': 'Student not found'}), 404
+        
+        logger.debug(f"Found student: {student.first_name} {student.last_name}")
+
+        data = {
+            'payment': {
+                'id': payment.id,
+                'reference': payment.reference or payment.receipt_number or f"REC-{payment.id}",
+                'amount': float(payment.amount_paid) if payment.amount_paid else 0.0,
+                'method': payment.payment_method or 'N/A',
+                'paymentDate': payment.payment_date.strftime('%d/%m/%Y %H:%M') if payment.payment_date else 'N/A',
+                'amount_total': float(payment.amount_paid) if payment.amount_paid else 0.0,
+                'notes': getattr(payment, 'description', '') or ''
+            },
+            'student': {
+                'firstName': student.first_name or '',
+                'lastName': student.last_name or '',
+                'matricule': student.matricule or '',
+                'className': student.class_obj.name if (student.class_obj and student.class_obj.name) else 'N/A'
+            },
+            'current_date': datetime.now().strftime('%d/%m/%Y %H:%M')
+        }
+
+        logger.debug("Rendering PDF...")
+        pdf_content = PDFService.generate_pdf('invoice_template.html', data)
+        
+        if not pdf_content:
+            logger.error("PDF generation returned empty content")
+            return jsonify({'error': 'Failed to generate PDF content'}), 500
+
+        logger.info("Invoice PDF generated successfully")
+        return send_file(
+            io.BytesIO(pdf_content),
+            mimetype='application/pdf',
+            as_attachment=True,
+            download_name=f'recu_{payment.reference or payment.id}.pdf'
+        )
+    except Exception as e:
+        logger.exception(f"Unhandled error generating invoice PDF for payment {payment_id}")
+        return jsonify({'error': str(e)}), 500
+
+
+@reports_bp.route('/invoice-txt/<int:payment_id>', methods=['GET'])
+def get_payment_invoice_txt(payment_id):
+    try:
+        # Récupération du paiement
+        payment = Payment.query.get(payment_id)
+        if not payment:
+            return jsonify({'error': 'Payment not found'}), 404
+        
+        # Récupération de l'étudiant via le student_fee_id
+        student_fee = StudentFee.query.get(payment.student_fee_id)
+        if not student_fee:
+            return jsonify({'error': 'Student fee not found'}), 404
+        
+        student = Student.query.get(student_fee.student_id)
+        if not student:
+            return jsonify({'error': 'Student not found'}), 404
+        
+        # Récupération de tous les paiements pour calculer le solde
+        all_payments = Payment.query.filter_by(student_fee_id=student_fee.id).all()
+        total_paid = sum(float(p.amount_paid) for p in all_payments)
+        
+        balance = float(student_fee.total_due) - total_paid
+
+        # Construction du contenu texte
+        text = f"""
+INSTITUT GABRIEL RITA
+B.P. 7261, DOUALA, CAMEROUN
+TEL: (+237) 681 87 39 54
+
+RECU DE PAIEMENT
+------------------------------------------------------------
+
+No Recu: {payment.reference or payment.receipt_number}
+Date: {payment.payment_date.strftime('%d/%m/%Y %H:%M') if payment.payment_date else 'N/A'}
+
+Eleve: {student.first_name} {student.last_name} ({student.matricule})
+Classe: {student.class_obj.name if student.class_obj else 'N/A'}
+
+------------------------------------------------------------
+| Description           | Montant                        |
+------------------------------------------------------------
+| Paiement Scolarité    | {float(payment.amount_paid):>22.2f} |
+------------------------------------------------------------
+
+TOTAL PAYE: {float(payment.amount_paid):>28.2f}
+RESTE A PAYER: {float(balance):>25.2f}
+
+Mode de paiement: {payment.payment_method}
+
+------------------------------------------------------------
+Merci de votre paiement.
+
+Generer le: {datetime.now().strftime('%d/%m/%Y %H:%M')}
+"""
+        return Response(text, mimetype='text/plain')
+    except Exception as e:
+        logger.error(f"Error generating invoice TXT: {str(e)}")
+        return jsonify({'error': str(e)}), 500
+
+
 @reports_bp.route('/health', methods=['GET'])
 def health_check():
     return jsonify({'status': 'ok', 'service': 'report-service', 'timestamp': datetime.now().isoformat()})
@@ -64,7 +194,77 @@ def get_available_reports():
         {'id': 'late-payments', 'name': "Paiements en Retard", 'description': "Élèves avec retard de paiement", 'params': [], 'formats': ['pdf', 'docx', 'xlsx'], 'route': '/api/reports/late-payments'},
         {'id': 'moratoriums', 'name': "Moratoires", 'description': "Élèves en moratoire", 'params': [], 'formats': ['pdf', 'docx', 'xlsx'], 'route': '/api/reports/moratoriums'},
         {'id': 'payments-by-class', 'name': "Paiements par Classe", 'description': "Synthèse par classe", 'params': ['class_name'], 'formats': ['pdf', 'docx', 'xlsx'], 'route': '/api/reports/payments-by-class/{class_name}'},
+        {'id': 'student-card', 'name': "Carte d'Étudiant", 'description': "Génération de la carte d'identité scolaire", 'params': ['matricule'], 'formats': ['pdf'], 'route': '/api/reports/student/card/{matricule}'},
     ])
+
+
+@reports_bp.route('/student/card/<matricule>', methods=['GET'])
+def get_student_card_pdf(matricule):
+    try:
+        logger.info(f"Generating card for student with matricule: {matricule}")
+        student = Student.query.filter_by(matricule=matricule).first()
+        if not student:
+            logger.warning(f"Student not found with matricule: {matricule}")
+            return jsonify({'error': 'Student not found'}), 404
+        
+        # School configuration
+        school_info = {
+            'name': 'Institut Gabriel Rita',
+            'subtitle': 'Excellence & Innovation',
+            'year': '2025-2026',
+            'address': 'Yaoundé, Cameroun',
+            'phone': '+237 600 000 000'
+        }
+        
+        # Resolve class and specialty
+        class_name = student.class_obj.name if student.class_obj else 'N/A'
+        specialty_name = student.class_obj.specialty.name if student.class_obj and student.class_obj.specialty else 'N/A'
+        
+        # Format date
+        current_date = datetime.now().strftime('%d/%m/%Y')
+        
+        # Generate QR Code
+        qr = qrcode.QRCode(version=1, box_size=10, border=1)
+        qr.add_data(f"STUDENT:{student.matricule}")
+        qr.make(fit=True)
+        qr_img = qr.make_image(fill_color="black", back_color="white")
+        
+        qr_buffer = io.BytesIO()
+        qr_img.save(qr_buffer, format='PNG')
+        qr_base64 = base64.b64encode(qr_buffer.getvalue()).decode('utf-8')
+        qr_url = f"data:image/png;base64,{qr_base64}"
+        
+        data = {
+            'school': school_info,
+            'student': {
+                'first_name': student.first_name,
+                'last_name': student.last_name,
+                'matricule': student.matricule,
+                'class_name': class_name,
+                'specialty_name': specialty_name,
+                'photo_url': student.photo_url,
+                'phone_number': student.phone,
+                'date_of_birth': student.date_of_birth.strftime('%d/%m/%Y') if student.date_of_birth else 'N/A',
+                'qr_url': qr_url
+            },
+            'current_date': current_date
+        }
+
+        # Generate the PDF
+        pdf_content = PDFService.generate_pdf('student_card.html', data)
+        
+        # Return as an inline PDF (viewable in browser)
+        return send_file(
+            io.BytesIO(pdf_content),
+            mimetype='application/pdf',
+            as_attachment=False,
+            download_name=f'carte_etudiant_{matricule}.pdf'
+        )
+    except Exception as e:
+        logger.error(f"Error generating student card for {matricule}: {str(e)}")
+        import traceback
+        logger.error(traceback.format_exc())
+        return jsonify({'error': str(e)}), 500
 
 
 @reports_bp.route('/classes', methods=['GET'])
@@ -490,16 +690,38 @@ def get_student_report(matricule):
         student = Student.query.filter_by(matricule=matricule).first()
         if not student:
             return jsonify({'error': 'Étudiant non trouvé'}), 404
-        payments = Payment.query.filter_by(student_id=student.id).order_by(Payment.payment_date.desc()).all()
-        invoices = Invoice.query.filter_by(student_id=student.id).all()
+        
+        # Récupération des frais et paiements via StudentFee
+        student_fee = StudentFee.query.filter_by(student_id=student.id).first()
+        if not student_fee:
+            total_due = 0
+            payments = []
+            balance = 0
+        else:
+            total_due = float(student_fee.total_due)
+            payments = Payment.query.filter_by(student_fee_id=student_fee.id).order_by(Payment.payment_date.desc()).all()
+            total_paid = sum(float(p.amount_paid) for p in payments)
+            balance = total_due - total_paid
+
         data = {
-            'student': {'firstName': student.first_name, 'lastName': student.last_name, 'matricule': student.matricule,
-                        'class_name': student.class_obj.name if student.class_obj else 'N/A',
-                        'totalFeesDue': sum(float(i.amount) for i in invoices),
-                        'totalFeesPaid': sum(float(p.amount) for p in payments),
-                        'balance': float(student.balance)},
-            'payments': [{'paymentDate': p.payment_date, 'reference': p.reference, 'method': p.method, 'amount': float(p.amount)} for p in payments],
-            'invoices': [{'title': i.title, 'amount': float(i.amount), 'due_date': i.due_date, 'status': i.status} for i in invoices],
+            'student': {
+                'firstName': student.first_name,
+                'lastName': student.last_name,
+                'matricule': student.matricule,
+                'className': student.class_obj.name if student.class_obj else 'N/A',
+                'totalFeesDue': total_due,
+                'totalFeesPaid': sum(float(p.amount_paid) for p in payments),
+                'balance': balance
+            },
+            'payments': [
+                {
+                    'paymentDate': p.payment_date.strftime('%d/%m/%Y %H:%M') if p.payment_date else 'N/A',
+                    'reference': p.reference or p.receipt_number,
+                    'method': p.payment_method,
+                    'amount': float(p.amount_paid)
+                } for p in payments
+            ],
+            'invoices': [], # On pourrait ajouter les détails des frais si nécessaire
             'current_date': datetime.now().strftime('%d/%m/%Y'),
         }
         base_name = f'releve_{student.first_name}_{student.last_name}'
@@ -510,6 +732,69 @@ def get_student_report(matricule):
         else:
             return _send_file_response(PDFService.generate_pdf('payment_by_student.html', data), f'{base_name}.pdf', 'pdf')
     except Exception as e:
+        logger.error(f"Error in get_student_report: {str(e)}")
+        return jsonify({'error': str(e)}), 500
+
+
+@reports_bp.route('/student-card/<student_ref>', methods=['GET'])
+def get_student_card(student_ref):
+    """
+    Génère la carte scolaire (PDF) d'un élève.
+    - student_ref: id numérique ou matricule.
+    """
+    fmt = _get_format()
+    if fmt != 'pdf':
+        fmt = 'pdf'
+
+    try:
+        # Resolve student
+        student = None
+        if str(student_ref).isdigit():
+            student = Student.query.get(int(student_ref))
+        if not student:
+            student = Student.query.filter_by(matricule=student_ref).first()
+
+        if not student:
+            return jsonify({'error': f'Élève non trouvé: {student_ref}'}), 404
+
+        class_obj = student.class_obj
+        specialty = class_obj.specialty if class_obj and hasattr(class_obj, 'specialty') else None
+        year = AcademicYear.query.filter_by(is_current=True).first()
+
+        school = {
+            'name': "INSTITUT SUPÉRIEUR GABRIEL RITA",
+            'subtitle': "Carte d'étudiant",
+            'year': year.name if year else '2025-2026',
+            'address': "BP : 7261 Douala-Bassa",
+            'phone': "Tél : 681 87 39 54 / 693 48 73 95",
+        }
+
+        data = {
+            'student': {
+                'id': student.id,
+                'matricule': student.matricule,
+                'first_name': student.first_name,
+                'last_name': student.last_name,
+                'gender': getattr(student, 'gender', None),
+                'date_of_birth': getattr(student, 'date_of_birth', None),
+                'phone': getattr(student, 'phone', None),
+                'parent_phone': getattr(student, 'parent_phone', None),
+                'photo_url': getattr(student, 'photo_url', None),
+                'class_name': class_obj.name if class_obj else None,
+                'specialty_name': specialty.name if specialty else None,
+            },
+            'school': school,
+            'current_date': datetime.now().strftime('%d/%m/%Y'),
+        }
+
+        filename = f"carte_scolaire_{student.matricule}"
+        return _send_file_response(
+            PDFService.generate_pdf('student_card.html', data),
+            f'{filename}.pdf',
+            'pdf',
+        )
+    except Exception as e:
+        logger.error(f"Error in get_student_card: {str(e)}")
         return jsonify({'error': str(e)}), 500
 
 
@@ -519,13 +804,40 @@ def get_global_school_report():
     try:
         students = Student.query.all()
         payments = Payment.query.all()
+        
+        # Calculer le revenu total à partir de amount_paid
+        total_revenue = sum(float(p.amount_paid) for p in payments)
+        
+        # Calculer les soldes pour chaque étudiant
+        student_data = []
+        for s in students:
+            student_fee = StudentFee.query.filter_by(student_id=s.id).first()
+            if student_fee:
+                total_due = float(student_fee.total_due)
+                total_paid = sum(float(p.amount_paid) for p in Payment.query.filter_by(student_fee_id=student_fee.id).all())
+                balance = total_due - total_paid
+            else:
+                balance = 0
+            
+            student_data.append({
+                'firstName': s.first_name,
+                'lastName': s.last_name,
+                'matricule': s.matricule,
+                'className': s.class_obj.name if s.class_obj else 'N/A',
+                'balance': balance,
+                'isActive': True # s.is_active n'existe pas dans le modèle ? à vérifier
+            })
+
         data = {
             'school_info': {'name': 'Institut Gabriel Rita', 'year': '2025-2026', 'report_date': datetime.now().strftime('%d/%m/%Y')},
-            'statistics': {'total_students': len(students), 'active_students': len([s for s in students if s.is_active]),
-                           'total_staff': Staff.query.count(), 'total_classes': Class.query.count(),
-                           'total_revenue': sum(float(p.amount) for p in payments)},
-            'students': [{'firstName': s.first_name, 'lastName': s.last_name, 'matricule': s.matricule,
-                          'className': s.class_obj.name if s.class_obj else 'N/A', 'balance': float(s.balance), 'isActive': s.is_active} for s in students],
+            'statistics': {
+                'total_students': len(students),
+                'active_students': len(students),
+                'total_staff': Staff.query.count(),
+                'total_classes': Class.query.count(),
+                'total_revenue': total_revenue
+            },
+            'students': student_data,
         }
         if fmt == 'docx':
             return _send_file_response(DocxService.generate_global_school(data), 'rapport_global_ecole.docx', 'docx')
@@ -534,26 +846,55 @@ def get_global_school_report():
         else:
             return _send_file_response(PDFService.generate_pdf('global_school.html', data), 'rapport_global_ecole.pdf', 'pdf')
     except Exception as e:
+        logger.error(f"Error in get_global_school_report: {str(e)}")
         return jsonify({'error': str(e)}), 500
 
 
 @reports_bp.route('/late-payments', methods=['GET'])
 def get_late_payments_report():
     fmt = _get_format()
+    logger.info(f"Generating late payments report (format: {fmt})")
     try:
-        students = Student.query.filter(Student.balance > 0).all()
+        # On cherche tous les frais non soldés
+        late_fees = StudentFee.query.filter(StudentFee.is_fully_paid == False).all()
+        logger.debug(f"Found {len(late_fees)} late fees")
+        
+        late_payments_data = []
+        for fee in late_fees:
+            student = Student.query.get(fee.student_id)
+            if not student: 
+                logger.warning(f"Student {fee.student_id} not found for fee {fee.id}")
+                continue
+            
+            payments = Payment.query.filter_by(student_fee_id=fee.id).all()
+            total_paid = sum(float(p.amount_paid) for p in payments)
+            balance = float(fee.total_due) - total_paid
+            
+            if balance > 0:
+                late_payments_data.append({
+                    'firstName': student.first_name or '',
+                    'lastName': student.last_name or '',
+                    'matricule': student.matricule or '',
+                    'className': student.class_obj.name if (student.class_obj and student.class_obj.name) else 'N/A',
+                    'balance': balance
+                })
+
         data = {
-            'school_year': '2025-2026', 'current_date': datetime.now().strftime('%d/%m/%Y'),
-            'late_payments': [{'firstName': s.first_name, 'lastName': s.last_name, 'matricule': s.matricule,
-                               'className': s.class_obj.name if s.class_obj else 'N/A', 'balance': float(s.balance)} for s in students],
+            'school_year': '2025-2026', 
+            'current_date': datetime.now().strftime('%d/%m/%Y'),
+            'late_payments': late_payments_data,
         }
+        
+        base_name = 'paiements_en_retard'
         if fmt == 'docx':
-            return _send_file_response(DocxService.generate_late_payments(data), 'paiements_en_retard.docx', 'docx')
+            return _send_file_response(DocxService.generate_late_payments(data), f'{base_name}.docx', 'docx')
         elif fmt == 'xlsx':
-            return _send_file_response(ExcelService.generate_late_payments(data), 'paiements_en_retard.xlsx', 'xlsx')
+            return _send_file_response(ExcelService.generate_late_payments(data), f'{base_name}.xlsx', 'xlsx')
         else:
-            return _send_file_response(PDFService.generate_pdf('late_payments.html', data), 'paiements_en_retard.pdf', 'pdf')
+            pdf_content = PDFService.generate_pdf('late_payments.html', data)
+            return _send_file_response(pdf_content, f'{base_name}.pdf', 'pdf')
     except Exception as e:
+        logger.exception("Error in get_late_payments_report")
         return jsonify({'error': str(e)}), 500
 
 
@@ -592,20 +933,60 @@ def get_payments_by_class_report(class_ref):
             
         class_name = class_obj.name
         students = Student.query.filter_by(class_id=class_obj.id).all()
-        student_ids = [s.id for s in students]
-        payments = Payment.query.filter(Payment.student_id.in_(student_ids)).all() if student_ids else []
-        invoices = Invoice.query.filter(Invoice.student_id.in_(student_ids)).all() if student_ids else []
+        
+        student_list_data = []
+        total_invoiced = 0
+        total_paid_all = 0
+        
+        for s in students:
+            student_fee = StudentFee.query.filter_by(student_id=s.id).first()
+            if student_fee:
+                total_due = float(student_fee.total_due)
+                payments = Payment.query.filter_by(student_fee_id=student_fee.id).all()
+                total_paid = sum(float(p.amount_paid) for p in payments)
+                balance = total_due - total_paid
+                
+                total_invoiced += total_due
+                total_paid_all += total_paid
+                
+                student_list_data.append({
+                    'firstName': s.first_name,
+                    'lastName': s.last_name,
+                    'matricule': s.matricule,
+                    'balance': balance,
+                    'totalFeesDue': total_due,
+                    'totalFeesPaid': total_paid,
+                    'payments': [
+                        {
+                            'paymentDate': p.payment_date.strftime('%d/%m/%Y') if p.payment_date else 'N/A',
+                            'reference': p.reference or p.receipt_number,
+                            'method': p.payment_method,
+                            'amount': float(p.amount_paid)
+                        } for p in payments
+                    ],
+                    'invoices': []
+                })
+            else:
+                student_list_data.append({
+                    'firstName': s.first_name,
+                    'lastName': s.last_name,
+                    'matricule': s.matricule,
+                    'balance': 0,
+                    'totalFeesDue': 0,
+                    'totalFeesPaid': 0,
+                    'payments': [],
+                    'invoices': []
+                })
+
         data = {
-            'class_name': class_name, 'school_year': '2025-2026', 'current_date': datetime.now().strftime('%d/%m/%Y'),
-            'total_invoiced': sum(float(i.amount) for i in invoices),
-            'total_paid': sum(float(p.amount) for p in payments),
-            'students': [
-                {'firstName': s.first_name, 'lastName': s.last_name, 'matricule': s.matricule, 'balance': float(s.balance),
-                 'payments': [{'paymentDate': p.payment_date, 'reference': p.reference, 'method': p.method, 'amount': float(p.amount)} for p in payments if p.student_id == s.id],
-                 'invoices': [{'title': i.title, 'amount': float(i.amount), 'due_date': i.due_date, 'status': i.status} for i in Invoice.query.filter_by(student_id=s.id).all()]}
-                for s in students
-            ],
+            'class_name': class_name,
+            'school_year': '2025-2026',
+            'current_date': datetime.now().strftime('%d/%m/%Y'),
+            'total_invoiced': total_invoiced,
+            'total_paid': total_paid_all,
+            'students': student_list_data,
         }
+        
         base_name = f'paiements_classe_{class_name}'
         if fmt == 'docx':
             return _send_file_response(DocxService.generate_payments_by_class(data), f'{base_name}.docx', 'docx')
@@ -614,4 +995,5 @@ def get_payments_by_class_report(class_ref):
         else:
             return _send_file_response(PDFService.generate_pdf('payment_by_class.html', data), f'{base_name}.pdf', 'pdf')
     except Exception as e:
+        logger.error(f"Error in get_payments_by_class_report: {str(e)}")
         return jsonify({'error': str(e)}), 500

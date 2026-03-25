@@ -1,0 +1,3 @@
+﻿{"id":"1","first_name":"Jean","full_name":"Jean Dupont","email":"jean.dupont@student.cm","status":"ACTIVE","last_name":"Dupont"}
+{"id":"2","first_name":"Marie","full_name":"Marie Curie","email":"marie.curie@student.cm","status":"ACTIVE","last_name":"Curie"}
+{"id":"3","first_name":"Pierre","full_name":"Pierre Ngomo","email":"pierre.ngomo@student.cm","status":"ACTIVE","last_name":"Ngomo"}

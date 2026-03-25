@@ -1,164 +1,85 @@
 {% extends "base_report.html" %}
 
-{% block title %}Rapport Global - Institut Gabriel Rita{% endblock %}
-{% block report_title %}BILAN GÉNÉRAL DE L'ÉTABLISSEMENT{% endblock %}
-
-{% block extra_css %}
-<style>
-    .stats-container {
-        display: grid;
-        grid-template-columns: repeat(4, 1fr);
-        gap: 12px;
-        margin-bottom: 25px;
-    }
-
-    .stats-card {
-        background: var(--white);
-        border: 1px solid var(--border);
-        padding: 15px 10px;
-        text-align: center;
-        border-radius: 8px;
-        position: relative;
-    }
-
-    .stats-card.featured {
-        background: var(--primary);
-        border-color: var(--primary);
-    }
-
-    .stats-card.featured .stats-val, 
-    .stats-card.featured .stats-lbl {
-        color: var(--white);
-    }
-
-    .stats-val {
-        display: block;
-        font-size: 18px;
-        font-weight: 800;
-        color: var(--primary);
-        margin-bottom: 4px;
-    }
-
-    .stats-lbl {
-        font-size: 8px;
-        text-transform: uppercase;
-        color: var(--secondary);
-        font-weight: 700;
-        letter-spacing: 0.5px;
-    }
-
-    .section-header {
-        font-size: 11px;
-        font-weight: 800;
-        margin-bottom: 12px;
-        padding: 6px 0;
-        border-bottom: 2px solid var(--primary);
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-    }
-
-    .badge-count {
-        background: var(--bg-soft);
-        color: var(--primary);
-        padding: 2px 8px;
-        border-radius: 10px;
-        font-size: 8px;
-        border: 1px solid var(--border);
-    }
-
-    .data-table {
-        width: 100%;
-        border-collapse: collapse;
-        border: 1px solid var(--border);
-        border-radius: 6px;
-        overflow: hidden;
-    }
-
-    .data-table th {
-        background: var(--bg-soft);
-        color: var(--primary);
-        font-weight: 800;
-        text-transform: uppercase;
-        font-size: 8px;
-        padding: 10px;
-        text-align: left;
-        border-bottom: 1.5px solid var(--border);
-    }
-
-    .data-table td {
-        padding: 8px 10px;
-        font-size: 8.5px;
-        border-bottom: 0.5px solid var(--border);
-        color: var(--primary-light);
-    }
-
-    tr:nth-child(even) {
-        background-color: #fcfcfc;
-    }
-
-    .status-active { color: #059669; font-weight: 700; }
-    .status-inactive { color: #dc2626; font-weight: 700; }
-
-    .balance-val {
-        text-align: right;
-        font-weight: 700;
-        font-family: 'Courier New', Courier, monospace;
-    }
-</style>
-{% endblock %}
+{% block title %}Bilan Général - {{ statistics.report_date }}{% endblock %}
 
 {% block content %}
-<div class="stats-container">
-    <div class="stats-card">
-        <span class="stats-val">{{ statistics.total_students }}</span>
-        <span class="stats-lbl">Effectif Total</span>
-    </div>
-    <div class="stats-card">
-        <span class="stats-val">{{ statistics.active_students }}</span>
-        <span class="stats-lbl">Élèves Actifs</span>
-    </div>
-    <div class="stats-card">
-        <span class="stats-val">{{ statistics.total_staff }}</span>
-        <span class="stats-lbl">Personnel</span>
-    </div>
-    <div class="stats-card featured">
-        <span class="stats-val">{{ "{:,.0f}".format(statistics.total_revenue) }}</span>
-        <span class="stats-lbl">Recettes (FCFA)</span>
+<div class="invoice-banner">
+    <div class="invoice-title">Bilan Général Financier</div>
+    <div class="invoice-ref">
+        <div style="font-size: 8px; text-transform: uppercase; color: var(--secondary);">Année Académique</div>
+        <div class="ref-no">2025 - 2026</div>
     </div>
 </div>
 
-<div class="section-header">
-    <span>LISTE NOMINATIVE DES ÉTUDIANTS</span>
-    <span class="badge-count">{{ students|length }} inscrits</span>
+<div class="kpi-grid">
+    <div class="kpi-card">
+        <div class="kpi-label">Effectif Étudiants</div>
+        <div class="kpi-value">{{ statistics.total_students }}<small>Inscrits</small></div>
+    </div>
+    <div class="kpi-card">
+        <div class="kpi-label">Classes Actives</div>
+        <div class="kpi-value">{{ statistics.total_classes }}<small>Salles</small></div>
+    </div>
+    <div class="kpi-card success">
+        <div class="kpi-label">Revenus Encaissés</div>
+        <div class="kpi-value">{{ "{:,.0f}".format(statistics.total_revenue) }}<small>FCFA</small></div>
+    </div>
+    <div class="kpi-card orange">
+        <div class="kpi-label">Personnel</div>
+        <div class="kpi-value">{{ statistics.total_staff }}<small>Employés</small></div>
+    </div>
 </div>
 
-<table class="data-table">
+<div class="section-title">
+    <h2>Liste Nominative & État des Soldes</h2>
+    <div class="line"></div>
+</div>
+
+<table class="luxury-table">
     <thead>
         <tr>
-            <th style="width: 25%;">Nom & Prénom</th>
+            <th style="width: 35%;">Nom & Prénoms</th>
             <th style="width: 15%;">Matricule</th>
-            <th>Classe</th>
-            <th style="text-align: center; width: 12%;">Statut</th>
-            <th style="text-align: right; width: 18%;">Solde (FCFA)</th>
+            <th style="width: 20%;">Classe</th>
+            <th style="width: 15%; text-align: right;">Solde</th>
+            <th style="width: 15%; text-align: center;">Statut</th>
         </tr>
     </thead>
     <tbody>
         {% for student in students %}
         <tr>
-            <td class="font-bold">{{ student.firstName }} {{ student.lastName }}</td>
-            <td><code>{{ student.matricule }}</code></td>
+            <td style="font-weight: 700;">{{ student.lastName }} {{ student.firstName }}</td>
+            <td class="font-mono">{{ student.matricule }}</td>
             <td>{{ student.className }}</td>
-            <td style="text-align: center;">
+            <td class="text-right font-mono font-bold" style="color: {{ 'var(--danger)' if student.balance > 0 else 'var(--success)' }};">
+                {{ "{:,.0f}".format(student.balance) }}
+            </td>
+            <td class="text-center">
                 {% if student.isActive %}
-                <span class="status-active">ACTIF</span>
+                <span class="badge badge-success">ACTIF</span>
                 {% else %}
-                <span class="status-inactive">INACTIF</span>
+                <span class="badge badge-neutral">INACTIF</span>
                 {% endif %}
             </td>
-            <td class="balance-val">{{ "{:,.0f}".format(student.balance) }}</td>
         </tr>
         {% endfor %}
     </tbody>
 </table>
+
+<div style="margin-top: 50px; page-break-inside: avoid;">
+    <div class="section-title">
+        <h2>Certification des Comptes</h2>
+        <div class="line"></div>
+    </div>
+    <div style="display: flex; justify-content: space-between; padding: 20px; border: 1px solid var(--border); border-radius: 8px; background: var(--bg-soft);">
+        <div style="width: 45%;">
+            <div style="font-size: 7px; color: var(--secondary); text-transform: uppercase; margin-bottom: 50px;">L'Agent Comptable</div>
+            <div style="border-top: 1px solid var(--primary); padding-top: 5px; font-size: 8px; font-weight: 700;">Date & Signature</div>
+        </div>
+        <div style="width: 45%; text-align: right;">
+            <div style="font-size: 7px; color: var(--secondary); text-transform: uppercase; margin-bottom: 50px;">La Direction Générale</div>
+            <div style="border-top: 1px solid var(--primary); padding-top: 5px; font-size: 8px; font-weight: 700;">Caché Officiel</div>
+        </div>
+    </div>
+</div>
 {% endblock %}

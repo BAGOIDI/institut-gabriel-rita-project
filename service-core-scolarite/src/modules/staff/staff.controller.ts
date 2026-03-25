@@ -19,6 +19,12 @@ class StaffQueryDto {
   contractType?: string;
   @IsOptional()
   @IsString()
+  classId?: string;
+  @IsOptional()
+  @IsString()
+  subjectId?: string;
+  @IsOptional()
+  @IsString()
   page?: string;
   @IsOptional()
   @IsString()
@@ -46,6 +52,8 @@ export class StaffController {
       status: query.status,
       specialty: query.specialty,
       contractType: query.contractType,
+      classId: query.classId ? Number(query.classId) : undefined,
+      subjectId: query.subjectId ? Number(query.subjectId) : undefined,
       page: query.page ? Number(query.page) : undefined,
       limit: query.limit ? Number(query.limit) : undefined,
     });

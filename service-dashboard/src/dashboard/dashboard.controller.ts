@@ -28,6 +28,21 @@ export class DashboardController {
     this.eventsGateway.broadcast('payment_update', data);
   }
 
+  @EventPattern('payment_updated')
+  async handlePaymentUpdated(@Payload() data: any) {
+    this.eventsGateway.broadcast('payment_update', data);
+  }
+
+  @EventPattern('payment_deleted')
+  async handlePaymentDeleted(@Payload() data: any) {
+    this.eventsGateway.broadcast('payment_update', data);
+  }
+
+  @EventPattern('disbursement_created')
+  async handleDisbursementCreated(@Payload() data: any) {
+    this.eventsGateway.broadcast('disbursement_update', data);
+  }
+
   @EventPattern('attendance_logged')
   async handleAttendance(@Payload() data: any) {
     this.eventsGateway.broadcast('attendance_update', data);

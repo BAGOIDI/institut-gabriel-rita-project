@@ -19,16 +19,16 @@ export class AcademicYearController {
 
   @Get(':id')
   findOne(@Param('id') id: string) {
-    return this.academicYearService.findOne(id);
+    return this.academicYearService.findOne(+id);
   }
 
   @Patch(':id')
   update(@Param('id') id: string, @Body() updateAcademicYearDto: UpdateAcademicYearDto) {
-    return this.academicYearService.update(id, updateAcademicYearDto);
+    return this.academicYearService.update(+id, updateAcademicYearDto);
   }
 
   @Delete(':id')
   remove(@Param('id') id: string) {
-    return this.academicYearService.remove(id);
+    return this.academicYearService.remove(+id);
   }
 }

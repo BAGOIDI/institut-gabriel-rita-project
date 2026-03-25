@@ -23,17 +23,6 @@ const MIME: Record<ReportFormat, string> = {
   xlsx: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
 };
 
-function triggerDownload(blob: Blob, filename: string) {
-  const url = window.URL.createObjectURL(blob);
-  const a = document.createElement('a');
-  a.href = url;
-  a.download = filename;
-  document.body.appendChild(a);
-  a.click();
-  a.remove();
-  window.URL.revokeObjectURL(url);
-}
-
 export type ReportPeriod = 'day' | 'evening' | 'all';
 
 const reportService = {
@@ -80,7 +69,7 @@ const reportService = {
       responseType: 'blob',
       timeout: 120000,
     });
-    return new Blob([res.data], { type: MIME[format] });
+    return res.data;
   },
 
   /** Génère l'emploi du temps d'un enseignant (Blob) */
@@ -90,7 +79,7 @@ const reportService = {
       responseType: 'blob',
       timeout: 120000,
     });
-    return new Blob([res.data], { type: MIME[format] });
+    return res.data;
   },
 
   /** Génère la synthèse (Blob) */
@@ -112,13 +101,13 @@ const reportService = {
   /** Déclenche le téléchargement de l'EDT d'une classe */
   async downloadSchedule(className: string, format: ReportFormat = 'pdf', period: ReportPeriod = 'all') {
     const blob = await this.getScheduleBlob(className, format, period);
-    triggerDownload(blob, `EDT_${className.replace(/\s+/g, '_')}.${format}`);
+    this.triggerDownload(blob, `EDT_${className.replace(/\s+/g, '_')}.${format}`);
   },
 
   /** Déclenche le téléchargement de l'EDT d'un enseignant */
   async downloadTeacherSchedule(teacherName: string, format: ReportFormat = 'pdf', period: ReportPeriod = 'all') {
     const blob = await this.getTeacherScheduleBlob(teacherName, format, period);
-    triggerDownload(blob, `EDT_Enseignant_${teacherName.replace(/\s+/g, '_')}.${format}`);
+    this.triggerDownload(blob, `EDT_Enseignant_${teacherName.replace(/\s+/g, '_')}.${format}`);
   },
 
   /** Génère et télécharge l'emploi du temps d'une matière */
@@ -128,15 +117,26 @@ const reportService = {
       responseType: 'blob',
       timeout: 120000,
     });
-    const blob = new Blob([res.data], { type: MIME[format] });
-    triggerDownload(blob, `edt_matiere_${subjectName.replace(/\s+/g, '_')}.${format}`);
-    return blob;
+    this.triggerDownload(res.data, `edt_matiere_${subjectName.replace(/\s+/g, '_')}.${format}`);
+    return res.data;
   },
 
   /** Déclenche le téléchargement de la synthèse */
   async downloadSynthesisSchedule(classId?: string, staffId?: string, format: ReportFormat = 'pdf', specialtyIds?: string[], period: ReportPeriod = 'all') {
     const blob = await this.getSynthesisBlob(classId, staffId, format, specialtyIds, period);
-    triggerDownload(blob, `Synthese_EDT.${format}`);
+    this.triggerDownload(blob, `Synthese_EDT.${format}`);
+  },
+
+  /** Déclenche le téléchargement d'un fichier */
+  triggerDownload(blob: Blob, fileName: string) {
+    const url = window.URL.createObjectURL(blob);
+    const link = document.createElement('a');
+    link.href = url;
+    link.setAttribute('download', fileName);
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+    setTimeout(() => window.URL.revokeObjectURL(url), 100);
   },
 
   /** Génère et télécharge le relevé de compte d'un étudiant */
@@ -146,9 +146,8 @@ const reportService = {
       responseType: 'blob',
       timeout: 120000,
     });
-    const blob = new Blob([res.data], { type: MIME[format] });
-    triggerDownload(blob, `releve_compte_${matricule}.${format}`);
-    return blob;
+    this.triggerDownload(res.data, `releve_compte_${matricule}.${format}`);
+    return res.data;
   },
 
   /** Génère et télécharge le rapport global de l'école */
@@ -158,9 +157,8 @@ const reportService = {
       responseType: 'blob',
       timeout: 120000,
     });
-    const blob = new Blob([res.data], { type: MIME[format] });
-    triggerDownload(blob, `rapport_global_ecole.${format}`);
-    return blob;
+    this.triggerDownload(res.data, `rapport_global_ecole.${format}`);
+    return res.data;
   },
 
   /** Génère et télécharge le rapport des paiements en retard */
@@ -170,9 +168,8 @@ const reportService = {
       responseType: 'blob',
       timeout: 120000,
     });
-    const blob = new Blob([res.data], { type: MIME[format] });
-    triggerDownload(blob, `paiements_en_retard.${format}`);
-    return blob;
+    this.triggerDownload(res.data, `paiements_en_retard.${format}`);
+    return res.data;
   },
 
   /** Génère et télécharge le rapport des moratoires */
@@ -182,9 +179,8 @@ const reportService = {
       responseType: 'blob',
       timeout: 120000,
     });
-    const blob = new Blob([res.data], { type: MIME[format] });
-    triggerDownload(blob, `moratoires.${format}`);
-    return blob;
+    this.triggerDownload(res.data, `moratoires.${format}`);
+    return res.data;
   },
 
   /** Génère et télécharge le rapport des paiements par classe */
@@ -194,15 +190,34 @@ const reportService = {
       responseType: 'blob',
       timeout: 120000,
     });
-    const blob = new Blob([res.data], { type: MIME[format] });
-    triggerDownload(blob, `paiements_classe_${className}.${format}`);
-    return blob;
+    this.triggerDownload(res.data, `paiements_classe_${className}.${format}`);
+    return res.data;
+  },
+
+  /** Génère une facture en texte brut */
+  async generateInvoiceTxt(data: any): Promise<string> {
+    const response = await api.post(`${BASE}/generate-invoice-txt`, data);
+    return response.data;
   },
 
   /** Génère l'emploi du temps depuis les données du frontend (modal Timetable) */
   async generateScheduleReport(scheduleData: any, format: ReportFormat = 'pdf') {
     const className = scheduleData.filter || scheduleData.class || 'classe';
     return reportService.downloadSchedule(className, format);
+  },
+
+  /** Génère la carte d'étudiant (Blob) */
+  async getStudentCardBlob(matricule: string): Promise<Blob> {
+    const res = await api.get(`${BASE}/student/card/${encodeURIComponent(matricule)}`, {
+      responseType: 'blob',
+      timeout: 120000,
+    });
+    return new Blob([res.data], { type: MIME['pdf'] });
+  },
+
+  /** Déclenche le téléchargement */
+  download(blob: Blob, filename: string) {
+    triggerDownload(blob, filename);
   },
 };
 

@@ -6,7 +6,7 @@ import { Students } from './pages/Students';
 import { Teachers } from './pages/Teachers';
 import { Timetable } from './pages/Timetable';
 import { Attendance } from './pages/Attendance';
-import { Payments } from './pages/Payments';
+import { Finance } from './pages/Finance';
 import { PaymentRules } from './pages/PaymentRules';
 import Reports from './pages/Reports';
 import { Settings } from './pages/Settings';
@@ -39,7 +39,7 @@ function App() {
                       <Route path="/students" element={<Students />} />
                       <Route path="/timetable" element={<Timetable />} />
                       <Route path="/attendance" element={<Attendance />} />
-                      <Route path="/payments" element={<Payments />} />
+                      <Route path="/finance" element={<Finance />} />
                       <Route path="/payment-rules" element={<PaymentRules />} />
                       <Route path="/reports" element={<Reports />} />
                       <Route path="/settings" element={<Settings />} />

@@ -104,6 +104,9 @@ export const Teachers = () => {
   const [confirmOpen, setConfirmOpen] = useState(false);
   const [targetDeleteId, setTargetDeleteId] = useState<string | null>(null);
   const [deleteLoading, setDeleteLoading] = useState(false);
+  const [formStep, setFormStep] = useState<1 | 2 | 3 | 4>(1);
+  const [subjectsFilter, setSubjectsFilter] = useState('');
+  const [classesFilter, setClassesFilter] = useState('');
   
   const { language } = useTheme();
   const t = translations[language];
@@ -305,6 +308,9 @@ export const Teachers = () => {
       setShowModal(false);
       setSelectedTeacher(null);
       setFormData({});
+      setFormStep(1);
+      setSubjectsFilter('');
+      setClassesFilter('');
       fetchTeachers();
       notify.success('Enseignant enregistré avec succès');
     } catch (error) {
@@ -315,8 +321,44 @@ export const Teachers = () => {
   const handleEdit = (teacher: Teacher) => {
     setSelectedTeacher(teacher);
     setFormData(teacher);
+    setFormStep(1);
+    setSubjectsFilter('');
+    setClassesFilter('');
     setShowModal(true);
   };
+
+  const validateStep = (step: 1 | 2 | 3 | 4) => {
+    const missing: string[] = [];
+
+    if (step === 1) {
+      if (!String(formData.lastName || '').trim()) missing.push(t.lastName);
+      if (!String(formData.gender || '').trim()) missing.push(t.gender);
+    }
+
+    if (step === 2) {
+      if (!String(formData.email || '').trim()) missing.push(t.email);
+    }
+
+    if (step === 3) {
+      if (!String(formData.specialty || '').trim()) missing.push(t.specialty);
+      if (!String(formData.status || '').trim()) missing.push(t.teacherStatus);
+    }
+
+    // step 4 has no strict required fields (subjects/classes optional)
+
+    if (missing.length > 0) {
+      notify.error(`${t.requiredFields || 'Champs obligatoires'}: ${missing.join(', ')}`);
+      return false;
+    }
+    return true;
+  };
+
+  const goNext = () => {
+    if (!validateStep(formStep)) return;
+    setFormStep((prev) => (prev === 4 ? 4 : ((prev + 1) as any)));
+  };
+
+  const goPrev = () => setFormStep((prev) => (prev === 1 ? 1 : ((prev - 1) as any)));
 
   const deleteTeacher = async () => {
     if (!targetDeleteId) return;
@@ -783,6 +825,9 @@ export const Teachers = () => {
                   setShowModal(false);
                   setSelectedTeacher(null);
                   setFormData({});
+                  setFormStep(1);
+                  setSubjectsFilter('');
+                  setClassesFilter('');
                 }}
                 className="p-2 hover:bg-gray-100 dark:hover:bg-slate-700 rounded-md transition-colors"
               >
@@ -791,359 +836,448 @@ export const Teachers = () => {
             </div>
 
             <form onSubmit={handleSubmit} className="p-6 space-y-6">
-              {/* Informations Personnelles */}
-              <div>
-                <h3 className="text-sm font-bold text-gray-900 dark:text-white mb-3 uppercase border-b border-gray-200 dark:border-slate-700 pb-2">
-                  {t.personalInfo}
-                </h3>
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                  <div>
-                    <label className="block text-xs font-medium text-gray-700 dark:text-gray-300 mb-1">{t.lastName} *</label>
-                    <input
-                      type="text"
-                      required
-                      value={formData.lastName || ''}
-                      onChange={(e) => setFormData({...formData, lastName: e.target.value})}
-                      className="w-full px-3 py-2 border border-gray-200 dark:border-slate-600 rounded-md bg-gray-50 dark:bg-slate-700 text-sm dark:text-white focus:ring-2 focus:ring-blue-500"
-                    />
+              {/* Wizard header */}
+              <div className="space-y-3">
+                <div className="flex items-center justify-between gap-3">
+                  <div className="text-xs font-semibold text-gray-700 dark:text-gray-200 uppercase tracking-wide">
+                    {formStep === 1 ? t.personalInfo : formStep === 2 ? t.contact : formStep === 3 ? t.professionalInfo : t.assignedClasses}
                   </div>
-                  <div>
-                    <label className="block text-xs font-medium text-gray-700 dark:text-gray-300 mb-1">{t.firstName} *</label>
-                    <input
-                      type="text"
-                      required
-                      value={formData.firstName || ''}
-                      onChange={(e) => setFormData({...formData, firstName: e.target.value})}
-                      className="w-full px-3 py-2 border border-gray-200 dark:border-slate-600 rounded-md bg-gray-50 dark:bg-slate-700 text-sm dark:text-white focus:ring-2 focus:ring-blue-500"
-                    />
+                  <div className="text-[11px] text-gray-500 dark:text-gray-400">
+                    {formStep}/4
                   </div>
-                  <div>
-                    <label className="block text-xs font-medium text-gray-700 dark:text-gray-300 mb-1">{t.birthDate}</label>
-                    <input
-                      type="date"
-                      value={formData.dateOfBirth || ''}
-                      onChange={(e) => setFormData({...formData, dateOfBirth: e.target.value})}
-                      className="w-full px-3 py-2 border border-gray-200 dark:border-slate-600 rounded-md bg-gray-50 dark:bg-slate-700 text-sm dark:text-white focus:ring-2 focus:ring-blue-500"
-                    />
-                  </div>
-                  <div>
-                    <label className="block text-xs font-medium text-gray-700 dark:text-gray-300 mb-1">{t.birthPlace}</label>
-                    <input
-                      type="text"
-                      value={formData.placeOfBirth || ''}
-                      onChange={(e) => setFormData({...formData, placeOfBirth: e.target.value})}
-                      className="w-full px-3 py-2 border border-gray-200 dark:border-slate-600 rounded-md bg-gray-50 dark:bg-slate-700 text-sm dark:text-white focus:ring-2 focus:ring-blue-500"
-                    />
-                  </div>
-                  <div>
-                    <label className="block text-xs font-medium text-gray-700 dark:text-gray-300 mb-1">{t.gender} *</label>
-                    <select
-                      required
-                      value={formData.gender || 'M'}
-                      onChange={(e) => setFormData({...formData, gender: e.target.value})}
-                      className="w-full px-3 py-2 border border-gray-200 dark:border-slate-600 rounded-md bg-gray-50 dark:bg-slate-700 text-sm dark:text-white focus:ring-2 focus:ring-blue-500"
-                    >
-                      {(genderOptions || []).map((opt: any) => (
-                        <option key={opt.id} value={opt.value}>{getOptionLabel(opt)}</option>
-                      ))}
-                    </select>
-                  </div>
-                  <div>
-                    <label className="block text-xs font-medium text-gray-700 dark:text-gray-300 mb-1">{t.maritalStatus}</label>
-                    <select
-                      value={formData.maritalStatus || 'Célibataire'}
-                      onChange={(e) => setFormData({...formData, maritalStatus: e.target.value})}
-                      className="w-full px-3 py-2 border border-gray-200 dark:border-slate-600 rounded-md bg-gray-50 dark:bg-slate-700 text-sm dark:text-white focus:ring-2 focus:ring-blue-500"
-                    >
-                      {(maritalOptions || []).map((opt: any) => (
-                        <option key={opt.id} value={opt.value}>{getOptionLabel(opt)}</option>
-                      ))}
-                    </select>
-                  </div>
-                  <div>
-                    <label className="block text-xs font-medium text-gray-700 dark:text-gray-300 mb-1">{t.nationality}</label>
-                    <input
-                      type="text"
-                      value={formData.nationality || 'Ivoirienne'}
-                      onChange={(e) => setFormData({...formData, nationality: e.target.value})}
-                      className="w-full px-3 py-2 border border-gray-200 dark:border-slate-600 rounded-md bg-gray-50 dark:bg-slate-700 text-sm dark:text-white focus:ring-2 focus:ring-blue-500"
-                    />
-                  </div>
-                  <div>
-                    <label className="block text-xs font-medium text-gray-700 dark:text-gray-300 mb-1">{t.idCardNumber}</label>
-                    <input
-                      type="text"
-                      value={formData.idCardNumber || ''}
-                      onChange={(e) => setFormData({...formData, idCardNumber: e.target.value})}
-                      className="w-full px-3 py-2 border border-gray-200 dark:border-slate-600 rounded-md bg-gray-50 dark:bg-slate-700 text-sm dark:text-white focus:ring-2 focus:ring-blue-500"
-                    />
-                  </div>
+                </div>
+                <div className="w-full h-2 bg-gray-100 dark:bg-slate-700 rounded-full overflow-hidden border border-gray-200 dark:border-slate-600">
+                  <div
+                    className="h-full bg-blue-600 transition-all"
+                    style={{ width: `${(formStep / 4) * 100}%` }}
+                  />
+                </div>
+                <div className="grid grid-cols-4 gap-2 text-[10px] text-gray-500 dark:text-gray-400">
+                  <div className={`text-center ${formStep === 1 ? 'text-blue-600 font-semibold' : ''}`}>1. {t.personalInfo}</div>
+                  <div className={`text-center ${formStep === 2 ? 'text-blue-600 font-semibold' : ''}`}>2. {t.contact}</div>
+                  <div className={`text-center ${formStep === 3 ? 'text-blue-600 font-semibold' : ''}`}>3. {t.professionalInfo}</div>
+                  <div className={`text-center ${formStep === 4 ? 'text-blue-600 font-semibold' : ''}`}>4. {t.assignedClasses}</div>
                 </div>
               </div>
 
-              {/* Contact */}
-              <div>
-                <h3 className="text-sm font-bold text-gray-900 dark:text-white mb-3 uppercase border-b border-gray-200 dark:border-slate-700 pb-2">
-                  {t.contact}
-                </h3>
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                  <div>
-                    <label className="block text-xs font-medium text-gray-700 dark:text-gray-300 mb-1">{t.phone} *</label>
-                    <input
-                      type="tel"
-                      required
-                      value={formData.phoneNumber || ''}
-                      onChange={(e) => setFormData({...formData, phoneNumber: e.target.value})}
-                      className="w-full px-3 py-2 border border-gray-200 dark:border-slate-600 rounded-md bg-gray-50 dark:bg-slate-700 text-sm dark:text-white focus:ring-2 focus:ring-blue-500"
-                    />
-                  </div>
-                  <div>
-                    <label className="block text-xs font-medium text-gray-700 dark:text-gray-300 mb-1">{t.email} *</label>
-                    <input
-                      type="email"
-                      required
-                      value={formData.email || ''}
-                      onChange={(e) => setFormData({...formData, email: e.target.value})}
-                      className="w-full px-3 py-2 border border-gray-200 dark:border-slate-600 rounded-md bg-gray-50 dark:bg-slate-700 text-sm dark:text-white focus:ring-2 focus:ring-blue-500"
-                    />
-                  </div>
-                  <div className="md:col-span-2">
-                    <label className="block text-xs font-medium text-gray-700 dark:text-gray-300 mb-1">{t.address}</label>
-                    <input
-                      type="text"
-                      value={formData.address || ''}
-                      onChange={(e) => setFormData({...formData, address: e.target.value})}
-                      className="w-full px-3 py-2 border border-gray-200 dark:border-slate-600 rounded-md bg-gray-50 dark:bg-slate-700 text-sm dark:text-white focus:ring-2 focus:ring-blue-500"
-                    />
-                  </div>
-                </div>
-              </div>
-
-              {/* Informations Professionnelles */}
-              <div>
-                <h3 className="text-sm font-bold text-gray-900 dark:text-white mb-3 uppercase border-b border-gray-200 dark:border-slate-700 pb-2">
-                  {t.professionalInfo}
-                </h3>
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                  <div>
-                    <label className="block text-xs font-medium text-gray-700 dark:text-gray-300 mb-1">{t.specialty} *</label>
-                    <select
-                      required
-                      value={formData.specialty || ''}
-                      onChange={(e) => setFormData({...formData, specialty: e.target.value})}
-                      className="w-full px-3 py-2 border border-gray-200 dark:border-slate-600 rounded-md bg-gray-50 dark:bg-slate-700 text-sm dark:text-white focus:ring-2 focus:ring-blue-500"
-                    >
-                      <option value="">{t.select}</option>
-                      {(specialtyOptions || []).map((opt: any) => (
-                        <option key={opt.id} value={opt.value}>{getOptionLabel(opt)}</option>
-                      ))}
-                    </select>
-                  </div>
-                  <div>
-                    <label className="block text-xs font-medium text-gray-700 dark:text-gray-300 mb-1">{t.degree}</label>
-                    <select
-                      value={formData.diploma || ''}
-                      onChange={(e) => setFormData({...formData, diploma: e.target.value})}
-                      className="w-full px-3 py-2 border border-gray-200 dark:border-slate-600 rounded-md bg-gray-50 dark:bg-slate-700 text-sm dark:text-white focus:ring-2 focus:ring-blue-500"
-                    >
-                      <option value="">{t.select}</option>
-                      {(degreeOptions || []).map((opt: any) => (
-                        <option key={opt.id} value={opt.value}>{getOptionLabel(opt)}</option>
-                      ))}
-                    </select>
-                  </div>
-                  <div>
-                    <label className="block text-xs font-medium text-gray-700 dark:text-gray-300 mb-1">{t.teacherStatus} *</label>
-                    <select
-                      required
-                      value={formData.status || 'Permanent'}
-                      onChange={(e) => setFormData({...formData, status: e.target.value})}
-                      className="w-full px-3 py-2 border border-gray-200 dark:border-slate-600 rounded-md bg-gray-50 dark:bg-slate-700 text-sm dark:text-white focus:ring-2 focus:ring-blue-500"
-                    >
-                      {(statusOptions || []).map((opt: any) => (
-                        <option key={opt.id} value={opt.value}>{getOptionLabel(opt)}</option>
-                      ))}
-                    </select>
-                  </div>
-                  <div>
-                    <label className="block text-xs font-medium text-gray-700 dark:text-gray-300 mb-1">{t.teacherContract}</label>
-                    <select
-                      value={formData.contractType || 'CDI'}
-                      onChange={(e) => setFormData({...formData, contractType: e.target.value})}
-                      className="w-full px-3 py-2 border border-gray-200 dark:border-slate-600 rounded-md bg-gray-50 dark:bg-slate-700 text-sm dark:text-white focus:ring-2 focus:ring-blue-500"
-                    >
-                      {(contractOptions || []).map((opt: any) => (
-                        <option key={opt.id} value={opt.value}>{getOptionLabel(opt)}</option>
-                      ))}
-                    </select>
-                  </div>
-                  <div>
-                    <label className="block text-xs font-medium text-gray-700 dark:text-gray-300 mb-1">{t.hireDate}</label>
-                    <input
-                      type="date"
-                      value={formData.hireDate || ''}
-                      onChange={(e) => setFormData({...formData, hireDate: e.target.value})}
-                      className="w-full px-3 py-2 border border-gray-200 dark:border-slate-600 rounded-md bg-gray-50 dark:bg-slate-700 text-sm dark:text-white focus:ring-2 focus:ring-blue-500"
-                    />
-                  </div>
-                  <div>
-                    <label className="block text-xs font-medium text-gray-700 dark:text-gray-300 mb-1">{t.salary}</label>
-                    <input
-                      type="number"
-                      value={formData.salary || 0}
-                      onChange={(e) => setFormData({...formData, salary: Number(e.target.value)})}
-                      className="w-full px-3 py-2 border border-gray-200 dark:border-slate-600 rounded-md bg-gray-50 dark:bg-slate-700 text-sm dark:text-white focus:ring-2 focus:ring-blue-500"
-                    />
+              {/* Step 1: Identité */}
+              {formStep === 1 && (
+                <div className="space-y-4">
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div>
+                      <label className="block text-xs font-medium text-gray-700 dark:text-gray-300 mb-1">{t.lastName} *</label>
+                      <input
+                        type="text"
+                        value={formData.lastName || ''}
+                        onChange={(e) => setFormData({...formData, lastName: e.target.value})}
+                        className="w-full px-3 py-2 border border-gray-200 dark:border-slate-600 rounded-md bg-gray-50 dark:bg-slate-700 text-sm dark:text-white focus:ring-2 focus:ring-blue-500"
+                      />
+                    </div>
+                    <div>
+                      <label className="block text-xs font-medium text-gray-700 dark:text-gray-300 mb-1">{t.firstName}</label>
+                      <input
+                        type="text"
+                        value={formData.firstName || ''}
+                        onChange={(e) => setFormData({...formData, firstName: e.target.value})}
+                        className="w-full px-3 py-2 border border-gray-200 dark:border-slate-600 rounded-md bg-gray-50 dark:bg-slate-700 text-sm dark:text-white focus:ring-2 focus:ring-blue-500"
+                      />
+                    </div>
+                    <div>
+                      <label className="block text-xs font-medium text-gray-700 dark:text-gray-300 mb-1">{t.birthDate}</label>
+                      <input
+                        type="date"
+                        value={formData.dateOfBirth || ''}
+                        onChange={(e) => setFormData({...formData, dateOfBirth: e.target.value})}
+                        className="w-full px-3 py-2 border border-gray-200 dark:border-slate-600 rounded-md bg-gray-50 dark:bg-slate-700 text-sm dark:text-white focus:ring-2 focus:ring-blue-500"
+                      />
+                    </div>
+                    <div>
+                      <label className="block text-xs font-medium text-gray-700 dark:text-gray-300 mb-1">{t.birthPlace}</label>
+                      <input
+                        type="text"
+                        value={formData.placeOfBirth || ''}
+                        onChange={(e) => setFormData({...formData, placeOfBirth: e.target.value})}
+                        className="w-full px-3 py-2 border border-gray-200 dark:border-slate-600 rounded-md bg-gray-50 dark:bg-slate-700 text-sm dark:text-white focus:ring-2 focus:ring-blue-500"
+                      />
+                    </div>
+                    <div>
+                      <label className="block text-xs font-medium text-gray-700 dark:text-gray-300 mb-1">{t.gender} *</label>
+                      <select
+                        value={formData.gender || 'M'}
+                        onChange={(e) => setFormData({...formData, gender: e.target.value})}
+                        className="w-full px-3 py-2 border border-gray-200 dark:border-slate-600 rounded-md bg-gray-50 dark:bg-slate-700 text-sm dark:text-white focus:ring-2 focus:ring-blue-500"
+                      >
+                        {(genderOptions || []).map((opt: any) => (
+                          <option key={opt.id} value={opt.value}>{getOptionLabel(opt)}</option>
+                        ))}
+                      </select>
+                    </div>
+                    <div>
+                      <label className="block text-xs font-medium text-gray-700 dark:text-gray-300 mb-1">{t.maritalStatus}</label>
+                      <select
+                        value={formData.maritalStatus || 'Célibataire'}
+                        onChange={(e) => setFormData({...formData, maritalStatus: e.target.value})}
+                        className="w-full px-3 py-2 border border-gray-200 dark:border-slate-600 rounded-md bg-gray-50 dark:bg-slate-700 text-sm dark:text-white focus:ring-2 focus:ring-blue-500"
+                      >
+                        {(maritalOptions || []).map((opt: any) => (
+                          <option key={opt.id} value={opt.value}>{getOptionLabel(opt)}</option>
+                        ))}
+                      </select>
+                    </div>
+                    <div>
+                      <label className="block text-xs font-medium text-gray-700 dark:text-gray-300 mb-1">{t.nationality}</label>
+                      <input
+                        type="text"
+                        value={formData.nationality || 'Ivoirienne'}
+                        onChange={(e) => setFormData({...formData, nationality: e.target.value})}
+                        className="w-full px-3 py-2 border border-gray-200 dark:border-slate-600 rounded-md bg-gray-50 dark:bg-slate-700 text-sm dark:text-white focus:ring-2 focus:ring-blue-500"
+                      />
+                    </div>
+                    <div>
+                      <label className="block text-xs font-medium text-gray-700 dark:text-gray-300 mb-1">{t.idCardNumber}</label>
+                      <input
+                        type="text"
+                        value={formData.idCardNumber || ''}
+                        onChange={(e) => setFormData({...formData, idCardNumber: e.target.value})}
+                        className="w-full px-3 py-2 border border-gray-200 dark:border-slate-600 rounded-md bg-gray-50 dark:bg-slate-700 text-sm dark:text-white focus:ring-2 focus:ring-blue-500"
+                      />
+                    </div>
                   </div>
                 </div>
-              </div>
+              )}
 
-          <div>
-            <h3 className="text-sm font-bold text-gray-900 dark:text-white mb-3 uppercase border-b border-gray-200 dark:border-slate-700 pb-2">
-              {t.subjectsTaught}
-            </h3>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-2">
-              {(subjectsList || []).map((s: any) => {
-                const val = s.name || s.value || s.id;
-                const label = s.name || getOptionLabel(s);
-                const checked = (formData.subjects || []).includes(val);
-                return (
-                  <label key={val} className="flex items-center gap-2 text-sm">
-                    <input
-                      type="checkbox"
-                      checked={checked}
-                      onChange={(e) => {
-                        const current = new Set(formData.subjects || []);
-                        if (e.target.checked) current.add(val);
-                        else current.delete(val);
-                        setFormData({ ...formData, subjects: Array.from(current) });
-                      }}
-                    />
-                    <span className="text-gray-700 dark:text-gray-300">{label}</span>
-                  </label>
-                );
-              })}
-            </div>
-          </div>
-          <div>
-            <h3 className="text-sm font-bold text-gray-900 dark:text-white mb-3 uppercase border-b border-gray-200 dark:border-slate-700 pb-2">
-              {t.assignedClasses}
-            </h3>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-2">
-              {(classesList || []).map((c: any) => {
-                const val = c.name || c.value || c.id;
-                const label = c.name || getOptionLabel(c);
-                const checked = (formData.classes || []).includes(val);
-                return (
-                  <label key={val} className="flex items-center gap-2 text-sm">
-                    <input
-                      type="checkbox"
-                      checked={checked}
-                      onChange={(e) => {
-                        const current = new Set(formData.classes || []);
-                        if (e.target.checked) current.add(val);
-                        else current.delete(val);
-                        setFormData({ ...formData, classes: Array.from(current) });
-                      }}
-                    />
-                    <span className="text-gray-700 dark:text-gray-300">{label}</span>
-                  </label>
-                );
-              })}
-            </div>
-          </div>
-
-              {/* {t.bankingInfo} */}
-              <div>
-                <h3 className="text-sm font-bold text-gray-900 dark:text-white mb-3 uppercase border-b border-gray-200 dark:border-slate-700 pb-2">
-                  {t.bankingInfo}
-                </h3>
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              {/* Step 2: Contact */}
+              {formStep === 2 && (
+                <div className="space-y-6">
                   <div>
-                    <label className="block text-xs font-medium text-gray-700 dark:text-gray-300 mb-1">{t.bankAccount}</label>
-                    <input
-                      type="text"
-                      value={formData.bankAccount || ''}
-                      onChange={(e) => setFormData({...formData, bankAccount: e.target.value})}
-                      className="w-full px-3 py-2 border border-gray-200 dark:border-slate-600 rounded-md bg-gray-50 dark:bg-slate-700 text-sm dark:text-white focus:ring-2 focus:ring-blue-500"
-                    />
+                    <h3 className="text-sm font-bold text-gray-900 dark:text-white mb-3 uppercase border-b border-gray-200 dark:border-slate-700 pb-2">
+                      {t.contact}
+                    </h3>
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                      <div>
+                        <label className="block text-xs font-medium text-gray-700 dark:text-gray-300 mb-1">{t.phone}</label>
+                        <input
+                          type="tel"
+                          value={formData.phoneNumber || ''}
+                          onChange={(e) => setFormData({...formData, phoneNumber: e.target.value})}
+                          className="w-full px-3 py-2 border border-gray-200 dark:border-slate-600 rounded-md bg-gray-50 dark:bg-slate-700 text-sm dark:text-white focus:ring-2 focus:ring-blue-500"
+                        />
+                      </div>
+                      <div>
+                        <label className="block text-xs font-medium text-gray-700 dark:text-gray-300 mb-1">{t.email} *</label>
+                        <input
+                          type="email"
+                          value={formData.email || ''}
+                          onChange={(e) => setFormData({...formData, email: e.target.value})}
+                          className="w-full px-3 py-2 border border-gray-200 dark:border-slate-600 rounded-md bg-gray-50 dark:bg-slate-700 text-sm dark:text-white focus:ring-2 focus:ring-blue-500"
+                        />
+                      </div>
+                      <div className="md:col-span-2">
+                        <label className="block text-xs font-medium text-gray-700 dark:text-gray-300 mb-1">{t.address}</label>
+                        <input
+                          type="text"
+                          value={formData.address || ''}
+                          onChange={(e) => setFormData({...formData, address: e.target.value})}
+                          className="w-full px-3 py-2 border border-gray-200 dark:border-slate-600 rounded-md bg-gray-50 dark:bg-slate-700 text-sm dark:text-white focus:ring-2 focus:ring-blue-500"
+                        />
+                      </div>
+                    </div>
                   </div>
+
                   <div>
-                    <label className="block text-xs font-medium text-gray-700 dark:text-gray-300 mb-1">{t.socialSecurityNumber}</label>
-                    <input
-                      type="text"
-                      value={formData.socialSecurityNumber || ''}
-                      onChange={(e) => setFormData({...formData, socialSecurityNumber: e.target.value})}
-                      className="w-full px-3 py-2 border border-gray-200 dark:border-slate-600 rounded-md bg-gray-50 dark:bg-slate-700 text-sm dark:text-white focus:ring-2 focus:ring-blue-500"
-                    />
+                    <h3 className="text-sm font-bold text-gray-900 dark:text-white mb-3 uppercase border-b border-gray-200 dark:border-slate-700 pb-2">
+                      {t.emergencyContact}
+                    </h3>
+                    <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                      <div>
+                        <label className="block text-xs font-medium text-gray-700 dark:text-gray-300 mb-1">{t.fullName}</label>
+                        <input
+                          type="text"
+                          value={formData.emergencyContact?.name || ''}
+                          onChange={(e) => setFormData({
+                            ...formData, 
+                            emergencyContact: {...formData.emergencyContact, name: e.target.value}
+                          })}
+                          className="w-full px-3 py-2 border border-gray-200 dark:border-slate-600 rounded-md bg-gray-50 dark:bg-slate-700 text-sm dark:text-white focus:ring-2 focus:ring-blue-500"
+                        />
+                      </div>
+                      <div>
+                        <label className="block text-xs font-medium text-gray-700 dark:text-gray-300 mb-1">Téléphone</label>
+                        <input
+                          type="tel"
+                          value={formData.emergencyContact?.phone || ''}
+                          onChange={(e) => setFormData({
+                            ...formData, 
+                            emergencyContact: {...formData.emergencyContact, phone: e.target.value}
+                          })}
+                          className="w-full px-3 py-2 border border-gray-200 dark:border-slate-600 rounded-md bg-gray-50 dark:bg-slate-700 text-sm dark:text-white focus:ring-2 focus:ring-blue-500"
+                        />
+                      </div>
+                      <div>
+                        <label className="block text-xs font-medium text-gray-700 dark:text-gray-300 mb-1">{t.relationship}</label>
+                        <input
+                          type="text"
+                          value={formData.emergencyContact?.relationship || ''}
+                          onChange={(e) => setFormData({
+                            ...formData, 
+                            emergencyContact: {...formData.emergencyContact, relationship: e.target.value}
+                          })}
+                          className="w-full px-3 py-2 border border-gray-200 dark:border-slate-600 rounded-md bg-gray-50 dark:bg-slate-700 text-sm dark:text-white focus:ring-2 focus:ring-blue-500"
+                        />
+                      </div>
+                    </div>
                   </div>
                 </div>
-              </div>
+              )}
 
-              {/* Contact d'urgence */}
-              <div>
-                <h3 className="text-sm font-bold text-gray-900 dark:text-white mb-3 uppercase border-b border-gray-200 dark:border-slate-700 pb-2">
-                  {t.emergencyContact}
-                </h3>
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+              {/* Step 3: Pro */}
+              {formStep === 3 && (
+                <div className="space-y-6">
                   <div>
-                    <label className="block text-xs font-medium text-gray-700 dark:text-gray-300 mb-1">{t.fullName}</label>
-                    <input
-                      type="text"
-                      value={formData.emergencyContact?.name || ''}
-                      onChange={(e) => setFormData({
-                        ...formData, 
-                        emergencyContact: {...formData.emergencyContact, name: e.target.value}
+                    <h3 className="text-sm font-bold text-gray-900 dark:text-white mb-3 uppercase border-b border-gray-200 dark:border-slate-700 pb-2">
+                      {t.professionalInfo}
+                    </h3>
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                      <div>
+                        <label className="block text-xs font-medium text-gray-700 dark:text-gray-300 mb-1">{t.specialty} *</label>
+                        <select
+                          value={formData.specialty || ''}
+                          onChange={(e) => setFormData({...formData, specialty: e.target.value})}
+                          className="w-full px-3 py-2 border border-gray-200 dark:border-slate-600 rounded-md bg-gray-50 dark:bg-slate-700 text-sm dark:text-white focus:ring-2 focus:ring-blue-500"
+                        >
+                          <option value="">{t.select}</option>
+                          {(specialtyOptions || []).map((opt: any) => (
+                            <option key={opt.id} value={opt.value}>{getOptionLabel(opt)}</option>
+                          ))}
+                        </select>
+                      </div>
+                      <div>
+                        <label className="block text-xs font-medium text-gray-700 dark:text-gray-300 mb-1">{t.degree}</label>
+                        <select
+                          value={formData.diploma || ''}
+                          onChange={(e) => setFormData({...formData, diploma: e.target.value})}
+                          className="w-full px-3 py-2 border border-gray-200 dark:border-slate-600 rounded-md bg-gray-50 dark:bg-slate-700 text-sm dark:text-white focus:ring-2 focus:ring-blue-500"
+                        >
+                          <option value="">{t.select}</option>
+                          {(degreeOptions || []).map((opt: any) => (
+                            <option key={opt.id} value={opt.value}>{getOptionLabel(opt)}</option>
+                          ))}
+                        </select>
+                      </div>
+                      <div>
+                        <label className="block text-xs font-medium text-gray-700 dark:text-gray-300 mb-1">{t.teacherStatus} *</label>
+                        <select
+                          value={formData.status || 'Permanent'}
+                          onChange={(e) => setFormData({...formData, status: e.target.value})}
+                          className="w-full px-3 py-2 border border-gray-200 dark:border-slate-600 rounded-md bg-gray-50 dark:bg-slate-700 text-sm dark:text-white focus:ring-2 focus:ring-blue-500"
+                        >
+                          {(statusOptions || []).map((opt: any) => (
+                            <option key={opt.id} value={opt.value}>{getOptionLabel(opt)}</option>
+                          ))}
+                        </select>
+                      </div>
+                      <div>
+                        <label className="block text-xs font-medium text-gray-700 dark:text-gray-300 mb-1">{t.teacherContract}</label>
+                        <select
+                          value={formData.contractType || 'CDI'}
+                          onChange={(e) => setFormData({...formData, contractType: e.target.value})}
+                          className="w-full px-3 py-2 border border-gray-200 dark:border-slate-600 rounded-md bg-gray-50 dark:bg-slate-700 text-sm dark:text-white focus:ring-2 focus:ring-blue-500"
+                        >
+                          {(contractOptions || []).map((opt: any) => (
+                            <option key={opt.id} value={opt.value}>{getOptionLabel(opt)}</option>
+                          ))}
+                        </select>
+                      </div>
+                      <div>
+                        <label className="block text-xs font-medium text-gray-700 dark:text-gray-300 mb-1">{t.hireDate}</label>
+                        <input
+                          type="date"
+                          value={formData.hireDate || ''}
+                          onChange={(e) => setFormData({...formData, hireDate: e.target.value})}
+                          className="w-full px-3 py-2 border border-gray-200 dark:border-slate-600 rounded-md bg-gray-50 dark:bg-slate-700 text-sm dark:text-white focus:ring-2 focus:ring-blue-500"
+                        />
+                      </div>
+                      <div>
+                        <label className="block text-xs font-medium text-gray-700 dark:text-gray-300 mb-1">{t.salary}</label>
+                        <input
+                          type="number"
+                          value={formData.salary || 0}
+                          onChange={(e) => setFormData({...formData, salary: Number(e.target.value)})}
+                          className="w-full px-3 py-2 border border-gray-200 dark:border-slate-600 rounded-md bg-gray-50 dark:bg-slate-700 text-sm dark:text-white focus:ring-2 focus:ring-blue-500"
+                        />
+                      </div>
+                    </div>
+                  </div>
+
+                  <div>
+                    <h3 className="text-sm font-bold text-gray-900 dark:text-white mb-3 uppercase border-b border-gray-200 dark:border-slate-700 pb-2">
+                      {t.bankingInfo}
+                    </h3>
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                      <div>
+                        <label className="block text-xs font-medium text-gray-700 dark:text-gray-300 mb-1">{t.bankAccount}</label>
+                        <input
+                          type="text"
+                          value={formData.bankAccount || ''}
+                          onChange={(e) => setFormData({...formData, bankAccount: e.target.value})}
+                          className="w-full px-3 py-2 border border-gray-200 dark:border-slate-600 rounded-md bg-gray-50 dark:bg-slate-700 text-sm dark:text-white focus:ring-2 focus:ring-blue-500"
+                        />
+                      </div>
+                      <div>
+                        <label className="block text-xs font-medium text-gray-700 dark:text-gray-300 mb-1">{t.socialSecurityNumber}</label>
+                        <input
+                          type="text"
+                          value={formData.socialSecurityNumber || ''}
+                          onChange={(e) => setFormData({...formData, socialSecurityNumber: e.target.value})}
+                          className="w-full px-3 py-2 border border-gray-200 dark:border-slate-600 rounded-md bg-gray-50 dark:bg-slate-700 text-sm dark:text-white focus:ring-2 focus:ring-blue-500"
+                        />
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              )}
+
+              {/* Step 4: Affectations */}
+              {formStep === 4 && (
+                <div className="space-y-6">
+                  <div>
+                    <h3 className="text-sm font-bold text-gray-900 dark:text-white mb-3 uppercase border-b border-gray-200 dark:border-slate-700 pb-2">
+                      {t.subjectsTaught}
+                    </h3>
+                    <div className="mb-3">
+                      <input
+                        type="text"
+                        value={subjectsFilter}
+                        onChange={(e) => setSubjectsFilter(e.target.value)}
+                        placeholder={t.searchPlaceholder || 'Rechercher...'}
+                        className="w-full px-3 py-2 border border-gray-200 dark:border-slate-600 rounded-md bg-gray-50 dark:bg-slate-700 text-sm dark:text-white focus:ring-2 focus:ring-blue-500"
+                      />
+                      <div className="mt-1 text-[11px] text-gray-500 dark:text-gray-400">
+                        {(formData.subjects || []).length} {t.selected || 'sélectionné(s)'}
+                      </div>
+                    </div>
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-2">
+                      {(subjectsList || [])
+                        .filter((s: any) => {
+                          const label = String(s?.name || getOptionLabel(s) || '').toLowerCase();
+                          const q = subjectsFilter.trim().toLowerCase();
+                          return !q || label.includes(q);
+                        })
+                        .map((s: any) => {
+                        const val = s.name || s.value || s.id;
+                        const label = s.name || getOptionLabel(s);
+                        const checked = (formData.subjects || []).includes(val);
+                        return (
+                          <label key={val} className="flex items-center gap-2 text-sm">
+                            <input
+                              type="checkbox"
+                              checked={checked}
+                              onChange={(e) => {
+                                const current = new Set(formData.subjects || []);
+                                if (e.target.checked) current.add(val);
+                                else current.delete(val);
+                                setFormData({ ...formData, subjects: Array.from(current) });
+                              }}
+                            />
+                            <span className="text-gray-700 dark:text-gray-300">{label}</span>
+                          </label>
+                        );
                       })}
-                      className="w-full px-3 py-2 border border-gray-200 dark:border-slate-600 rounded-md bg-gray-50 dark:bg-slate-700 text-sm dark:text-white focus:ring-2 focus:ring-blue-500"
-                    />
+                    </div>
                   </div>
+
                   <div>
-                    <label className="block text-xs font-medium text-gray-700 dark:text-gray-300 mb-1">Téléphone</label>
-                    <input
-                      type="tel"
-                      value={formData.emergencyContact?.phone || ''}
-                      onChange={(e) => setFormData({
-                        ...formData, 
-                        emergencyContact: {...formData.emergencyContact, phone: e.target.value}
+                    <h3 className="text-sm font-bold text-gray-900 dark:text-white mb-3 uppercase border-b border-gray-200 dark:border-slate-700 pb-2">
+                      {t.assignedClasses}
+                    </h3>
+                    <div className="mb-3">
+                      <input
+                        type="text"
+                        value={classesFilter}
+                        onChange={(e) => setClassesFilter(e.target.value)}
+                        placeholder={t.searchPlaceholder || 'Rechercher...'}
+                        className="w-full px-3 py-2 border border-gray-200 dark:border-slate-600 rounded-md bg-gray-50 dark:bg-slate-700 text-sm dark:text-white focus:ring-2 focus:ring-blue-500"
+                      />
+                      <div className="mt-1 text-[11px] text-gray-500 dark:text-gray-400">
+                        {(formData.classes || []).length} {t.selected || 'sélectionné(s)'}
+                      </div>
+                    </div>
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-2">
+                      {(classesList || [])
+                        .filter((c: any) => {
+                          const label = String(c?.name || getOptionLabel(c) || '').toLowerCase();
+                          const q = classesFilter.trim().toLowerCase();
+                          return !q || label.includes(q);
+                        })
+                        .map((c: any) => {
+                        const val = c.name || c.value || c.id;
+                        const label = c.name || getOptionLabel(c);
+                        const checked = (formData.classes || []).includes(val);
+                        return (
+                          <label key={val} className="flex items-center gap-2 text-sm">
+                            <input
+                              type="checkbox"
+                              checked={checked}
+                              onChange={(e) => {
+                                const current = new Set(formData.classes || []);
+                                if (e.target.checked) current.add(val);
+                                else current.delete(val);
+                                setFormData({ ...formData, classes: Array.from(current) });
+                              }}
+                            />
+                            <span className="text-gray-700 dark:text-gray-300">{label}</span>
+                          </label>
+                        );
                       })}
-                      className="w-full px-3 py-2 border border-gray-200 dark:border-slate-600 rounded-md bg-gray-50 dark:bg-slate-700 text-sm dark:text-white focus:ring-2 focus:ring-blue-500"
-                    />
-                  </div>
-                  <div>
-                    <label className="block text-xs font-medium text-gray-700 dark:text-gray-300 mb-1">{t.relationship}</label>
-                    <input
-                      type="text"
-                      value={formData.emergencyContact?.relationship || ''}
-                      onChange={(e) => setFormData({
-                        ...formData, 
-                        emergencyContact: {...formData.emergencyContact, relationship: e.target.value}
-                      })}
-                      className="w-full px-3 py-2 border border-gray-200 dark:border-slate-600 rounded-md bg-gray-50 dark:bg-slate-700 text-sm dark:text-white focus:ring-2 focus:ring-blue-500"
-                    />
+                    </div>
                   </div>
                 </div>
-              </div>
+              )}
 
-              {/* Boutons d'action */}
-              <div className="flex items-center justify-end gap-3 pt-4 border-t border-gray-200 dark:border-slate-700">
+              {/* Wizard actions */}
+              <div className="flex items-center justify-between gap-3 pt-4 border-t border-gray-200 dark:border-slate-700">
                 <button
                   type="button"
                   onClick={() => {
                     setShowModal(false);
                     setSelectedTeacher(null);
                     setFormData({});
+                    setFormStep(1);
+                    setSubjectsFilter('');
+                    setClassesFilter('');
                   }}
                   className="px-4 py-2 text-sm font-normal text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-slate-700 rounded-md transition-colors border border-gray-200 dark:border-slate-600"
                 >
                   {t.cancel}
                 </button>
-                <button
-                  type="submit"
-                  className="px-4 py-2 text-sm font-normal bg-blue-600 hover:bg-blue-700 text-white rounded-md transition-colors border border-blue-700"
-                >
-                  {selectedTeacher ? t.update : t.save}
-                </button>
+
+                <div className="flex items-center gap-2">
+                  <button
+                    type="button"
+                    onClick={goPrev}
+                    disabled={formStep === 1}
+                    className="px-4 py-2 text-sm font-normal rounded-md transition-colors border border-gray-200 dark:border-slate-600 text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-slate-700 disabled:opacity-40 disabled:hover:bg-transparent"
+                  >
+                    {t.previous || 'Précédent'}
+                  </button>
+
+                  {formStep < 4 ? (
+                    <button
+                      type="button"
+                      onClick={goNext}
+                      className="px-4 py-2 text-sm font-normal bg-blue-600 hover:bg-blue-700 text-white rounded-md transition-colors border border-blue-700"
+                    >
+                      {t.next || 'Suivant'}
+                    </button>
+                  ) : (
+                    <button
+                      type="submit"
+                      className="px-4 py-2 text-sm font-normal bg-blue-600 hover:bg-blue-700 text-white rounded-md transition-colors border border-blue-700"
+                    >
+                      {selectedTeacher ? t.update : t.save}
+                    </button>
+                  )}
+                </div>
               </div>
             </form>
           </div>

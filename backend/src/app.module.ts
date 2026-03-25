@@ -5,6 +5,9 @@ import { AggregatorModule } from './modules/aggregator/aggregator.module';
 import { StudentsModule } from './modules/students/students.module';
 import { ExternalModule } from './external/external.module';
 import { SearchIndexerService } from './search-indexer.service';
+import { SearchModule } from './modules/search/search.module';
+import { DatabaseModule } from './modules/database/database.module';
+import { RabbitMQTestModule } from './modules/rabbitmq-test/rabbitmq-test.module';
 
 @Module({
   imports: [
@@ -21,6 +24,9 @@ import { SearchIndexerService } from './search-indexer.service';
     AggregatorModule,
     StudentsModule,
     ExternalModule,
+    SearchModule, // Module pour l'indexation Typesense
+    DatabaseModule, // Module pour les statistiques DB
+    RabbitMQTestModule, // Module de test RabbitMQ (DEV only)
   ],
   controllers: [StudentEventsController],
   providers: [SearchIndexerService],

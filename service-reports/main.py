@@ -68,3 +68,29 @@ async def generate_invoice(data: InvoiceData):
         
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
+
+@app.post("/generate-invoice-txt")
+async def generate_invoice_txt(data: InvoiceData):
+    try:
+        template = env.get_template("invoice.txt")
+        
+        # Render text content
+        text_content = template.render(
+            invoice_number=data.invoice_number,
+            date=data.date,
+            student_name=data.student_name,
+            student_id=data.student_id,
+            items=data.items,
+            total=data.total_amount,
+            paid=data.paid_amount,
+            balance=data.balance_due,
+            method=data.payment_method,
+            generated_at=datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+        )
+        
+        return Response(content=text_content, media_type="text/plain", headers={
+            "Content-Disposition": f"attachment; filename=invoice_{data.invoice_number}.txt"
+        })
+        
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))

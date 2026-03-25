@@ -1,86 +1,351 @@
 <!DOCTYPE html>
-<html>
+<html lang="fr">
 <head>
     <meta charset="utf-8">
-    <title>Facture</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Facture - Institut Gabriel Rita</title>
     <style>
-        body { font-family: 'Helvetica', sans-serif; color: #333; line-height: 1.6; }
-        .container { max-width: 800px; margin: 0 auto; padding: 20px; }
-        .header { display: flex; justify-content: space-between; margin-bottom: 40px; border-bottom: 2px solid #eee; padding-bottom: 20px; }
-        .logo { font-size: 24px; font-weight: bold; color: #2563eb; }
-        .invoice-info { text-align: right; }
-        .client-info { margin-bottom: 40px; }
-        table { width: 100%; border-collapse: collapse; margin-bottom: 30px; }
-        th { background: #f8fafc; text-align: left; padding: 12px; border-bottom: 2px solid #e2e8f0; }
-        td { padding: 12px; border-bottom: 1px solid #e2e8f0; }
-        .total-section { float: right; width: 300px; }
-        .total-row { display: flex; justify-content: space-between; padding: 8px 0; }
-        .grand-total { font-weight: bold; font-size: 18px; border-top: 2px solid #333; margin-top: 10px; padding-top: 10px; }
-        .footer { margin-top: 60px; text-align: center; font-size: 12px; color: #64748b; border-top: 1px solid #eee; padding-top: 20px; }
-        .status-paid { color: #16a34a; font-weight: bold; border: 2px solid #16a34a; padding: 5px 10px; border-radius: 4px; display: inline-block; transform: rotate(-10deg); }
+        /* Reset et base */
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { 
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; 
+            color: #1e293b; 
+            line-height: 1.6;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 40px 20px;
+        }
+        
+        /* Conteneur principal */
+        .container { 
+            max-width: 850px; 
+            margin: 0 auto; 
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            overflow: hidden;
+        }
+        
+        /* En-tête avec branding */
+        .header { 
+            background: linear-gradient(135deg, #2563eb 0%, #1e40af 100%);
+            color: white;
+            padding: 40px;
+            display: flex; 
+            justify-content: space-between; 
+            align-items: center;
+            position: relative;
+        }
+        .header::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 40px;
+            right: 40px;
+            height: 20px;
+            background: white;
+            border-radius: 10px 10px 0 0;
+        }
+        .logo { 
+            font-size: 28px; 
+            font-weight: 700; 
+            letter-spacing: -0.5px;
+            text-transform: uppercase;
+        }
+        .logo span {
+            display: block;
+            font-size: 14px;
+            font-weight: 400;
+            opacity: 0.9;
+            margin-top: 5px;
+            text-transform: none;
+        }
+        .invoice-badge {
+            text-align: right;
+        }
+        .invoice-title {
+            font-size: 32px;
+            font-weight: 700;
+            margin-bottom: 8px;
+            letter-spacing: -1px;
+        }
+        .invoice-details {
+            font-size: 14px;
+            opacity: 0.95;
+        }
+        .invoice-number {
+            font-weight: 600;
+            color: #fbbf24;
+        }
+        
+        /* Contenu principal */
+        .main-content {
+            padding: 50px 40px 40px;
+        }
+        
+        /* Informations client */
+        .client-section {
+            margin-bottom: 40px;
+        }
+        .section-title {
+            font-size: 14px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: #64748b;
+            margin-bottom: 15px;
+            font-weight: 600;
+        }
+        .client-card {
+            background: #f8fafc;
+            border-left: 4px solid #2563eb;
+            padding: 20px;
+            border-radius: 8px;
+        }
+        .client-name {
+            font-size: 20px;
+            font-weight: 700;
+            color: #1e293b;
+            margin-bottom: 8px;
+        }
+        .client-id {
+            color: #64748b;
+            font-size: 14px;
+        }
+        
+        /* Tableau */
+        .table-container {
+            margin-bottom: 40px;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+        }
+        table { 
+            width: 100%; 
+            border-collapse: collapse; 
+        }
+        thead {
+            background: linear-gradient(135deg, #1e293b 0%, #334155 100%);
+            color: white;
+        }
+        th { 
+            text-align: left; 
+            padding: 16px 20px;
+            font-weight: 600;
+            font-size: 13px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        th:last-child {
+            text-align: right;
+        }
+        tbody tr {
+            border-bottom: 1px solid #e2e8f0;
+            transition: background 0.2s;
+        }
+        tbody tr:last-child {
+            border-bottom: none;
+        }
+        tbody tr:hover {
+            background: #f8fafc;
+        }
+        td { 
+            padding: 16px 20px;
+            font-size: 14px;
+        }
+        td:last-child {
+            text-align: right;
+            font-weight: 600;
+            color: #1e293b;
+        }
+        
+        /* Section totaux */
+        .totals-section {
+            display: flex;
+            justify-content: flex-end;
+            margin-bottom: 40px;
+        }
+        .totals-card {
+            width: 380px;
+            background: #f8fafc;
+            border-radius: 10px;
+            padding: 25px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
+        }
+        .total-row { 
+            display: flex; 
+            justify-content: space-between; 
+            padding: 12px 15px;
+            border-bottom: 1px solid #e2e8f0;
+            font-size: 14px;
+        }
+        .total-row:last-child {
+            border-bottom: none;
+        }
+        .grand-total {
+            background: linear-gradient(135deg, #2563eb 0%, #1e40af 100%);
+            color: white;
+            margin-top: 15px;
+            padding: 18px 15px;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: 700;
+        }
+        .balance-positive {
+            color: #dc2626;
+            font-weight: 700;
+        }
+        .balance-negative {
+            color: #16a34a;
+            font-weight: 700;
+        }
+        
+        /* Mode de paiement */
+        .payment-method {
+            text-align: right;
+            margin-top: 20px;
+            padding: 15px;
+            background: white;
+            border-radius: 8px;
+            border: 2px solid #e2e8f0;
+        }
+        .payment-label {
+            font-size: 13px;
+            color: #64748b;
+            margin-right: 10px;
+        }
+        .payment-value {
+            font-weight: 700;
+            color: #2563eb;
+            font-size: 15px;
+        }
+        
+        /* Statut payé */
+        .status-badge {
+            position: absolute;
+            top: 40px;
+            right: 40px;
+            background: #16a34a;
+            color: white;
+            font-weight: 700;
+            padding: 10px 25px;
+            border-radius: 50px;
+            font-size: 16px;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            box-shadow: 0 4px 15px rgba(22, 163, 74, 0.4);
+            transform: rotate(10deg);
+        }
+        
+        /* Pied de page */
+        .footer { 
+            background: #f8fafc;
+            padding: 30px 40px;
+            text-align: center; 
+            font-size: 13px; 
+            color: #64748b;
+            border-top: 3px solid #e2e8f0;
+        }
+        .footer-thanks {
+            font-size: 16px;
+            color: #2563eb;
+            font-weight: 600;
+            margin-bottom: 15px;
+        }
+        .footer-contact {
+            margin-bottom: 10px;
+        }
+        .footer-generated {
+            font-size: 12px;
+            color: #94a3b8;
+            margin-top: 15px;
+        }
+        
+        /* Utility */
+        .clearfix::after {
+            content: "";
+            display: table;
+            clear: both;
+        }
     </style>
 </head>
 <body>
     <div class="container">
         <div class="header">
-            <div class="logo">INSTITUT GABRIEL RITA</div>
-            <div class="invoice-info">
-                <h1>REÇU DE PAIEMENT</h1>
-                <p>N°: {{ invoice_number }}</p>
-                <p>Date: {{ date }}</p>
+            <div class="logo">
+                INSTITUT GABRIEL RITA
+                <span>Excellence & Formation</span>
+            </div>
+            <div class="invoice-badge">
+                <div class="invoice-title">REÇU</div>
+                <div class="invoice-details">
+                    N° <span class="invoice-number">{{ invoice_number }}</span><br>
+                    Date: {{ date }}
+                </div>
             </div>
         </div>
 
-        <div class="client-info">
-            <h3>Facturé à :</h3>
-            <p><strong>{{ student_name }}</strong></p>
-            <p>ID Étudiant: {{ student_id }}</p>
+        <div class="main-content">
+            <div class="client-section">
+                <div class="section-title">Bénéficiaire</div>
+                <div class="client-card">
+                    <div class="client-name">{{ student_name }}</div>
+                    <div class="client-id">ID Étudiant: {{ student_id }}</div>
+                </div>
+            </div>
+
+            <div class="table-container">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Description</th>
+                            <th>Montant</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for item in items %}
+                        <tr>
+                            <td>{{ item.description }}</td>
+                            <td>{{ "{:,.0f}".format(item.amount) }} FCFA</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="totals-section">
+                <div class="totals-card">
+                    <div class="total-row">
+                        <span>Total Dû</span>
+                        <span><strong>{{ "{:,.0f}".format(total) }}</strong> FCFA</span>
+                    </div>
+                    <div class="total-row">
+                        <span>Montant Payé</span>
+                        <span><strong>{{ "{:,.0f}".format(paid) }}</strong> FCFA</span>
+                    </div>
+                    <div class="total-row grand-total">
+                        <span>Reste à Payer</span>
+                        <span class="{{ 'balance-positive' if balance > 0 else 'balance-negative' }}">
+                            {{ "{:,.0f}".format(balance) }} FCFA
+                        </span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="payment-method">
+                <span class="payment-label">Mode de paiement:</span>
+                <span class="payment-value">{{ method }}</span>
+            </div>
         </div>
-
-        <table>
-            <thead>
-                <tr>
-                    <th>Description</th>
-                    <th style="text-align: right;">Montant</th>
-                </tr>
-            </thead>
-            <tbody>
-                {% for item in items %}
-                <tr>
-                    <td>{{ item.description }}</td>
-                    <td style="text-align: right;">{{ "{:,.0f}".format(item.amount) }} FCFA</td>
-                </tr>
-                {% endfor %}
-            </tbody>
-        </table>
-
-        <div class="total-section">
-            <div class="total-row">
-                <span>Total Dû:</span>
-                <span>{{ "{:,.0f}".format(total) }} FCFA</span>
-            </div>
-            <div class="total-row">
-                <span>Montant Payé:</span>
-                <span>{{ "{:,.0f}".format(paid) }} FCFA</span>
-            </div>
-            <div class="total-row grand-total">
-                <span>Reste à Payer:</span>
-                <span style="color: {{ '#dc2626' if balance > 0 else '#16a34a' }};">
-                    {{ "{:,.0f}".format(balance) }} FCFA
-                </span>
-            </div>
-            <br>
-            <div style="text-align: right;">
-                Mode de paiement: <strong>{{ method }}</strong>
-            </div>
-        </div>
-
-        <div style="clear: both;"></div>
 
         <div class="footer">
-            <p>Merci de votre confiance.</p>
-            <p>Institut Gabriel Rita - Tél: +225 XX XX XX XX - Email: contact@igr.ci</p>
-            <p>Généré le {{ generated_at }}</p>
+            <div class="footer-thanks">Merci de votre confiance</div>
+            <div class="footer-contact">
+                <strong>Institut Gabriel Rita</strong><br>
+                Tél: +225 XX XX XX XX • Email: contact@igr.ci
+            </div>
+            <div class="footer-generated">
+                Généré le {{ generated_at }}
+            </div>
         </div>
     </div>
 </body>

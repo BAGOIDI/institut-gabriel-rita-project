@@ -13,6 +13,7 @@ import { InvoiceModule } from './modules/invoices/invoices.module';
 import { GradeModule } from './modules/grades/grades.module';
 import { ClassModule } from './modules/classes/classes.module';
 import { AcademicYearModule } from './modules/academic-years/academic-years.module';
+import { TeacherSubjectClassModule } from './modules/teacher-subject-class/teacher-subject-class.module';
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { ConfigModule } from '@nestjs/config';
@@ -30,6 +31,7 @@ import { Payment } from './entities/payment.entity';
 import { Semester } from './entities/semester.entity';
 import { Specialty } from './entities/specialty.entity';
 import { Subject } from './entities/subject.entity';
+import { TeacherSubjectClass } from './entities/teacher-subject-class.entity';
 
 @Module({
   imports: [
@@ -47,6 +49,7 @@ import { Subject } from './entities/subject.entity';
     GradeModule,
     ClassModule,
     AcademicYearModule,
+    TeacherSubjectClassModule,
 
     ConfigModule.forRoot({ isGlobal: true }),
     TypeOrmModule.forRoot({
@@ -70,7 +73,8 @@ import { Subject } from './entities/subject.entity';
         Payment,
         Semester,
         Specialty,
-        Subject
+        Subject,
+        TeacherSubjectClass
       ],
       autoLoadEntities: true,
       // Désactivé après application des nouvelles relations

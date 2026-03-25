@@ -23,7 +23,7 @@ ChartJS.register(
   Filler
 );
 
-export default function RevenueChart() {
+export default function RevenueChart({ data: dynamicData, labels: dynamicLabels }) {
   const options = {
     responsive: true,
     plugins: {
@@ -37,11 +37,11 @@ export default function RevenueChart() {
   };
 
   const data = {
-    labels: ['Jan', 'Fév', 'Mar', 'Avr', 'Mai', 'Juin', 'Juil'],
+    labels: dynamicLabels || ['Jan', 'Fév', 'Mar', 'Avr', 'Mai', 'Juin', 'Juil'],
     datasets: [
       {
         label: 'Encaissements (FCFA)',
-        data: [1500000, 2300000, 1800000, 3200000, 2100000, 2800000, 3500000],
+        data: dynamicData || [0, 0, 0, 0, 0, 0, 0],
         borderColor: 'rgb(37, 99, 235)',
         backgroundColor: 'rgba(37, 99, 235, 0.1)',
         fill: true,

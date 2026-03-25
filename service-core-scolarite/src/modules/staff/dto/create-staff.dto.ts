@@ -9,8 +9,9 @@ export class CreateStaffDto {
   @IsString()
   matricule?: string;
 
+  @IsOptional()
   @IsString()
-  firstName: string;
+  firstName?: string;
 
   @IsString()
   lastName: string;
@@ -39,8 +40,9 @@ export class CreateStaffDto {
   @IsString()
   idCardNumber?: string;
 
+  @IsOptional()
   @IsString()
-  phoneNumber: string;
+  phoneNumber?: string;
 
   @IsOptional()
   @IsEmail()

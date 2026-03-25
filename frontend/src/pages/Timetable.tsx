@@ -16,11 +16,10 @@ import {
   X,
   Save,
   Loader2,
-  RefreshCw,
-  Printer
+  RefreshCw
 } from 'lucide-react';
 import api from '../services/api.service';
-import SchedulePrintModal from '../components/SchedulePrintModal';
+import ScheduleExportModal from '../components/ScheduleExportModal';
 import reportService from '../services/report.service';
 import { useTheme } from '../contexts/ThemeContext';
 import { SystemOptionsService, SystemOption } from '../services/system-options.service';
@@ -66,7 +65,8 @@ export const Timetable = () => {
   const [showModal, setShowModal] = useState(false);
   const [selectedSlot, setSelectedSlot] = useState<TimeSlot | null>(null);
   const [draggedSlot, setDraggedSlot] = useState<TimeSlot | null>(null);
-  const [showPrintModal, setShowPrintModal] = useState(false);
+  const [dragOverCell, setDragOverCell] = useState<{ day: number, time: string } | null>(null);
+  const [showExportModal, setShowExportModal] = useState(false);
   const [confirmOpen, setConfirmOpen] = useState(false);
   const [targetDeleteId, setTargetDeleteId] = useState<string | null>(null);
   const [deleteLoading, setDeleteLoading] = useState(false);
@@ -85,6 +85,11 @@ export const Timetable = () => {
   const [timeSlotOptions, setTimeSlotOptions] = useState<SystemOption[]>([]);
   const [subjects, setSubjects] = useState<any[]>([]);
   const [specialties, setSpecialties] = useState<any[]>([]);
+
+  const [dialogClasses, setDialogClasses] = useState<any[]>([]);
+  const [dialogSubjects, setDialogSubjects] = useState<any[]>([]);
+  const [dialogTeachers, setDialogTeachers] = useState<any[]>([]);
+  const [dialogLoading, setDialogLoading] = useState(false);
 
   const [selectedSpecialties, setSelectedSpecialties] = useState<string[]>(
     () => {
@@ -119,49 +124,6 @@ export const Timetable = () => {
   });
 
   // 2. Tous les useMemo après les states
-  const filteredClasses = useMemo(() => {
-    let result = classes;
-    if (formData.subjectId) {
-      const subject = subjects.find(s => String(s.id) === formData.subjectId);
-      if (subject?.class) {
-        result = result.filter(c => String(c.id) === String(subject.class.id));
-      }
-    }
-    if (formData.staffId) {
-      const teacherSubjects = subjects.filter(s => s.teacher && String(s.teacher.id) === formData.staffId);
-      const classIds = new Set(teacherSubjects.map(s => s.class ? String(s.class.id) : null).filter(Boolean));
-      result = result.filter(c => classIds.has(String(c.id)));
-    }
-    return result;
-  }, [classes, subjects, formData.subjectId, formData.staffId]);
-
-  const filteredSubjects = useMemo(() => {
-    let result = subjects;
-    if (formData.classId) {
-      result = result.filter(s => s.class && String(s.class.id) === formData.classId);
-    }
-    if (formData.staffId) {
-      result = result.filter(s => s.teacher && String(s.teacher.id) === formData.staffId);
-    }
-    return result;
-  }, [subjects, formData.classId, formData.staffId]);
-
-  const filteredTeachers = useMemo(() => {
-    let result = teachers;
-    if (formData.classId) {
-      const classSubjects = subjects.filter(s => s.class && String(s.class.id) === formData.classId);
-      const teacherIds = new Set(classSubjects.map(s => s.teacher ? String(s.teacher.id) : null).filter(Boolean));
-      result = result.filter(t => teacherIds.has(String(t.id)));
-    }
-    if (formData.subjectId) {
-      const subject = subjects.find(s => String(s.id) === formData.subjectId);
-      if (subject?.teacher) {
-        result = result.filter(t => String(t.id) === String(subject.teacher.id));
-      }
-    }
-    return result;
-  }, [teachers, subjects, formData.classId, formData.subjectId]);
-
   const LOCAL_TIME_SLOTS = useMemo(() => {
     const allSlots = [
       { type: 'Cours', value: '08:00', end: '09:50', labelFr: '08:00 - 09:50', labelEn: '08:00 - 09:50' },
@@ -223,7 +185,7 @@ export const Timetable = () => {
         if (sameDay && overlaps) {
           if (staffId && String(slot.staffId) === staffId) return true;
           if (classId && String(slot.classId) === classId) return true;
-          if (roomName && slot.roomName === roomName) return true;
+          if (roomName && roomName !== 'TBD' && slot.roomName === roomName) return true;
         }
         return false;
       });
@@ -249,6 +211,66 @@ export const Timetable = () => {
   useEffect(() => {
     localStorage.setItem('timetable_selectedSynthesisClasses', JSON.stringify(selectedSynthesisClasses));
   }, [selectedSynthesisClasses]);
+
+  // Chargement dynamique des options du dialogue
+  useEffect(() => {
+    const fetchDialogOptions = async () => {
+      if (!showModal) return;
+      
+      setDialogLoading(true);
+      try {
+        const { classId, staffId, subjectId } = formData;
+        
+        // S'assurer que les résultats sont des tableaux
+        const toArr = (v: any) => {
+          if (!v) return [];
+          if (Array.isArray(v)) return v;
+          if (Array.isArray(v.items)) return v.items;
+          return [];
+        };
+
+        // Toujours charger toutes les classes (sauf si on veut vraiment restreindre)
+        setDialogClasses(classes);
+
+        // Si une classe est sélectionnée, on restreint les matières et enseignants
+        if (classId) {
+          const subjectsForClass = toArr(await CoreService.getSubjectsByClassV2(classId));
+          const teachersForClass = toArr(await CoreService.getTeachersByClassV2(classId));
+          
+          let finalSubjects = subjectsForClass;
+          let finalTeachers = teachersForClass;
+
+          // Si une matière est aussi sélectionnée, on filtre les enseignants qui l'enseignent
+          if (subjectId) {
+            // On peut appeler l'endpoint générique avec les 2 filtres
+            const mappings = toArr(await CoreService.getAll('teacher-subject-class', { classId, subjectId }));
+            const teacherIds = mappings.map((m: any) => m.staffId);
+            finalTeachers = teachersForClass.filter((t: any) => teacherIds.includes(t.id));
+          }
+
+          // Si un enseignant est aussi sélectionné, on filtre les matières qu'il enseigne dans cette classe
+          if (staffId) {
+            const mappings = toArr(await CoreService.getAll('teacher-subject-class', { classId, staffId }));
+            const subjectIds = mappings.map((m: any) => m.subjectId);
+            finalSubjects = subjectsForClass.filter((s: any) => subjectIds.includes(s.id));
+          }
+
+          setDialogSubjects(finalSubjects);
+          setDialogTeachers(finalTeachers);
+        } else {
+          // Si aucune classe n'est sélectionnée, on montre tout (ou on pourrait forcer la sélection d'une classe d'abord)
+          setDialogSubjects(subjects);
+          setDialogTeachers(teachers);
+        }
+      } catch (error) {
+        console.error('Erreur lors du chargement des options filtrées:', error);
+      } finally {
+        setDialogLoading(false);
+      }
+    };
+
+    fetchDialogOptions();
+  }, [showModal, formData.classId, formData.staffId, formData.subjectId, classes, subjects, teachers]);
 
   useEffect(() => {
     localStorage.setItem('timetable_viewPeriod', viewPeriod);
@@ -654,9 +676,11 @@ export const Timetable = () => {
       setShowModal(false);
       setSelectedSlot(null);
       refreshTimetableData();
-    } catch (error) {
+      notify.success(selectedSlot ? 'Créneau mis à jour' : 'Créneau enregistré');
+    } catch (error: any) {
       console.error('Erreur lors de l\'enregistrement:', error);
-      notify.error("Erreur lors de l'enregistrement");
+      const message = error.response?.data?.message || "Erreur lors de l'enregistrement";
+      notify.error(message);
     }
   };
 
@@ -686,26 +710,35 @@ export const Timetable = () => {
   const handleDrop = async (dayOfWeek: number, time: string) => {
     if (!draggedSlot) return;
 
+    if (dayOfWeek > 6) {
+      notify.error('Les cours ne peuvent pas être programmés le dimanche');
+      return;
+    }
+
     try {
-      const dayIndex = Number(dayOfWeek) || draggedSlot.dayOfWeek || 1;
       const localSlot = LOCAL_TIME_SLOTS.find(s => s.value === time);
       if (localSlot && localSlot.type !== 'Cours') {
         notify.warning('Impossible de déplacer vers une pause');
         return;
       }
       const updateData: any = {
-        dayOfWeek: isNaN(dayIndex) || dayIndex <= 0 ? undefined : dayIndex,
+        dayOfWeek: dayOfWeek,
         startTime: time,
         endTime: localSlot?.end || draggedSlot.endTime,
-        roomName: draggedSlot.roomName,
+        subjectId: Number(draggedSlot.subjectId),
+        staffId: Number(draggedSlot.staffId),
+        classId: Number(draggedSlot.classId),
+        roomName: draggedSlot.roomName || 'TBD',
       };
       await api.put(`/api/planning/schedules/${draggedSlot.id}`, updateData);
       refreshTimetableData();
-    } catch (error) {
+    } catch (error: any) {
       console.error('Erreur lors du déplacement:', error);
-      notify.error('Erreur lors du déplacement');
+      const msg = error.response?.data?.message || 'Erreur lors du déplacement';
+      notify.error(msg);
     } finally {
       setDraggedSlot(null);
+      setDragOverCell(null);
     }
   };
 
@@ -715,8 +748,8 @@ export const Timetable = () => {
     notify.info('Ouverture de la fenêtre d’export…');
   };
 
-  const handlePrintSchedule = () => {
-    // Préparer les données pour l'impression
+  const handleExportSchedule = () => {
+    // Préparer les données pour l'exportation
     const selectedLabel =
       viewMode === 'class'
         ? (classes.find(c => String(c.id) === String(selectedFilter))?.name || selectedFilter)
@@ -735,8 +768,8 @@ export const Timetable = () => {
       dateGenerated: new Date().toISOString(),
     };
     
-    // Ouvrir le modal d'impression
-    setShowPrintModal(true);
+    // Ouvrir le modal d'exportation
+    setShowExportModal(true);
   };
 
   const visibleSubjects = useMemo(() => {
@@ -828,36 +861,6 @@ export const Timetable = () => {
     setShowModal(true);
   };
 
-  const handleDirectPrint = async () => {
-    try {
-      setLoading(true);
-      let blob: Blob;
-      if (viewMode === 'class' && selectedFilter) {
-        const className = classes.find(c => String(c.id) === String(selectedFilter))?.name || selectedFilter;
-        blob = await reportService.getScheduleBlob(className, 'pdf');
-      } else if (viewMode === 'teacher' && selectedFilter) {
-        const teacher = teachers.find(t => String(t.id) === String(selectedFilter));
-        const teacherName = teacher ? `${teacher.firstName} ${teacher.lastName}` : selectedFilter;
-        blob = await reportService.getTeacherScheduleBlob(teacherName, 'pdf');
-      } else if (viewMode === 'synthesis_class') {
-        const specialtyIds = selectedSpecialties.length > 0 ? selectedSpecialties : undefined;
-        blob = await reportService.getSynthesisBlob(undefined, undefined, 'pdf', specialtyIds);
-      } else {
-        notify.warning("Sélectionnez une classe ou un enseignant pour l'impression directe.");
-        setLoading(false);
-        return;
-      }
-
-      const url = window.URL.createObjectURL(blob);
-      window.open(url, '_blank');
-    } catch (error) {
-      console.error('Erreur lors de l\'impression:', error);
-      notify.error("Erreur lors de la génération du document d'impression");
-    } finally {
-      setLoading(false);
-    }
-  };
-
   return (
     <div className="w-full">
       {/* Header */}
@@ -872,19 +875,10 @@ export const Timetable = () => {
         <div className="flex gap-2">
           <Tooltip text="Exporter">
             <button 
-              onClick={handlePrintSchedule}
+              onClick={handleExportSchedule}
               className="flex items-center justify-center w-10 h-10 bg-primary hover:bg-primary/90 text-white rounded-md transition-colors border border-primary/30 shadow-sm shadow-blue-500/10"
             >
               <Download className="w-4 h-4" />
-            </button>
-          </Tooltip>
-          <Tooltip text="Imprimer">
-            <button 
-              onClick={handleDirectPrint}
-              disabled={loading}
-              className="flex items-center justify-center w-10 h-10 bg-gray-200 dark:bg-slate-700 hover:bg-gray-300 dark:hover:bg-slate-600 text-gray-800 dark:text-white rounded-md transition-colors border border-gray-300 dark:border-slate-600 shadow-sm"
-            >
-              {loading ? <Loader2 className="w-4 h-4 animate-spin" /> : <Printer className="w-4 h-4" />}
             </button>
           </Tooltip>
           <Tooltip text="Nouveau créneau">
@@ -1390,20 +1384,34 @@ export const Timetable = () => {
                         const q2 = calendarView === 'day' ? 0.35 : 0.25;
                         const fillB = calendarView === 'day' ? 0.18 : 0.10;
                         const pauseBg = `repeating-linear-gradient(135deg, rgba(163,230,53,${q1}) 0 10px, rgba(163,230,53,${q2}) 10px 20px)`;
+                        const isDraggingOver = dragOverCell?.day === dayOfWeek && dragOverCell?.time === slot.value;
+                        
                         return (
                           <div
                             key={`${dayOfWeek}-${slot.value}`}
-                            className={`transition-colors ${isPause ? 'cursor-not-allowed' : 'cursor-pointer hover:bg-blue-50/30 dark:hover:bg-blue-900/10'} ${isPause ? '' : 'border-b border-gray-100 dark:border-slate-700/50'}`}
+                            className={`transition-all duration-200 ${isPause ? 'cursor-not-allowed' : 'cursor-pointer'} ${isPause ? '' : 'border-b border-gray-100 dark:border-slate-700/50'}`}
                             style={{ 
                               height: isPause ? 30 : 60, 
                               padding: 0, 
                               margin: 0,
                               backgroundImage: isPause ? pauseBg : undefined,
-                              backgroundColor: isPause ? `rgba(163,230,53,${fillB})` : undefined
+                              backgroundColor: isPause 
+                                ? `rgba(163,230,53,${fillB})` 
+                                : isDraggingOver 
+                                  ? 'rgba(59, 130, 246, 0.2)' 
+                                  : undefined,
+                              boxShadow: isDraggingOver ? 'inset 0 0 0 2px rgba(59, 130, 246, 0.5)' : undefined
                             }}
                             onDragOver={(e) => {
                               if (isPause) return;
                               e.preventDefault();
+                              if (!isDraggingOver) {
+                                setDragOverCell({ day: dayOfWeek, time: slot.value });
+                              }
+                            }}
+                            onDragLeave={() => {
+                              if (isPause) return;
+                              setDragOverCell(null);
                             }}
                             onDrop={() => {
                               if (isPause) return;
@@ -1590,9 +1598,10 @@ export const Timetable = () => {
                     value={formData.subjectId}
                     onChange={(e) => setFormData({...formData, subjectId: e.target.value})}
                     className="w-full px-3 py-2 border border-gray-200 dark:border-slate-600 rounded-md bg-gray-50 dark:bg-slate-700 text-sm dark:text-white focus:ring-2 focus:ring-blue-500"
+                    disabled={dialogLoading}
                   >
                     <option value="">Sélectionner...</option>
-                    {filteredSubjects.map(s => (
+                    {dialogSubjects.map(s => (
                       <option key={s.id} value={String(s.id)}>{s.name}</option>
                     ))}
                   </select>
@@ -1644,12 +1653,10 @@ export const Timetable = () => {
                       });
                     }}
                     className="w-full px-3 py-2 border border-gray-200 dark:border-slate-600 rounded-md bg-gray-50 dark:bg-slate-700 text-sm dark:text-white focus:ring-2 focus:ring-blue-500"
+                    disabled={dialogLoading}
                   >
                     <option value="">Sélectionner un enseignant...</option>
-                    {filteredTeachers.length === 0 && (
-                      <option value="" disabled>Chargement des enseignants...</option>
-                    )}
-                    {filteredTeachers.map((teacher) => (
+                    {dialogTeachers.map((teacher) => (
                       <option key={teacher.id} value={Number(teacher.id)}>
                         {teacher.firstName} {teacher.lastName} {teacher.specialty ? `- ${teacher.specialty}` : ''}
                       </option>
@@ -1664,11 +1671,28 @@ export const Timetable = () => {
                     value={formData.classId || ''}
                     onChange={(e) => setFormData({...formData, classId: e.target.value})}
                     className="w-full px-3 py-2 border border-gray-200 dark:border-slate-600 rounded-md bg-gray-50 dark:bg-slate-700 text-sm dark:text-white focus:ring-2 focus:ring-blue-500"
+                    disabled={dialogLoading}
                   >
                     <option value="">Sélectionner une classe...</option>
-                    {filteredClasses.map((c) => (
+                    {dialogClasses.map((c) => (
                       <option key={c.id || c.name} value={String(c.id)}>
                         {c.name}
+                      </option>
+                    ))}
+                  </select>
+                </div>
+
+                <div>
+                  <label className="block text-xs font-medium text-gray-700 dark:text-gray-300 mb-1">Salle</label>
+                  <select
+                    value={formData.roomName || ''}
+                    onChange={(e) => setFormData({...formData, roomName: e.target.value})}
+                    className="w-full px-3 py-2 border border-gray-200 dark:border-slate-600 rounded-md bg-gray-50 dark:bg-slate-700 text-sm dark:text-white focus:ring-2 focus:ring-blue-500"
+                  >
+                    <option value="TBD">À définir (TBD)</option>
+                    {rooms.map((room) => (
+                      <option key={room.id} value={room.value}>
+                        {getLabel(room)}
                       </option>
                     ))}
                   </select>
@@ -1707,8 +1731,8 @@ export const Timetable = () => {
         </div>
       )}
       
-      {/* Modal d'impression */}
-      <SchedulePrintModal
+      {/* Modal d'exportation */}
+      <ScheduleExportModal
         scheduleData={{
           title: `Emploi du temps - ${
             viewMode === 'class'
@@ -1726,8 +1750,8 @@ export const Timetable = () => {
           filter: selectedFilter,
           dateGenerated: new Date().toISOString(),
         }}
-        isOpen={showPrintModal}
-        onClose={() => setShowPrintModal(false)}
+        isOpen={showExportModal}
+        onClose={() => setShowExportModal(false)}
         defaultPeriod={viewPeriod}
       />
       <ConfirmDialog

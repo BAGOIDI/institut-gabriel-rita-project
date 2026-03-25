@@ -3,7 +3,7 @@ import { X, Download, FileText, FileSpreadsheet, File, Loader2 } from 'lucide-re
 import reportService, { ReportFormat, ReportPeriod } from '../services/report.service';
 import SearchableSelect from './SearchableSelect';
 
-interface SchedulePrintModalProps {
+interface ScheduleExportModalProps {
   scheduleData: {
     title: string;
     period: string;
@@ -18,12 +18,12 @@ interface SchedulePrintModalProps {
 }
 
 const FORMAT_OPTIONS: { value: ReportFormat; label: string; icon: React.ReactNode; color: string; desc: string }[] = [
-  { value: 'pdf',  label: 'PDF',       icon: <File className="w-5 h-5" />,            color: '#DC2626', desc: 'Document imprimable, idéal pour affichage' },
+  { value: 'pdf',  label: 'PDF',       icon: <File className="w-5 h-5" />,            color: '#DC2626', desc: 'Document exportable, idéal pour affichage' },
   { value: 'docx', label: 'Word',      icon: <FileText className="w-5 h-5" />,        color: '#2563EB', desc: 'Document modifiable Microsoft Word' },
   { value: 'xlsx', label: 'Excel',     icon: <FileSpreadsheet className="w-5 h-5" />, color: '#059669', desc: 'Feuille de calcul Microsoft Excel' },
 ];
 
-const SchedulePrintModal: React.FC<SchedulePrintModalProps> = ({ scheduleData, isOpen, onClose, defaultPeriod = 'all' }) => {
+const ScheduleExportModal: React.FC<ScheduleExportModalProps> = ({ scheduleData, isOpen, onClose, defaultPeriod = 'all' }) => {
   const [selectedFormat, setSelectedFormat] = useState<ReportFormat>('pdf');
   const [selectedPeriod, setSelectedPeriod] = useState<ReportPeriod>(defaultPeriod);
   const [isLoading, setIsLoading] = useState(false);
@@ -336,4 +336,4 @@ const SchedulePrintModal: React.FC<SchedulePrintModalProps> = ({ scheduleData, i
   );
 };
 
-export default SchedulePrintModal;
+export default ScheduleExportModal;

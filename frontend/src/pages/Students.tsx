@@ -27,6 +27,7 @@ import { QRCodeSVG } from 'qrcode.react';
 import * as XLSX from 'xlsx';
 import api from '../services/api.service';
 import { CoreService } from '../services/core.service';
+import reportService from '../services/report.service';
 import { useSystemOptions } from '../hooks/useSystemOptions';
 import { useTheme } from '../contexts/ThemeContext';
 import { translations } from '../lib/translations';
@@ -47,7 +48,7 @@ interface Student {
   qrCode: string;
   dateOfBirth: string;
   gender: string; // M ou F
-  photo: string;
+  photo?: string;
 }
 
 export const Students = () => {
@@ -225,6 +226,26 @@ export const Students = () => {
       }
     };
     reader.readAsBinaryString(file);
+  };
+
+  const handleDownloadCard = async () => {
+    if (!selectedStudent) return;
+    
+    try {
+      notify.info("Génération de la carte en cours...");
+      const blob = await reportService.getStudentCardBlob(selectedStudent.matricule);
+      const url = window.URL.createObjectURL(blob);
+      const link = document.createElement('a');
+      link.href = url;
+      link.download = `Carte_Etudiant_${selectedStudent.matricule}.pdf`;
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+      window.URL.revokeObjectURL(url);
+    } catch (error) {
+      console.error("Erreur lors de la génération de la carte:", error);
+      notify.error("Erreur lors de la génération de la carte d'étudiant");
+    }
   };
 
   const safeStudents = Array.isArray(students) ? students : [];
@@ -744,7 +765,10 @@ export const Students = () => {
                 </div>
               </div>
 
-              <button className="w-full flex items-center justify-center gap-2 bg-gray-900 text-white py-3 rounded-xl hover:bg-black transition-colors">
+              <button 
+                onClick={handleDownloadCard}
+                className="w-full flex items-center justify-center gap-2 bg-gray-900 text-white py-3 rounded-xl hover:bg-black transition-colors"
+              >
                 <Download className="w-4 h-4" />
                 {t.downloadCard}
               </button>
@@ -945,7 +969,6 @@ const StudentForm = ({ onClose, onSave, translations, initialStudent, classesLis
           <div className="space-y-1">
             <label className="text-xs font-bold text-gray-500 uppercase">Prénom</label>
             <input 
-              required
               className="w-full px-4 py-2 bg-gray-50 dark:bg-slate-700 border-none rounded-lg dark:text-white"
               value={formData.firstName}
               onChange={e => setFormData({...formData, firstName: e.target.value})}
@@ -1011,7 +1034,6 @@ const StudentForm = ({ onClose, onSave, translations, initialStudent, classesLis
           <div className="space-y-1">
             <label className="text-xs font-bold text-gray-500 uppercase">{translations.parentPhone}</label>
             <input 
-              required
               className="w-full px-4 py-2 bg-gray-50 dark:bg-slate-700 border-none rounded-lg dark:text-white"
               value={formData.parentPhoneNumber}
               onChange={e => setFormData({...formData, parentPhoneNumber: e.target.value})}

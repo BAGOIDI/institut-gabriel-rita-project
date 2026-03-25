@@ -3,8 +3,8 @@ import { Semester } from './semester.entity';
 
 @Entity({ name: 'academic_years' })
 export class AcademicYear {
-  @PrimaryGeneratedColumn('uuid')
-  id: string;
+  @PrimaryGeneratedColumn()
+  id: number;
 
   @Column()
   name: string;

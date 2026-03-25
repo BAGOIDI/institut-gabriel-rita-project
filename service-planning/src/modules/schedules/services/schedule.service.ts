@@ -63,7 +63,7 @@ export class ScheduleService implements OnModuleInit {
 
     // 3. Room conflict
     const roomName = args.roomName?.trim();
-    if (roomName) {
+    if (roomName && roomName !== 'TBD') {
       const roomSchedules = await this.repo.findByRoomAndDay(roomName, args.dayOfWeek);
       for (const sched of roomSchedules) {
         if (excludeId && sched.id === excludeId) continue;
@@ -130,13 +130,16 @@ export class ScheduleService implements OnModuleInit {
     return await this.repo.save(schedule);
   }
 
-  async findAll(filters: { classId?: string, roomId?: string }) {
+  async findAll(filters: { classId?: string; roomId?: string; staffId?: string }) {
     const where: any = {};
     if (filters.classId) {
-      where.classId = filters.classId;
+      where.classId = Number(filters.classId);
     }
     if (filters.roomId) {
       where.roomName = filters.roomId;
+    }
+    if (filters.staffId) {
+      where.staffId = Number(filters.staffId);
     }
     return await this.repo.find({ where });
   }

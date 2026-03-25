@@ -1,0 +1,66 @@
+{% extends "base_report.html" %}
+
+{% block title %}Reçu de Paiement - {{ payment.reference }}{% endblock %}
+
+{% block content %}
+<div class="main-title-band" style="background: linear-gradient(135deg, #2563eb 0%, #1e40af 100%); color: white; padding: 20px; border-radius: 10px; text-align: center; margin-bottom: 25px; box-shadow: 0 4px 15px rgba(37, 99, 235, 0.3);">
+    REÇU DE PAIEMENT SCOLAIRE
+</div>
+
+<div class="receipt-container" style="border: 2px solid #e2e8f0; padding: 30px; border-radius: 12px; background: white; margin-top: 10px; box-shadow: 0 10px 40px rgba(0, 0, 0, 0.08);">
+    <div style="display: block; width: 100%; margin-bottom: 30px; background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%); padding: 20px; border-radius: 10px; border-left: 5px solid #2563eb;">
+        <div style="display: inline-block; width: 60%; vertical-align: top;">
+            <h2 style="margin: 0; color: #1e293b; font-size: 20px; font-weight: 800; text-transform: uppercase;">{{ student.firstName }} {{ student.lastName }}</h2>
+            <p style="margin: 8px 0 0 0; font-size: 12px; font-weight: 700; color: #64748b;">⊚ Matricule : <strong style="color: #2563eb;">{{ student.matricule }}</strong></p>
+            <p style="margin: 4px 0 0 0; font-size: 12px; font-weight: 700; color: #64748b;">◈ Classe : {{ student.className }}</p>
+        </div>
+        <div style="display: inline-block; width: 38%; vertical-align: top; text-align: right; background: white; padding: 15px; border-radius: 8px; box-shadow: 0 2px 10px rgba(0,0,0,0.05);">
+            <h3 style="margin: 0; color: #dc2626; font-size: 18px; font-weight: 900; letter-spacing: -0.5px;">N° {{ payment.reference }}</h3>
+            <p style="margin: 8px 0 0 0; font-size: 11px; font-weight: 700; color: #64748b;">📅 Date : {{ payment.paymentDate }}</p>
+        </div>
+    </div>
+
+    <table class="styled-table" style="margin-bottom: 30px; border-radius: 8px; overflow: hidden; box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);">
+        <thead style="background: linear-gradient(135deg, #1e293b 0%, #334155 100%);">
+            <tr>
+                <th style="width: 70%; color: white; text-transform: uppercase; letter-spacing: 1px;"><div class="slanted-header"><span style="color: white;">Désignation des frais</span></div></th>
+                <th style="width: 30%; color: white; text-transform: uppercase; letter-spacing: 1px;"><div class="slanted-header orange"><span style="color: white;">Montant (FCFA)</span></div></th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr style="background: #f8fafc;">
+                <td style="padding: 25px 15px;">
+                    <strong style="font-size: 13px; color: #1e293b;">✓ Versement Scolarité</strong><br>
+                    <small style="color: #64748b; font-size: 11px;">{{ payment.notes or 'Paiement des frais de scolarité' }}</small>
+                </td>
+                <td class="text-right font-mono" style="font-size: 16px; font-weight: 900; color: #2563eb; padding: 25px 15px; background: white;">
+                    {{ "{:,.0f}".format(payment.amount) }} <small style="font-size: 12px; color: #64748b;">FCFA</small>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+
+    <div style="display: block; width: 100%; text-align: right; margin-bottom: 40px;">
+        <div class="kpi-card-premium" style="display: inline-block; padding: 20px 40px; text-align: right; background: linear-gradient(135deg, #2563eb 0%, #1e40af 100%); border-radius: 12px; box-shadow: 0 8px 25px rgba(37, 99, 235, 0.35);">
+            <div style="font-size: 10px; text-transform: uppercase; font-weight: 700; margin-bottom: 8px; color: #bfdbfe;">Total Versé</div>
+            <div style="font-size: 26px; font-weight: 900; color: white; letter-spacing: -1px;">{{ "{:,.0f}".format(payment.amount_total) }} <small style="font-size: 12px; opacity: 0.9;">FCFA</small></div>
+        </div>
+    </div>
+
+    <div style="display: block; width: 100%; margin-top: 25px; padding: 25px; background: #f8fafc; border-radius: 10px; border: 2px dashed #cbd5e1;">
+        <div style="display: inline-block; width: 48%; text-align: center; vertical-align: top;">
+            <div style="font-size: 10px; font-weight: 800; text-decoration: underline; margin-bottom: 70px; color: #475569;">SIGNATURE DE L'ÉLÈVE / PARENT</div>
+            <div style="font-size: 9px; color: #94a3b8;">(Précédé de la mention "Lu et approuvé")</div>
+        </div>
+        <div style="display: inline-block; width: 48%; text-align: center; vertical-align: top; margin-left: 3%;">
+            <div style="font-size: 10px; font-weight: 800; text-decoration: underline; margin-bottom: 70px; color: #475569;">L'ÉCONOME / CACHET</div>
+            <div style="font-size: 9px; color: #94a3b8;">{{ current_date }}</div>
+        </div>
+    </div>
+
+    <div style="margin-top: 50px; padding: 20px; background: linear-gradient(135deg, #fef3c7 0%, #fde68a 100%); border-left: 5px solid #f59e0b; border-radius: 8px; font-size: 9px; color: #78350f;">
+        <div style="font-weight: 800; color: #92400e; margin-bottom: 8px; text-transform: uppercase;">⚠ NB: Important</div>
+        Aucun remboursement ne sera effectué après versement. Gardez précieusement ce reçu.
+    </div>
+</div>
+{% endblock %}

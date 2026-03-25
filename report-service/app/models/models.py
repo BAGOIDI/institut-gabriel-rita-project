@@ -74,7 +74,7 @@ class User(db.Model):
     is_active = db.Column(db.Boolean, default=True)
     
     # Relationships
-    student = db.relationship('Student', backref='user', uselist=False, lazy=True)
+    # student = db.relationship('Student', backref='user', uselist=False, lazy=True)
     staff = db.relationship('Staff', backref='user', uselist=False, lazy=True)
 
 
@@ -112,7 +112,7 @@ class Specialty(db.Model):
     name = db.Column(db.String, nullable=False)
     code = db.Column(db.String, nullable=False)
     description = db.Column(db.Text)
-    track_id = db.Column(db.Integer, db.ForeignKey('tracks.id'))
+    # track_id = db.Column(db.Integer, db.ForeignKey('tracks.id'))
 
 
 class Track(db.Model):
@@ -124,7 +124,7 @@ class Track(db.Model):
     description = db.Column(db.Text)
     
     # Relationships
-    specialties = db.relationship('Specialty', backref='track', lazy=True)
+    # specialties = db.relationship('Specialty', backref='track', lazy=True)
 
 
 class Class(db.Model):
@@ -172,12 +172,14 @@ class Staff(db.Model):
     
     id = db.Column(db.Integer, primary_key=True)
     user_id = db.Column(db.Integer, db.ForeignKey('users.id'))
-    first_name = db.Column(db.String, nullable=False)
-    last_name = db.Column(db.String, nullable=False)
-    biometric_id = db.Column(db.String, unique=True)
+    matricule = db.Column(db.String(50), unique=True)
+    first_name = db.Column(db.String(100))
+    last_name = db.Column(db.String(100), nullable=False)
+    phone_number = db.Column(db.String(50))
+    email = db.Column(db.String(100))
+    biometric_id = db.Column(db.String(50), unique=True)
     hourly_rate = db.Column(db.Numeric(10, 2))
-    phone_number = db.Column(db.String)
-    email = db.Column(db.String)
+    photo_url = db.Column('photo', db.Text)
     
     # Relationships
     attendances = db.relationship('Attendance', backref='staff_member', lazy=True)
@@ -199,22 +201,21 @@ class Student(db.Model):
     __tablename__ = 'students'
     
     id = db.Column(db.Integer, primary_key=True)
-    user_id = db.Column(db.Integer, db.ForeignKey('users.id'))
-    matricule = db.Column(db.String, unique=True, nullable=False)
-    first_name = db.Column(db.String, nullable=False)
-    last_name = db.Column(db.String, nullable=False)
-    class_id = db.Column(db.Integer, db.ForeignKey('classes.id'))
+    matricule = db.Column(db.String(50), unique=True)
+    first_name = db.Column(db.String(100))
+    last_name = db.Column(db.String(100))
+    gender = db.Column(db.String(20))
     date_of_birth = db.Column(db.Date)
-    gender = db.Column(db.String(1))
-    phone = db.Column(db.String)
-    parent_phone = db.Column(db.String)
-    balance = db.Column(db.Numeric(10, 2), default=0)
-    photo_url = db.Column(db.Text)
-    is_active = db.Column(db.Boolean, default=True)
+    place_of_birth = db.Column(db.String(100))
+    phone_number = db.Column(db.String(50))
+    email = db.Column(db.String(100))
+    class_id = db.Column(db.Integer, db.ForeignKey('classes.id'))
+    parent_phone_number = db.Column(db.String(20))
+    special_status = db.Column(db.String(100))
+    photo_url = db.Column('photo', db.Text)
     
     # Relationships
-    invoices = db.relationship('Invoice', backref='student', lazy=True)
-    payments = db.relationship('Payment', backref='student', lazy=True)
+    student_fees = db.relationship('StudentFee', backref='student', lazy=True)
     grades = db.relationship('Grade', backref='student', lazy=True)
     medical_visits = db.relationship('MedicalVisit', backref='student', lazy=True)
     housing_allocations = db.relationship('HousingAllocation', backref='student', lazy=True)
@@ -225,30 +226,33 @@ class Student(db.Model):
     teacher_evaluations = db.relationship('TeacherEvaluation', backref='student', lazy=True)
 
 
-class Invoice(db.Model):
+class StudentFee(db.Model):
     __tablename__ = 'finance_student_fees'
     
     id = db.Column(db.Integer, primary_key=True)
     student_id = db.Column(db.Integer, db.ForeignKey('students.id'))
-    title = db.Column(db.String)
-    amount = db.Column(db.Numeric(10, 2), nullable=False)
-    due_date = db.Column(db.Date)
-    status = db.Column(db.String, default='UNPAID')
+    total_due = db.Column(db.Numeric(10, 2), nullable=False)
+    fee_type_id = db.Column(db.Integer)
+    discount_amount = db.Column(db.Numeric(10, 2), default=0)
+    is_fully_paid = db.Column(db.Boolean, default=False)
+    created_at = db.Column(db.DateTime, default=datetime.utcnow)
     
     # Relationships
-    payments = db.relationship('Payment', backref='invoice', lazy=True)
+    payments = db.relationship('Payment', backref='student_fee', lazy=True)
 
 
 class Payment(db.Model):
     __tablename__ = 'finance_payments'
     
     id = db.Column(db.Integer, primary_key=True)
-    student_id = db.Column(db.Integer, db.ForeignKey('students.id'))
-    invoice_id = db.Column(db.Integer, db.ForeignKey('finance_student_fees.id'))
-    amount = db.Column(db.Numeric(10, 2), nullable=False)
-    method = db.Column(db.String)
+    student_fee_id = db.Column(db.Integer, db.ForeignKey('finance_student_fees.id'))
+    amount_paid = db.Column(db.Numeric(10, 2), nullable=False)
+    payment_method = db.Column(db.String)
+    receipt_number = db.Column(db.String)
     reference = db.Column(db.String)
     payment_date = db.Column(db.DateTime, default=datetime.utcnow)
+    student_name = db.Column(db.String)
+    student_matricule = db.Column(db.String)
 
 
 class CourseSchedule(db.Model):

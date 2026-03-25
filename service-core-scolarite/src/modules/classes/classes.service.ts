@@ -39,8 +39,20 @@ export class ClassService implements OnModuleInit {
     return await this.classRepository.save(newClass);
   }
 
-  async findAll(): Promise<Class[]> {
-    return await this.classRepository.find();
+  async findAll(query?: { teacherId?: number; subjectId?: number }): Promise<Class[]> {
+    const qb = this.classRepository.createQueryBuilder('class');
+
+    if (query?.teacherId) {
+      qb.innerJoin('class.subjects', 'subject')
+        .andWhere('subject.teacher_id = :teacherId', { teacherId: query.teacherId });
+    }
+
+    if (query?.subjectId) {
+      qb.innerJoin('class.subjects', 'subject_filter')
+        .andWhere('subject_filter.id = :subjectId', { subjectId: query.subjectId });
+    }
+
+    return await qb.getMany();
   }
 
   async findOne(id: number): Promise<Class> {

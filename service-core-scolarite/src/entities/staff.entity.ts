@@ -1,5 +1,6 @@
-import { Entity, Column, PrimaryGeneratedColumn, JoinColumn, OneToOne, CreateDateColumn } from 'typeorm';
+import { Entity, Column, PrimaryGeneratedColumn, JoinColumn, OneToOne, CreateDateColumn, OneToMany } from 'typeorm';
 import { User } from './user.entity';
+import { Subject } from './subject.entity';
 
 @Entity({ name: 'staff' })
 export class Staff {
@@ -9,7 +10,7 @@ export class Staff {
   @Column({ name: 'user_id', nullable: true })
   userId: number;
 
-  @Column({ name: 'first_name' })
+  @Column({ name: 'first_name', nullable: true })
   firstName: string;
 
   @Column({ name: 'last_name' })
@@ -84,4 +85,7 @@ export class Staff {
   @OneToOne(() => User, user => user.staffProfile, { nullable: true })
   @JoinColumn({ name: 'user_id' })
   user: User;
+
+  @OneToMany(() => Subject, subject => subject.teacher)
+  subjects: Subject[];
 }

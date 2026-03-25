@@ -13,9 +13,7 @@ import {
 import { useTheme } from '../contexts/ThemeContext';
 import { translations } from '../lib/translations';
 import DashboardService, { DashboardStats } from '../services/dashboard.service';
-
-// ─── WebSocket URL (same host, service-dashboard port) ───────────────────────
-const WS_URL = (import.meta.env.VITE_DASHBOARD_WS_URL as string) || 'http://localhost:3003';
+import { socket } from '../services/api';
 
 // ─── Small reusable components ────────────────────────────────────────────────
 
@@ -81,30 +79,29 @@ export const Dashboard = () => {
 
   // ── WebSocket connection (Socket.IO via service-dashboard) ────────────────
   useEffect(() => {
-    let socket: any = null;
-    const connectWS = async () => {
-      try {
-        // Dynamically import socket.io-client to avoid SSR issues
-        const { io } = await import('socket.io-client').catch(() => ({ io: null }));
-        if (!io) return;
+    if (!socket) return;
 
-        socket = io(WS_URL, { transports: ['websocket'], reconnectionAttempts: 5 });
-        wsRef.current = socket;
+    const onConnect = () => setWsConnected(true);
+    const onDisconnect = () => setWsConnected(false);
+    const onPaymentUpdate = () => fetchStats(true);
+    const onAttendanceUpdate = () => fetchStats(true);
+    const onStatsRefresh = () => fetchStats(true);
 
-        socket.on('connect',    () => setWsConnected(true));
-        socket.on('disconnect', () => setWsConnected(false));
+    socket.on('connect', onConnect);
+    socket.on('disconnect', onDisconnect);
+    socket.on('payment_update', onPaymentUpdate);
+    socket.on('attendance_update', onAttendanceUpdate);
+    socket.on('stats_refresh', onStatsRefresh);
 
-        // Real-time events → silent refresh
-        socket.on('payment_update',   () => fetchStats(true));
-        socket.on('attendance_update',() => fetchStats(true));
-        socket.on('stats_refresh',    () => fetchStats(true));
-      } catch {
-        // socket.io-client not installed or unreachable — silent fail
-      }
+    setWsConnected(socket.connected);
+
+    return () => {
+      socket.off('connect', onConnect);
+      socket.off('disconnect', onDisconnect);
+      socket.off('payment_update', onPaymentUpdate);
+      socket.off('attendance_update', onAttendanceUpdate);
+      socket.off('stats_refresh', onStatsRefresh);
     };
-
-    connectWS();
-    return () => { socket?.disconnect(); };
   }, [fetchStats]);
 
   useEffect(() => { fetchStats(); }, [fetchStats]);

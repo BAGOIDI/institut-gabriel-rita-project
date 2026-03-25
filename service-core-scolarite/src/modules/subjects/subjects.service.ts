@@ -76,10 +76,20 @@ export class SubjectService implements OnModuleInit {
     return await this.subjectRepository.save(subject);
   }
 
-  async findAll(): Promise<Subject[]> {
-    return await this.subjectRepository.find({
-      relations: ['class', 'teacher']
-    });
+  async findAll(query?: { classId?: number; teacherId?: number }): Promise<Subject[]> {
+    const qb = this.subjectRepository.createQueryBuilder('subject')
+      .leftJoinAndSelect('subject.class', 'class')
+      .leftJoinAndSelect('subject.teacher', 'teacher');
+
+    if (query?.classId) {
+      qb.andWhere('subject.class_id = :classId', { classId: query.classId });
+    }
+
+    if (query?.teacherId) {
+      qb.andWhere('subject.teacher_id = :teacherId', { teacherId: query.teacherId });
+    }
+
+    return await qb.getMany();
   }
 
   async findOne(id: number): Promise<Subject> {

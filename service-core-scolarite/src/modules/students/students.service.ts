@@ -16,6 +16,21 @@ export interface PaginatedResult<T> {
   lastPage: number;
 }
 
+type StudentListItem = {
+  id: number;
+  matricule: string;
+  firstName: string;
+  lastName: string;
+  gender?: string | null;
+  dateOfBirth?: Date | null;
+  phoneNumber?: string | null;
+  parentPhoneNumber?: string | null;
+  email?: string | null;
+  classRoom?: string | null;
+  specialStatus?: string | null;
+  photo?: string | null;
+};
+
 @Injectable()
 export class StudentService {
   constructor(
@@ -26,7 +41,24 @@ export class StudentService {
     @Inject('RABBITMQ_SERVICE') private client: ClientProxy,
   ) {}
 
-  async create(data: any): Promise<Student> {
+  private toListItem(s: Student): StudentListItem {
+    return {
+      id: s.id,
+      matricule: s.matricule,
+      firstName: s.firstName,
+      lastName: s.lastName,
+      gender: s.gender ?? null,
+      dateOfBirth: (s as any).dateOfBirth ?? null,
+      phoneNumber: (s as any).phone ?? null,
+      parentPhoneNumber: (s as any).parentPhone ?? null,
+      email: s.email ?? null,
+      classRoom: (s as any).class?.name ?? null,
+      specialStatus: (s as any).specialStatus ?? null,
+      photo: s.photo ?? null,
+    };
+  }
+
+  async create(data: any): Promise<StudentListItem> {
     const {
       firstName,
       lastName,
@@ -36,10 +68,11 @@ export class StudentService {
       parentPhoneNumber,
       photo,
       classRoom,
+      specialStatus,
     } = data || {};
 
-    if (!firstName || !lastName) {
-      throw new BadRequestException('firstName and lastName are required');
+    if (!lastName) {
+      throw new BadRequestException('lastName is required');
     }
 
     const generatedMatricule =
@@ -61,11 +94,16 @@ export class StudentService {
       // Align front fields with entity columns when possible
       phone: phoneNumber,
       parentPhone: parentPhoneNumber,
-      photoUrl: photo,
+      specialStatus,
+      photo: photo,
     });
-    const savedStudent = await this.studentRepository.save(student);
+    const savedStudent = await this.studentRepository.save(student) as Student;
     this.client.emit('student.created', savedStudent);
-    return savedStudent;
+    const withClass = await this.studentRepository.findOne({
+      where: { id: savedStudent.id },
+      relations: { class: true },
+    });
+    return this.toListItem(withClass || savedStudent);
   }
 
   private normalizePagination(options: PaginationOptions = {}): Required<PaginationOptions> {
@@ -80,11 +118,12 @@ export class StudentService {
   private async getPaginatedResult(
     where: Record<string, any> = {},
     options?: PaginationOptions,
-  ): Promise<PaginatedResult<Student>> {
+  ): Promise<PaginatedResult<StudentListItem>> {
     const { page, limit } = this.normalizePagination(options);
 
     const [items, total] = await this.studentRepository.findAndCount({
       where,
+      relations: { class: true },
       skip: (page - 1) * limit,
       take: limit,
       order: { lastName: 'ASC', firstName: 'ASC' },
@@ -93,57 +132,80 @@ export class StudentService {
     const lastPage = total > 0 ? Math.ceil(total / limit) : 1;
 
     return {
-      items,
+      items: items.map((s) => this.toListItem(s)),
       total,
       lastPage,
     };
   }
 
-  async findAll(options?: PaginationOptions): Promise<PaginatedResult<Student>> {
+  async findAll(options?: PaginationOptions): Promise<PaginatedResult<StudentListItem>> {
     return this.getPaginatedResult({}, options);
   }
 
   async search(
-    q: string | undefined,
+    filters: {
+      q?: string;
+      classRoom?: string;
+      filiere?: string; // pas encore persisté dans l'entité actuelle
+      specialStatus?: string;
+    },
     options?: PaginationOptions,
-  ): Promise<PaginatedResult<Student>> {
+  ): Promise<PaginatedResult<StudentListItem>> {
     const { page, limit } = this.normalizePagination(options);
 
     const query = this.studentRepository
       .createQueryBuilder('student')
+      .leftJoinAndSelect('student.class', 'class')
       .orderBy('student.lastName', 'ASC')
       .addOrderBy('student.firstName', 'ASC')
       .skip((page - 1) * limit)
       .take(limit);
 
-    if (q && q.trim() !== '') {
-      const term = `%${q.toLowerCase()}%`;
+    if (filters?.q && filters.q.trim() !== '') {
+      const term = `%${filters.q.toLowerCase()}%`;
       query.andWhere(
         '(LOWER(student.firstName) LIKE :term OR LOWER(student.lastName) LIKE :term OR LOWER(student.matricule) LIKE :term)',
         { term },
       );
     }
 
+    if (filters?.classRoom && filters.classRoom.trim() !== '') {
+      query.andWhere('class.name = :classRoom', { classRoom: filters.classRoom.trim() });
+    }
+
+    if (filters?.specialStatus && filters.specialStatus.trim() !== '') {
+      query.andWhere('student.specialStatus = :specialStatus', { specialStatus: filters.specialStatus.trim() });
+    }
+
+    // NOTE: filiere est envoyée par le front mais pas stockée dans l'entité actuelle.
+    // On n'applique pas de filtre DB ici pour éviter des erreurs silencieuses.
+
     const [items, total] = await query.getManyAndCount();
     const lastPage = total > 0 ? Math.ceil(total / limit) : 1;
 
     return {
-      items,
+      items: items.map((s) => this.toListItem(s)),
       total,
       lastPage,
     };
   }
 
-  async findOne(id: string): Promise<Student> {
+  async findOne(id: string): Promise<StudentListItem> {
     const numericId = Number(id);
-    const student = await this.studentRepository.findOne({ where: { id: numericId } });
+    if (isNaN(numericId)) {
+      throw new BadRequestException('Invalid ID format');
+    }
+    const student = await this.studentRepository.findOne({
+      where: { id: numericId },
+      relations: { class: true },
+    });
     if (!student) {
       throw new NotFoundException(`Student with ID ${id} not found`);
     }
-    return student;
+    return this.toListItem(student);
   }
 
-  async update(id: string, updateStudentDto: any): Promise<Student> {
+  async update(id: string, updateStudentDto: any): Promise<StudentListItem> {
     const numericId = Number(id);
     if (Number.isNaN(numericId)) {
       throw new BadRequestException(`Invalid student id: ${id}`);
@@ -161,20 +223,31 @@ export class StudentService {
       ...updateStudentDto,
       phone: (updateStudentDto as any).phoneNumber,
       parentPhone: (updateStudentDto as any).parentPhoneNumber,
-      photoUrl: (updateStudentDto as any).photo,
+      photo: (updateStudentDto as any).photo,
       class: classEntity ?? undefined,
     });
     if (!student) {
       throw new NotFoundException(`Student with ID ${id} not found`);
     }
-    const savedStudent = await this.studentRepository.save(student);
-    this.client.emit('student.created', savedStudent);
-    return savedStudent;
+    const savedStudent = await this.studentRepository.save(student) as Student;
+    this.client.emit('student.updated', savedStudent);
+    const withClass = await this.studentRepository.findOne({
+      where: { id: savedStudent.id },
+      relations: { class: true },
+    });
+    return this.toListItem(withClass || savedStudent);
   }
 
   async remove(id: string): Promise<{ deleted: boolean }> {
-    const student = await this.findOne(id);
-    await this.studentRepository.remove(student);
+    const numericId = Number(id);
+    if (isNaN(numericId)) {
+      throw new BadRequestException(`Invalid student id: ${id}`);
+    }
+    const studentEntity = await this.studentRepository.findOne({ where: { id: numericId } });
+    if (!studentEntity) {
+      throw new NotFoundException(`Student with ID ${id} not found`);
+    }
+    await this.studentRepository.remove(studentEntity);
     return { deleted: true };
   }
 
@@ -192,7 +265,7 @@ export class StudentService {
         lastName: row['Nom'] || 'Inconnu',
       });
 
-      const savedStudent = await this.studentRepository.save(student);
+      const savedStudent = await this.studentRepository.save(student) as Student;
       this.client.emit('student.created', savedStudent);
       count++;
     }

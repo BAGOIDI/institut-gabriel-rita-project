@@ -10,7 +10,7 @@ export const translations = {
     students: 'Étudiants',
     timetable: 'Emploi du temps',
     attendance: 'Présences',
-    payments: 'Paiements',
+    finance: 'Finance',
     reports: 'Rapports',
     
     // Stats

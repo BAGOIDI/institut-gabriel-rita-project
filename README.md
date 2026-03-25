@@ -19,6 +19,7 @@ Système de gestion scolaire moderne basé sur une architecture microservices av
 - [Démarrage](#démarrage)
 - [Services](#services)
 - [API Endpoints](#api-endpoints)
+- [🔍 Typesense & Recherche](#-typesense--recherche)
 - [Développement](#développement)
 - [Déploiement](#déploiement)
 - [Tests](#tests)
@@ -178,6 +179,64 @@ docker-compose ps
 - **Traefik Dashboard** : http://localhost:8080
 - **RabbitMQ Management** : http://localhost:15672
 - **API Documentation** : http://localhost/api/core/docs
+- **Typesense** : http://localhost:8108
+
+## 🔍 Typesense & Recherche
+
+Le système intègre Typesense pour la recherche rapide et RabbitMQ pour la synchronisation en temps réel.
+
+### Initialisation Rapide
+
+```bash
+# 1. Démarrer les services
+docker-compose up -d
+
+# 2. Initialiser Typesense avec les données
+docker-compose exec backend bash /app/src/scripts/init-typesense.sh
+
+# 3. Tester l'intégration
+docker-compose exec backend bash /app/src/scripts/test-integration.sh
+```
+
+### Endpoints de Recherche
+
+```bash
+# Indexer tous les étudiants et enseignants
+curl -X POST http://localhost:3000/api/search/index/all
+
+# Vérifier la santé de Typesense
+curl http://localhost:3000/api/search/health
+
+# Rechercher dans Typesense
+curl "http://localhost:8108/collections/students/documents/search?q=dupont&query_by=first_name,last_name,email"
+```
+
+### Documentation Complète
+
+- [📖 Guide de configuration](TYPESENSE_SETUP_GUIDE.md)
+- [⚡ Commandes rapides](TYPESENSE_COMMANDS.md)
+- [🚀 Démarrage rapide](QUICKSTART_TYPESENSE.md)
+- [📋 Synthèse d'implémentation](TYPESENSE_IMPLEMENTATION_SUMMARY.md)
+
+### Architecture de Synchronisation
+
+```
+service-core-scolarite
+    ↓ (événement via RabbitMQ)
+    student.created / teacher.created
+    ↓
+backend (NestJS)
+    ↓ (indexe dans Typesense)
+Typesense (collection: students / teachers)
+```
+
+### Fonctionnalités Clés
+
+- ✅ **Indexation automatique** via événements RabbitMQ
+- ✅ **Indexation en masse** pour l'initialisation
+- ✅ **Mise à jour en temps réel** des indexes
+- ✅ **Recherche full-text** rapide et pertinente
+- ✅ **Filtrage par facettes** (status, specialty, etc.)
 
 ## 🌐 API Endpoints
 

@@ -1,5 +1,6 @@
 from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
+from flask_cors import CORS
 from config.config import config
 
 db = SQLAlchemy()
@@ -7,6 +8,9 @@ db = SQLAlchemy()
 def create_app(config_name='default'):
     app = Flask(__name__)
     app.config.from_object(config[config_name])
+
+    # Configuration CORS
+    CORS(app, resources={r"/api/*": {"origins": "*"}})
 
     db.init_app(app)
 
@@ -53,6 +57,24 @@ def create_app(config_name='default'):
 </body>
 </html>
         """, 200
+
+    @app.context_processor
+    def inject_global_vars():
+        import os
+        from pathlib import Path
+        logo_path = os.path.join(app.root_path, 'static', 'images', 'logo.png')
+        if not os.path.exists(logo_path):
+            logo_path = os.path.join(app.root_path, 'static', 'img', 'logo.png')
+            
+        logo_url = None
+        if os.path.exists(logo_path):
+            # Convert to absolute URI for WeasyPrint
+            logo_url = Path(logo_path).as_uri()
+            
+        return {
+            'logo_url': logo_url,
+            'current_year': '2025-2026'
+        }
 
     # Enregistrement des Blueprints
     from app.routes.reports import reports_bp

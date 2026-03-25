@@ -21,7 +21,7 @@ export class SemesterService {
     return await this.semesterRepository.find();
   }
 
-  async findOne(id: string): Promise<Semester> {
+  async findOne(id: number): Promise<Semester> {
     const semester = await this.semesterRepository.findOne({ where: { id } });
     if (!semester) {
       throw new NotFoundException(`Semester with ID ${id} not found`);
@@ -29,7 +29,7 @@ export class SemesterService {
     return semester;
   }
 
-  async update(id: string, updateSemesterDto: UpdateSemesterDto): Promise<Semester> {
+  async update(id: number, updateSemesterDto: UpdateSemesterDto): Promise<Semester> {
     const semester = await this.semesterRepository.preload({
       id: id,
       ...updateSemesterDto,
@@ -40,7 +40,7 @@ export class SemesterService {
     return await this.semesterRepository.save(semester);
   }
 
-  async remove(id: string): Promise<void> {
+  async remove(id: number): Promise<void> {
     const semester = await this.findOne(id);
     await this.semesterRepository.remove(semester);
   }

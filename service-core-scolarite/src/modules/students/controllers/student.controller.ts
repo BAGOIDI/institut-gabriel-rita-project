@@ -1,10 +1,12 @@
-import { Controller, Post, UseInterceptors, UploadedFile } from '@nestjs/common';
+import { Controller, Post, UseInterceptors, UploadedFile, Inject } from '@nestjs/common';
 import { FileInterceptor } from '@nestjs/platform-express';
-import { StudentService } from '../services/student.service';
+import { StudentService as StudentImportService } from '../services/student.service';
 
-@Controller('students')
-export class StudentController {
-  constructor(private readonly service: StudentService) {}
+@Controller('students-import')
+export class StudentImportController {
+  constructor(
+    @Inject('StudentImportService') private readonly service: StudentImportService
+  ) {}
 
   @Post('import')
   @UseInterceptors(FileInterceptor('file'))

@@ -1,0 +1,258 @@
+/* Luxury Print Styles for ISGR Reports - Executive Edition */
+
+:root {
+    --primary: #020617;      /* Deep Slate */
+    --primary-light: #1e293b; /* Slate 800 */
+    --accent: #c2410c;       /* Burnt Orange */
+    --accent-light: #fff7ed; /* Soft Orange BG */
+    --secondary: #64748b;    /* Slate 500 */
+    --border: #e2e8f0;       /* Slate 200 */
+    --bg-soft: #f8fafc;      /* Slate 50 */
+    --white: #ffffff;
+    --success: #15803d;      /* Green 700 */
+    --success-bg: #f0fdf4;
+    --danger: #b91c1c;       /* Red 700 */
+    --danger-bg: #fef2f2;
+}
+
+@page {
+    size: A4;
+    margin: 10mm;
+}
+
+body {
+    font-family: 'Inter', -apple-system, sans-serif;
+    font-size: 8.5pt;
+    line-height: 1.5;
+    color: var(--primary);
+    margin: 0;
+    padding: 0;
+    background-color: white;
+}
+
+/* --- WRAPPING TABLE FOR REPEATING HEADERS/FOOTERS --- */
+.wrapping-table {
+    width: 100%;
+    border: none;
+    border-collapse: collapse;
+}
+
+.page-header-space { height: 160px; }
+.page-footer-space { height: 100px; }
+
+/* --- FIXED ELEMENTS (Keep original structure as requested) --- */
+.official-header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    width: 100%;
+    height: 155px;
+    background: white;
+    z-index: 1000;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    padding: 15px 10mm;
+    border-bottom: 2px solid var(--primary);
+}
+
+.footer {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    width: 100%;
+    height: 90px;
+    background: white;
+    z-index: 1000;
+    padding: 10px 10mm;
+    border-top: 1px solid var(--border);
+}
+
+/* --- MODERN COMPONENT: SECTION HEADERS --- */
+.section-title {
+    display: flex;
+    align-items: center;
+    margin: 25px 0 15px 0;
+    gap: 10px;
+}
+
+.section-title h2 {
+    font-size: 11px;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    color: var(--primary);
+    margin: 0;
+    white-space: nowrap;
+}
+
+.section-title .line {
+    height: 1px;
+    background: var(--border);
+    flex-grow: 1;
+}
+
+/* --- MODERN COMPONENT: KPI CARDS --- */
+.kpi-grid {
+    display: flex;
+    gap: 15px;
+    margin-bottom: 25px;
+}
+
+.kpi-card {
+    flex: 1;
+    background: var(--bg-soft);
+    border: 1px solid var(--border);
+    padding: 15px;
+    border-radius: 8px;
+    position: relative;
+    overflow: hidden;
+}
+
+.kpi-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; bottom: 0;
+    width: 4px;
+    background: var(--primary);
+}
+
+.kpi-card.orange::before { background: var(--accent); }
+.kpi-card.success::before { background: var(--success); }
+.kpi-card.danger::before { background: var(--danger); }
+
+.kpi-label {
+    font-size: 7px;
+    font-weight: 700;
+    color: var(--secondary);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin-bottom: 4px;
+}
+
+.kpi-value {
+    font-size: 16px;
+    font-weight: 900;
+    color: var(--primary);
+}
+
+.kpi-value small {
+    font-size: 9px;
+    font-weight: 600;
+    color: var(--secondary);
+    margin-left: 2px;
+}
+
+/* --- MODERN COMPONENT: DATA TABLES --- */
+.luxury-table {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0;
+    margin: 10px 0;
+}
+
+.luxury-table th {
+    background: var(--primary);
+    color: white;
+    font-size: 7.5px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    padding: 12px 15px;
+    text-align: left;
+}
+
+.luxury-table th:first-child { border-top-left-radius: 6px; }
+.luxury-table th:last-child { border-top-right-radius: 6px; }
+
+.luxury-table td {
+    padding: 12px 15px;
+    font-size: 9px;
+    border-bottom: 1px solid var(--border);
+    color: var(--primary-light);
+    vertical-align: middle;
+}
+
+.luxury-table tbody tr:last-child td { border-bottom: none; }
+.luxury-table tbody tr:nth-child(even) { background: var(--bg-soft); }
+
+/* --- MODERN COMPONENT: BADGES --- */
+.badge {
+    padding: 3px 8px;
+    border-radius: 12px;
+    font-size: 7px;
+    font-weight: 800;
+    text-transform: uppercase;
+    display: inline-block;
+}
+
+.badge-success { background: var(--success-bg); color: var(--success); }
+.badge-danger { background: var(--danger-bg); color: var(--danger); }
+.badge-neutral { background: var(--bg-soft); color: var(--secondary); }
+
+/* --- MODERN COMPONENT: STUDENT MINI CARD --- */
+.student-header-box {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: var(--primary);
+    color: white;
+    padding: 20px;
+    border-radius: 10px;
+    margin-bottom: 25px;
+}
+
+.student-info h1 {
+    font-size: 20px;
+    font-weight: 900;
+    margin: 0;
+    letter-spacing: -0.5px;
+}
+
+.student-meta {
+    display: flex;
+    gap: 15px;
+    margin-top: 5px;
+    opacity: 0.8;
+    font-size: 9px;
+}
+
+.student-meta span strong { color: white; }
+
+/* --- MODERN COMPONENT: INVOICE DESIGN --- */
+.invoice-banner {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 30px;
+}
+
+.invoice-title {
+    font-size: 24px;
+    font-weight: 900;
+    color: var(--primary);
+    letter-spacing: -1px;
+}
+
+.invoice-ref {
+    text-align: right;
+}
+
+.invoice-ref .ref-no {
+    font-size: 14px;
+    font-weight: 900;
+    color: var(--accent);
+}
+
+/* --- UTILITIES --- */
+.text-right { text-align: right; }
+.font-mono { font-family: 'JetBrains Mono', 'Courier New', monospace; }
+.font-bold { font-weight: 800; }
+.mt-20 { margin-top: 20px; }
+.mb-20 { margin-bottom: 20px; }
+
+@media print {
+    tr { page-break-inside: avoid !important; }
+    .no-print { display: none !important; }
+}

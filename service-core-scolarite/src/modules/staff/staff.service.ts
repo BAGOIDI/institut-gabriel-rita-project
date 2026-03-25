@@ -88,6 +88,8 @@ export class StaffService implements OnModuleInit {
     status?: string;
     specialty?: string;
     contractType?: string;
+    classId?: number;
+    subjectId?: number;
     page?: number;
     limit?: number;
   }): Promise<{ items: Staff[]; total: number; lastPage: number; page: number; limit: number }> {
@@ -95,6 +97,16 @@ export class StaffService implements OnModuleInit {
     const limit = Math.min(100, Math.max(1, Number(query?.limit) || 10));
 
     const qb = this.staffRepository.createQueryBuilder('staff');
+
+    if (query?.classId) {
+      qb.innerJoin('staff.subjects', 'subject')
+        .andWhere('subject.class_id = :classId', { classId: query.classId });
+    }
+
+    if (query?.subjectId) {
+      qb.innerJoin('staff.subjects', 'subject_filter')
+        .andWhere('subject_filter.id = :subjectId', { subjectId: query.subjectId });
+    }
 
     if (query?.q) {
       const q = `%${query.q.toLowerCase()}%`;

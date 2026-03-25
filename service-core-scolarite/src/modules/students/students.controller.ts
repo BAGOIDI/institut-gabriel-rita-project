@@ -21,6 +21,24 @@ export class StudentController {
     });
   }
 
+  @Get('search')
+  search(
+    @Query('q') q?: string,
+    @Query('classRoom') classRoom?: string,
+    @Query('filiere') filiere?: string,
+    @Query('specialStatus') specialStatus?: string,
+    @Query('page') page?: string,
+    @Query('limit') limit?: string,
+  ) {
+    return this.studentService.search(
+      { q, classRoom, filiere, specialStatus },
+      {
+        page: page ? Number(page) : undefined,
+        limit: limit ? Number(limit) : undefined,
+      },
+    );
+  }
+
   @Get(':id')
   findOne(@Param('id') id: string) {
     return this.studentService.findOne(id);
@@ -34,18 +52,6 @@ export class StudentController {
   @Delete(':id')
   remove(@Param('id') id: string) {
     return this.studentService.remove(id);
-  }
-
-  @Get('search')
-  search(
-    @Query('q') q?: string,
-    @Query('page') page?: string,
-    @Query('limit') limit?: string,
-  ) {
-    return this.studentService.search(q, {
-      page: page ? Number(page) : undefined,
-      limit: limit ? Number(limit) : undefined,
-    });
   }
 
   @Post('import')

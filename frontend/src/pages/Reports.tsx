@@ -389,7 +389,7 @@ const Reports: React.FC = () => {
                     >
                       {classes.length === 0 && (
                         <>
-                          {['Terminale C','Terminale D','1ère C','1ère D','2nde A','2nde C'].map(c => (
+                          {['Terminale C','Terminale D','1ère C','1ère D','2nde A','2nde C','3ème'].map(c => (
                             <option key={c} value={c}>{c}</option>
                           ))}
                         </>

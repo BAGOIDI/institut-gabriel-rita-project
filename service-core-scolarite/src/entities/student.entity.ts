@@ -12,7 +12,7 @@ export class Student {
   @Column({ unique: true, length: 50 })
   matricule: string;
 
-  @Column({ name: 'first_name', length: 100 })
+  @Column({ name: 'first_name', length: 100, nullable: true })
   firstName: string;
 
   @Column({ name: 'last_name', length: 100 })
@@ -41,7 +41,7 @@ export class Student {
   specialStatus: string;
 
   @Column({ name: 'photo', type: 'text', nullable: true })
-  photoUrl: string;
+  photo: string;
 
   @OneToMany(() => Invoice, invoice => invoice.student)
   invoices: Invoice[];

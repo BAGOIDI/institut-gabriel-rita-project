@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, Query } from '@nestjs/common';
 import { ClassService } from './classes.service';
 import { CreateClassDto } from './dto/create-classes.dto';
 import { UpdateClassDto } from './dto/update-classes.dto';
@@ -13,8 +13,11 @@ export class ClassController {
   }
 
   @Get()
-  findAll() {
-    return this.classService.findAll();
+  findAll(@Query('teacherId') teacherId?: string, @Query('subjectId') subjectId?: string) {
+    return this.classService.findAll({
+      teacherId: teacherId ? Number(teacherId) : undefined,
+      subjectId: subjectId ? Number(subjectId) : undefined,
+    });
   }
 
   @Get(':id')
