@@ -2,10 +2,14 @@ import { BulletinModule } from './modules/bulletin/bulletin.module';
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { ConfigModule } from '@nestjs/config';
+import { EvaluationsModule } from './modules/evaluations/evaluations.module';
+import { GradesModule } from './modules/grades/grades.module';
 
 @Module({
   imports: [
     BulletinModule,
+    EvaluationsModule,
+    GradesModule,
 
     ConfigModule.forRoot({ isGlobal: true }),
     TypeOrmModule.forRoot({

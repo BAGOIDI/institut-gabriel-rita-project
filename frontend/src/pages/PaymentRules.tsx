@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Plus, Edit3, Trash2, Save, X, Calendar, Clock, Percent, AlertCircle } from 'lucide-react';
 import { BancoButton } from '../components/BancoButton';
 import { useTheme } from '../contexts/ThemeContext';
+import { useTranslation } from '../hooks/useTranslation';
 import { translations } from '../lib/translations';
 
 interface PaymentRule {
@@ -17,8 +18,8 @@ interface PaymentRule {
 
 export const PaymentRules = () => {
   const { language } = useTheme();
-  const t = translations[language];
-  const [rules, setRules] = useState<PaymentRule[]>([]);
+  const { t } = useTranslation();
+  const [rules, setRules] = useState<any[]>([]);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [editingRule, setEditingRule] = useState<PaymentRule | null>(null);
   const [newRule, setNewRule] = useState({

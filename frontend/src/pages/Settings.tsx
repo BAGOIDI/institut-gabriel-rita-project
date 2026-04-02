@@ -23,11 +23,12 @@ import {
 import { ToggleSwitch } from '../components/ToggleSwitch';
 import { BancoButton } from '../components/BancoButton';
 import { useTheme } from '../contexts/ThemeContext';
+import { useTranslation } from '../hooks/useTranslation';
 import { translations } from '../lib/translations';
 
 export const Settings = () => {
   const { language, toggleLanguage, theme, toggleTheme } = useTheme();
-  const t = translations[language];
+  const { t } = useTranslation();
   const [activeTab, setActiveTab] = useState('profile');
   const [showPassword, setShowPassword] = useState(false);
 
@@ -68,7 +69,7 @@ export const Settings = () => {
           </div>
           <div>
             <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2 font-inter">
-              {t.phone}
+              {t('phone')}
             </label>
             <input
               type="tel"
@@ -97,7 +98,7 @@ export const Settings = () => {
 
       <div className="banco-card rounded-xl p-6">
         <h3 className="text-lg font-bold text-gray-900 dark:text-white mb-4 font-inter">
-          {t.changePassword}
+          {t('changePassword')}
         </h3>
         <div className="space-y-4">
           <div>
@@ -133,7 +134,7 @@ export const Settings = () => {
           </div>
           <div>
             <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2 font-inter">
-              {t.confirmNewPassword}
+              {t('confirmNewPassword')}
             </label>
             <input
               type="password"
@@ -144,7 +145,7 @@ export const Settings = () => {
         <div className="mt-6">
           <BancoButton variant="primary">
             <Key className="w-4 h-4" />
-            {t.changePasswordBtn}
+            {t('changePasswordBtn')}
           </BancoButton>
         </div>
       </div>
@@ -164,7 +165,7 @@ export const Settings = () => {
             initialValue={true}
           />
           <ToggleSwitch
-            label={t.weeklyReports}
+            label={t('weeklyReports')}
             description="Recevoir un résumé hebdomadaire des activités"
             initialValue={false}
           />
@@ -183,7 +184,7 @@ export const Settings = () => {
 
       <div className="banco-card rounded-xl p-6">
         <h3 className="text-lg font-bold text-gray-900 dark:text-white mb-4 font-inter">
-          {t.inAppNotifications}
+          {t('inAppNotifications')}
         </h3>
         <div className="space-y-4">
           <ToggleSwitch
@@ -192,7 +193,7 @@ export const Settings = () => {
             initialValue={true}
           />
           <ToggleSwitch
-            label={t.notificationSound}
+            label={t('notificationSound')}
             description="Émettre un son lors de nouvelles notifications"
             initialValue={false}
           />
@@ -214,7 +215,7 @@ export const Settings = () => {
             initialValue={false}
           />
           <ToggleSwitch
-            label={t.activeSessions}
+            label={t('activeSessions')}
             description="Gérer les sessions actives sur différents appareils"
             initialValue={true}
           />
@@ -260,7 +261,7 @@ export const Settings = () => {
           <div className="flex items-center justify-between">
             <div>
               <span className="text-base font-medium capitalize text-gray-800 dark:text-white font-inter">
-                {t.darkMode}
+                {t('darkMode')}
               </span>
               <p className="text-sm text-gray-500 dark:text-gray-400 mt-1 font-inter">
                 {t.reduceEyeStrain}
@@ -290,13 +291,13 @@ export const Settings = () => {
 
       <div className="banco-card rounded-xl p-6">
         <h3 className="text-lg font-bold text-gray-900 dark:text-white mb-4 font-inter">
-          {t.interfaceLanguage}
+          {t('interfaceLanguage')}
         </h3>
         <div className="space-y-4">
           <div className="flex items-center justify-between">
             <div>
               <span className="text-base font-medium capitalize text-gray-800 dark:text-white font-inter">
-                {t.interfaceLanguage}
+                {t('interfaceLanguage')}
               </span>
               <p className="text-sm text-gray-500 dark:text-gray-400 mt-1 font-inter">
                 {t.changeLanguage}
@@ -334,7 +335,7 @@ export const Settings = () => {
     <div className="space-y-6">
       <div className="banco-card rounded-xl p-6">
         <h3 className="text-lg font-bold text-gray-900 dark:text-white mb-4 font-inter">
-          {t.paymentMethods}
+          {t('paymentMethods')}
         </h3>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           <div className="relative rounded-lg bg-gray-100 dark:bg-slate-700 p-6">
@@ -361,14 +362,14 @@ export const Settings = () => {
             <div className="text-center py-8">
               <CreditCard className="w-12 h-12 text-gray-400 mx-auto mb-3" />
               <h4 className="text-base font-bold text-gray-900 dark:text-white mb-2 font-inter">
-                {t.addPaymentMethod}
+                {t('addPaymentMethod')}
               </h4>
               <p className="text-sm text-gray-500 dark:text-gray-400 font-inter">
                 {t.connectCard}
               </p>
               <BancoButton variant="outline" className="mt-4">
                 <CreditCard className="w-4 h-4" />
-                {t.addCard}
+                {t('addCard')}
               </BancoButton>
             </div>
           </div>
@@ -382,7 +383,7 @@ export const Settings = () => {
         <div className="space-y-4">
           <div className="flex items-center justify-between p-4 bg-gray-50 dark:bg-slate-700 rounded-lg">
             <div>
-              <p className="font-medium text-gray-900 dark:text-white font-inter">{t.monthlySubscription}</p>
+              <p className="font-medium text-gray-900 dark:text-white font-inter">{t('monthlySubscription')}</p>
               <p className="text-sm text-gray-500 dark:text-gray-400 font-inter">Janvier 2026</p>
             </div>
             <div className="text-right">
@@ -417,7 +418,7 @@ export const Settings = () => {
             {t.settingsTitle}
           </h1>
           <p className="text-sm text-gray-500 dark:text-gray-400 font-inter">
-            {t.managePreferences}
+            {t('managePreferences')}
           </p>
         </div>
       </div>

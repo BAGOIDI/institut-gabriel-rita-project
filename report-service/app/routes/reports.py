@@ -5,11 +5,13 @@ Supporte les formats : PDF, DOCX (Word), XLSX (Excel)
 from flask import Blueprint, send_file, request, jsonify, Response, send_from_directory, current_app
 from app.models.models import (
     Student, Subject, Payment, StudentFee, CourseSchedule, Staff, Class,
-    AcademicYear, Specialty, Attendance, Grade, Evaluation
+    AcademicYear, Specialty, Attendance, Grade, Evaluation, Semester
 )
+from app import db
 from app.services.pdf_service import PDFService
 from app.services.docx_service import DocxService
 from app.services.excel_service import ExcelService
+from app.services.whatsapp_service import whatsapp_service
 from datetime import datetime
 import io
 import requests
@@ -17,6 +19,7 @@ import logging
 import qrcode
 import base64
 import os
+from sqlalchemy import and_
 
 # Configure logging
 logging.basicConfig(level=logging.INFO)
@@ -29,7 +32,9 @@ def serve_static(filename):
     return send_from_directory(os.path.join(current_app.root_path, 'static'), filename)
 
 # Align with NestJS planning service controller: /schedules
-PLANNING_SERVICE_URL = 'http://service-planning:3000/schedules'
+# Use environment variable for flexibility between Docker and local dev
+import os
+PLANNING_SERVICE_URL = os.environ.get('PLANNING_SERVICE_URL', 'http://service-planning:3000/schedules')
 
 MIME_TYPES = {
     'pdf':  'application/pdf',
@@ -195,6 +200,7 @@ def get_available_reports():
         {'id': 'moratoriums', 'name': "Moratoires", 'description': "Élèves en moratoire", 'params': [], 'formats': ['pdf', 'docx', 'xlsx'], 'route': '/api/reports/moratoriums'},
         {'id': 'payments-by-class', 'name': "Paiements par Classe", 'description': "Synthèse par classe", 'params': ['class_name'], 'formats': ['pdf', 'docx', 'xlsx'], 'route': '/api/reports/payments-by-class/{class_name}'},
         {'id': 'student-card', 'name': "Carte d'Étudiant", 'description': "Génération de la carte d'identité scolaire", 'params': ['matricule'], 'formats': ['pdf'], 'route': '/api/reports/student/card/{matricule}'},
+        {'id': 'bulletin', 'name': "Bulletin de Notes", 'description': "Impression du bulletin (notes par semestre)", 'params': ['matricule', 'academic_year_id', 'semester_id'], 'formats': ['pdf'], 'route': '/api/reports/bulletin/{matricule}?academic_year_id=...&semester_id=...'},
     ])
 
 
@@ -736,6 +742,277 @@ def get_student_report(matricule):
         return jsonify({'error': str(e)}), 500
 
 
+@reports_bp.route('/bulletin/<matricule>', methods=['GET'])
+def get_bulletin(matricule):
+    """
+    Génère le bulletin (PDF) d'un étudiant pour une année + semestre.
+    Params:
+      - academic_year_id (optional): défaut = année courante
+      - semester_id (optional): défaut = 1er semestre trouvé pour l'année
+    """
+    fmt = _get_format()
+    if fmt != 'pdf':
+        fmt = 'pdf'
+
+    academic_year_id = request.args.get('academic_year_id', type=int)
+    semester_id = request.args.get('semester_id', type=int)
+
+    student = Student.query.filter_by(matricule=matricule).first()
+    if not student:
+        return jsonify({'error': 'Étudiant non trouvé'}), 404
+
+    if academic_year_id:
+        year = AcademicYear.query.get(academic_year_id)
+    else:
+        year = AcademicYear.query.filter_by(is_current=True).first()
+        if not year:
+            year = AcademicYear.query.order_by(AcademicYear.id.desc()).first()
+
+    if not year:
+        return jsonify({'error': "Aucune année académique trouvée"}), 400
+
+    if semester_id:
+        semester = Semester.query.get(semester_id)
+    else:
+        semester = Semester.query.filter_by(academic_year_id=year.id).order_by(Semester.id.asc()).first()
+        if not semester:
+            semester = Semester.query.order_by(Semester.id.asc()).first()
+
+    if not semester:
+        return jsonify({'error': "Aucun semestre trouvé"}), 400
+
+    # Pull evaluations + grades for this student
+    q = (
+        db.session.query(Evaluation, Grade, Subject)
+        .join(Subject, Subject.id == Evaluation.subject_id)
+        .outerjoin(
+            Grade,
+            and_(Grade.evaluation_id == Evaluation.id, Grade.student_id == student.id),
+        )
+        .filter(Evaluation.academic_year_id == year.id)
+        .filter(Evaluation.semester_id == semester.id)
+        .order_by(Subject.name.asc(), Evaluation.type.asc(), Evaluation.name.asc())
+    )
+
+    rows = []
+    total_weighted_20 = 0.0
+    total_weights = 0.0
+    count_evals = 0
+
+    for ev, gr, subj in q.all():
+        max_score = float(ev.max_score or 20.0)
+        weight = float(ev.weight_percent or 100)
+        score = None
+        is_absent = False
+        if gr is not None:
+            is_absent = bool(gr.is_absent)
+            if (gr.score is not None) and (not is_absent):
+                score = float(gr.score)
+
+        weighted_20 = None
+        if score is not None and max_score > 0:
+            weighted_20 = round((score / max_score) * 20.0 * (weight / 100.0), 2)
+            total_weighted_20 += weighted_20
+            total_weights += (weight / 100.0)
+            count_evals += 1
+        elif gr is not None and is_absent:
+            # Absent: counts as 0 with weight
+            total_weights += (weight / 100.0)
+            count_evals += 1
+
+        rows.append(
+            {
+                "subject_name": subj.name,
+                "evaluation_name": ev.name,
+                "evaluation_type": ev.type,
+                "weight_percent": int(weight),
+                "score": "" if score is None else f"{score:.2f}",
+                "max_score": f"{max_score:.2f}",
+                "is_absent": is_absent,
+                "weighted_score_20": "" if weighted_20 is None else f"{weighted_20:.2f}",
+            }
+        )
+
+    general_avg = 0.0
+    if total_weights > 0:
+        general_avg = round(total_weighted_20 / total_weights, 2)
+
+    data = {
+        "student": {
+            "matricule": student.matricule,
+            "first_name": student.first_name or "",
+            "last_name": student.last_name or "",
+            "class_name": student.class_obj.name if student.class_obj else "N/A",
+        },
+        "academic_year": {"id": year.id, "name": year.name},
+        "semester": {"id": semester.id, "name": semester.name},
+        "rows": rows,
+        "summary": {"general_average_20": f"{general_avg:.2f}", "count_evaluations": count_evals},
+        "current_date": datetime.now().strftime("%d/%m/%Y"),
+    }
+
+    filename = f"bulletin_{student.matricule}_{year.name}_{semester.name}".replace(" ", "_")
+    return _send_file_response(PDFService.generate_pdf("bulletin.html", data), f"{filename}.pdf", "pdf")
+
+
+@reports_bp.route('/bulletins/class/<int:class_id>', methods=['GET'])
+def get_class_bulletins(class_id):
+    """
+    Génère un PDF unique contenant les bulletins de TOUS les étudiants d'une classe.
+    """
+    academic_year_id = request.args.get('academic_year_id', type=int)
+    semester_id = request.args.get('semester_id', type=int)
+
+    cls = Class.query.get(class_id)
+    if not cls:
+        return jsonify({'error': 'Classe non trouvée'}), 404
+
+    students = Student.query.filter_by(class_id=class_id).all()
+    if not students:
+        return jsonify({'error': 'Aucun étudiant dans cette classe'}), 404
+
+    if academic_year_id:
+        year = AcademicYear.query.get(academic_year_id)
+    else:
+        year = AcademicYear.query.filter_by(is_current=True).first() or AcademicYear.query.order_by(AcademicYear.id.desc()).first()
+
+    if semester_id:
+        semester = Semester.query.get(semester_id)
+    else:
+        semester = Semester.query.filter_by(academic_year_id=year.id).order_by(Semester.id.asc()).first()
+
+    all_bulletins_data = []
+
+    for student in students:
+        # Pull evaluations + grades for this student (same logic as get_bulletin)
+        q = (
+            db.session.query(Evaluation, Grade, Subject)
+            .join(Subject, Subject.id == Evaluation.subject_id)
+            .outerjoin(Grade, and_(Grade.evaluation_id == Evaluation.id, Grade.student_id == student.id))
+            .filter(Evaluation.academic_year_id == year.id)
+            .filter(Evaluation.semester_id == semester.id)
+            .order_by(Subject.name.asc())
+        )
+
+        rows = []
+        total_weighted_20 = 0.0
+        total_weights = 0.0
+        for ev, gr, subj in q.all():
+            max_score = float(ev.max_score or 20.0)
+            weight = float(ev.weight_percent or 100)
+            score = float(gr.score) if gr and gr.score is not None and not gr.is_absent else None
+            
+            weighted_20 = round((score / max_score) * 20.0 * (weight / 100.0), 2) if score is not None else 0.0
+            if score is not None or (gr and gr.is_absent):
+                total_weighted_20 += weighted_20
+                total_weights += (weight / 100.0)
+
+            rows.append({
+                "subject_name": subj.name,
+                "evaluation_name": ev.name,
+                "score": "" if score is None else f"{score:.2f}",
+                "max_score": f"{max_score:.2f}",
+                "weighted_score_20": f"{weighted_20:.2f}" if score is not None else "0.00",
+                "is_absent": gr.is_absent if gr else False
+            })
+
+        general_avg = round(total_weighted_20 / total_weights, 2) if total_weights > 0 else 0.0
+        
+        all_bulletins_data.append({
+            "student": {"matricule": student.matricule, "first_name": student.first_name, "last_name": student.last_name, "class_name": cls.name},
+            "year": year.name,
+            "semester": semester.name,
+            "rows": rows,
+            "general_avg": f"{general_avg:.2f}",
+            "current_date": datetime.now().strftime("%d/%m/%Y"),
+        })
+
+    # Render a template that loops through all bulletins with page breaks
+    pdf_content = PDFService.generate_pdf("bulk_bulletins.html", {"bulletins": all_bulletins_data})
+    return _send_file_response(pdf_content, f"bulletins_{cls.name.replace(' ', '_')}.pdf", "pdf")
+
+
+@reports_bp.route('/grades/pv/class/<int:class_id>', methods=['GET'])
+def get_class_pv(class_id):
+    """
+    Génère le Procès-Verbal (PV) de synthèse des notes pour une classe.
+    """
+    academic_year_id = request.args.get('academic_year_id', type=int)
+    semester_id = request.args.get('semester_id', type=int)
+
+    cls = Class.query.get(class_id)
+    students = Student.query.filter_by(class_id=class_id).order_by(Student.last_name, Student.first_name).all()
+    subjects = Subject.query.filter_by(class_id=class_id).order_by(Subject.name).all()
+
+    # Logic to build the matrix
+    matrix = []
+    for student in students:
+        student_row = {"name": f"{student.last_name} {student.first_name}", "matricule": student.matricule, "grades": []}
+        total_sum = 0
+        count = 0
+        for subj in subjects:
+            # Avg grade for this student in this subject for the period
+            grades = db.session.query(Grade.score).join(Evaluation).filter(
+                Evaluation.subject_id == subj.id,
+                Grade.student_id == student.id,
+                Evaluation.semester_id == semester_id
+            ).all()
+            avg = sum([float(g[0]) for g in grades if g[0] is not None]) / len(grades) if grades else None
+            student_row["grades"].append(f"{avg:.2f}" if avg is not None else "-")
+            if avg is not None:
+                total_sum += avg
+                count += 1
+        student_row["average"] = f"{(total_sum / count):.2f}" if count > 0 else "-"
+        matrix.append(student_row)
+
+    data = {
+        "class_name": cls.name,
+        "subjects": [s.name for s in subjects],
+        "matrix": matrix,
+        "current_date": datetime.now().strftime("%d/%m/%Y")
+    }
+    
+    pdf_content = PDFService.generate_pdf("pv_grades.html", data, landscape=True)
+    return _send_file_response(pdf_content, f"PV_{cls.name.replace(' ', '_')}.pdf", "pdf")
+
+
+@reports_bp.route('/grades/stats/class/<int:class_id>', methods=['GET'])
+def get_class_stats(class_id):
+    semester_id = request.args.get('semester_id', type=int)
+    
+    # Simple statistics for dashboard
+    students_count = Student.query.filter_by(class_id=class_id).count()
+    if students_count == 0:
+        return jsonify({'error': 'No students'}), 404
+
+    all_avgs = []
+    students = Student.query.filter_by(class_id=class_id).all()
+    for student in students:
+        grades = db.session.query(Grade.score).join(Evaluation).filter(
+            Grade.student_id == student.id,
+            Evaluation.semester_id == semester_id
+        ).all()
+        if grades:
+            avg = sum([float(g[0]) for g in grades if g[0] is not None]) / len(grades)
+            all_avgs.append(avg)
+
+    if not all_avgs:
+        return jsonify({'stats': {'average': 0, 'min': 0, 'max': 0, 'success_rate': 0}})
+
+    stats = {
+        'average': round(sum(all_avgs) / len(all_avgs), 2),
+        'min': round(min(all_avgs), 2),
+        'max': round(max(all_avgs), 2),
+        'success_rate': round(len([a for a in all_avgs if a >= 10]) / len(all_avgs) * 100, 2),
+        'count': len(all_avgs),
+        'student_averages': [
+            {'name': f"{s.last_name} {s.first_name}", 'average': round(avg, 2)}
+            for s, avg in zip(students, all_avgs)
+        ]
+    }
+    return jsonify({'stats': stats})
+
+
 @reports_bp.route('/student-card/<student_ref>', methods=['GET'])
 def get_student_card(student_ref):
     """
@@ -996,4 +1273,230 @@ def get_payments_by_class_report(class_ref):
             return _send_file_response(PDFService.generate_pdf('payment_by_class.html', data), f'{base_name}.pdf', 'pdf')
     except Exception as e:
         logger.error(f"Error in get_payments_by_class_report: {str(e)}")
+        return jsonify({'error': str(e)}), 500
+
+
+# ============================================
+# ROUTES WHATSAPP (WAHA) - ENVOI EDT
+# ============================================
+
+@reports_bp.route('/whatsapp/send-schedule/<class_ref>', methods=['POST'])
+def send_schedule_whatsapp(class_ref):
+    """Envoie l'EDT d'une classe par WhatsApp avec PDF"""
+    try:
+        data = request.get_json()
+        phone = data.get('phone')
+        teacher_name = data.get('teacher_name', 'Enseignant')
+        period = data.get('period', 'all')
+        
+        if not phone:
+            return jsonify({'error': 'Numéro de téléphone requis'}), 400
+        
+        # Vérifier connexion WAHA
+        if not whatsapp_service.check_connection():
+            return jsonify({'error': 'WAHA non connecté. Veuillez scanner le QR code.'}), 503
+        
+        logger.info(f"Envoi EDT WhatsApp pour {class_ref} à {phone}")
+        
+        # Récupérer les données EDT et générer le message
+        url = f'{PLANNING_SERVICE_URL}'
+        response = requests.get(url, timeout=5)
+        response.raise_for_status()
+        all_schedules = response.json()
+        
+        # Filtrer pour cette classe
+        class_schedules = [s for s in all_schedules if str(s.get('classId')) == str(class_ref)]
+        
+        # Construire schedule_data
+        DAYS = ['Lundi', 'Mardi', 'Mercredi', 'Jeudi', 'Vendredi', 'Samedi']
+        DAY_SLOTS = [
+            ('08:00', '09:50'), ('10:05', '12:00'),
+            ('13:00', '14:50'), ('15:05', '17:00'),
+        ]
+        EVENING_SLOTS = [('17:30', '19:20'), ('19:35', '21:00')]
+        
+        if period == 'day':
+            OFFICIAL_TIME_SLOTS = DAY_SLOTS
+        elif period == 'evening':
+            OFFICIAL_TIME_SLOTS = EVENING_SLOTS
+        else:
+            OFFICIAL_TIME_SLOTS = DAY_SLOTS + EVENING_SLOTS
+        
+        schedule_data = {}
+        for d in DAYS:
+            schedule_data[d] = {}
+            for start, end in OFFICIAL_TIME_SLOTS:
+                schedule_data[d][f"{start} - {end}"] = None
+        
+        for s in class_schedules:
+            try:
+                idx = int(s['dayOfWeek']) - 1
+                day_key = DAYS[idx] if 0 <= idx < len(DAYS) else 'Lundi'
+                start = (s.get('startTime') or '')[:5]
+                end = (s.get('endTime') or '')[:5]
+                time_key = f"{start} - {end}"
+                
+                if (start, end) in OFFICIAL_TIME_SLOTS:
+                    staff_id = s.get('staffId')
+                    subj_id = s.get('subjectId')
+                    
+                    teacher = Staff.query.get(staff_id) if staff_id else None
+                    subject = Subject.query.get(subj_id) if subj_id else None
+                    
+                    schedule_data[day_key][time_key] = {
+                        'subject': subject.name if subject else 'N/A',
+                        'teacher_name': f"{teacher.first_name} {teacher.last_name}" if teacher else 'N/A',
+                        'room': s.get('roomName', ''),
+                        'class_name': class_ref
+                    }
+            except Exception:
+                continue
+        
+        # Formater et envoyer le message
+        message = whatsapp_service.format_schedule_message(
+            teacher_name=teacher_name,
+            class_name=class_ref,
+            schedule_data={'schedule': schedule_data, 'period': period},
+            include_pdf=True
+        )
+        
+        text_result = whatsapp_service.send_message(phone, message)
+        
+        if not text_result.get('success'):
+            return jsonify(text_result), 500
+        
+        return jsonify({
+            'success': True,
+            'message': 'Message envoyé avec succès',
+            'messageId': text_result.get('messageId')
+        })
+        
+    except Exception as e:
+        logger.error(f"Erreur envoi WhatsApp: {str(e)}")
+        return jsonify({'error': str(e)}), 500
+
+
+@reports_bp.route('/whatsapp/send-to-teacher/<int:staff_id>', methods=['POST'])
+def send_teacher_schedule_whatsapp(staff_id):
+    """Envoie l'EDT d'un enseignant par WhatsApp"""
+    try:
+        data = request.get_json()
+        phone = data.get('phone')
+        period = data.get('period', 'all')
+        
+        if not phone:
+            return jsonify({'error': 'Numéro de téléphone requis'}), 400
+        
+        teacher = Staff.query.get(staff_id)
+        if not teacher:
+            return jsonify({'error': 'Enseignant non trouvé'}), 404
+            
+        # Vérifier connexion WAHA
+        if not whatsapp_service.check_connection():
+            return jsonify({'error': 'WAHA non connecté.'}), 503
+        
+        logger.info(f"Envoi EDT WhatsApp pour enseignant {staff_id} à {phone}")
+        
+        # Récupérer les données EDT
+        url = f'{PLANNING_SERVICE_URL}/staff/{staff_id}'
+        response = requests.get(url, timeout=5)
+        response.raise_for_status()
+        teacher_schedules = response.json()
+        
+        # Construire schedule_data (similaire à send_schedule_whatsapp)
+        DAYS = ['Lundi', 'Mardi', 'Mercredi', 'Jeudi', 'Vendredi', 'Samedi']
+        DAY_SLOTS = [('08:00', '09:50'), ('10:05', '12:00'), ('13:00', '14:50'), ('15:05', '17:00')]
+        EVENING_SLOTS = [('17:30', '19:20'), ('19:35', '21:00')]
+        OFFICIAL_TIME_SLOTS = (DAY_SLOTS if period == 'day' else EVENING_SLOTS if period == 'evening' else DAY_SLOTS + EVENING_SLOTS)
+        
+        schedule_data = {d: {f"{s} - {e}": None for s, e in OFFICIAL_TIME_SLOTS} for d in DAYS}
+        
+        for s in teacher_schedules:
+            try:
+                idx = int(s['dayOfWeek']) - 1
+                day_key = DAYS[idx] if 0 <= idx < len(DAYS) else 'Lundi'
+                start, end = (s.get('startTime') or '')[:5], (s.get('endTime') or '')[:5]
+                time_key = f"{start} - {end}"
+                
+                if (start, end) in OFFICIAL_TIME_SLOTS:
+                    subject = Subject.query.get(s.get('subjectId'))
+                    class_obj = Class.query.get(s.get('classId'))
+                    schedule_data[day_key][time_key] = {
+                        'subject': subject.name if subject else 'N/A',
+                        'teacher_name': f"{teacher.first_name} {teacher.last_name}",
+                        'room': s.get('roomName', ''),
+                        'class_name': class_obj.name if class_obj else 'N/A'
+                    }
+            except Exception: continue
+            
+        message = whatsapp_service.format_schedule_message(
+            teacher_name=f"{teacher.first_name} {teacher.last_name}",
+            class_name="Mon Emploi du Temps",
+            schedule_data={'schedule': schedule_data, 'period': period},
+            include_pdf=True
+        )
+        return jsonify(whatsapp_service.send_message(phone, message))
+    except Exception as e:
+        logger.error(f"Erreur envoi WhatsApp enseignant: {str(e)}")
+        return jsonify({'error': str(e)}), 500
+
+
+@reports_bp.route('/whatsapp/send-synthesis', methods=['POST'])
+def send_synthesis_whatsapp():
+    """Envoie une synthèse d'EDT par WhatsApp"""
+    try:
+        data = request.get_json()
+        phone = data.get('phone')
+        class_ids = data.get('class_ids', [])
+        period = data.get('period', 'all')
+        
+        if not phone or not class_ids:
+            return jsonify({'error': 'Numéro et classes requis'}), 400
+            
+        # Vérifier connexion WAHA
+        if not whatsapp_service.check_connection():
+            return jsonify({'error': 'WAHA non connecté. Veuillez scanner le QR code.'}), 503
+
+        # Message simple pour confirmer l'envoi
+        intro = f"📚 *SYNTHÈSE DES EMPLOIS DU TEMPS - INSTITUT GABRIEL RITA* 📚\n\n"
+        intro += f"📅 Période: {period.upper()}\n"
+        intro += f"🏫 Classes concernées: {len(class_ids)}\n"
+        intro += "━━━━━━━━━━━━━━━━━━━━━━━\n\n"
+        intro += "Veuillez trouver ci-joint la synthèse détaillée des emplois du temps."
+        
+        whatsapp_service.send_message(phone, intro)
+        
+        return jsonify({
+            'success': True, 
+            'message': 'Synthèse envoyée par WhatsApp'
+        })
+    except Exception as e:
+        logger.error(f"Erreur envoi synthèse WhatsApp: {str(e)}")
+        return jsonify({'error': str(e)}), 500
+
+
+@reports_bp.route('/whatsapp/status', methods=['GET'])
+def whatsapp_status():
+    """Vérifie le statut de la connexion WhatsApp"""
+    try:
+        is_connected = whatsapp_service.check_connection()
+        return jsonify({
+            'connected': is_connected,
+            'service': 'WAHA',
+            'status': 'OK' if is_connected else 'DISCONNECTED'
+        })
+    except Exception as e:
+        return jsonify({'connected': False, 'error': str(e)}), 500
+
+
+@reports_bp.route('/whatsapp/qr', methods=['GET'])
+def get_whatsapp_qr():
+    """Récupère le QR code pour connecter WhatsApp"""
+    try:
+        qr_code = whatsapp_service.get_qr()
+        if qr_code:
+            return jsonify({'qrCode': qr_code})
+        else:
+            return jsonify({'error': 'Impossible de récupérer le QR code'}), 500
+    except Exception as e:
         return jsonify({'error': str(e)}), 500

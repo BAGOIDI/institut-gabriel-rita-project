@@ -9,6 +9,7 @@ import {
   Calendar,
   MoreVertical,
   QrCode,
+  Eye,
   Download,
   AlertCircle,
   Camera,
@@ -30,6 +31,7 @@ import { CoreService } from '../services/core.service';
 import reportService from '../services/report.service';
 import { useSystemOptions } from '../hooks/useSystemOptions';
 import { useTheme } from '../contexts/ThemeContext';
+import { useTranslation } from '../hooks/useTranslation';
 import { translations } from '../lib/translations';
 import { ConfirmDialog } from '../components/ConfirmDialog';
 import { useNotification } from '../contexts/NotificationContext';
@@ -80,7 +82,7 @@ export const Students = () => {
   const [showColumnFilters, setShowColumnFilters] = useState(false);
   
   const { language } = useTheme();
-  const t = translations[language];
+  const { t } = useTranslation();
   const notify = useNotification();
   const [confirmOpen, setConfirmOpen] = useState(false);
   const [targetDeleteId, setTargetDeleteId] = useState<string | null>(null);
@@ -261,13 +263,13 @@ export const Students = () => {
         className="flex justify-between items-center"
       >
         <div>
-          <h1 className="text-xl font-bold text-gray-900 dark:text-white uppercase tracking-tight">{t.studentManagement}</h1>
-          <p className="text-[11px] text-gray-500 dark:text-gray-400">{t.studentManagementDesc}</p>
+          <h1 className="text-xl font-bold text-gray-900 dark:text-white uppercase tracking-tight">{t('studentManagement')}</h1>
+          <p className="text-[11px] text-gray-500 dark:text-gray-400">{t('studentManagementDesc')}</p>
         </div>
         <div className="flex gap-2">
           <label className="flex items-center gap-2 bg-primary hover:bg-primary/90 text-white px-3 py-1.5 rounded-md cursor-pointer transition-colors text-xs font-semibold border border-primary/30 shadow-sm shadow-blue-500/10">
             <Upload className="w-3.5 h-3.5" />
-            <span>{t.importExcel}</span>
+            <span>{t('importExcel')}</span>
             <input type="file" className="hidden" accept=".xlsx, .xls" onChange={handleFileUpload} />
           </label>
           <button 
@@ -278,7 +280,7 @@ export const Students = () => {
             className="flex items-center gap-2 bg-blue-600 hover:bg-blue-700 text-white px-3 py-1.5 rounded-md transition-colors text-xs font-normal border border-blue-700"
           >
             <Plus className="w-3.5 h-3.5" />
-            <span>{t.newStudent}</span>
+            <span>{t('newStudent')}</span>
           </button>
         </div>
       </div>
@@ -295,7 +297,7 @@ export const Students = () => {
           <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-3.5 h-3.5 text-gray-400" />
           <input 
             type="text"
-            placeholder={t.searchPlaceholder}
+            placeholder={t('searchPlaceholder')}
             className="w-full pl-9 pr-4 py-1.5 bg-gray-50 dark:bg-slate-700 border border-gray-200 dark:border-slate-600 rounded-md focus:ring-2 focus:ring-blue-500 dark:text-white text-xs"
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
@@ -310,7 +312,7 @@ export const Students = () => {
               value={filters.classRoom}
               onChange={(e) => setFilters({...filters, classRoom: e.target.value})}
             >
-              <option value="">{t.allClasses}</option>
+              <option value="">{t('allClasses')}</option>
               {classesList.map((c: any) => (
                 <option key={c.id} value={c.name}>{c.name}</option>
               ))}
@@ -322,11 +324,11 @@ export const Students = () => {
             value={filters.specialStatus}
             onChange={(e) => setFilters({...filters, specialStatus: e.target.value})}
           >
-            <option value="">{t.allStatus}</option>
-            <option value="Standard">{t.standard}</option>
-            <option value="Boursier">{t.scholarship}</option>
-            <option value="Orphelin">{t.orphan}</option>
-            <option value="Récipiendaire">{t.recipient}</option>
+            <option value="">{t('allStatus')}</option>
+            <option value="Standard">{t('standard')}</option>
+            <option value="Boursier">{t('scholarship')}</option>
+            <option value="Orphelin">{t('orphan')}</option>
+            <option value="Récipiendaire">{t('recipient')}</option>
           </select>
 
           <div className="h-6 w-px bg-gray-200 dark:bg-slate-700 mx-1"></div>
@@ -353,7 +355,7 @@ export const Students = () => {
               setPagination({...pagination, page: 1});
             }}
             className="p-1.5 text-gray-400 hover:text-gray-600 dark:hover:text-white transition-colors border border-gray-200 dark:border-slate-600 rounded-md hover:bg-gray-100 dark:hover:bg-slate-700"
-            title={t.reset}
+            title={t('reset')}
           >
             <RefreshCw className={`w-3.5 h-3.5 ${loading ? 'animate-spin' : ''}`} />
           </button>
@@ -364,21 +366,21 @@ export const Students = () => {
       {loading && students.length === 0 ? (
         <div className="flex flex-col items-center justify-center py-20">
           <div className="w-10 h-10 border-4 border-blue-500 border-t-transparent rounded-full animate-spin mb-4"></div>
-          <p className="text-gray-500 font-medium">{t.loadingSearch}</p>
+          <p className="text-gray-500 font-medium">{t('loadingSearch')}</p>
         </div>
       ) : backendError ? (
         <div className="bg-white dark:bg-slate-800 rounded-md p-20 text-center border border-dashed border-red-300 dark:border-red-700">
           <div className="w-48 h-48 mx-auto mb-6">
             <img src="/images/debrancher.png" alt="Connexion perdue" className="w-full h-full object-contain opacity-60" />
           </div>
-          <h3 className="text-lg font-bold text-red-600 dark:text-red-400 mb-2">{t.serverConnectionLost}</h3>
-          <p className="text-gray-600 dark:text-gray-400 mb-4">{t.serverConnectionLostDesc}</p>
+          <h3 className="text-lg font-bold text-red-600 dark:text-red-400 mb-2">{t('serverConnectionLost')}</h3>
+          <p className="text-gray-600 dark:text-gray-400 mb-4">{t('serverConnectionLostDesc')}</p>
           <button 
             onClick={fetchStudents}
             className="inline-flex items-center gap-2 bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-md transition-colors text-sm"
           >
             <RefreshCw className="w-4 h-4" />
-            {t.retry}
+            {t('retry')}
           </button>
         </div>
       ) : students.length === 0 ? (
@@ -386,8 +388,8 @@ export const Students = () => {
           <div className="w-16 h-16 bg-gray-50 dark:bg-slate-700 rounded-full flex items-center justify-center mx-auto mb-4">
             <Search className="w-8 h-8 text-gray-300" />
           </div>
-          <h3 className="text-lg font-bold text-gray-900 dark:text-white">{t.noStudentFound}</h3>
-          <p className="text-gray-500">{t.noStudentFoundDesc}</p>
+          <h3 className="text-lg font-bold text-gray-900 dark:text-white">{t('noStudentFound')}</h3>
+          <p className="text-gray-500">{t('noStudentFoundDesc')}</p>
         </div>
       ) : viewMode === 'table' ? (
         <div className="bg-white dark:bg-slate-800 rounded-md border border-gray-200 dark:border-slate-700 overflow-hidden shadow-md">
@@ -397,13 +399,13 @@ export const Students = () => {
               <tr className="bg-gray-50 dark:bg-slate-700/50 border-b border-gray-100 dark:border-slate-700">
                 <th className="px-6 py-4 text-xs font-normal text-gray-500 uppercase tracking-wider">
                   <div className="flex items-center gap-2">
-                    <span>{t.student}</span>
+                    <span>{t('student')}</span>
                     <button 
                       onClick={() => setShowColumnFilters(!showColumnFilters)}
                       className={`p-1 rounded hover:bg-gray-200 dark:hover:bg-slate-600 transition-colors ${
                         showColumnFilters ? 'bg-blue-100 dark:bg-blue-900/30 text-blue-600' : ''
                       }`}
-                      title={t.filterColumns}
+                      title={t('filterColumns')}
                     >
                       <Filter className="w-3.5 h-3.5" />
                     </button>
@@ -421,7 +423,7 @@ export const Students = () => {
                   <th className="px-6 py-2">
                     <input
                       type="text"
-                      placeholder={t.filterByName}
+                      placeholder={t('filterByName')}
                       value={columnFilters.name}
                       onChange={(e) => setColumnFilters({...columnFilters, name: e.target.value})}
                       className="w-full px-2 py-1 text-xs bg-white dark:bg-slate-800 border border-gray-300 dark:border-slate-600 rounded focus:ring-2 focus:ring-blue-500 dark:text-white"
@@ -430,7 +432,7 @@ export const Students = () => {
                   <th className="px-6 py-2">
                     <input
                       type="text"
-                      placeholder={t.filterByMatricule}
+                      placeholder={t('filterByMatricule')}
                       value={columnFilters.matricule}
                       onChange={(e) => setColumnFilters({...columnFilters, matricule: e.target.value})}
                       className="w-full px-2 py-1 text-xs bg-white dark:bg-slate-800 border border-gray-300 dark:border-slate-600 rounded focus:ring-2 focus:ring-blue-500 dark:text-white"
@@ -439,7 +441,7 @@ export const Students = () => {
                   <th className="px-6 py-2">
                     <input
                       type="text"
-                      placeholder={t.filterByClass}
+                      placeholder={t('filterByClass')}
                       value={columnFilters.classRoom}
                       onChange={(e) => setColumnFilters({...columnFilters, classRoom: e.target.value})}
                       className="w-full px-2 py-1 text-xs bg-white dark:bg-slate-800 border border-gray-300 dark:border-slate-600 rounded focus:ring-2 focus:ring-blue-500 dark:text-white"
@@ -451,16 +453,16 @@ export const Students = () => {
                       onChange={(e) => setColumnFilters({...columnFilters, status: e.target.value})}
                       className="w-full px-2 py-1 text-xs bg-white dark:bg-slate-800 border border-gray-300 dark:border-slate-600 rounded focus:ring-2 focus:ring-blue-500 dark:text-white"
                     >
-                      <option value="">{t.all}</option>
-                      <option value="Boursier">{t.scholarship}</option>
-                      <option value="Orphelin">{t.orphan}</option>
-                      <option value="Standard">{t.standard}</option>
+                      <option value="">{t('all')}</option>
+                      <option value="Boursier">{t('scholarship')}</option>
+                      <option value="Orphelin">{t('orphan')}</option>
+                      <option value="Standard">{t('standard')}</option>
                     </select>
                   </th>
                   <th className="px-6 py-2">
                     <input
                       type="text"
-                      placeholder={t.filterByContact}
+                      placeholder={t('filterByContact')}
                       value={columnFilters.contact}
                       onChange={(e) => setColumnFilters({...columnFilters, contact: e.target.value})}
                       className="w-full px-2 py-1 text-xs bg-white dark:bg-slate-800 border border-gray-300 dark:border-slate-600 rounded focus:ring-2 focus:ring-blue-500 dark:text-white"
@@ -471,7 +473,7 @@ export const Students = () => {
                       onClick={() => setColumnFilters({ name: '', matricule: '', classRoom: '', status: '', contact: '' })}
                       className="text-xs text-blue-600 hover:text-blue-700 dark:text-blue-400 font-normal"
                     >
-                      {t.reset}
+                      {t('reset')}
                     </button>
                   </th>
                 </tr>
@@ -548,7 +550,7 @@ export const Students = () => {
                         className="p-2 text-blue-600 hover:bg-blue-50 dark:hover:bg-blue-900/20 rounded-lg transition-colors"
                         title="Voir QR Code"
                       >
-                        <QrCode className="w-4 h-4" />
+                        <Eye className="w-4 h-4" />
                       </button>
                       <button 
                         onClick={() => {
@@ -615,11 +617,11 @@ export const Students = () => {
                 <div className="space-y-2 mb-4">
                   <div className="flex items-center gap-2 text-sm text-gray-600 dark:text-gray-400">
                     <Calendar className="w-3.5 h-3.5" />
-                    <span>{t.dateOfBirth}: {student.dateOfBirth ? new Date(student.dateOfBirth).toLocaleDateString() : t.na}</span>
+                    <span>{t('dateOfBirth')}: {student.dateOfBirth ? new Date(student.dateOfBirth).toLocaleDateString() : t('na')}</span>
                   </div>
                   <div className="flex items-center gap-2 text-sm text-gray-600 dark:text-gray-400">
                     <Phone className="w-3.5 h-3.5" />
-                    <span>{t.phone}: {student.phoneNumber || t.na}</span>
+                    <span>{t('studentPhone')}: {student.phoneNumber || t('na')}</span>
                   </div>
                   <div className="flex items-center gap-2 text-sm text-gray-900 dark:text-white font-semibold">
                     <div className="px-2 py-0.5 bg-gray-100 dark:bg-slate-700 rounded text-xs">
@@ -627,7 +629,7 @@ export const Students = () => {
                     </div>
                     {student.filiere && (
                       <div className="px-2 py-0.5 bg-blue-50 dark:bg-blue-900/20 text-blue-600 rounded text-xs">
-                        {student.filiere || t.noMajor}
+                        {student.filiere || t('noMajor')}
                       </div>
                     )}
                   </div>
@@ -636,14 +638,14 @@ export const Students = () => {
                 <div className="flex items-center justify-between pt-4 border-t border-gray-50 dark:border-slate-700">
                   <div className="flex items-center gap-1.5">
                     <AlertCircle className="w-3.5 h-3.5 text-amber-500" />
-                    <span className="text-[10px] font-normal text-gray-500 uppercase">{student.specialStatus || t.standard}</span>
+                    <span className="text-[10px] font-normal text-gray-500 uppercase">{student.specialStatus || t('standard')}</span>
                   </div>
                   <button 
                     onClick={() => setSelectedStudent(student)}
                     className="text-xs text-blue-600 font-normal flex items-center gap-1"
                   >
-                    <QrCode className="w-3.5 h-3.5" />
-                    {t.showQr}
+                    <Eye className="w-3.5 h-3.5" />
+                    {t('showQr')}
                   </button>
                 </div>
               </div>
@@ -663,10 +665,14 @@ export const Students = () => {
         >
           <div className="flex items-center gap-4">
             <div className="text-sm text-gray-500 dark:text-gray-400">
-              {t.showingFromToOfTotalStudents.replace('{from}', String((pagination.page - 1) * pagination.limit + 1)).replace('{to}', String(Math.min(pagination.page * pagination.limit, pagination.total))).replace('{total}', String(pagination.total))}
+              {t('showingFromToOfTotalStudents', {
+                from: (pagination.page - 1) * pagination.limit + 1,
+                to: Math.min(pagination.page * pagination.limit, pagination.total),
+                total: pagination.total
+              })}
             </div>
             <div className="flex items-center gap-2">
-              <span className="text-sm text-gray-500 dark:text-gray-400">{t.perPage}</span>
+              <span className="text-sm text-gray-500 dark:text-gray-400">{t('perPage')}</span>
               <select 
                 value={pagination.limit}
                 onChange={(e) => handleLimitChange(Number(e.target.value))}
@@ -736,7 +742,7 @@ export const Students = () => {
             </button>
 
             <div className="text-center mb-6">
-              <h2 className="text-xl font-bold text-gray-900 dark:text-white uppercase">{t.studentCard}</h2>
+              <h2 className="text-xl font-bold text-gray-900 dark:text-white uppercase">{t('studentCard')}</h2>
               <p className="text-sm text-gray-500 italic">{selectedStudent.firstName} {selectedStudent.lastName}</p>
             </div>
 
@@ -756,7 +762,7 @@ export const Students = () => {
                   <span className="font-normal text-blue-600">{selectedStudent.matricule}</span>
                 </div>
                 <div className="flex justify-between text-sm">
-                  <span className="text-gray-500">{t.uniqueId}:</span>
+                  <span className="text-gray-500">{t('uniqueId')}:</span>
                   <span className="font-mono text-xs">{selectedStudent.uniqueId}</span>
                 </div>
                 <div className="flex justify-between text-sm">
@@ -770,7 +776,7 @@ export const Students = () => {
                 className="w-full flex items-center justify-center gap-2 bg-gray-900 text-white py-3 rounded-xl hover:bg-black transition-colors"
               >
                 <Download className="w-4 h-4" />
-                {t.downloadCard}
+                {t('downloadCard')}
               </button>
             </div>
           </div>
@@ -912,7 +918,7 @@ const StudentForm = ({ onClose, onSave, translations, initialStudent, classesLis
           <Plus className="w-6 h-6 rotate-45" />
         </button>
 
-        <h2 className="text-xl font-bold text-gray-900 dark:text-white mb-6 uppercase">{isEdit ? 'Modifier le dossier étudiant' : translations.newStudentRecord}</h2>
+        <h2 className="text-xl font-bold text-gray-900 dark:text-white mb-6 uppercase">{isEdit ? 'Modifier le dossier étudiant' : translations('newStudentRecord')}</h2>
 
         <form onSubmit={handleSubmit} className="grid grid-cols-1 md:grid-cols-2 gap-4">
           {/* Photo Upload Section */}
@@ -985,46 +991,46 @@ const StudentForm = ({ onClose, onSave, translations, initialStudent, classesLis
             />
           </div>
           <div className="space-y-1">
-            <label className="text-xs font-bold text-gray-500 uppercase">{translations.gender}</label>
+            <label className="text-xs font-bold text-gray-500 uppercase">{translations('gender')}</label>
             <select 
               required
               className="w-full px-4 py-2 bg-gray-50 dark:bg-slate-700 border-none rounded-lg dark:text-white"
               value={formData.gender || 'M'}
               onChange={e => setFormData({...formData, gender: e.target.value})}
             >
-              <option value="M">{translations.male}</option>
-              <option value="F">{translations.female}</option>
+              <option value="M">{translations('male')}</option>
+              <option value="F">{translations('female')}</option>
             </select>
           </div>
           <div className="space-y-1">
-            <label className="text-xs font-bold text-gray-500 uppercase">{translations.class}</label>
+            <label className="text-xs font-bold text-gray-500 uppercase">{translations('class')}</label>
             <select 
               required
               className="w-full px-4 py-2 bg-gray-50 dark:bg-slate-700 border-none rounded-lg dark:text-white"
               value={formData.classRoom}
               onChange={e => setFormData({...formData, classRoom: e.target.value})}
             >
-              <option value="">{translations.select}</option>
+              <option value="">{translations('select')}</option>
               {classesList.map((c: any) => (
                 <option key={c.id} value={c.name}>{c.name}</option>
               ))}
             </select>
           </div>
           <div className="space-y-1">
-            <label className="text-xs font-bold text-gray-500 uppercase">{translations.major}</label>
+            <label className="text-xs font-bold text-gray-500 uppercase">{translations('major')}</label>
             <select 
               className="w-full px-4 py-2 bg-gray-50 dark:bg-slate-700 border-none rounded-lg dark:text-white"
               value={formData.filiere || ''}
               onChange={e => setFormData({...formData, filiere: e.target.value})}
             >
-              <option value="">{translations.select}</option>
+              <option value="">{translations('select')}</option>
               {specialtiesList.map((s: any) => (
                 <option key={s.id} value={s.name}>{s.name}</option>
               ))}
             </select>
           </div>
           <div className="space-y-1">
-            <label className="text-xs font-bold text-gray-500 uppercase">{translations.studentPhone}</label>
+            <label className="text-xs font-bold text-gray-500 uppercase">{translations('studentPhone')}</label>
             <input 
               className="w-full px-4 py-2 bg-gray-50 dark:bg-slate-700 border-none rounded-lg dark:text-white"
               value={formData.phoneNumber}
@@ -1032,7 +1038,7 @@ const StudentForm = ({ onClose, onSave, translations, initialStudent, classesLis
             />
           </div>
           <div className="space-y-1">
-            <label className="text-xs font-bold text-gray-500 uppercase">{translations.parentPhone}</label>
+            <label className="text-xs font-bold text-gray-500 uppercase">{translations('parentPhone')}</label>
             <input 
               className="w-full px-4 py-2 bg-gray-50 dark:bg-slate-700 border-none rounded-lg dark:text-white"
               value={formData.parentPhoneNumber}
@@ -1040,16 +1046,16 @@ const StudentForm = ({ onClose, onSave, translations, initialStudent, classesLis
             />
           </div>
           <div className="space-y-1">
-            <label className="text-xs font-bold text-gray-500 uppercase">{translations.status}</label>
+            <label className="text-xs font-bold text-gray-500 uppercase">{translations('status')}</label>
             <select 
               className="w-full px-4 py-2 bg-gray-50 dark:bg-slate-700 border-none rounded-lg dark:text-white"
               value={formData.specialStatus}
               onChange={e => setFormData({...formData, specialStatus: e.target.value})}
             >
-              <option value="">{translations.standard}</option>
-              <option value="Boursier">{translations.scholarship}</option>
-              <option value="Orphelin">{translations.orphan}</option>
-              <option value="Récipiendaire">{translations.recipient}</option>
+              <option value="">{translations('standard')}</option>
+              <option value="Boursier">{translations('scholarship')}</option>
+              <option value="Orphelin">{translations('orphan')}</option>
+              <option value="Récipiendaire">{translations('recipient')}</option>
             </select>
           </div>
           
@@ -1058,7 +1064,7 @@ const StudentForm = ({ onClose, onSave, translations, initialStudent, classesLis
               type="submit"
               className="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 rounded-xl transition-colors"
             >
-              {isEdit ? 'Mettre à jour' : translations.registerStudentRecord}
+              {isEdit ? 'Mettre à jour' : translations('registerStudentRecord')}
             </button>
           </div>
         </form>

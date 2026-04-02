@@ -14,11 +14,12 @@ export class StudentController {
   findAll(
     @Query('page') page?: string,
     @Query('limit') limit?: string,
+    @Query('classId') classId?: string,
   ) {
     return this.studentService.findAll({
       page: page ? Number(page) : undefined,
       limit: limit ? Number(limit) : undefined,
-    });
+    }, classId ? Number(classId) : undefined);
   }
 
   @Get('search')

@@ -1,0 +1,85 @@
+code,libelle,codfil,cycle
+ACC,Business And Finance,BUSFIN,HND
+ADS,Administration Scolaire ,SCIEDU,BTS
+AFI,Accounting And Finance,BUSFIN,HND
+AGA,Arts Gastronomiques,ARMECU,BTS
+AMA,Assistant Manager,GESTIO,HND
+AND,Andragogie  ,SCIEDU,BTS
+AQC,Aquaculture,AGRELE,BTS
+BAT,Bâtiment,GENCIV,BTS
+BOW,Boiler Making And Welding,MECENG,HND
+BST,Building Science And Technology ,CIVENG,HND
+BTSET,Electro Technique,GENELE,BTS
+CAP,Conseil Agropastoral  ,AGRELE,BTS
+CER,Production Ceramique  ,ARMECU,BTS
+CFP,Assistance en Cabinet Médical,MEDSAN,CFP
+CFPACB,Aide Chimiste Biologiste,MEDSAN,FORPRO
+CFPACM,Assistant en Cabinet Médical,MEDSAN,FORPRO
+CFPFCL,Froid et Climatisation,MEDSAN,FORPRO
+CFPISA,Installation Sanitaire,MEDSAN,FORPRO
+CGE,Comptabilité Et Gestion Entreprises,GESTIO,BTS
+CHS,Chaudronerie Et Soudure,GEMEPR,BTS
+CIB,"Caricature, Illustation, Bandes Dessinees ",ARMECU,BTS
+CIN,Commerce International,COMVEN,BTS
+CMN,E-Commerce Et Marketing,GENINF,BTS
+COI,"Esthetique, Cosmetique Et Coiffure-Cosmetique  ",ECENSO,BTS
+COM,Communication Des Organisations,INFCOM,BTS
+DAN,Dessin Anime ,ARMECU,BTS
+DDD,Didactique Des Disciplines (Option ????),SCIEDU,BTS
+DEG,Design,ARMECU,BTS
+DID,Education Specialisee  ,SCIEDU,BTS
+EAP,Entrepreneuriat Agropastoral  ,AGRELE,BTS
+EES,Economie Et Entreprenariat Social,ECENSO,BTS
+ELN,Electronics,ELEENG,HND
+ENS,Entrainement Sportif ,SCTEAP,BTS
+EPS,Education Physique Et Sportive  ,SCTEAP,BTS
+FCL,Genie Thermique Et Energie-Froid Et Climatisation  ,GENTHE,BTS
+FME,Fabrication Mécanique,GENMEC,BTS
+GAP,Technologie De La Marine Marchande (Option???),GENIND,BTS
+GEC,Restauration ,TOHORE,BTS
+GEF,Gestion Forestiere,SCIENV,BTS
+GEN,Gestion Environnementale,SCIENV,BTS
+GLT,Gestion Logistique Et Transport,COMVEN,BTS
+GTO,Géomètre Topographe,GENCIV,BTS
+HNDET,Electrotechnics ,ELEENG,HND
+HRM,Human Ressource Management,MANAGE,HND
+HYG,Hydrogeologie Et Gestion Des Eaux Souterraines ,IGGEEA,BTS
+HYS,Hydrologie De Surface,METEAU,BTS
+HYT,"Hydraulique, Traitement Des Eaux Et Assainissement",METEAU,BTS
+IGL,Génie Logiciel,GENINF,BTS
+IHA,Industrie Du Textile Et De L’Habillement-Industrie Habillement ,ARMECU,BTS
+IIA,Informatique Industriel Et Automatisme,GENINF,BTS
+ISA,Installation Sanitaire,INGEAU,BTS
+IWD,Infographie Et Web Design  ,ARMECU,BTS
+JOU,Journalisme  ,INFCOM,BTS
+LGA,Administration Of Local Government,MANAGE,HND
+LTM,Logistics And Transport Management,GESTIO,HND
+MAT,Tourisme Et Loisirs ,TOHORE,BTS
+MAV,Maintenance Après-Vente (Mava),COMVEN,BTS
+MCV,Marketing-Commerce-Vente  ,COMVEN,BTS
+MEB,Menuiserie Et Ebenisterie,GENIND,BTS
+MEC,Mecanical Construction,MECENG,HND
+MID,Midwifery,MEDBIS,HND
+MKA,Mécatronique,GENMEC,BTS
+MLS,Medical Laboratory Sciences,MEDBIS,HND
+MTH,Hôtellerie Et Restauration,TOHORE,BTS
+MUS,Musicologie,ARMECU,BTS
+NUS,Nursing,MEDBIS,HND
+OSP,Orientation Scolaire Et Professionnelle ,SCIEDU,BTS
+PAN,Production Animale ,AGRELE,BTS
+PEI,Peinture ,ARMECU,BTS
+PGA,"Puericulture, Gerontologie Et Auxiliaire De Vie ",ECENSO,BTS
+PHA,Photographie Et Audiovisuel ,ARMECU,BTS
+PHT,Pharmacy Technology,MEDBIS,HND
+PHY,Physiotherapy,MEDBIS,HND
+PVE,Production Vegetale ,AGRELE,BTS
+QMA,Quality Management  ,MANAGE,HND
+RES,Réseau Et Sécurité,GENINF,BTS
+SCU,Sculpture ,ARTCUL,BTS
+SFM,Sages Femmes,MEDSAN,LIC
+SIN,Soins Infirmiers,MEDSAN,LIC
+TCA,Techniques Commerciales Agricoles ,AGRELE,BTS
+TEL,Telecommunication  ,METTEL,BTS
+TLB,Technicien De Laboratoire,MEDSAN,HND
+Toutes,Toutes Les Filières,XXXXX,XXXXX
+TSA,Agroequipement,AGRELE,BTS

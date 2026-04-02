@@ -216,3 +216,48 @@ ALTER TABLE public.subjects
     ADD COLUMN IF NOT EXISTS "creditsEcts" INTEGER DEFAULT 0,
     ADD COLUMN IF NOT EXISTS class_id INTEGER,
     ADD COLUMN IF NOT EXISTS semester_id INTEGER;
+
+-- =============================================
+-- 9. BULLETINS / ÉVALUATIONS / NOTES (Bulletin)
+-- =============================================
+-- Sécurise la structure attendue pour l'impression des bulletins.
+
+ALTER TABLE public.evaluations
+    ADD COLUMN IF NOT EXISTS academic_year_id INTEGER,
+    ADD COLUMN IF NOT EXISTS semester_id INTEGER,
+    ADD COLUMN IF NOT EXISTS status VARCHAR(20) DEFAULT 'DRAFT';
+
+ALTER TABLE public.evaluations
+    ADD CONSTRAINT IF NOT EXISTS chk_evaluations_type
+        CHECK (type IN ('CC', 'SN', 'RA', 'TP', 'PROJET'));
+
+ALTER TABLE public.evaluations
+    ADD CONSTRAINT IF NOT EXISTS chk_evaluations_status
+        CHECK (status IN ('DRAFT', 'PUBLISHED', 'CLOSED'));
+
+ALTER TABLE public.evaluations
+    ADD CONSTRAINT IF NOT EXISTS chk_evaluations_weight_percent
+        CHECK (weight_percent > 0 AND weight_percent <= 100);
+
+ALTER TABLE public.evaluations
+    ADD CONSTRAINT IF NOT EXISTS chk_evaluations_max_score
+        CHECK (max_score > 0);
+
+CREATE INDEX IF NOT EXISTS idx_evaluations_subject ON public.evaluations (subject_id);
+CREATE INDEX IF NOT EXISTS idx_evaluations_year_semester ON public.evaluations (academic_year_id, semester_id);
+
+ALTER TABLE public.grades
+    ADD COLUMN IF NOT EXISTS anonymity_code VARCHAR(50),
+    ADD COLUMN IF NOT EXISTS created_by VARCHAR(100),
+    ADD COLUMN IF NOT EXISTS updated_at TIMESTAMP WITHOUT TIME ZONE DEFAULT CURRENT_TIMESTAMP,
+    ADD COLUMN IF NOT EXISTS updated_by VARCHAR(100);
+
+ALTER TABLE public.grades
+    ADD CONSTRAINT IF NOT EXISTS chk_grades_score
+        CHECK (score IS NULL OR score >= 0);
+
+CREATE INDEX IF NOT EXISTS idx_grades_student ON public.grades (student_id);
+CREATE INDEX IF NOT EXISTS idx_grades_evaluation ON public.grades (evaluation_id);
+CREATE UNIQUE INDEX IF NOT EXISTS uq_grades_anonymity_code
+    ON public.grades (anonymity_code)
+    WHERE anonymity_code IS NOT NULL;

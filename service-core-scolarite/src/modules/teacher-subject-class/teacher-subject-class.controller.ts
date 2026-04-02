@@ -10,6 +10,11 @@ export class TeacherSubjectClassController {
     return this.service.create(data);
   }
 
+  @Post('sync/:staffId')
+  sync(@Param('staffId') staffId: string, @Body() assignments: { classId: number; subjectId: number }[]) {
+    return this.service.syncTeacherAssignments(Number(staffId), assignments);
+  }
+
   @Get()
   findAll(
     @Query('staffId') staffId?: string,

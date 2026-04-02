@@ -7,3 +7,5 @@ __pycache__/
 gunicorn.ctl
 templates.zip
 templates.rar
+intranet.mdb
+backups

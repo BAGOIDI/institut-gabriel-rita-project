@@ -12,6 +12,7 @@ export const translations = {
     attendance: 'Présences',
     finance: 'Finance',
     reports: 'Rapports',
+    bulletins: 'Bulletins',
     
     // Stats
     teachersPresent: 'ENSEIGNANTS PRÉSENTS',
@@ -29,7 +30,7 @@ export const translations = {
     // Sections
     weeklyAttendance: 'Présences de la semaine',
     recentCheckIns: 'Derniers pointages',
-    today: 'Aujourd\'hui',
+    today: "Aujourd'hui",
     recoveryByClass: 'Recouvrement par classe',
     latePayments: 'Retardataires & Pénalités',
     grantedMoratoria: 'Moratoires accordés',
@@ -74,6 +75,11 @@ export const translations = {
     // User
     admin: 'ADMIN',
     administrator: 'Administrateur',
+    myProfile: 'Mon profil',
+    settings: 'Paramètres',
+    support: 'Support',
+    logout: 'Déconnexion',
+    loadingError: "Erreur de chargement",
     loadingDashboard: 'Chargement du dashboard...',
     actualizeData: 'Actualiser les données',
     // Settings page
@@ -250,6 +256,7 @@ export const translations = {
     bankingSocialInfo: 'Informations Bancaires & Sécurité Sociale',
     emergencyContact: 'Contact d\'urgence',
     cancel: 'Annuler',
+    close: 'Fermer',
     update: 'Mettre à jour',
     save: 'Enregistrer',
     maleLabel: 'Masculin',
@@ -382,7 +389,32 @@ export const translations = {
     html: 'HTML',
     printDirectly: 'IMPRIMER DIRECTEMENT',
     technicalNote: 'Note Technique',
-    jasperReportsNote: 'Ce module utilise un moteur JasperReports intégré dans le conteneur Docker. Les fichiers JRXML sont compilés et remplis dynamiquement avec les données du système. Assurez-vous que vos modèles sont compatibles avec JasperReports 6.x+.'
+    jasperReportsNote: 'Ce module utilise un moteur JasperReports intégré dans le conteneur Docker. Les fichiers JRXML sont compilés et remplis dynamiquement avec les données du système. Assurez-vous que vos modèles sont compatibles avec JasperReports 6.x+.',
+    
+    // Timetable Configuration
+    deleteTimeslot: 'Supprimer le créneau',
+    confirmDeleteTimeslot: 'Êtes-vous sûr de vouloir supprimer ce créneau horaire ?',
+    timeslotDeleted: 'Créneau supprimé avec succès',
+    errorDeletingTimeslot: 'Erreur lors de la suppression du créneau',
+    days: 'Jours',
+    hours: 'Heures',
+    selectItemToExport: 'Veuillez sélectionner un élément à exporter',
+    pleaseFillAllFields: 'Veuillez remplir tous les champs',
+    errorGenerating: 'Erreur lors de la génération',
+    exportTimetable: "Exporter l'emploi du temps",
+    exportType: "Type d'export",
+    classSynthesis: 'Synthèse des classes',
+    coursePeriod: 'Période de cours',
+    day: 'Jour',
+    evening: 'Soir',
+    classToExport: 'Classe à exporter',
+    teacherToExport: 'Enseignant à exporter',
+    synthesisToExport: 'Synthèse à exporter',
+    selectClass: 'Sélectionner une classe',
+    selectTeacher: 'Sélectionner un enseignant',
+    cannotProgramOnSunday: 'Impossible de programmer le dimanche',
+    loading: 'Chargement...',
+    generate: 'Générer'
   },
   en: {
     // Header
@@ -397,6 +429,7 @@ export const translations = {
     attendance: 'Attendance',
     payments: 'Payments',
     reports: 'Reports',
+    bulletins: 'Bulletins',
     
     // Stats
     teachersPresent: 'TEACHERS PRESENT',
@@ -414,6 +447,7 @@ export const translations = {
     // Sections
     weeklyAttendance: 'Weekly Attendance',
     recentCheckIns: 'Recent Check-ins',
+    latestCheckIns: 'Latest Check-ins',
     today: 'Today',
     recoveryByClass: 'Recovery by Class',
     latePayments: 'Late Payments & Penalties',
@@ -459,6 +493,11 @@ export const translations = {
     // User
     admin: 'ADMIN',
     administrator: 'Administrator',
+    myProfile: 'My Profile',
+    settings: 'Settings',
+    support: 'Support',
+    logout: 'Logout',
+    loadingError: 'Loading error',
     loadingDashboard: 'Loading dashboard...',
     actualizeData: 'Refresh data',
     // Settings page
@@ -635,6 +674,7 @@ export const translations = {
     bankingSocialInfo: 'Banking & Social Security Information',
     emergencyContact: 'Emergency Contact',
     cancel: 'Cancel',
+    close: 'Close',
     update: 'Update',
     save: 'Save',
     maleLabel: 'Male',
@@ -762,8 +802,33 @@ export const translations = {
     html: 'HTML',
     printDirectly: 'PRINT DIRECTLY',
     technicalNote: 'Technical Note',
-    jasperReportsNote: 'This module uses an integrated JasperReports engine in the Docker container. JRXML files are compiled and dynamically filled with system data. Make sure your templates are compatible with JasperReports 6.x+.'
-  }
+    jasperReportsNote: 'This module uses an integrated JasperReports engine in the Docker container. JRXML files are compiled and dynamically filled with system data. Make sure your templates are compatible with JasperReports 6.x+.',
+      
+    // Timetable Configuration
+    deleteTimeslot: 'Delete timeslot',
+    confirmDeleteTimeslot: 'Are you sure you want to delete this timeslot?',
+    timeslotDeleted: 'Timeslot deleted successfully',
+    errorDeletingTimeslot: 'Error deleting timeslot',
+    days: 'Days',
+    hours: 'Hours',
+    selectItemToExport: 'Please select an item to export',
+    pleaseFillAllFields: 'Please fill all fields',
+    errorGenerating: 'Error generating',
+    exportTimetable: 'Export timetable',
+    exportType: 'Export type',
+    classSynthesis: 'Class synthesis',
+    coursePeriod: 'Course period',
+    day: 'Day',
+    evening: 'Evening',
+    classToExport: 'Class to export',
+    teacherToExport: 'Teacher to export',
+    synthesisToExport: 'Synthesis to export',
+    selectClass: 'Select a class',
+    selectTeacher: 'Select a teacher',
+    cannotProgramOnSunday: 'Cannot schedule on Sunday',
+    loading: 'Loading...',
+    generate: 'Generate'
+  },
 };
 
 export type TranslationKey = keyof typeof translations.fr;

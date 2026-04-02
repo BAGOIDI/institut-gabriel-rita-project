@@ -1,0 +1,20 @@
+nummouv,ddate,annee,mois,jour,libelle,montant,sens
+1,2024-11-23 00:00:00,2024,11,23,Dépenses assemblée générale,24000,credit
+2,2025-03-01 00:00:00,2025,03,01,Aide prof claudine Timene,50000,credit
+3,2025-03-01 00:00:00,2025,03,01,Transport aide prof claudine Timene,2000,credit
+4,2025-05-17 00:00:00,2025,05,17,AG du 17/05/25 Ach. Boisson,30000,credit
+5,2025-05-17 00:00:00,2025,05,17,AG du 17/05/25 Ach. Bouffe Cantine,25000,credit
+6,2025-06-02 00:00:00,2025,06,02,Ekinleh Zenabou - Cotisation Fev2025,0,debit
+7,2025-06-09 00:00:00,2025,06,09,Agbor Nerris - Cotisation Fev2025,0,debit
+8,2025-07-25 00:00:00,2025,07,25,Aide prof Agor Nerris. maladie,25000,credit
+9,2025-07-30 00:00:00,2025,07,30,Décaissement Deuil AGOR NERRIS,100000,credit
+10,2025-07-30 00:00:00,2025,07,30,Déplacement pour remise enveloppe,3500,credit
+11,2025-10-17 00:00:00,2025,10,17,Aide Naissance enfant Ngako,30000,credit
+12,2025-10-07 00:00:00,2025,10,07,Recu de Administration- Fete Enseignants,15000,debit
+13,2025-10-05 00:00:00,2025,10,05,Dépense nourriture fête des enseignants,20000,credit
+14,2025-10-05 00:00:00,2025,10,05,Dépense boisson fête des enseignants,7500,credit
+15,2025-11-22 00:00:00,2025,11,22,AG du 22/11/25 Ach. Bouffe & Boisson,35000,credit
+16,2025-12-10 00:00:00,2025,12,10,Aide naissance enfant Walvede,28000,credit
+17,2025-12-10 00:00:00,2025,12,10,Paiement Sanction Walvede,2000,debit
+18,2026-01-21 00:00:00,2025,01,21,Paiement Sanction Welvede,2000,debit
+19,2026-02-20 00:00:00,2026,02,20,Pret CHINDA,3000,debit

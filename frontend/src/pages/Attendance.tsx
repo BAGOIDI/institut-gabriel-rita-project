@@ -19,7 +19,7 @@ import {
   LayoutGrid
 } from 'lucide-react';
 import { useTheme } from '../contexts/ThemeContext';
-import { translations } from '../lib/translations';
+import { useTranslation } from '../hooks/useTranslation';
 import api from '../services/api.service';
 
 interface Teacher {
@@ -53,7 +53,7 @@ interface AttendanceStats {
 
 export const Attendance = () => {
   const { language } = useTheme();
-  const t = translations[language];
+  const { t } = useTranslation();
   const [attendances, setAttendances] = useState<Attendance[]>([]);
   const [stats, setStats] = useState<AttendanceStats | null>(null);
   const [loading, setLoading] = useState(true);
@@ -149,9 +149,9 @@ export const Attendance = () => {
 
   const getStatusBadge = (status: string) => {
     const badges = {
-      PRESENT: { bg: 'bg-emerald-100 dark:bg-emerald-900/30', text: 'text-emerald-700 dark:text-emerald-400', label: '{t.present}' },
-      LATE: { bg: 'bg-amber-100 dark:bg-amber-900/30', text: 'text-amber-700 dark:text-amber-400', label: '{t.late}' },
-      ABSENT: { bg: 'bg-rose-100 dark:bg-rose-900/30', text: 'text-rose-700 dark:text-rose-400', label: '{t.absent}' },
+      PRESENT: { bg: 'bg-emerald-100 dark:bg-emerald-900/30', text: 'text-emerald-700 dark:text-emerald-400', label: t('present') },
+      LATE: { bg: 'bg-amber-100 dark:bg-amber-900/30', text: 'text-amber-700 dark:text-amber-400', label: t('late') },
+      ABSENT: { bg: 'bg-rose-100 dark:bg-rose-900/30', text: 'text-rose-700 dark:text-rose-400', label: t('absent') },
     };
     const badge = badges[status as keyof typeof badges] || badges.ABSENT;
     return (
@@ -171,7 +171,7 @@ export const Attendance = () => {
     return (
       <div className="flex flex-col items-center justify-center py-20 h-full">
         <div className="w-10 h-10 border-4 border-blue-500 border-t-transparent rounded-full animate-spin mb-4"></div>
-        <p className="text-gray-500 font-medium">{t.loadingAttendances}...</p>
+        <p className="text-gray-500 font-medium">{t('loadingAttendances')}...</p>
       </div>
     );
   }
@@ -184,8 +184,8 @@ export const Attendance = () => {
         className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3"
       >
         <div>
-          <h1 className="text-xl font-bold text-gray-900 dark:text-white uppercase tracking-tight">{t.attendances}</h1>
-          <p className="text-[11px] text-gray-500 dark:text-gray-400">{t.teacherAttendanceManagement}</p>
+          <h1 className="text-xl font-bold text-gray-900 dark:text-white uppercase tracking-tight">{t('attendances')}</h1>
+          <p className="text-[11px] text-gray-500 dark:text-gray-400">{t('teacherAttendanceManagement')}</p>
         </div>
         <div className="flex gap-2">
           <button 
@@ -193,13 +193,13 @@ export const Attendance = () => {
             className="flex items-center gap-2 bg-blue-600 hover:bg-blue-700 text-white px-3 py-1.5 rounded-md transition-colors text-xs font-normal border border-blue-700"
           >
             <RefreshCw className="w-3.5 h-3.5" />
-            <span>{t.refresh}</span>
+            <span>{t('refresh')}</span>
           </button>
           <button 
             className="flex items-center gap-2 bg-emerald-600 hover:bg-emerald-700 text-white px-3 py-1.5 rounded-md transition-colors text-xs font-normal border border-emerald-700"
           >
             <Download className="w-3.5 h-3.5" />
-            <span>{t.export}</span>
+            <span>{t('export')}</span>
           </button>
         </div>
       </div>
@@ -222,7 +222,7 @@ export const Attendance = () => {
                 Total
               </div>
             </div>
-            <div className="text-[10px] font-semibold tracking-wide text-gray-500 dark:text-gray-400 mb-0.5">{t.teachers}</div>
+            <div className="text-[10px] font-semibold tracking-wide text-gray-500 dark:text-gray-400 mb-0.5">{t('teachers')}</div>
             <div className="text-xl font-black text-gray-900 dark:text-white">{stats.totalTeachers}</div>
           </div>
 
@@ -239,7 +239,7 @@ export const Attendance = () => {
                 <span>{stats.attendanceRate.toFixed(1)}%</span>
               </div>
             </div>
-            <div className="text-[10px] font-semibold tracking-wide text-gray-500 dark:text-gray-400 mb-0.5">{t.present}</div>
+            <div className="text-[10px] font-semibold tracking-wide text-gray-500 dark:text-gray-400 mb-0.5">{t('present')}</div>
             <div className="text-xl font-black text-gray-900 dark:text-white">{stats.present}</div>
           </div>
 
@@ -258,7 +258,7 @@ export const Attendance = () => {
                 <span>{stats.lateRate.toFixed(1)}%</span>
               </div>
             </div>
-            <div className="text-[10px] font-semibold tracking-wide text-gray-500 dark:text-gray-400 mb-0.5">{t.lates}</div>
+            <div className="text-[10px] font-semibold tracking-wide text-gray-500 dark:text-gray-400 mb-0.5">{t('lates')}</div>
             <div className="text-xl font-black text-gray-900 dark:text-white">{stats.late}</div>
           </div>
 
@@ -277,7 +277,7 @@ export const Attendance = () => {
                 <span>{stats.absent}</span>
               </div>
             </div>
-            <div className="text-[10px] font-semibold tracking-wide text-gray-500 dark:text-gray-400 mb-0.5">{t.absent}</div>
+            <div className="text-[10px] font-semibold tracking-wide text-gray-500 dark:text-gray-400 mb-0.5">{t('absent')}</div>
             <div className="text-xl font-black text-gray-900 dark:text-white">{stats.absent}</div>
           </div>
         </div>
@@ -298,7 +298,7 @@ export const Attendance = () => {
               onClick={goToToday}
               className="px-3 py-1.5 bg-blue-600 hover:bg-blue-700 text-white rounded-md text-xs font-normal transition-colors border border-blue-700"
             >
-              {t.today}
+              {t('today')}
             </button>
             <button 
               onClick={goToPreviousDay}
@@ -321,7 +321,7 @@ export const Attendance = () => {
 
           {/* Year and Month Selectors */}
           <div className="flex items-center gap-2">
-            <span className="text-xs font-medium text-gray-500 dark:text-gray-400">{t.year}:</span>
+            <span className="text-xs font-medium text-gray-500 dark:text-gray-400">{t('year')}:</span>
             <select 
               value={selectedYear}
               onChange={(e) => {
@@ -339,7 +339,7 @@ export const Attendance = () => {
               })}
             </select>
             
-            <span className="text-xs font-medium text-gray-500 dark:text-gray-400 ml-2">{t.month}:</span>
+            <span className="text-xs font-medium text-gray-500 dark:text-gray-400 ml-2">{t('month')}:</span>
             <select 
               value={selectedMonth}
               onChange={(e) => {
@@ -379,7 +379,7 @@ export const Attendance = () => {
         <div className="flex flex-col lg:flex-row gap-3 justify-between">
           {/* View Mode Toggle */}
           <div className="flex gap-2 items-center">
-            <span className="text-xs font-medium text-gray-500 dark:text-gray-400">{t.display}:</span>
+            <span className="text-xs font-medium text-gray-500 dark:text-gray-400">{t('display')}:</span>
             <div className="flex bg-gray-50 dark:bg-slate-700 p-0.5 rounded-md border border-gray-200 dark:border-slate-600">
               <button 
                 onClick={() => setViewMode('list')}
@@ -390,7 +390,7 @@ export const Attendance = () => {
                 }`}
               >
                 <List className="w-3.5 h-3.5" />
-                <span>{t.list}</span>
+                <span>{t('list')}</span>
               </button>
               <button 
                 onClick={() => setViewMode('card')}
@@ -401,7 +401,7 @@ export const Attendance = () => {
                 }`}
               >
                 <LayoutGrid className="w-3.5 h-3.5" />
-                <span>{t.cards}</span>
+                <span>{t('cards')}</span>
               </button>
             </div>
           </div>
@@ -414,17 +414,17 @@ export const Attendance = () => {
               onChange={(e) => setFilterStatus(e.target.value)}
               className="bg-gray-50 dark:bg-slate-700 border border-gray-200 dark:border-slate-600 rounded-md text-xs px-3 py-1.5 dark:text-white focus:ring-2 focus:ring-blue-500"
             >
-              <option value="ALL">{t.allStatuses}</option>
-              <option value="PRESENT">{t.present}</option>
-              <option value="LATE">{t.lates}</option>
-              <option value="ABSENT">{t.absent}</option>
+              <option value="ALL">{t('allStatuses')}</option>
+              <option value="PRESENT">{t('present')}</option>
+              <option value="LATE">{t('lates')}</option>
+              <option value="ABSENT">{t('absent')}</option>
             </select>
 
             <div className="relative">
               <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 w-3.5 h-3.5 text-gray-400" />
               <input
                 type="text"
-                placeholder={t.searchPlaceholder}
+                placeholder={t('searchPlaceholder')}
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
                 className="pl-9 pr-3 py-1.5 bg-gray-50 dark:bg-slate-700 border border-gray-200 dark:border-slate-600 rounded-md text-xs dark:text-white focus:ring-2 focus:ring-blue-500"
@@ -443,28 +443,28 @@ export const Attendance = () => {
               <thead className="bg-gray-50 dark:bg-slate-700/50 border-b border-gray-200 dark:border-slate-700">
                 <tr>
                   <th className="px-4 py-3 text-left text-[10px] font-bold text-gray-600 dark:text-gray-300 uppercase tracking-wider">
-                    {t.teacher}
+                    {t('teacher')}
                   </th>
                   <th className="px-4 py-3 text-left text-[10px] font-bold text-gray-600 dark:text-gray-300 uppercase tracking-wider">
-                    {t.matricule}
+                    {t('matricule')}
                   </th>
                   <th className="px-4 py-3 text-left text-[10px] font-bold text-gray-600 dark:text-gray-300 uppercase tracking-wider">
-                    {t.specialty}
+                    {t('specialty')}
                   </th>
                   <th className="px-4 py-3 text-center text-[10px] font-bold text-gray-600 dark:text-gray-300 uppercase tracking-wider">
-                    {t.arrival}
+                    {t('arrival')}
                   </th>
                   <th className="px-4 py-3 text-center text-[10px] font-bold text-gray-600 dark:text-gray-300 uppercase tracking-wider">
-                    {t.departure}
+                    {t('departure')}
                   </th>
                   <th className="px-4 py-3 text-center text-[10px] font-bold text-gray-600 dark:text-gray-300 uppercase tracking-wider">
-                    {t.duration}
+                    {t('duration')}
                   </th>
                   <th className="px-4 py-3 text-center text-[10px] font-bold text-gray-600 dark:text-gray-300 uppercase tracking-wider">
-                    {t.late}
+                    {t('late')}
                   </th>
                   <th className="px-4 py-3 text-center text-[10px] font-bold text-gray-600 dark:text-gray-300 uppercase tracking-wider">
-                    {t.status}
+                    {t('status')}
                   </th>
                 </tr>
               </thead>
@@ -475,7 +475,7 @@ export const Attendance = () => {
                       <div className="flex flex-col items-center justify-center">
                         <AlertCircle className="w-12 h-12 text-gray-300 dark:text-gray-600 mb-3" />
                         <p className="text-sm text-gray-500 dark:text-gray-400 font-medium">
-                          {t.noAttendanceRecorded}
+                          {t('noAttendanceRecorded')}
                         </p>
                       </div>
                     </td>
@@ -632,7 +632,7 @@ export const Attendance = () => {
           className="bg-gray-50 dark:bg-slate-800/50 rounded-md border border-gray-200 dark:border-slate-700"
         >
           <div className="text-xs text-gray-600 dark:text-gray-400">
-            <span className="font-bold text-gray-900 dark:text-white">{filteredAttendances.length}</span> résultat(s) affiché(s)
+            <span className="font-bold text-gray-900 dark:text-white">{filteredAttendances.length}</span> {t('resultsDisplayed')}
           </div>
         </div>
       )}

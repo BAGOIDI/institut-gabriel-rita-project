@@ -1,0 +1,48 @@
+code,libelle,coddom
+AGFOSC,Agricutural And Food Sciences,AGENSC
+AGRELE,Agriculture et élevage,AGRPAS
+ARMECU,Arts Et Metiers De La Culture,ARCUED
+ARTCUL,Arts And Culture,ARCUEC
+BIOENG,Biological Engineering,HEALTH
+BUSFIN,Business And Finance,MABUCA
+CARJUR,Carrieres Juridiques,MABUCA
+CHEENG,Chemical Engineering,INGTEC
+CIVENG,Civil Engineering,INGTEC
+COMENG,Computer Engineering,ICT
+COMMUN,Communication,ICT
+COMVEN,Commerce-Vente,COGEDR
+ECENSO,Economie Et Entrepreunariat Social,COGEDR
+EDUCAT,Education,ARCUEC
+ELEENG,Electrical And Electronic Engineering,INGTEC
+ELELEN,Electrical And Electronic Engineering,INGTEC
+ENSCSP,Environmental Sciences Specialities,AGENSC
+FINANC,Finances et affaires,FINANC
+FORPRO,Formation professionnelle,FORM
+GEMEPR,Genie Mecanique Et Productique,INDTEC
+GENBIO,Genie Biologique1,SANTE
+GENCHI,Genie Chimique et des procédés,INDTEC
+GENCIV,Génie civil,INDTEC
+GENELE,Génie électrique,INDTEC
+GENELT,Genie Electronique,INDTEC
+GENIND,Génie industriel,INDTEC
+GENINF,Génie informatique,TIC
+GENTHE,Génie thermique,INDTEC
+GESTIO,Gestion,COGEDR
+HOECSW,Home Economics And Social Work,MABUCA
+INFCOM,Information Et Communication,ARCUEC
+INGEAU,Ingénieurie et gestion des eaux,EAUENV
+LEGCAR,Legal Careers,MABUCA
+MANAGE,Management,MABUCA
+MECENG,Mechanical Engineering,INGTEC
+MEDBIS,Medical And Biomedical Sciences ,HEALTH
+MEDSAN,Etudes médico-sanitaires,SANTE
+METTEL,Networks And Telecommunication,ICT
+PEMIEN,Petroleum And Mining Engineering,INGTEC
+SCIEDU,Sciences De L'Education,ARCUEC
+SCIENV,Sciences Environnementales,AGENSC
+SCITEB,Sciences Et Techniques Biomedicales,SANTE
+SCTEAP,Sciences Et Techniques Des Activites Physiques Et Sportives (Staps),ARCUEC
+THENEN,Thermal And Energy Engineering,INDTEC
+TOHOMA,Tourism And Hotel Management,HOECTO
+TOHORE,"Tourisme, Hotellerie, Restauration",TOHOSS
+WAENMA,Water Engineering And Management,INDTEC

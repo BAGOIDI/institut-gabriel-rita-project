@@ -3,7 +3,6 @@ import {
   Plus, 
   Search, 
   Download,
-  Upload,
   Calendar,
   Clock,
   User,
@@ -11,16 +10,15 @@ import {
   MapPin,
   ChevronLeft,
   ChevronRight,
-  Edit,
   Trash2,
   X,
   Save,
   Loader2,
-  RefreshCw
+  RefreshCw,
+  Settings
 } from 'lucide-react';
 import api from '../services/api.service';
 import ScheduleExportModal from '../components/ScheduleExportModal';
-import reportService from '../services/report.service';
 import { useTheme } from '../contexts/ThemeContext';
 import { SystemOptionsService, SystemOption } from '../services/system-options.service';
 import { CoreService } from '../services/core.service';
@@ -30,6 +28,9 @@ import ClassTimetableView from '../components/ClassTimetableView';
 import FreeSlotFinder from '../components/FreeSlotFinder';
 import Tooltip from '../components/Tooltip';
 import SearchableSelect from '../components/SearchableSelect';
+import { useTranslation } from '../hooks/useTranslation';
+import WhatsAppSender from '../components/WhatsAppSender';
+import TimetableConfig from '../components/TimetableConfig';
 
 interface TimeSlot {
   id: string;
@@ -48,16 +49,18 @@ interface TimeSlot {
 
 export const Timetable = () => {
   const { language } = useTheme();
+  const { t } = useTranslation();
   const notify = useNotification();
 
-  // 1. Tous les states en premier
+  // 1. States
   const [loading, setLoading] = useState(false);
   const [timeSlots, setTimeSlots] = useState<TimeSlot[]>([]);
-  const [selectedClass, setSelectedClass] = useState('');
   const [viewMode, setViewMode] = useState<'class' | 'teacher' | 'synthesis_class' | 'free_slot'>(
     () => (localStorage.getItem('timetable_viewMode') as any) || 'class'
   );
-  const [calendarView, setCalendarView] = useState<'day' | 'week' | 'month'>('week');
+  const [calendarView, setCalendarView] = useState<'day' | 'week' | 'month'>(
+    () => (localStorage.getItem('timetable_calendarView') as any) || 'week'
+  );
   const [currentDate, setCurrentDate] = useState(new Date());
   const [selectedFilter, setSelectedFilter] = useState<string>(
     () => localStorage.getItem('timetable_selectedFilter') || ''
@@ -67,16 +70,21 @@ export const Timetable = () => {
   const [draggedSlot, setDraggedSlot] = useState<TimeSlot | null>(null);
   const [dragOverCell, setDragOverCell] = useState<{ day: number, time: string } | null>(null);
   const [showExportModal, setShowExportModal] = useState(false);
+  const [exportData, setExportData] = useState<any>(null);
   const [confirmOpen, setConfirmOpen] = useState(false);
   const [targetDeleteId, setTargetDeleteId] = useState<string | null>(null);
   const [deleteLoading, setDeleteLoading] = useState(false);
   const [showSpecialtySelector, setShowSpecialtySelector] = useState(false);
-  const [searchTerm, setSearchTerm] = useState('');
   const [hoveredSlot, setHoveredSlot] = useState<TimeSlot | null>(null);
   const [conflictingSlot, setConflictingSlot] = useState<TimeSlot | null>(null);
   const [viewPeriod, setViewPeriod] = useState<'day' | 'evening' | 'all'>(
     () => (localStorage.getItem('timetable_viewPeriod') as any) || 'all'
   );
+  const [showConfiguration, setShowConfiguration] = useState(false);
+
+  const [selectedSpecialty, setSelectedSpecialty] = useState<string>('');
+  const [selectedLevel, setSelectedLevel] = useState<string>('');
+  const [selectedRoom, setSelectedRoom] = useState<string>('');
 
   const [teachers, setTeachers] = useState<any[]>([]);
   const [classes, setClasses] = useState<any[]>([]);
@@ -91,17 +99,6 @@ export const Timetable = () => {
   const [dialogTeachers, setDialogTeachers] = useState<any[]>([]);
   const [dialogLoading, setDialogLoading] = useState(false);
 
-  const [selectedSpecialties, setSelectedSpecialties] = useState<string[]>(
-    () => {
-      try {
-        const saved = localStorage.getItem('timetable_selectedSpecialties');
-        return saved ? JSON.parse(saved) : [];
-      } catch (e) {
-        return [];
-      }
-    }
-  );
-  
   const [selectedSynthesisClasses, setSelectedSynthesisClasses] = useState<string[]>(
     () => {
       try {
@@ -123,7 +120,7 @@ export const Timetable = () => {
     roomName: '',
   });
 
-  // 2. Tous les useMemo après les states
+  // 2. Memos
   const LOCAL_TIME_SLOTS = useMemo(() => {
     const allSlots = [
       { type: 'Cours', value: '08:00', end: '09:50', labelFr: '08:00 - 09:50', labelEn: '08:00 - 09:50' },
@@ -153,16 +150,16 @@ export const Timetable = () => {
       value: s.value,
       labelFr: s.labelFr,
       labelEn: s.labelEn,
-      label: s.labelFr,
+      label: language === 'fr' ? s.labelFr : s.labelEn,
       isActive: true,
     }));
-  }, [LOCAL_TIME_SLOTS]);
+  }, [LOCAL_TIME_SLOTS, language]);
 
   const LOCAL_END_TIMES = useMemo(() => {
     return Array.from(new Set(LOCAL_TIME_SLOTS.map(s => s.end)));
   }, [LOCAL_TIME_SLOTS]);
 
-  // 3. Tous les useEffect après les useMemo
+  // 3. Effects
   useEffect(() => {
     const checkConflicts = () => {
       if (!showModal) {
@@ -177,7 +174,7 @@ export const Timetable = () => {
       }
 
       const conflict = timeSlots.find(slot => {
-        if (selectedSlot && slot.id === selectedSlot.id) return false; // Ne pas se comparer à soi-même
+        if (selectedSlot && slot.id === selectedSlot.id) return false;
 
         const sameDay = String(slot.dayOfWeek) === dayOfWeek;
         const overlaps = slot.startTime < endTime && slot.endTime > startTime;
@@ -198,19 +195,11 @@ export const Timetable = () => {
 
   useEffect(() => {
     localStorage.setItem('timetable_viewMode', viewMode);
-  }, [viewMode]);
-
-  useEffect(() => {
+    localStorage.setItem('timetable_calendarView', calendarView);
     localStorage.setItem('timetable_selectedFilter', selectedFilter);
-  }, [selectedFilter]);
-
-  useEffect(() => {
-    localStorage.setItem('timetable_selectedSpecialties', JSON.stringify(selectedSpecialties));
-  }, [selectedSpecialties]);
-
-  useEffect(() => {
+    localStorage.setItem('timetable_viewPeriod', viewPeriod);
     localStorage.setItem('timetable_selectedSynthesisClasses', JSON.stringify(selectedSynthesisClasses));
-  }, [selectedSynthesisClasses]);
+  }, [viewMode, calendarView, selectedFilter, viewPeriod, selectedSynthesisClasses]);
 
   // Chargement dynamique des options du dialogue
   useEffect(() => {
@@ -221,7 +210,6 @@ export const Timetable = () => {
       try {
         const { classId, staffId, subjectId } = formData;
         
-        // S'assurer que les résultats sont des tableaux
         const toArr = (v: any) => {
           if (!v) return [];
           if (Array.isArray(v)) return v;
@@ -229,10 +217,8 @@ export const Timetable = () => {
           return [];
         };
 
-        // Toujours charger toutes les classes (sauf si on veut vraiment restreindre)
         setDialogClasses(classes);
 
-        // Si une classe est sélectionnée, on restreint les matières et enseignants
         if (classId) {
           const subjectsForClass = toArr(await CoreService.getSubjectsByClassV2(classId));
           const teachersForClass = toArr(await CoreService.getTeachersByClassV2(classId));
@@ -240,15 +226,12 @@ export const Timetable = () => {
           let finalSubjects = subjectsForClass;
           let finalTeachers = teachersForClass;
 
-          // Si une matière est aussi sélectionnée, on filtre les enseignants qui l'enseignent
           if (subjectId) {
-            // On peut appeler l'endpoint générique avec les 2 filtres
             const mappings = toArr(await CoreService.getAll('teacher-subject-class', { classId, subjectId }));
             const teacherIds = mappings.map((m: any) => m.staffId);
             finalTeachers = teachersForClass.filter((t: any) => teacherIds.includes(t.id));
           }
 
-          // Si un enseignant est aussi sélectionné, on filtre les matières qu'il enseigne dans cette classe
           if (staffId) {
             const mappings = toArr(await CoreService.getAll('teacher-subject-class', { classId, staffId }));
             const subjectIds = mappings.map((m: any) => m.subjectId);
@@ -258,7 +241,6 @@ export const Timetable = () => {
           setDialogSubjects(finalSubjects);
           setDialogTeachers(finalTeachers);
         } else {
-          // Si aucune classe n'est sélectionnée, on montre tout (ou on pourrait forcer la sélection d'une classe d'abord)
           setDialogSubjects(subjects);
           setDialogTeachers(teachers);
         }
@@ -273,10 +255,6 @@ export const Timetable = () => {
   }, [showModal, formData.classId, formData.staffId, formData.subjectId, classes, subjects, teachers]);
 
   useEffect(() => {
-    localStorage.setItem('timetable_viewPeriod', viewPeriod);
-  }, [viewPeriod]);
-
-  useEffect(() => {
     setTimeSlotOptions(LOCAL_TIME_OPTIONS);
   }, [LOCAL_TIME_OPTIONS]);
 
@@ -284,22 +262,27 @@ export const Timetable = () => {
     loadDynamicOptions();
   }, []);
 
-
-
   // Jours de la semaine par défaut
   const DEFAULT_DAYS: SystemOption[] = useMemo(() => ([
-    { id: 1, category: 'TIMETABLE_DAY', value: '1', labelFr: 'Lundi', labelEn: 'Monday', label: 'Lundi', isActive: true },
-    { id: 2, category: 'TIMETABLE_DAY', value: '2', labelFr: 'Mardi', labelEn: 'Tuesday', label: 'Mardi', isActive: true },
-    { id: 3, category: 'TIMETABLE_DAY', value: '3', labelFr: 'Mercredi', labelEn: 'Wednesday', label: 'Mercredi', isActive: true },
-    { id: 4, category: 'TIMETABLE_DAY', value: '4', labelFr: 'Jeudi', labelEn: 'Thursday', label: 'Jeudi', isActive: true },
-    { id: 5, category: 'TIMETABLE_DAY', value: '5', labelFr: 'Vendredi', labelEn: 'Friday', label: 'Vendredi', isActive: true },
-    { id: 6, category: 'TIMETABLE_DAY', value: '6', labelFr: 'Samedi', labelEn: 'Saturday', label: 'Samedi', isActive: true },
-  ]), []);
+    { id: 1, category: 'TIMETABLE_DAY', value: '1', labelFr: 'Lundi', labelEn: 'Monday', label: language === 'fr' ? 'Lundi' : 'Monday', isActive: true },
+    { id: 2, category: 'TIMETABLE_DAY', value: '2', labelFr: 'Mardi', labelEn: 'Tuesday', label: language === 'fr' ? 'Mardi' : 'Tuesday', isActive: true },
+    { id: 3, category: 'TIMETABLE_DAY', value: '3', labelFr: 'Mercredi', labelEn: 'Wednesday', label: language === 'fr' ? 'Mercredi' : 'Wednesday', isActive: true },
+    { id: 4, category: 'TIMETABLE_DAY', value: '4', labelFr: 'Jeudi', labelEn: 'Thursday', label: language === 'fr' ? 'Jeudi' : 'Thursday', isActive: true },
+    { id: 5, category: 'TIMETABLE_DAY', value: '5', labelFr: 'Vendredi', labelEn: 'Friday', label: language === 'fr' ? 'Vendredi' : 'Friday', isActive: true },
+    { id: 6, category: 'TIMETABLE_DAY', value: '6', labelFr: 'Samedi', labelEn: 'Saturday', label: language === 'fr' ? 'Samedi' : 'Saturday', isActive: true },
+  ]), [language]);
+
+  const filteredClasses = useMemo(() => {
+    return classes.filter(cls => {
+      const matchSpecialty = !selectedSpecialty || String(cls.specialty?.id) === selectedSpecialty;
+      const matchLevel = !selectedLevel || String(cls.level) === selectedLevel;
+      return matchSpecialty && matchLevel;
+    });
+  }, [classes, selectedSpecialty, selectedLevel]);
 
   const loadDynamicOptions = async () => {
     try {
       setLoading(true);
-      setTimeSlotOptions(LOCAL_TIME_OPTIONS);
       const toArray = (v: any) => {
         if (!v) return [];
         if (Array.isArray(v)) return v;
@@ -317,24 +300,18 @@ export const Timetable = () => {
       ] = await Promise.all([
         SystemOptionsService.getByCategory('TIMETABLE_DAY').catch(() => ({ items: [] })),
         SystemOptionsService.getByCategory('TIMETABLE_ROOM').catch(() => ({ items: [] })),
-        // Le backend /classes n'accepte pas "limit" (ValidationPipe forbidNonWhitelisted)
         CoreService.getAll('classes').catch(() => ({ items: [] })),
-        // Le backend /staff peut refuser des query params non whitelistés
         CoreService.getAll('staff').catch(() => ({ items: [] })),
-        // Le backend /subjects n'accepte pas "limit" (ValidationPipe forbidNonWhitelisted)
         CoreService.getAll('subjects').catch(() => ({ items: [] })),
         CoreService.getAll('specialties').catch(() => ({ items: [] }))
       ]);
 
       let daysArr = toArray(daysRes);
-      if (daysArr.length === 0) {
-        daysArr = DEFAULT_DAYS;
-      }
+      if (daysArr.length === 0) daysArr = DEFAULT_DAYS;
       const roomsArr = toArray(roomsRes);
       setDays(daysArr);
       setRooms(roomsArr);
-      // Créneaux horaires issus du frontend pour l'instant
-      setTimeSlotOptions(LOCAL_TIME_OPTIONS);
+      
       const classesArr = toArray(classesRes);
       const teachersArr = toArray(teachersRes);
       const subjectsArr = toArray(subjectsRes);
@@ -348,30 +325,26 @@ export const Timetable = () => {
       });
       const subjectsSorted = subjectsArr.slice().sort((a: any, b: any) => String(a.name).localeCompare(String(b.name)));
       const specialtiesSorted = specialtiesArr.slice().sort((a: any, b: any) => String(a.code).localeCompare(String(b.code)));
+      
       setClasses(classesSorted);
       setTeachers(teachersSorted);
       setSubjects(subjectsSorted);
       setSpecialties(specialtiesSorted);
-      if (selectedSpecialties.length === 0) {
-        setSelectedSpecialties(specialtiesSorted.map(s => s.id));
-      }
 
-      // Set default values if not set
       if (daysArr.length > 0 && !formData.dayOfWeek) {
         const v = String((daysArr[0] as any).value ?? daysArr[0].id ?? '1');
         setFormData(prev => ({ ...prev, dayOfWeek: v }));
       }
+      
       if (!selectedFilter) {
-        if (viewMode === 'class' && classesArr.length > 0) {
-          setSelectedFilter(String(classesArr[0].id));
-        } else if (viewMode === 'teacher' && teachersArr.length > 0) {
-          const t = teachersArr[0];
-          setSelectedFilter(String(t.id));
+        if (viewMode === 'class' && classesSorted.length > 0) {
+          setSelectedFilter(String(classesSorted[0].id));
+        } else if (viewMode === 'teacher' && teachersSorted.length > 0) {
+          setSelectedFilter(String(teachersSorted[0].id));
         }
       }
     } catch (error) {
       console.error('Erreur lors du chargement des options', error);
-      setTimeSlotOptions(LOCAL_TIME_OPTIONS);
     } finally {
       setLoading(false);
     }
@@ -389,126 +362,78 @@ export const Timetable = () => {
     return js === 0 ? 7 : js; // 1=Mon ... 6=Sat, 7=Sun
   };
 
-  // Génération dynamique des jours selon la vue
   const displayDays = useMemo(() => {
-    if (calendarView === 'day') {
-      return [currentDate];
-    } else if (calendarView === 'week') {
-      // Obtenir le lundi de la semaine
-      const monday = new Date(currentDate);
-      const day = monday.getDay();
-      const diff = monday.getDate() - day + (day === 0 ? -6 : 1);
-      monday.setDate(diff);
-      
-      // Générer les 6 jours (Lundi à Samedi)
-      return Array.from({ length: 6 }, (_, i) => {
-        const date = new Date(monday);
-        date.setDate(monday.getDate() + i);
-        return date;
-      });
-    } else {
-      // Vue mois : afficher seulement la première semaine pour la vue détaillée
-      const year = currentDate.getFullYear();
-      const month = currentDate.getMonth();
-      const firstDay = new Date(year, month, 1);
-      
-      // Obtenir le lundi de la première semaine du mois
-      const monday = new Date(firstDay);
-      const day = monday.getDay();
-      const diff = monday.getDate() - day + (day === 0 ? -6 : 1);
-      monday.setDate(diff);
-      
-      // Générer les 6 jours (Lundi à Samedi)
-      return Array.from({ length: 6 }, (_, i) => {
-        const date = new Date(monday);
-        date.setDate(monday.getDate() + i);
-        return date;
-      });
-    }
+    if (calendarView === 'day') return [currentDate];
+    const monday = new Date(currentDate);
+    const day = monday.getDay();
+    const diff = monday.getDate() - day + (day === 0 ? -6 : 1);
+    monday.setDate(diff);
+    return Array.from({ length: 6 }, (_, i) => {
+      const date = new Date(monday);
+      date.setDate(monday.getDate() + i);
+      return date;
+    });
   }, [calendarView, currentDate]);
 
-  // Générer toutes les semaines du mois pour la vue mois
   const monthWeeks = useMemo(() => {
     if (calendarView !== 'month') return [];
-    
     const year = currentDate.getFullYear();
     const month = currentDate.getMonth();
     const firstDay = new Date(year, month, 1);
     const lastDay = new Date(year, month + 1, 0);
-    
-    // Obtenir le lundi de la première semaine
     const startMonday = new Date(firstDay);
     const startDay = startMonday.getDay();
     const startDiff = startMonday.getDate() - startDay + (startDay === 0 ? -6 : 1);
     startMonday.setDate(startDiff);
-    
-    // Générer toutes les semaines jusqu'à couvrir le dernier jour du mois
     const weeks: Date[][] = [];
     let currentWeekStart = new Date(startMonday);
-    
-    while (currentWeekStart <= lastDay || weeks.length === 0 || weeks[weeks.length - 1][weeks[weeks.length - 1].length - 1] < lastDay) {
+    while (currentWeekStart <= lastDay || weeks.length === 0) {
       const week = Array.from({ length: 6 }, (_, i) => {
         const date = new Date(currentWeekStart);
         date.setDate(currentWeekStart.getDate() + i);
         return date;
       });
       weeks.push(week);
-      
-      // Passer à la semaine suivante
       currentWeekStart.setDate(currentWeekStart.getDate() + 7);
-      
-      // Éviter les boucles infinies
       if (weeks.length > 6) break;
     }
-    
     return weeks;
   }, [calendarView, currentDate]);
 
-  // Navigation
   const goToPrevious = () => {
     const newDate = new Date(currentDate);
-    if (calendarView === 'day') {
-      newDate.setDate(currentDate.getDate() - 1);
-    } else if (calendarView === 'week') {
-      newDate.setDate(currentDate.getDate() - 7);
-    } else {
-      // Vue mois : naviguer par mois
-      newDate.setMonth(currentDate.getMonth() - 1);
-    }
+    if (calendarView === 'day') newDate.setDate(currentDate.getDate() - 1);
+    else if (calendarView === 'week') newDate.setDate(currentDate.getDate() - 7);
+    else newDate.setMonth(currentDate.getMonth() - 1);
     setCurrentDate(newDate);
   };
 
   const goToNext = () => {
     const newDate = new Date(currentDate);
-    if (calendarView === 'day') {
-      newDate.setDate(currentDate.getDate() + 1);
-    } else if (calendarView === 'week') {
-      newDate.setDate(currentDate.getDate() + 7);
-    } else {
-      // Vue mois : naviguer par mois
-      newDate.setMonth(currentDate.getMonth() + 1);
-    }
+    if (calendarView === 'day') newDate.setDate(currentDate.getDate() + 1);
+    else if (calendarView === 'week') newDate.setDate(currentDate.getDate() + 7);
+    else newDate.setMonth(currentDate.getMonth() + 1);
     setCurrentDate(newDate);
   };
 
-  const goToToday = () => {
-    setCurrentDate(new Date());
-  };
+  const goToToday = () => setCurrentDate(new Date());
 
-  // Formater le titre de la période
   const getPeriodTitle = () => {
-    if (calendarView === 'day') {
-      return currentDate.toLocaleDateString('fr-FR', { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' });
-    } else if (calendarView === 'week') {
+    const locale = language === 'fr' ? 'fr-FR' : 'en-US';
+    if (calendarView === 'day') return currentDate.toLocaleDateString(locale, { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' });
+    if (calendarView === 'week') {
       const firstDay = displayDays[0];
       const lastDay = displayDays[displayDays.length - 1];
-      return `${firstDay.toLocaleDateString('fr-FR', { day: 'numeric', month: 'short' })} - ${lastDay.toLocaleDateString('fr-FR', { day: 'numeric', month: 'short', year: 'numeric' })}`;
-    } else {
-      return currentDate.toLocaleDateString('fr-FR', { month: 'long', year: 'numeric' });
+      return `${firstDay.toLocaleDateString(locale, { day: 'numeric', month: 'short' })} - ${lastDay.toLocaleDateString(locale, { day: 'numeric', month: 'short', year: 'numeric' })}`;
     }
+    return currentDate.toLocaleDateString(locale, { month: 'long', year: 'numeric' });
   };
 
   const refreshTimetableData = async () => {
+    if (!selectedFilter && (viewMode === 'class' || viewMode === 'teacher')) {
+      setTimeSlots([]);
+      return;
+    }
     setLoading(true);
     try {
       let url;
@@ -517,23 +442,16 @@ export const Timetable = () => {
         url = `/api/planning/schedules/staff/${selectedFilter}`;
       } else {
         url = `/api/planning/schedules`;
-        if (viewMode === 'class' && selectedFilter) {
-          params.classId = selectedFilter;
-        }
+        if (viewMode === 'class' && selectedFilter) params.classId = selectedFilter;
       }
       
       const response = await api.get(url, { params });
       const data = response.data;
       
-      // Mapper les données du backend vers le format attendu
       const mappedSlots: TimeSlot[] = Array.isArray(data) ? data.map((slot: any) => {
         const subjectObj = subjects.find((s: any) => String(s.id) === String(slot.subjectId));
         const teacherObj = teachers.find((t: any) => String(t.id) === String(slot.staffId));
         const classObj = classes.find((c: any) => String(c.id) === String(slot.classId));
-
-        const subjectName = subjectObj?.name || `Matière #${slot.subjectId ?? ''}`.trim();
-        const teacherName = teacherObj ? `${teacherObj.firstName} ${teacherObj.lastName}`.trim() : `Enseignant #${slot.staffId ?? ''}`.trim();
-        const className = classObj?.name || `Classe #${slot.classId ?? ''}`.trim();
 
         return {
           id: slot.id?.toString() || `temp-${Math.random()}`,
@@ -541,21 +459,25 @@ export const Timetable = () => {
           startTime: String(slot.startTime || '').substring(0, 5) || '08:00',
           endTime: String(slot.endTime || '').substring(0, 5) || '09:00',
           subjectId: Number(slot.subjectId) || 0,
-          subjectName,
+          subjectName: subjectObj?.name || `${t('subject')} #${slot.subjectId ?? ''}`,
           staffId: Number(slot.staffId) || 0,
-          teacherName,
+          teacherName: teacherObj ? `${teacherObj.firstName} ${teacherObj.lastName}` : `${t('teacher')} #${slot.staffId ?? ''}`,
           classId: Number(slot.classId) || 0,
-          className,
+          className: classObj?.name || `${t('class')} #${slot.classId ?? ''}`,
           roomName: slot.roomName || '',
           color: subjectObj?.color || '#3b82f6',
         };
       }) : [];
 
-      // Filtrer côté frontend selon la vue
       let filtered = mappedSlots;
       if (viewMode === 'class' && selectedFilter) {
         filtered = mappedSlots.filter(s => String(s.classId) === String(selectedFilter));
       }
+      
+      if (selectedRoom) {
+        filtered = filtered.filter(s => s.roomName === selectedRoom);
+      }
+
       setTimeSlots(filtered);
     } catch (error) {
       console.error('Erreur lors du chargement de l\'emploi du temps', error);
@@ -570,7 +492,6 @@ export const Timetable = () => {
     const color = found?.color || '#3b82f6';
     const bg = found?.backgroundColor || '#eff6ff';
     if (found?.color || found?.backgroundColor) return { color, bg };
-    // fallback deterministic color when backend doesn't provide colors
     let hash = 0;
     for (let i = 0; i < subjectName.length; i++) hash = (hash * 31 + subjectName.charCodeAt(i)) >>> 0;
     const hue = hash % 360;
@@ -593,20 +514,17 @@ export const Timetable = () => {
 
   const SLOT_OFFSETS = useMemo(() => {
     let offset = 0;
-    const arr = SLOT_META.map(meta => {
+    return SLOT_META.map(meta => {
       const entry = { start: meta.start, end: meta.end, offset, height: meta.height, type: meta.type };
       offset += meta.height;
       return entry;
     });
-    return arr;
   }, [SLOT_META]);
 
   const getTimeSlotTop = (startTime: string) => {
     const startMin = toMinutes(startTime);
-    // Trouver le segment dont le start correspond
     const seg = SLOT_OFFSETS.find(s => s.start === startMin);
     if (seg) return seg.offset;
-    // Sinon approcher: prendre le segment précédent
     const prev = [...SLOT_OFFSETS].reverse().find(s => s.start < startMin);
     return prev ? prev.offset : 0;
   };
@@ -615,26 +533,15 @@ export const Timetable = () => {
     const startMin = toMinutes(startTime);
     const endMin = toMinutes(endTime);
     if (endMin <= startMin) return 0;
-    // Somme des hauteurs des segments entièrement inclus
     let height = 0;
     for (const seg of SLOT_OFFSETS) {
-      // Aucun chevauchement
       if (seg.end <= startMin) continue;
       if (seg.start >= endMin) break;
-      // Si entièrement inclus
-      if (seg.start >= startMin && seg.end <= endMin) {
-        height += seg.height;
-      } else if (startMin >= seg.start && endMin <= seg.end) {
-        // Inclus partiel dans un seul segment
-        const ratio = (endMin - startMin) / (seg.end - seg.start);
-        height += Math.max(0, ratio * seg.height);
-      } else if (startMin > seg.start && startMin < seg.end) {
-        // Début en milieu de segment
-        const ratio = (seg.end - startMin) / (seg.end - seg.start);
-        height += Math.max(0, ratio * seg.height);
-      } else if (endMin > seg.start && endMin < seg.end) {
-        // Fin en milieu de segment
-        const ratio = (endMin - seg.start) / (seg.end - seg.start);
+      if (seg.start >= startMin && seg.end <= endMin) height += seg.height;
+      else {
+        const intersectionStart = Math.max(startMin, seg.start);
+        const intersectionEnd = Math.min(endMin, seg.end);
+        const ratio = (intersectionEnd - intersectionStart) / (seg.end - seg.start);
         height += Math.max(0, ratio * seg.height);
       }
     }
@@ -646,9 +553,8 @@ export const Timetable = () => {
     try {
       const dayIndex = Number(formData.dayOfWeek) || 1;
       const selectedStart = LOCAL_TIME_SLOTS.find(s => s.value === formData.startTime);
-      // Bloquer si c'est une pause (par sécurité)
       if (selectedStart && selectedStart.type !== 'Cours') {
-        notify.warning('Impossible de programmer pendant une pause');
+        notify.warning(t('cannotProgramDuringPause'));
         return;
       }
 
@@ -663,24 +569,19 @@ export const Timetable = () => {
       };
 
       if (!payload.subjectId || !payload.staffId || !payload.classId || !payload.startTime || !payload.endTime) {
-        notify.warning('Veuillez remplir tous les champs obligatoires');
+        notify.warning(t('pleaseFillAllFields'));
         return;
       }
 
-      if (selectedSlot) {
-        await api.put(`/api/planning/schedules/${selectedSlot.id}`, payload);
-      } else {
-        await api.post(`/api/planning/schedules`, payload);
-      }
+      if (selectedSlot) await api.put(`/api/planning/schedules/${selectedSlot.id}`, payload);
+      else await api.post(`/api/planning/schedules`, payload);
       
       setShowModal(false);
       setSelectedSlot(null);
       refreshTimetableData();
-      notify.success(selectedSlot ? 'Créneau mis à jour' : 'Créneau enregistré');
+      notify.success(selectedSlot ? t('slotUpdated') : t('slotSaved'));
     } catch (error: any) {
-      console.error('Erreur lors de l\'enregistrement:', error);
-      const message = error.response?.data?.message || "Erreur lors de l'enregistrement";
-      notify.error(message);
+      notify.error(error.response?.data?.message || t('errorSavingSlot'));
     }
   };
 
@@ -688,14 +589,16 @@ export const Timetable = () => {
     setTargetDeleteId(slotId);
     setConfirmOpen(true);
   };
+
   const deleteSlot = async () => {
     if (!targetDeleteId) return;
     setDeleteLoading(true);
     try {
       await api.delete(`/api/planning/schedules/${targetDeleteId}`);
       refreshTimetableData();
+      notify.success(t('slotDeleted'));
     } catch (error) {
-      notify.error('Erreur lors de la suppression');
+      notify.error(t('errorDeletingSlot'));
     } finally {
       setDeleteLoading(false);
       setConfirmOpen(false);
@@ -705,20 +608,35 @@ export const Timetable = () => {
 
   const handleDragStart = (slot: TimeSlot) => {
     setDraggedSlot(slot);
+    // Ajouter un effet visuel
+    const element = document.getElementById(`slot-${slot.id}`);
+    if (element) {
+      element.style.opacity = '0.5';
+      element.style.transform = 'scale(1.05)';
+      element.style.zIndex = '100';
+    }
   };
 
   const handleDrop = async (dayOfWeek: number, time: string) => {
     if (!draggedSlot) return;
-
     if (dayOfWeek > 6) {
-      notify.error('Les cours ne peuvent pas être programmés le dimanche');
+      notify.error(t('cannotProgramOnSunday'));
       return;
     }
-
+    
+    // Animation de succès
+    const dropZone = document.getElementById(`drop-zone-${dayOfWeek}-${time}`);
+    if (dropZone) {
+      dropZone.classList.add('bg-green-100', 'dark:bg-green-900/30');
+      setTimeout(() => {
+        dropZone.classList.remove('bg-green-100', 'dark:bg-green-900/30');
+      }, 300);
+    }
+    
     try {
       const localSlot = LOCAL_TIME_SLOTS.find(s => s.value === time);
       if (localSlot && localSlot.type !== 'Cours') {
-        notify.warning('Impossible de déplacer vers une pause');
+        notify.warning(t('cannotMoveToPause'));
         return;
       }
       const updateData: any = {
@@ -732,43 +650,33 @@ export const Timetable = () => {
       };
       await api.put(`/api/planning/schedules/${draggedSlot.id}`, updateData);
       refreshTimetableData();
+      notify.success(t('slotMoved'));
     } catch (error: any) {
-      console.error('Erreur lors du déplacement:', error);
-      const msg = error.response?.data?.message || 'Erreur lors du déplacement';
-      notify.error(msg);
+      notify.error(error.response?.data?.message || t('errorMovingSlot'));
     } finally {
       setDraggedSlot(null);
       setDragOverCell(null);
     }
   };
 
-
-  const handleExport = () => {
-    // Ancienne fonction export
-    notify.info('Ouverture de la fenêtre d’export…');
-  };
-
   const handleExportSchedule = () => {
-    // Préparer les données pour l'exportation
-    const selectedLabel =
-      viewMode === 'class'
-        ? (classes.find(c => String(c.id) === String(selectedFilter))?.name || selectedFilter)
-        : viewMode === 'teacher'
-          ? (() => {
-              const t = teachers.find(tt => String(tt.id) === String(selectedFilter));
-              return t ? `${t.firstName} ${t.lastName}` : selectedFilter;
-            })()
-          : selectedFilter;
-    const scheduleData = {
-      title: `Emploi du temps - ${selectedLabel}`,
+    const selectedLabel = viewMode === 'class'
+      ? (classes.find(c => String(c.id) === String(selectedFilter))?.name || selectedFilter)
+      : viewMode === 'teacher'
+        ? (() => {
+            const tFound = teachers.find(tt => String(tt.id) === String(selectedFilter));
+            return tFound ? `${tFound.firstName} ${tFound.lastName}` : selectedFilter;
+          })()
+        : selectedFilter;
+
+    setExportData({
+      title: `${t('timetable')} - ${selectedLabel}`,
       period: getPeriodTitle(),
       slots: timeSlots,
       viewMode,
       filter: selectedFilter,
       dateGenerated: new Date().toISOString(),
-    };
-    
-    // Ouvrir le modal d'exportation
+    });
     setShowExportModal(true);
   };
 
@@ -783,56 +691,14 @@ export const Timetable = () => {
     return Array.from(visible.values());
   }, [timeSlots, subjects]);
 
-  const visibleSpecialties = useMemo(() => {
-    const visible = new Map<string, any>();
-    timeSlots.forEach(slot => {
-      const classInfo = classes.find(c => c.id === slot.classId);
-      if (classInfo && classInfo.specialty) {
-        if (!visible.has(classInfo.specialty.name)) {
-          visible.set(classInfo.specialty.name, classInfo.specialty);
-        }
-      }
-    });
-    return Array.from(visible.values());
-  }, [timeSlots, classes]);
-
-  const handleSpecialtySelection = (specialtyId: string) => {
-    setSelectedSpecialties(prev => {
-      if (prev.includes(specialtyId)) {
-        return prev.filter(id => id !== specialtyId);
-      } else {
-        return [...prev, specialtyId];
-      }
-    });
-  };
-
   const handleSynthesisClassSelection = (classId: string) => {
-    setSelectedSynthesisClasses(prev => {
-      if (prev.includes(classId)) {
-        return prev.filter(id => id !== classId);
-      } else {
-        return [...prev, classId];
-      }
-    });
+    setSelectedSynthesisClasses(prev => prev.includes(classId) ? prev.filter(id => id !== classId) : [...prev, classId]);
   };
 
-  const handleSelectAllSpecialties = () => {
-    setSelectedSpecialties(specialties.map(s => s.id));
-  };
+  const handleSelectAllSynthesisClasses = () => setSelectedSynthesisClasses(classes.map(c => String(c.id)));
+  const handleDeselectAllSynthesisClasses = () => setSelectedSynthesisClasses([]);
 
-  const handleDeselectAllSpecialties = () => {
-    setSelectedSpecialties([]);
-  };
-
-  const handleSelectAllSynthesisClasses = () => {
-    setSelectedSynthesisClasses(classes.map(c => String(c.id)));
-  };
-
-  const handleDeselectAllSynthesisClasses = () => {
-    setSelectedSynthesisClasses([]);
-  };
-
-  const handleCreateNewSlot = (dayId: string, startTime: string, classId: string) => {
+  const handleCreateNewSlot = (dayId: string, startTime: string, targetId: string) => {
     setSelectedSlot(null);
     const ts = LOCAL_TIME_SLOTS.find(s => s.value === startTime);
     setFormData({
@@ -840,10 +706,26 @@ export const Timetable = () => {
       startTime: startTime,
       endTime: ts?.end || '',
       subjectId: '',
-      staffId: '',
-      classId: classId,
+      staffId: viewMode === 'teacher' ? targetId : '',
+      classId: viewMode === 'class' ? targetId : '',
       roomName: 'TBD',
     });
+    setShowModal(true);
+  };
+
+  const handleCreateSlotFromFreeSlot = async (slotData: any) => {
+    // Ouvrir le modal avec les données pré-remplies
+    const ts = LOCAL_TIME_SLOTS.find(s => s.value === slotData.startTime);
+    setFormData({
+      dayOfWeek: slotData.dayOfWeek,
+      startTime: slotData.startTime,
+      endTime: ts?.end || '',
+      subjectId: '',
+      staffId: viewMode === 'teacher' ? selectedFilter : '',
+      classId: viewMode === 'class' ? selectedFilter : '',
+      roomName: 'TBD',
+    });
+    setSelectedSlot(null);
     setShowModal(true);
   };
 
@@ -863,25 +745,56 @@ export const Timetable = () => {
 
   return (
     <div className="w-full">
-      {/* Header */}
-      <div 
-        style={{ marginBottom: 'var(--card-spacing)' }}
-        className="flex justify-between items-center"
-      >
+      {showConfiguration ? (
+        <TimetableConfig onClose={() => setShowConfiguration(false)} />
+      ) : (
         <div>
-          <h1 className="text-xl font-bold text-gray-900 dark:text-white uppercase tracking-tight">EMPLOI DU TEMPS</h1>
-          <p className="text-[11px] text-gray-500 dark:text-gray-400">Planification des cours et salles</p>
+      {/* Header */}
+      <div style={{ marginBottom: 'var(--card-spacing)' }} className="flex justify-between items-center">
+        <div>
+          <h1 className="text-xl font-bold text-gray-900 dark:text-white uppercase tracking-tight">{t('timetable')}</h1>
+          <p className="text-[11px] text-gray-500 dark:text-gray-400">{t('timetableDesc')}</p>
         </div>
         <div className="flex gap-2">
-          <Tooltip text="Exporter">
+          {selectedFilter && (viewMode === 'class' || viewMode === 'teacher') && (
+            <WhatsAppSender
+              targetType={viewMode === 'class' ? 'class' : 'teacher'}
+              targetId={selectedFilter}
+              targetName={
+                viewMode === 'class'
+                  ? classes.find(c => String(c.id) === String(selectedFilter))?.name || selectedFilter
+                  : (() => {
+                      const tFound = teachers.find(tt => String(tt.id) === String(selectedFilter));
+                      return tFound ? `${tFound.firstName} ${tFound.lastName}` : selectedFilter;
+                    })()
+              }
+            />
+          )}
+          {viewMode === 'synthesis_class' && selectedSynthesisClasses.length > 0 && (
+             <WhatsAppSender
+                targetType="class"
+                targetId={selectedSynthesisClasses.join(',')}
+                targetName={t('classSynthesis')}
+             />
+          )}
+          <Tooltip text={t('timetableConfiguration')}>
             <button 
-              onClick={handleExportSchedule}
-              className="flex items-center justify-center w-10 h-10 bg-primary hover:bg-primary/90 text-white rounded-md transition-colors border border-primary/30 shadow-sm shadow-blue-500/10"
+              onClick={() => setShowConfiguration(!showConfiguration)} 
+              className={`flex items-center justify-center w-10 h-10 rounded-md transition-colors border ${
+                showConfiguration 
+                  ? 'bg-blue-600 hover:bg-blue-700 text-white border-blue-700' 
+                  : 'bg-gray-100 dark:bg-slate-700 hover:bg-gray-200 dark:hover:bg-slate-600 text-gray-700 dark:text-gray-300 border-gray-300 dark:border-slate-600'
+              }`}
             >
+              <Settings className="w-4 h-4" />
+            </button>
+          </Tooltip>
+          <Tooltip text={t('export')}>
+            <button onClick={handleExportSchedule} className="flex items-center justify-center w-10 h-10 bg-primary hover:bg-primary/90 text-white rounded-md transition-colors border border-primary/30 shadow-sm">
               <Download className="w-4 h-4" />
             </button>
           </Tooltip>
-          <Tooltip text="Nouveau créneau">
+          <Tooltip text={t('newSlot')}>
             <button 
               onClick={() => {
                 setSelectedSlot(null);
@@ -890,7 +803,7 @@ export const Timetable = () => {
                   startTime: '',
                   endTime: '',
                   subjectId: '',
-                  staffId: '',
+                  staffId: viewMode === 'teacher' ? selectedFilter : '',
                   classId: viewMode === 'class' ? selectedFilter : '',
                   roomName: 'TBD',
                 });
@@ -904,42 +817,18 @@ export const Timetable = () => {
         </div>
       </div>
 
-      {/* Barre de navigation temporelle */}
-      <div 
-        style={{ 
-          padding: 'calc(var(--card-spacing) * 0.75)',
-          marginBottom: 'var(--card-spacing)'
-        }}
-        className="bg-white dark:bg-slate-800 rounded-md shadow-md border border-gray-200 dark:border-slate-700 flex flex-wrap gap-3 items-center justify-between"
-      >
-        {/* Navigation gauche */}
+      {/* Navigation */}
+      <div style={{ padding: 'calc(var(--card-spacing) * 0.75)', marginBottom: 'var(--card-spacing)' }} className="bg-white dark:bg-slate-800 rounded-md shadow-md border border-gray-200 dark:border-slate-700 flex flex-wrap gap-3 items-center justify-between">
         <div className="flex items-center gap-2">
-          <button 
-            onClick={goToToday}
-            className="px-3 py-1.5 bg-blue-600 hover:bg-blue-700 text-white rounded-md text-xs font-normal transition-colors border border-blue-700"
-          >
-            Aujourd'hui
+          <button onClick={goToToday} className="px-3 py-1.5 bg-blue-600 hover:bg-blue-700 text-white rounded-md text-xs font-normal transition-colors border border-blue-700">
+            {t('today')}
           </button>
-          <button 
-            onClick={goToPrevious}
-            className="flex items-center gap-1.5 px-3 py-1.5 hover:bg-gray-100 dark:hover:bg-slate-700 rounded-md transition-colors border border-gray-200 dark:border-slate-600 text-xs font-normal text-gray-700 dark:text-gray-300"
-          >
+          <button onClick={goToPrevious} className="flex items-center gap-1.5 px-3 py-1.5 hover:bg-gray-100 dark:hover:bg-slate-700 rounded-md transition-colors border border-gray-200 dark:border-slate-600 text-xs font-normal text-gray-700 dark:text-gray-300">
             <ChevronLeft className="w-3 h-3" />
-            <span>
-              {calendarView === 'day' && 'Jour précédent'}
-              {calendarView === 'week' && 'Semaine précédente'}
-              {calendarView === 'month' && 'Mois précédent'}
-            </span>
+            <span>{calendarView === 'day' ? t('previousDay') : calendarView === 'week' ? t('previousWeek') : t('previousMonth')}</span>
           </button>
-          <button 
-            onClick={goToNext}
-            className="flex items-center gap-1.5 px-3 py-1.5 hover:bg-gray-100 dark:hover:bg-slate-700 rounded-md transition-colors border border-gray-200 dark:border-slate-600 text-xs font-normal text-gray-700 dark:text-gray-300"
-          >
-            <span>
-              {calendarView === 'day' && 'Jour suivant'}
-              {calendarView === 'week' && 'Semaine suivante'}
-              {calendarView === 'month' && 'Mois suivant'}
-            </span>
+          <button onClick={goToNext} className="flex items-center gap-1.5 px-3 py-1.5 hover:bg-gray-100 dark:hover:bg-slate-700 rounded-md transition-colors border border-gray-200 dark:border-slate-600 text-xs font-normal text-gray-700 dark:text-gray-300">
+            <span>{calendarView === 'day' ? t('nextDay') : calendarView === 'week' ? t('nextWeek') : t('nextMonth')}</span>
             <ChevronRight className="w-3 h-3" />
           </button>
           <div className="text-sm font-bold text-gray-900 dark:text-white ml-2 px-3 py-1.5 bg-gray-50 dark:bg-slate-700 rounded-md border border-gray-200 dark:border-slate-600">
@@ -947,192 +836,115 @@ export const Timetable = () => {
           </div>
         </div>
 
-        {/* Sélecteur de vue calendrier */}
         <div className="flex items-center gap-2">
-          <span className="text-xs font-medium text-gray-500 dark:text-gray-400">Année:</span>
-          <select 
-            value={currentDate.getFullYear()}
-            onChange={(e) => {
-              const newDate = new Date(currentDate);
-              newDate.setFullYear(parseInt(e.target.value));
-              setCurrentDate(newDate);
-            }}
-            className="bg-gray-50 dark:bg-slate-700 border border-gray-200 dark:border-slate-600 rounded-md text-xs px-3 py-1.5 dark:text-white focus:ring-2 focus:ring-blue-500"
-          >
-            {Array.from({ length: 10 }, (_, i) => {
-              const year = new Date().getFullYear() - 3 + i;
-              return <option key={year} value={year}>{year}</option>;
-            })}
+          <span className="text-xs font-medium text-gray-500 dark:text-gray-400">{t('year')}:</span>
+          <select value={currentDate.getFullYear()} onChange={(e) => { const d = new Date(currentDate); d.setFullYear(parseInt(e.target.value)); setCurrentDate(d); }} className="bg-gray-50 dark:bg-slate-700 border border-gray-200 dark:border-slate-600 rounded-md text-xs px-3 py-1.5 dark:text-white focus:ring-2 focus:ring-blue-500">
+            {Array.from({ length: 10 }, (_, i) => { const y = new Date().getFullYear() - 3 + i; return <option key={y} value={y}>{y}</option>; })}
           </select>
-          
-          <span className="text-xs font-medium text-gray-500 dark:text-gray-400 ml-2">Mois:</span>
-          <select 
-            value={currentDate.getMonth()}
-            onChange={(e) => {
-              const newDate = new Date(currentDate);
-              newDate.setMonth(parseInt(e.target.value));
-              setCurrentDate(newDate);
-            }}
-            className="bg-gray-50 dark:bg-slate-700 border border-gray-200 dark:border-slate-600 rounded-md text-xs px-3 py-1.5 dark:text-white focus:ring-2 focus:ring-blue-500"
-          >
-            <option value={0}>Janvier</option>
-            <option value={1}>Février</option>
-            <option value={2}>Mars</option>
-            <option value={3}>Avril</option>
-            <option value={4}>Mai</option>
-            <option value={5}>Juin</option>
-            <option value={6}>Juillet</option>
-            <option value={7}>Août</option>
-            <option value={8}>Septembre</option>
-            <option value={9}>Octobre</option>
-            <option value={10}>Novembre</option>
-            <option value={11}>Décembre</option>
+          <span className="text-xs font-medium text-gray-500 dark:text-gray-400 ml-2">{t('month')}:</span>
+          <select value={currentDate.getMonth()} onChange={(e) => { const d = new Date(currentDate); d.setMonth(parseInt(e.target.value)); setCurrentDate(d); }} className="bg-gray-50 dark:bg-slate-700 border border-gray-200 dark:border-slate-600 rounded-md text-xs px-3 py-1.5 dark:text-white focus:ring-2 focus:ring-blue-500">
+            {Array.from({ length: 12 }, (_, i) => <option key={i} value={i}>{new Date(0, i).toLocaleDateString(language === 'fr' ? 'fr-FR' : 'en-US', { month: 'long' })}</option>)}
           </select>
-          
-          <span className="text-xs font-medium text-gray-500 dark:text-gray-400 ml-2">Affichage:</span>
-          <select 
-            value={calendarView}
-            onChange={(e) => setCalendarView(e.target.value as 'day' | 'week' | 'month')}
-            className="bg-gray-50 dark:bg-slate-700 border border-gray-200 dark:border-slate-600 rounded-md text-xs px-3 py-1.5 dark:text-white focus:ring-2 focus:ring-blue-500"
-          >
-            <option value="day">Jour</option>
-            <option value="week">Semaine</option>
-            <option value="month">Mois</option>
+          <span className="text-xs font-medium text-gray-500 dark:text-gray-400 ml-2">{t('display')}:</span>
+          <select value={calendarView} onChange={(e) => setCalendarView(e.target.value as any)} className="bg-gray-50 dark:bg-slate-700 border border-gray-200 dark:border-slate-600 rounded-md text-xs px-3 py-1.5 dark:text-white focus:ring-2 focus:ring-blue-500">
+            <option value="day">{t('day')}</option>
+            <option value="week">{t('week')}</option>
+            <option value="month">{t('month')}</option>
           </select>
         </div>
       </div>
 
-      {/* Filtres */}
-      <div 
-        style={{ 
-          padding: 'calc(var(--card-spacing) * 0.75)',
-          marginBottom: 'var(--card-spacing)'
-        }}
-        className="bg-white dark:bg-slate-800 rounded-md shadow-md border border-gray-200 dark:border-slate-700 flex flex-wrap gap-3 items-center justify-between"
-      >
+      {/* Filters */}
+      <div style={{ padding: 'calc(var(--card-spacing) * 0.75)', marginBottom: 'var(--card-spacing)' }} className="bg-white dark:bg-slate-800 rounded-md shadow-md border border-gray-200 dark:border-slate-700 flex flex-wrap gap-4 items-center">
         <div className="flex gap-2 items-center">
-          <span className="text-xs font-medium text-gray-500 dark:text-gray-400">Vue:</span>
-          <div className="flex bg-gray-50 dark:bg-slate-700 p-0.5 rounded-md border border-gray-200 dark:border-slate-600 grid grid-cols-4">
-            <button 
-              onClick={() => {
-                // on force le reset pour que loadDynamicOptions choisisse la 1ère classe dispo
-                setViewMode('class');
-                setSelectedFilter('');
-              }}
-              className={`px-3 py-1.5 rounded-md text-xs font-normal transition-all ${
-                viewMode === 'class' 
-                  ? 'bg-white dark:bg-slate-600 shadow-sm text-blue-600' 
-                  : 'text-gray-600 dark:text-gray-400'
-              }`}
-            >
-              Par Classe
+          <span className="text-xs font-medium text-gray-500 dark:text-gray-400">{t('view')}:</span>
+          <div className="flex bg-gray-50 dark:bg-slate-700 p-0.5 rounded-md border border-gray-200 dark:border-slate-600">
+            <button onClick={() => { setViewMode('class'); setSelectedFilter(''); }} className={`px-3 py-1.5 rounded-md text-xs font-normal transition-all ${viewMode === 'class' ? 'bg-white dark:bg-slate-600 shadow-sm text-blue-600' : 'text-gray-600 dark:text-gray-400'}`}>
+              {t('byClass')}
             </button>
-            <button 
-              onClick={() => {
-                // reset pour que le prochain chargement choisisse le 1er enseignant
-                setViewMode('teacher');
-                setSelectedFilter('');
-              }}
-              className={`px-3 py-1.5 rounded-md text-xs font-normal transition-all ${
-                viewMode === 'teacher' 
-                  ? 'bg-white dark:bg-slate-600 shadow-sm text-blue-600' 
-                  : 'text-gray-600 dark:text-gray-400'
-              }`}
-            >
-              Par Enseignant
+            <button onClick={() => { setViewMode('teacher'); setSelectedFilter(''); }} className={`px-3 py-1.5 rounded-md text-xs font-normal transition-all ${viewMode === 'teacher' ? 'bg-white dark:bg-slate-600 shadow-sm text-blue-600' : 'text-gray-600 dark:text-gray-400'}`}>
+              {t('byTeacher')}
             </button>
-            <button 
-              onClick={() => {
-                setViewMode('synthesis_class');
-                setSelectedFilter('');
-              }}
-              className={`px-3 py-1.5 rounded-md text-xs font-normal transition-all ${
-                viewMode === 'synthesis_class' 
-                  ? 'bg-white dark:bg-slate-600 shadow-sm text-blue-600' 
-                  : 'text-gray-600 dark:text-gray-400'
-              }`}
-            >
-              Synthèse par Classe
+            <button onClick={() => { setViewMode('synthesis_class'); setSelectedFilter(''); }} className={`px-3 py-1.5 rounded-md text-xs font-normal transition-all ${viewMode === 'synthesis_class' ? 'bg-white dark:bg-slate-600 shadow-sm text-blue-600' : 'text-gray-600 dark:text-gray-400'}`}>
+              {t('synthesisByClass')}
             </button>
-            <button 
-              onClick={() => {
-                setViewMode('free_slot');
-                setSelectedFilter('');
-              }}
-              className={`px-3 py-1.5 rounded-md text-xs font-normal transition-all ${
-                viewMode === 'free_slot' 
-                  ? 'bg-white dark:bg-slate-600 shadow-sm text-blue-600' 
-                  : 'text-gray-600 dark:text-gray-400'
-              }`}
-            >
-              Chercher créneaux
+            <button onClick={() => { setViewMode('free_slot'); setSelectedFilter(''); }} className={`px-3 py-1.5 rounded-md text-xs font-normal transition-all ${viewMode === 'free_slot' ? 'bg-white dark:bg-slate-600 shadow-sm text-blue-600' : 'text-gray-600 dark:text-gray-400'}`}>
+              {t('findSlots')}
             </button>
           </div>
         </div>
 
-        <div className="flex flex-col md:flex-row md:items-center gap-4">
-          <span className="text-xs font-medium text-gray-500 dark:text-gray-400">Période:</span>
-          <div className="flex bg-gray-50 dark:bg-slate-700 p-0.5 rounded-md border border-gray-200 dark:border-slate-600 grid grid-cols-3">
-            <button 
-              onClick={() => setViewPeriod('all')}
-              className={`px-3 py-1.5 rounded-md text-xs font-normal transition-all ${
-                viewPeriod === 'all' 
-                  ? 'bg-white dark:bg-slate-600 shadow-sm text-blue-600' 
-                  : 'text-gray-600 dark:text-gray-400'
-              }`}
-            >
-              Complet
-            </button>
-            <button 
-              onClick={() => setViewPeriod('day')}
-              className={`px-3 py-1.5 rounded-md text-xs font-normal transition-all ${
-                viewPeriod === 'day' 
-                  ? 'bg-white dark:bg-slate-600 shadow-sm text-blue-600' 
-                  : 'text-gray-600 dark:text-gray-400'
-              }`}
-            >
-              Jour
-            </button>
-            <button 
-              onClick={() => setViewPeriod('evening')}
-              className={`px-3 py-1.5 rounded-md text-xs font-normal transition-all ${
-                viewPeriod === 'evening' 
-                  ? 'bg-white dark:bg-slate-600 shadow-sm text-blue-600' 
-                  : 'text-gray-600 dark:text-gray-400'
-              }`}
-            >
-              Soir
-            </button>
-          </div>
+        {viewMode === 'class' && (
+          <>
+            <div className="flex items-center gap-2">
+              <span className="text-xs font-medium text-gray-500 dark:text-gray-400">{t('specialtyFilter')}:</span>
+              <select 
+                value={selectedSpecialty} 
+                onChange={(e) => { setSelectedSpecialty(e.target.value); setSelectedFilter(''); }}
+                className="bg-gray-50 dark:bg-slate-700 border border-gray-200 dark:border-slate-600 rounded-md text-xs px-3 py-1.5 dark:text-white focus:ring-2 focus:ring-blue-500"
+              >
+                <option value="">{t('allSpecialties')}</option>
+                {specialties.map(s => <option key={s.id} value={String(s.id)}>{s.code} - {s.name}</option>)}
+              </select>
+            </div>
+            <div className="flex items-center gap-2">
+              <span className="text-xs font-medium text-gray-500 dark:text-gray-400">{t('levelFilter')}:</span>
+              <select 
+                value={selectedLevel} 
+                onChange={(e) => { setSelectedLevel(e.target.value); setSelectedFilter(''); }}
+                className="bg-gray-50 dark:bg-slate-700 border border-gray-200 dark:border-slate-600 rounded-md text-xs px-3 py-1.5 dark:text-white focus:ring-2 focus:ring-blue-500"
+              >
+                <option value="">{t('allLevels')}</option>
+                {[1, 2, 3, 4, 5].map(l => <option key={l} value={String(l)}>{t('level')} {l}</option>)}
+              </select>
+            </div>
+          </>
+        )}
+
+        <div className="flex items-center gap-2">
+          <span className="text-xs font-medium text-gray-500 dark:text-gray-400">{t('roomFilter')}:</span>
+          <select 
+            value={selectedRoom} 
+            onChange={(e) => setSelectedRoom(e.target.value)}
+            className="bg-gray-50 dark:bg-slate-700 border border-gray-200 dark:border-slate-600 rounded-md text-xs px-3 py-1.5 dark:text-white focus:ring-2 focus:ring-blue-500"
+          >
+            <option value="">{t('allRooms')}</option>
+            {rooms.map(r => <option key={r.id} value={r.value}>{getLabel(r)}</option>)}
+          </select>
         </div>
 
         <div className="flex items-center gap-2">
+          <span className="text-xs font-medium text-gray-500 dark:text-gray-400">{t('period')}:</span>
+          <select 
+            value={viewPeriod} 
+            onChange={(e) => setViewPeriod(e.target.value as any)}
+            className="bg-gray-50 dark:bg-slate-700 border border-gray-200 dark:border-slate-600 rounded-md text-xs px-3 py-1.5 dark:text-white focus:ring-2 focus:ring-blue-500"
+          >
+            <option value="all">{t('allPeriods')}</option>
+            <option value="day">{t('daySession')}</option>
+            <option value="evening">{t('eveningSession')}</option>
+          </select>
+        </div>
+
+        <div className="flex items-center gap-2 flex-grow justify-end">
           <Search className="w-3.5 h-3.5 text-gray-400" />
           {viewMode === 'synthesis_class' ? (
             <div className="relative">
-              <button
-                onClick={() => setShowSpecialtySelector(!showSpecialtySelector)}
-                className="bg-gray-50 dark:bg-slate-700 border border-gray-200 dark:border-slate-600 rounded-md text-xs px-3 py-1.5 dark:text-white focus:ring-2 focus:ring-blue-500"
-              >
-                Filtrer par Classe
+              <button onClick={() => setShowSpecialtySelector(!showSpecialtySelector)} className="bg-gray-50 dark:bg-slate-700 border border-gray-200 dark:border-slate-600 rounded-md text-xs px-3 py-1.5 dark:text-white focus:ring-2 focus:ring-blue-500">
+                {t('filterByClass')}
               </button>
               {showSpecialtySelector && (
-                <div className="absolute z-[100] mt-2 w-56 rounded-md shadow-lg bg-white dark:bg-slate-800 ring-1 ring-black ring-opacity-5 focus:outline-none">
+                <div className="absolute z-[100] mt-2 right-0 w-56 rounded-md shadow-lg bg-white dark:bg-slate-800 ring-1 ring-black ring-opacity-5">
                   <div className="py-1">
                     <div className="px-4 py-2 flex justify-between">
-                      <button onClick={handleSelectAllSynthesisClasses} className="text-xs text-blue-600 hover:underline">Tout</button>
-                      <button onClick={handleDeselectAllSynthesisClasses} className="text-xs text-blue-600 hover:underline">Aucun</button>
+                      <button onClick={handleSelectAllSynthesisClasses} className="text-xs text-blue-600 hover:underline">{t('all')}</button>
+                      <button onClick={handleDeselectAllSynthesisClasses} className="text-xs text-blue-600 hover:underline">{t('none')}</button>
                     </div>
                     <div className="border-t border-gray-200 dark:border-slate-700"></div>
                     <div className="max-h-64 overflow-y-auto">
                       {classes.map(cls => (
                         <label key={cls.id} className="flex items-center px-4 py-2 text-sm text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-slate-700">
-                          <input
-                            type="checkbox"
-                            checked={selectedSynthesisClasses.includes(String(cls.id))}
-                            onChange={() => handleSynthesisClassSelection(String(cls.id))}
-                            className="mr-2"
-                          />
+                          <input type="checkbox" checked={selectedSynthesisClasses.includes(String(cls.id))} onChange={() => handleSynthesisClassSelection(String(cls.id))} className="mr-2" />
                           {cls.name}
                         </label>
                       ))}
@@ -1142,26 +954,17 @@ export const Timetable = () => {
               )}
             </div>
           ) : viewMode === 'free_slot' ? (
-            <div className="text-xs text-gray-500 italic">
-              Sélectionnez les classes dans l'outil ci-dessous
-            </div>
+            <div className="text-xs text-gray-500 italic">{t('selectClassesBelow')}</div>
           ) : (
             <SearchableSelect
               value={selectedFilter}
               onChange={setSelectedFilter}
-              placeholder={`Sélectionner ${viewMode === 'class' ? 'une classe' : 'un enseignant'}`}
-              options={
-                viewMode === 'class'
-                  ? classes.map(c => ({ value: String(c.id), label: c.name }))
-                  : teachers.map(t => ({ value: String(t.id), label: `${t.firstName} ${t.lastName}` }))
-              }
+              placeholder={viewMode === 'class' ? t('selectClass') : t('selectTeacher')}
+              options={viewMode === 'class' ? filteredClasses.map(c => ({ value: String(c.id), label: c.name })) : teachers.map(tFound => ({ value: String(tFound.id), label: `${tFound.firstName} ${tFound.lastName}` }))}
             />
           )}
-          <Tooltip text="Visualiser">
-            <button
-              onClick={refreshTimetableData}
-              className="ml-2 flex items-center justify-center w-10 h-10 bg-blue-600 hover:bg-blue-700 text-white rounded-md transition-colors border border-blue-700"
-            >
+          <Tooltip text={t('visualize')}>
+            <button onClick={refreshTimetableData} className="ml-2 flex items-center justify-center w-10 h-10 bg-blue-600 hover:bg-blue-700 text-white rounded-md transition-colors border border-blue-700">
               <Search className="w-4 h-4" />
             </button>
           </Tooltip>
@@ -1169,606 +972,273 @@ export const Timetable = () => {
       </div>
 
       <div id="printable">
-        {/* Calendrier */}
-      {viewMode === 'free_slot' ? (
-        <FreeSlotFinder 
-          teachers={teachers}
-          classes={classes}
-          rooms={rooms}
-          timeSlots={timeSlots}
-          days={days}
-          timeSlotOptions={timeSlotOptions}
-        />
-      ) : viewMode === 'synthesis_class' ? (
-        <ClassTimetableView 
-          timeSlots={timeSlots}
-          classes={classes.filter(c => selectedSynthesisClasses.includes(String(c.id)))}
-          days={days}
-          timeSlotOptions={timeSlotOptions}
-          onEditSlot={handleEditSlot}
-          onCreateSlot={handleCreateNewSlot}
-          onDeleteSlot={handleDeleteSlot}
-        />
-      ) : calendarView === 'month' ? (
-        // Vue mois : grille avec jours en colonnes et semaines en lignes
-        <div className="bg-white dark:bg-slate-800 rounded-md border border-gray-200 dark:border-slate-700 shadow-md overflow-hidden">
-          <div className="overflow-x-auto">
-            <div className="min-w-[1200px]">
-              {/* En-têtes des jours */}
-              <div 
-                className="grid border-b border-gray-200 dark:border-slate-700"
-                style={{ gridTemplateColumns: `repeat(${days.length || 6}, 1fr)` }}
-              >
-                {days.map((day) => (
-                  <div 
-                    key={day.id}
-                    className="bg-gray-50 dark:bg-slate-700/50 p-3 text-center border-r border-gray-200 dark:border-slate-700 last:border-r-0"
-                  >
-                    <div className="text-xs font-bold uppercase text-gray-900 dark:text-white">
-                      {getLabel(day)}
-                    </div>
-                  </div>
-                ))}
-              </div>
-
-              {/* Grille des semaines */}
-              <div>
-                {monthWeeks.map((week, weekIndex) => {
-                  const currentMonth = currentDate.getMonth();
-                  return (
-                    <div 
-                      key={weekIndex}
-                      className="grid border-b border-gray-200 dark:border-slate-700 last:border-b-0"
-                      style={{ gridTemplateColumns: `repeat(${days.length || 6}, 1fr)` }}
-                    >
+        {loading ? (
+          <div className="flex justify-center items-center h-96"><Loader2 className="w-8 h-8 animate-spin text-blue-600" /></div>
+        ) : viewMode === 'free_slot' ? (
+          <FreeSlotFinder teachers={teachers} classes={classes} rooms={rooms} timeSlots={timeSlots} days={days} timeSlotOptions={timeSlotOptions} onCreateSlot={handleCreateSlotFromFreeSlot} />
+        ) : viewMode === 'synthesis_class' ? (
+          <ClassTimetableView timeSlots={timeSlots} classes={classes.filter(c => selectedSynthesisClasses.includes(String(c.id)))} teachers={teachers} days={days} timeSlotOptions={timeSlotOptions} onEditSlot={handleEditSlot} onCreateNewSlot={handleCreateNewSlot} onDeleteSlot={handleDeleteSlot} viewMode={viewMode} selectedFilter={selectedFilter} getColorForSubject={getColorForSubject} />
+        ) : calendarView === 'month' ? (
+          <div className="bg-white dark:bg-slate-800 rounded-md border border-gray-200 dark:border-slate-700 shadow-md overflow-hidden">
+            <div className="overflow-x-auto">
+              <div className="min-w-[1200px]">
+                <div className="grid border-b border-gray-200 dark:border-slate-700" style={{ gridTemplateColumns: `repeat(${days.length || 6}, 1fr)` }}>
+                  {days.map((day) => <div key={day.id} className="bg-gray-50 dark:bg-slate-700/50 p-3 text-center border-r border-gray-200 dark:border-slate-700 last:border-r-0 font-bold uppercase text-[10px] text-gray-500">{getLabel(day)}</div>)}
+                </div>
+                <div>
+                  {monthWeeks.map((week, weekIndex) => (
+                    <div key={weekIndex} className="grid border-b border-gray-200 dark:border-slate-700 last:border-b-0" style={{ gridTemplateColumns: `repeat(${days.length || 6}, 1fr)` }}>
                       {week.map((date, dayIndex) => {
                         const isToday = date.toDateString() === new Date().toDateString();
-                        const isCurrentMonth = date.getMonth() === currentMonth;
                         const dayOfWeek = getDayOfWeekFromDate(date);
                         const daySlots = timeSlots.filter(slot => slot.dayOfWeek === dayOfWeek);
-                        
                         return (
-                          <div 
-                            key={dayIndex}
-                            className={`min-h-[120px] p-2 border-r border-gray-200 dark:border-slate-700 last:border-r-0 relative ${
-                              isCurrentMonth ? '' : 'bg-gray-50/50 dark:bg-slate-900/20'
-                            } ${
-                              isToday ? 'bg-blue-50 dark:bg-blue-900/20' : ''
-                            }`}
-                          >
-                            {/* Numéro du jour */}
-                            <div className={`text-xs font-bold mb-2 ${
-                              isToday ? 'text-blue-600 dark:text-blue-400' : isCurrentMonth ? 'text-gray-900 dark:text-white' : 'text-gray-400 dark:text-gray-600'
-                            }`}>
-                              {date.getDate()}
-                            </div>
-                            
-                            {/* Créneaux de cours en version compacte */}
+                          <div key={dayIndex} className={`min-h-[120px] p-2 border-r border-gray-200 dark:border-slate-700 last:border-r-0 relative ${date.getMonth() === currentDate.getMonth() ? '' : 'opacity-40'} ${isToday ? 'bg-blue-50 dark:bg-blue-900/20' : ''}`}>
+                            <div className={`text-xs font-bold mb-2 ${isToday ? 'text-blue-600' : ''}`}>{date.getDate()}</div>
                             <div className="space-y-1">
                               {daySlots.slice(0, 3).map((slot) => {
                                 const colors = getColorForSubject(slot.subjectName);
                                 return (
-                                  <div
-                                    key={slot.id}
-                                    onClick={() => {
-                                      setSelectedSlot(slot);
-                                      setFormData({
-                                        dayOfWeek: String(slot.dayOfWeek),
-                                        startTime: slot.startTime,
-                                        endTime: slot.endTime,
-                                        subjectId: String(slot.subjectId),
-                                        staffId: String(slot.staffId),
-                                        classId: String(slot.classId),
-                                        roomName: slot.roomName,
-                                      });
-                                      setShowModal(true);
-                                    }}
-                                    style={{
-                                      backgroundColor: colors.bg,
-                                      borderLeft: `3px solid ${colors.color}`,
-                                    }}
-                                    className="rounded-sm p-1 cursor-pointer hover:shadow-md transition-shadow text-[10px]"
-                                  >
-                                    <div 
-                                      className="font-bold truncate"
-                                      style={{ color: colors.color }}
-                                    >
-                                      {slot.subjectName}
-                                    </div>
-                                    <div className="text-gray-600 dark:text-gray-400 truncate">
-                                      {slot.startTime}
-                                    </div>
+                                  <div key={slot.id} onClick={() => handleEditSlot(slot)} style={{ backgroundColor: colors.bg, borderLeft: `3px solid ${colors.color}` }} className="rounded-sm p-1 cursor-pointer hover:shadow-md transition-shadow text-[10px] truncate">
+                                    <span className="font-bold" style={{ color: colors.color }}>{slot.subjectName}</span>
                                   </div>
                                 );
                               })}
-                              {daySlots.length > 3 && (
-                                <div className="text-[10px] text-gray-500 dark:text-gray-400 font-medium text-center">
-                                  +{daySlots.length - 3} autres
-                                </div>
-                              )}
+                              {daySlots.length > 3 && <div className="text-[10px] text-gray-500 text-center">+{daySlots.length - 3} {t('others')}</div>}
                             </div>
                           </div>
                         );
                       })}
                     </div>
-                  );
-                })}
+                  ))}
+                </div>
               </div>
             </div>
           </div>
-        </div>
-      ) : (
-        // Vue jour et semaine : affichage temporel classique
-        <div className="bg-white dark:bg-slate-800 rounded-md border border-gray-200 dark:border-slate-700 shadow-md overflow-hidden">
-          <div className="overflow-x-auto">
-            <div className="min-w-[1200px]">
-            {/* En-têtes des jours */}
-            <div 
-              className="grid border-b border-gray-200 dark:border-slate-700"
-              style={{ gridTemplateColumns: `140px repeat(${displayDays.length}, 1fr)` }}
-            >
-              <div className="bg-gray-50 dark:bg-slate-700/50 p-3 border-r border-gray-200 dark:border-slate-700">
-                <Clock className="w-4 h-4 text-gray-400" />
-              </div>
-              {displayDays.map((date, index) => {
-                const isToday = date.toDateString() === new Date().toDateString();
-                const dayName = date.toLocaleDateString('fr-FR', { weekday: calendarView === 'month' ? 'short' : 'long' });
-                return (
-                  <div 
-                    key={index}
-                    className={`bg-gray-50 dark:bg-slate-700/50 p-3 text-center border-r border-gray-200 dark:border-slate-700 last:border-r-0 ${
-                      isToday ? 'bg-blue-50 dark:bg-blue-900/20' : ''
-                    }`}
-                  >
-                    <div className={`text-xs font-bold uppercase ${
-                      isToday ? 'text-blue-600 dark:text-blue-400' : 'text-gray-900 dark:text-white'
-                    }`}>
-                      {dayName}
-                    </div>
-                    <div className={`text-[10px] mt-0.5 ${
-                      isToday ? 'text-blue-600 dark:text-blue-400 font-bold' : 'text-gray-500'
-                    }`}>
-                      {date.toLocaleDateString('fr-FR', { day: 'numeric', month: 'short' })}
-                    </div>
-                  </div>
-                );
-              })}
-            </div>
-
-            {/* Grille horaire */}
-            <div className="relative">
-              <div 
-                className="grid"
-                style={{ gridTemplateColumns: `140px repeat(${displayDays.length}, 1fr)` }}
-              >
-                {/* Colonne des heures */}
-                <div className="border-r border-gray-200 dark:border-slate-700">
-                  {timeSlotOptions.map((slot) => {
-                    const local = LOCAL_TIME_SLOTS.find(s => s.value === slot.value);
-                    const isPause = local ? (local.type !== 'Cours') : false;
-                    const p1 = calendarView === 'day' ? 0.25 : 0.15;
-                    const p2 = calendarView === 'day' ? 0.35 : 0.25;
-                    const fillA = calendarView === 'day' ? 0.18 : 0.10;
-                    const pauseBg = `repeating-linear-gradient(135deg, rgba(163,230,53,${p1}) 0 10px, rgba(163,230,53,${p2}) 10px 20px)`;
+        ) : (
+          <div className="bg-white dark:bg-slate-800 rounded-md border border-gray-200 dark:border-slate-700 shadow-md overflow-hidden">
+            <div className="overflow-x-auto">
+              <div className="min-w-[1200px]">
+                <div className="grid border-b border-gray-200 dark:border-slate-700" style={{ gridTemplateColumns: `140px repeat(${displayDays.length}, 1fr)` }}>
+                  <div className="bg-gray-50 dark:bg-slate-700/50 p-3 border-r border-gray-200 dark:border-slate-700 flex justify-center items-center"><Clock className="w-4 h-4 text-gray-400" /></div>
+                  {displayDays.map((date, index) => {
+                    const isToday = date.toDateString() === new Date().toDateString();
                     return (
-                      <div 
-                        key={slot.id}
-                        className={`${isPause ? '' : 'border-b border-gray-100 dark:border-slate-700/50'} flex items-center justify-center text-[10px] text-gray-500 dark:text-gray-400 font-medium`}
-                        style={{ 
-                          height: isPause ? 30 : 60,
-                          backgroundImage: isPause ? pauseBg : undefined,
-                          backgroundColor: isPause ? `rgba(163,230,53,${fillA})` : undefined
-                        }}
-                      >
-                        <span className="whitespace-nowrap text-center">
-                          {local ? `${slot.value} - ${local.end}` : slot.value}
-                        </span>
+                      <div key={index} className={`bg-gray-50 dark:bg-slate-700/50 p-3 text-center border-r border-gray-200 dark:border-slate-700 last:border-r-0 ${isToday ? 'bg-blue-50 dark:bg-blue-900/20' : ''}`}>
+                        <div className={`text-xs font-bold uppercase ${isToday ? 'text-blue-600' : 'text-gray-900 dark:text-white'}`}>{date.toLocaleDateString('fr-FR', { weekday: 'long' })}</div>
+                        <div className={`text-[10px] ${isToday ? 'text-blue-600 font-bold' : 'text-gray-500'}`}>{date.toLocaleDateString('fr-FR', { day: 'numeric', month: 'short' })}</div>
                       </div>
                     );
                   })}
                 </div>
-
-                {/* Colonnes des jours */}
-                {displayDays.map((date, index) => {
-                  const dayOfWeek = getDayOfWeekFromDate(date);
-                  return (
-                    <div 
-                      key={index}
-                      className="relative border-r border-gray-200 dark:border-slate-700 last:border-r-0"
-                    >
-                      {/* Lignes de fond */}
+                <div className="relative">
+                  <div className="grid" style={{ gridTemplateColumns: `140px repeat(${displayDays.length}, 1fr)` }}>
+                    <div className="border-r border-gray-200 dark:border-slate-700">
                       {timeSlotOptions.map((slot) => {
                         const local = LOCAL_TIME_SLOTS.find(s => s.value === slot.value);
-                        const isPause = local ? (local.type !== 'Cours') : false;
-                        const q1 = calendarView === 'day' ? 0.25 : 0.15;
-                        const q2 = calendarView === 'day' ? 0.35 : 0.25;
-                        const fillB = calendarView === 'day' ? 0.18 : 0.10;
-                        const pauseBg = `repeating-linear-gradient(135deg, rgba(163,230,53,${q1}) 0 10px, rgba(163,230,53,${q2}) 10px 20px)`;
-                        const isDraggingOver = dragOverCell?.day === dayOfWeek && dragOverCell?.time === slot.value;
-                        
+                        const isPause = local?.type !== 'Cours';
+                        const isEvening = slot.value >= '17:30';
                         return (
-                          <div
-                            key={`${dayOfWeek}-${slot.value}`}
-                            className={`transition-all duration-200 ${isPause ? 'cursor-not-allowed' : 'cursor-pointer'} ${isPause ? '' : 'border-b border-gray-100 dark:border-slate-700/50'}`}
-                            style={{ 
-                              height: isPause ? 30 : 60, 
-                              padding: 0, 
-                              margin: 0,
-                              backgroundImage: isPause ? pauseBg : undefined,
-                              backgroundColor: isPause 
-                                ? `rgba(163,230,53,${fillB})` 
-                                : isDraggingOver 
-                                  ? 'rgba(59, 130, 246, 0.2)' 
-                                  : undefined,
-                              boxShadow: isDraggingOver ? 'inset 0 0 0 2px rgba(59, 130, 246, 0.5)' : undefined
-                            }}
-                            onDragOver={(e) => {
-                              if (isPause) return;
-                              e.preventDefault();
-                              if (!isDraggingOver) {
-                                setDragOverCell({ day: dayOfWeek, time: slot.value });
-                              }
-                            }}
-                            onDragLeave={() => {
-                              if (isPause) return;
-                              setDragOverCell(null);
-                            }}
-                            onDrop={() => {
-                              if (isPause) return;
-                              handleDrop(dayOfWeek, slot.value);
-                            }}
-                            onClick={() => {
-                              if (isPause) return;
-                              const localSlot = LOCAL_TIME_SLOTS.find(s => s.value === slot.value);
-                              setFormData({ ...formData, dayOfWeek: String(dayOfWeek), startTime: slot.value, endTime: localSlot?.end || formData.endTime });
-                              setShowModal(true);
-                            }}
-                          >
-                          </div>
-                        );
-                      })}
-
-                      {/* Créneaux de cours */}
-                      {timeSlots
-                        .filter(slot => slot.dayOfWeek === dayOfWeek)
-                        .map((slot) => {
-                        const colors = getColorForSubject(slot.subjectName);
-                        const height = getTimeSlotHeight(slot.startTime, slot.endTime);
-                        const top = getTimeSlotTop(slot.startTime);
-
-                        return (
-                          <div
-                            key={slot.id}
-                            draggable
-                            onDragStart={() => handleDragStart(slot)}
-                            onMouseEnter={() => setHoveredSlot(slot)}
-                            onMouseLeave={() => setHoveredSlot(null)}
-                            onClick={() => {
-                              setSelectedSlot(slot);
-                              setFormData({
-                                dayOfWeek: String(slot.dayOfWeek),
-                                startTime: slot.startTime,
-                                endTime: slot.endTime,
-                                subjectId: String(slot.subjectId),
-                                staffId: String(slot.staffId),
-                                classId: String(slot.classId),
-                                roomName: slot.roomName,
-                              });
-                              setShowModal(true);
-                            }}
-                            style={{
-                              top: `${top}px`,
-                              height: `${height}px`,
-                              backgroundColor: colors.bg,
-                              borderLeft: `3px solid ${colors.color}`,
-                            }}
-                            className={`absolute left-1 right-1 rounded-md shadow-sm hover:shadow-md transition-all cursor-move group overflow-hidden ${
-                              conflictingSlot && conflictingSlot.id === slot.id ? 'ring-2 ring-red-500' : ''
-                            }`}
-                          >
-                            <div className="p-2 h-full flex flex-col justify-between">
-                              <div>
-                                <div 
-                                  className="text-xs font-bold mb-0.5 truncate"
-                                  style={{ color: colors.color }}
-                                >
-                                  {slot.subjectName}
-                                </div>
-                                <div className="text-[10px] text-gray-600 dark:text-gray-400 truncate flex items-center gap-1">
-                                  <User className="w-3 h-3" />
-                                  {slot.teacherName}
-                                </div>
-                              </div>
-                              <div className="text-[9px] font-medium text-gray-500">
-                                {slot.startTime} - {slot.endTime}
-                              </div>
-                            </div>
-
-                            {/* Actions au survol */}
-                            <div className="absolute top-1 right-1 opacity-0 group-hover:opacity-100 transition-opacity flex gap-1">
-                              <button
-                                onClick={(e) => {
-                                  e.stopPropagation();
-                                  handleDeleteSlot(slot.id);
-                                }}
-                                className="p-1 bg-red-500 text-white rounded-md hover:bg-red-600 transition-colors"
-                              >
-                                <Trash2 className="w-3 h-3" />
-                              </button>
-                            </div>
-                            {hoveredSlot && hoveredSlot.id === slot.id && (
-                              <div className="absolute z-10 top-0 left-full ml-2 w-64 bg-white dark:bg-slate-800 border border-gray-200 dark:border-slate-700 rounded-md shadow-lg p-4">
-                                <h3 className="font-bold text-sm mb-2" style={{ color: colors.color }}>{slot.subjectName}</h3>
-                                <p className="text-xs text-gray-600 dark:text-gray-400 flex items-center gap-2"><User className="w-3 h-3" /> {slot.teacherName}</p>
-                                <p className="text-xs text-gray-600 dark:text-gray-400 flex items-center gap-2"><BookOpen className="w-3 h-3" /> {slot.className}</p>
-                                <p className="text-xs text-gray-600 dark:text-gray-400 flex items-center gap-2"><MapPin className="w-3 h-3" /> {slot.roomName}</p>
-                                <p className="text-xs text-gray-600 dark:text-gray-400 flex items-center gap-2"><Clock className="w-3 h-3" /> {slot.startTime} - {slot.endTime}</p>
+                          <div key={slot.id} className={`${isPause ? 'bg-lime-50/30' : 'border-b border-gray-100'} flex flex-col items-center justify-center text-[10px] text-gray-500 font-medium px-1`} style={{ height: isPause ? 30 : 60 }}>
+                            <div>{slot.value} - {local?.end}</div>
+                            {viewPeriod === 'all' && !isPause && (
+                              <div className={`text-[8px] uppercase px-1 rounded ${isEvening ? 'bg-purple-100 text-purple-700' : 'bg-blue-100 text-blue-700'}`}>
+                                {isEvening ? t('evening') : t('day')}
                               </div>
                             )}
                           </div>
                         );
                       })}
+                    </div>
+                    {displayDays.map((date, index) => {
+                      const dayOfWeek = getDayOfWeekFromDate(date);
+                      return (
+                        <div 
+                          key={index} 
+                          onDragOver={(e) => {
+                            e.preventDefault();
+                            setDragOverCell({ day: dayOfWeek, time: '' }); // Optionnel pour le feedback
+                          }}
+                          onDrop={(e) => {
+                            e.preventDefault();
+                            // Le drop sur la colonne elle-même sans slot spécifique
+                          }}
+                          className="relative border-r border-gray-200 dark:border-slate-700 last:border-r-0"
+                        >
+                          {timeSlotOptions.map((slot) => {
+                            const local = LOCAL_TIME_SLOTS.find(s => s.value === slot.value);
+                            const isPause = local?.type !== 'Cours';
+                            const isOver = dragOverCell?.day === dayOfWeek && dragOverCell?.time === slot.value;
+                            
+                            return (
+                              <div 
+                                key={`${dayOfWeek}-${slot.value}`} 
+                                id={`drop-zone-${dayOfWeek}-${slot.value}`}
+                                onClick={() => !isPause && handleCreateNewSlot(String(dayOfWeek), slot.value, selectedFilter)} 
+                                onDragOver={(e) => {
+                                  if (!isPause) {
+                                    e.preventDefault();
+                                    setDragOverCell({ day: dayOfWeek, time: slot.value });
+                                  }
+                                }}
+                                onDragLeave={() => setDragOverCell(null)}
+                                onDrop={(e) => {
+                                  e.preventDefault();
+                                  if (!isPause) handleDrop(dayOfWeek, slot.value);
+                                }}
+                                className={`border-b border-gray-100 ${isPause ? 'bg-lime-50/20' : 'hover:bg-blue-50/10 cursor-pointer'} ${isOver ? 'bg-blue-100/50' : ''}`} 
+                                style={{ height: isPause ? 30 : 60 }} 
+                              />
+                            );
+                          })}
+                          {timeSlots.filter(s => s.dayOfWeek === dayOfWeek).map((slot) => {
+                            const colors = getColorForSubject(slot.subjectName);
+                            const height = getTimeSlotHeight(slot.startTime, slot.endTime);
+                            const top = getTimeSlotTop(slot.startTime);
+                            const isDragged = draggedSlot?.id === slot.id;
+                            
+                            return (
+                              <div 
+                                key={slot.id} 
+                                id={`slot-${slot.id}`}
+                                draggable
+                                onDragStart={() => handleDragStart(slot)}
+                                onClick={() => handleEditSlot(slot)} 
+                                style={{ 
+                                  top: `${top}px`, 
+                                  height: `${height}px`, 
+                                  backgroundColor: colors.bg, 
+                                  borderLeft: `3px solid ${colors.color}`,
+                                  opacity: isDragged ? 0.5 : 1,
+                                  zIndex: isDragged ? 50 : 10
+                                }} 
+                                className="absolute left-1 right-1 rounded-md shadow-sm hover:shadow-md transition-all cursor-pointer p-2 overflow-hidden"
+                              >
+                                <div className="text-[10px] font-bold truncate" style={{ color: colors.color }}>{slot.subjectName}</div>
+                                <div className="text-[9px] text-gray-500 truncate">{slot.teacherName}</div>
+                                <div className="text-[8px] text-gray-400">{slot.startTime} - {slot.endTime}</div>
+                              </div>
+                            );
+                          })}
+                        </div>
+                      );
+                    })}
                   </div>
-                  );
-                })}
+                </div>
               </div>
             </div>
-            </div>
           </div>
-        </div>
-      )}
+        )}
       </div>
 
-      {/* Légende */}
-      <div 
-        style={{ marginTop: 'var(--card-spacing)' }}
-        className="bg-white dark:bg-slate-800 rounded-md border border-gray-200 dark:border-slate-700 p-4"
-      >
-        <h3 className="text-sm font-bold text-gray-900 dark:text-white mb-3 uppercase">Légende</h3>
+      {/* Legend */}
+      <div style={{ marginTop: 'var(--card-spacing)' }} className="bg-white dark:bg-slate-800 rounded-md border border-gray-200 dark:border-slate-700 p-4">
+        <h3 className="text-sm font-bold text-gray-900 dark:text-white mb-3 uppercase">{t('legend')}</h3>
         <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-2">
           {visibleSubjects.map((s: any) => {
             const colors = getColorForSubject(s.name);
             return (
-            <div key={s.id || s.name} className="flex items-center gap-2">
-              <div 
-                className="w-3 h-3 rounded-sm"
-                style={{ backgroundColor: colors.color }}
-              />
-              <span className="text-xs text-gray-600 dark:text-gray-400">{s.name}</span>
-            </div>
-          )})}
+              <div key={s.id || s.name} className="flex items-center gap-2">
+                <div className="w-3 h-3 rounded-sm" style={{ backgroundColor: colors.color }} />
+                <span className="text-xs text-gray-600 dark:text-gray-400">{s.name}</span>
+              </div>
+            );
+          })}
         </div>
       </div>
 
-      {/* Modal Formulaire */}
+      {/* Modal */}
       {showModal && (
         <div className="fixed inset-0 bg-black/50 backdrop-blur-sm flex items-center justify-center z-50 p-4">
           <div className="bg-white dark:bg-slate-800 rounded-md border border-gray-200 dark:border-slate-700 shadow-2xl max-w-2xl w-full max-h-[90vh] overflow-y-auto">
             <div className="sticky top-0 bg-white dark:bg-slate-800 border-b border-gray-200 dark:border-slate-700 px-6 py-4 flex justify-between items-center">
-              <h2 className="text-lg font-bold text-gray-900 dark:text-white uppercase">
-                {selectedSlot ? 'MODIFIER CRÉNEAU' : 'NOUVEAU CRÉNEAU'}
-              </h2>
-              <button 
-                onClick={() => {
-                  setShowModal(false);
-                  setSelectedSlot(null);
-                  setFormData({
-                    dayOfWeek: '',
-                    startTime: '',
-                    endTime: '',
-                    subjectId: '',
-                    staffId: '',
-                    classId: '',
-                    roomName: '',
-                  });
-                }}
-                className="p-2 hover:bg-gray-100 dark:hover:bg-slate-700 rounded-md transition-colors"
-              >
-                <X className="w-5 h-5" />
-              </button>
+              <h2 className="text-lg font-bold text-gray-900 dark:text-white uppercase">{selectedSlot ? t('editSlot') : t('newSlot')}</h2>
+              <button onClick={() => setShowModal(false)} className="p-2 hover:bg-gray-100 dark:hover:bg-slate-700 rounded-md"><X className="w-5 h-5" /></button>
             </div>
-
             <form onSubmit={handleCreateSlot} className="p-6 space-y-4">
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                {conflictingSlot && (
-                  <div className="md:col-span-2 bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative" role="alert">
-                    <strong className="font-bold">Conflit détecté !</strong>
-                    <span className="block sm:inline"> Ce créneau entre en conflit avec le cours de {conflictingSlot.subjectName}.</span>
-                  </div>
-                )}
                 <div>
-                  <label className="block text-xs font-medium text-gray-700 dark:text-gray-300 mb-1">Jour *</label>
-                  <select
-                    required
-                    value={formData.dayOfWeek}
-                    onChange={(e) => setFormData({...formData, dayOfWeek: e.target.value})}
-                    className="w-full px-3 py-2 border border-gray-200 dark:border-slate-600 rounded-md bg-gray-50 dark:bg-slate-700 text-sm dark:text-white focus:ring-2 focus:ring-blue-500"
-                  >
-                    <option value="">Sélectionner...</option>
-                    {days.map(day => (
-                      <option key={day.id} value={String((day as any).value ?? day.id)}>{getLabel(day)}</option>
-                    ))}
+                  <label className="block text-xs font-medium text-gray-700 dark:text-gray-300 mb-1">{t('day')} *</label>
+                  <select required value={formData.dayOfWeek} onChange={(e) => setFormData({...formData, dayOfWeek: e.target.value})} className="w-full px-3 py-2 border border-gray-200 dark:border-slate-600 rounded-md bg-gray-50 dark:bg-slate-700 text-sm dark:text-white">
+                    <option value="">{t('select')}</option>
+                    {days.map(day => <option key={day.id} value={String((day as any).value ?? day.id)}>{getLabel(day)}</option>)}
                   </select>
                 </div>
-
                 <div>
-                  <label className="block text-xs font-medium text-gray-700 dark:text-gray-300 mb-1">Matière *</label>
-                  <select
-                    required
-                    value={formData.subjectId}
-                    onChange={(e) => setFormData({...formData, subjectId: e.target.value})}
-                    className="w-full px-3 py-2 border border-gray-200 dark:border-slate-600 rounded-md bg-gray-50 dark:bg-slate-700 text-sm dark:text-white focus:ring-2 focus:ring-blue-500"
-                    disabled={dialogLoading}
-                  >
-                    <option value="">Sélectionner...</option>
-                    {dialogSubjects.map(s => (
-                      <option key={s.id} value={String(s.id)}>{s.name}</option>
-                    ))}
+                  <label className="block text-xs font-medium text-gray-700 dark:text-gray-300 mb-1">{t('subject')} *</label>
+                  <select required value={formData.subjectId} onChange={(e) => setFormData({...formData, subjectId: e.target.value})} className="w-full px-3 py-2 border border-gray-200 dark:border-slate-600 rounded-md bg-gray-50 dark:bg-slate-700 text-sm dark:text-white" disabled={dialogLoading}>
+                    <option value="">{t('select')}</option>
+                    {dialogSubjects.map(s => <option key={s.id} value={String(s.id)}>{s.name}</option>)}
                   </select>
                 </div>
-
                 <div>
-                  <label className="block text-xs font-medium text-gray-700 dark:text-gray-300 mb-1">Heure de début *</label>
-                  <select
-                    required
-                    value={formData.startTime}
-                    onChange={(e) => {
-                      const v = e.target.value;
-                      const slot = LOCAL_TIME_SLOTS.find(s => s.value === v);
-                      setFormData({ ...formData, startTime: v, endTime: slot?.end || formData.endTime });
-                    }}
-                    className="w-full px-3 py-2 border border-gray-200 dark:border-slate-600 rounded-md bg-gray-50 dark:bg-slate-700 text-sm dark:text-white focus:ring-2 focus:ring-blue-500"
-                  >
-                    <option value="">Sélectionner...</option>
-                    {LOCAL_TIME_SLOTS.filter(s => s.type === 'Cours').map((s, idx) => (
-                      <option key={`start-${idx}`} value={s.value}>{s.value}</option>
-                    ))}
+                  <label className="block text-xs font-medium text-gray-700 dark:text-gray-300 mb-1">{t('startTime')} *</label>
+                  <select required value={formData.startTime} onChange={(e) => { const v = e.target.value; const slot = LOCAL_TIME_SLOTS.find(s => s.value === v); setFormData({ ...formData, startTime: v, endTime: slot?.end || formData.endTime }); }} className="w-full px-3 py-2 border border-gray-200 dark:border-slate-600 rounded-md bg-gray-50 dark:bg-slate-700 text-sm dark:text-white">
+                    <option value="">{t('select')}</option>
+                    {LOCAL_TIME_SLOTS.filter(s => s.type === 'Cours').map((s, idx) => <option key={idx} value={s.value}>{s.value}</option>)}
                   </select>
                 </div>
-
                 <div>
-                  <label className="block text-xs font-medium text-gray-700 dark:text-gray-300 mb-1">Heure de fin *</label>
-                  <select
-                    required
-                    value={formData.endTime}
-                    onChange={(e) => setFormData({...formData, endTime: e.target.value})}
-                    className="w-full px-3 py-2 border border-gray-200 dark:border-slate-600 rounded-md bg-gray-50 dark:bg-slate-700 text-sm dark:text-white focus:ring-2 focus:ring-blue-500"
-                    disabled
-                  >
-                    <option value="">Sélectionner...</option>
-                    <option value={formData.endTime || ''}>{formData.endTime || 'Fin'}</option>
+                  <label className="block text-xs font-medium text-gray-700 dark:text-gray-300 mb-1">{t('endTime')} *</label>
+                  <select required value={formData.endTime} className="w-full px-3 py-2 border border-gray-200 dark:border-slate-600 rounded-md bg-gray-50 dark:bg-slate-700 text-sm dark:text-white" disabled>
+                    <option value={formData.endTime}>{formData.endTime}</option>
                   </select>
                 </div>
-
                 <div>
-                  <label className="block text-xs font-medium text-gray-700 dark:text-gray-300 mb-1">Enseignant *</label>
-                  <select
-                    required
-                    value={formData.staffId || ''}
-                    onChange={(e) => {
-                      const selectedId = Number(e.target.value);
-                      setFormData({
-                        ...formData, 
-                        staffId: String(selectedId),
-                      });
-                    }}
-                    className="w-full px-3 py-2 border border-gray-200 dark:border-slate-600 rounded-md bg-gray-50 dark:bg-slate-700 text-sm dark:text-white focus:ring-2 focus:ring-blue-500"
-                    disabled={dialogLoading}
-                  >
-                    <option value="">Sélectionner un enseignant...</option>
-                    {dialogTeachers.map((teacher) => (
-                      <option key={teacher.id} value={Number(teacher.id)}>
-                        {teacher.firstName} {teacher.lastName} {teacher.specialty ? `- ${teacher.specialty}` : ''}
-                      </option>
-                    ))}
+                  <label className="block text-xs font-medium text-gray-700 dark:text-gray-300 mb-1">{t('teacher')} *</label>
+                  <select required value={formData.staffId} onChange={(e) => setFormData({...formData, staffId: e.target.value})} className="w-full px-3 py-2 border border-gray-200 dark:border-slate-600 rounded-md bg-gray-50 dark:bg-slate-700 text-sm dark:text-white" disabled={dialogLoading}>
+                    <option value="">{t('select')}</option>
+                    {dialogTeachers.map(tFound => <option key={tFound.id} value={String(tFound.id)}>{tFound.firstName} {tFound.lastName}</option>)}
                   </select>
                 </div>
-
                 <div>
-                  <label className="block text-xs font-medium text-gray-700 dark:text-gray-300 mb-1">Classe *</label>
-                  <select
-                    required
-                    value={formData.classId || ''}
-                    onChange={(e) => setFormData({...formData, classId: e.target.value})}
-                    className="w-full px-3 py-2 border border-gray-200 dark:border-slate-600 rounded-md bg-gray-50 dark:bg-slate-700 text-sm dark:text-white focus:ring-2 focus:ring-blue-500"
-                    disabled={dialogLoading}
-                  >
-                    <option value="">Sélectionner une classe...</option>
-                    {dialogClasses.map((c) => (
-                      <option key={c.id || c.name} value={String(c.id)}>
-                        {c.name}
-                      </option>
-                    ))}
+                  <label className="block text-xs font-medium text-gray-700 dark:text-gray-300 mb-1">{t('class')} *</label>
+                  <select required value={formData.classId} onChange={(e) => setFormData({...formData, classId: e.target.value})} className="w-full px-3 py-2 border border-gray-200 dark:border-slate-600 rounded-md bg-gray-50 dark:bg-slate-700 text-sm dark:text-white" disabled={dialogLoading}>
+                    <option value="">{t('select')}</option>
+                    {dialogClasses.map(c => <option key={c.id} value={String(c.id)}>{c.name}</option>)}
                   </select>
                 </div>
-
                 <div>
-                  <label className="block text-xs font-medium text-gray-700 dark:text-gray-300 mb-1">Salle</label>
-                  <select
-                    value={formData.roomName || ''}
-                    onChange={(e) => setFormData({...formData, roomName: e.target.value})}
-                    className="w-full px-3 py-2 border border-gray-200 dark:border-slate-600 rounded-md bg-gray-50 dark:bg-slate-700 text-sm dark:text-white focus:ring-2 focus:ring-blue-500"
-                  >
-                    <option value="TBD">À définir (TBD)</option>
-                    {rooms.map((room) => (
-                      <option key={room.id} value={room.value}>
-                        {getLabel(room)}
-                      </option>
-                    ))}
+                  <label className="block text-xs font-medium text-gray-700 dark:text-gray-300 mb-1">{t('room')}</label>
+                  <select value={formData.roomName} onChange={(e) => setFormData({...formData, roomName: e.target.value})} className="w-full px-3 py-2 border border-gray-200 dark:border-slate-600 rounded-md bg-gray-50 dark:bg-slate-700 text-sm dark:text-white">
+                    <option value="TBD">TBD</option>
+                    {rooms.map(r => <option key={r.id} value={r.value}>{getLabel(r)}</option>)}
                   </select>
                 </div>
               </div>
-
               <div className="flex items-center justify-end gap-3 pt-4 border-t border-gray-200 dark:border-slate-700">
-                <button
-                  type="button"
-                  onClick={() => {
-                    setShowModal(false);
-                    setSelectedSlot(null);
-                    setFormData({
-                      dayOfWeek: '',
-                      startTime: '',
-                      endTime: '',
-                      subjectId: '',
-                      staffId: '',
-                      classId: '',
-                      roomName: '',
-                    });
-                  }}
-                  className="px-4 py-2 text-sm font-normal text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-slate-700 rounded-md transition-colors border border-gray-200 dark:border-slate-600"
-                >
-                  Annuler
-                </button>
-                <button
-                  type="submit"
-                  className="px-4 py-2 text-sm font-normal bg-blue-600 hover:bg-blue-700 text-white rounded-md transition-colors border border-blue-700"
-                >
-                  {selectedSlot ? 'Mettre à jour' : 'Enregistrer'}
-                </button>
+                <button type="button" onClick={() => setShowModal(false)} className="px-4 py-2 text-sm font-normal text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-slate-700 rounded-md transition-colors border border-gray-200 dark:border-slate-600">{t('cancel')}</button>
+                <button type="submit" className="px-4 py-2 text-sm font-normal bg-blue-600 hover:bg-blue-700 text-white rounded-md transition-colors border border-blue-700">{selectedSlot ? t('update') : t('save')}</button>
               </div>
             </form>
           </div>
         </div>
       )}
-      
-      {/* Modal d'exportation */}
-      <ScheduleExportModal
-        scheduleData={{
-          title: `Emploi du temps - ${
-            viewMode === 'class'
-              ? (classes.find(c => String(c.id) === String(selectedFilter))?.name || selectedFilter)
-              : viewMode === 'teacher'
-                ? (() => {
-                    const t = teachers.find(tt => String(tt.id) === String(selectedFilter));
-                    return t ? `${t.firstName} ${t.lastName}` : selectedFilter;
-                  })()
-                : selectedFilter
-          }`,
-          period: getPeriodTitle(),
-          slots: timeSlots,
-          viewMode,
-          filter: selectedFilter,
-          dateGenerated: new Date().toISOString(),
-        }}
-        isOpen={showExportModal}
-        onClose={() => setShowExportModal(false)}
-        defaultPeriod={viewPeriod}
-      />
+
+      {showExportModal && exportData && (
+        <ScheduleExportModal
+          isOpen={showExportModal}
+          onClose={() => setShowExportModal(false)}
+          scheduleData={exportData}
+          classes={classes}
+        />
+      )}
+
       <ConfirmDialog
         isOpen={confirmOpen}
-        onClose={() => {
-          if (deleteLoading) return;
-          setConfirmOpen(false);
-          setTargetDeleteId(null);
-        }}
+        onClose={() => setConfirmOpen(false)}
         onConfirm={deleteSlot}
-        title="Supprimer le créneau"
-        message="Cette action est irréversible. Voulez-vous vraiment supprimer ce créneau ?"
-        confirmText="Supprimer"
-        cancelText="Annuler"
+        title={t('deleteSlotTitle')}
+        message={t('deleteSlotMessage')}
+        confirmText={t('delete')}
+        cancelText={t('cancel')}
         type="danger"
         loading={deleteLoading}
       />
+      </div>
+      )}
     </div>
   );
 };
+
+export default Timetable;

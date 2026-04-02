@@ -17,6 +17,7 @@ import {
 import { financeApi, coreApi, reportsApi, socket } from '../services/api';
 import { useNotification } from '../contexts/NotificationContext';
 import { useTheme } from '../contexts/ThemeContext';
+import { useTranslation } from '../hooks/useTranslation';
 import { translations } from '../lib/translations';
 import { useDebounce } from '../hooks/useDebounce';
 import { ConfirmDialog } from '../components/ConfirmDialog';
@@ -33,7 +34,7 @@ import { useNavigate } from 'react-router-dom';
 
 export const Finance = () => {
   const { language } = useTheme();
-  const t = translations[language];
+  const { t } = useTranslation();
   const notify = useNotification();
   
   const [activeTab, setActiveTab] = useState<'overview' | 'encaissements' | 'decaissements' | 'rapports'>('overview');
@@ -517,7 +518,7 @@ export const Finance = () => {
       {/* Header */}
       <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-8">
         <div>
-          <h1 className="text-2xl font-bold text-gray-900 dark:text-white uppercase tracking-tight">{t.finance}</h1>
+          <h1 className="text-2xl font-bold text-gray-900 dark:text-white uppercase tracking-tight">{t('finance')}</h1>
           <p className="text-sm text-gray-500 dark:text-gray-400">Gestion financière, encaissements et décaissements</p>
         </div>
         <div className="flex gap-3">
@@ -526,7 +527,7 @@ export const Finance = () => {
             className="flex items-center gap-2 bg-rose-600 hover:bg-rose-700 text-white px-4 py-2 rounded-lg transition-all shadow-md hover:shadow-lg text-sm font-semibold active:scale-95"
           >
             <Upload className="w-4 h-4" />
-            Nouveau Décaissement
+            {t('newWithdrawal')}
           </button>
           <button
             onClick={() => {
@@ -724,7 +725,7 @@ export const Finance = () => {
                     onClick={() => setDisbursementShowAllDates(!disbursementShowAllDates)}
                     className={`px-3 py-2 rounded-lg text-xs font-bold transition-all border ${disbursementShowAllDates ? 'bg-rose-600 text-white border-rose-600' : 'bg-white dark:bg-slate-700 text-gray-600 dark:text-gray-300 border-gray-200 dark:border-slate-600'}`}
                   >
-                    {disbursementShowAllDates ? 'Filtrer par date' : 'Toutes les dates'}
+                    {disbursementShowAllDates ? t('filterByDate') : t('allDates')}
                   </button>
                   <select 
                     value={disbursementFilterMethod}
@@ -740,7 +741,7 @@ export const Finance = () => {
                     <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" />
                     <input
                       type="text"
-                      placeholder="Rechercher bénéficiaire..."
+                      placeholder={t('searchBeneficiary')}
                       value={disbursementSearchQuery}
                       onChange={(e) => setDisbursementSearchQuery(e.target.value)}
                       className="pl-9 pr-4 py-2 bg-white dark:bg-slate-700 border border-gray-200 dark:border-slate-600 rounded-lg text-xs font-bold outline-none focus:ring-2 focus:ring-rose-500"
@@ -751,7 +752,7 @@ export const Finance = () => {
                     className="flex items-center gap-2 px-4 py-2 bg-rose-600 text-white text-xs font-black rounded-xl hover:bg-rose-700 transition-all uppercase active:scale-95 shadow-lg shadow-rose-500/20"
                   >
                     <Plus className="w-4 h-4" />
-                    <span>Nouveau</span>
+                    <span>{t('new')}</span>
                   </button>
                 </div>
               </div>
@@ -792,7 +793,7 @@ export const Finance = () => {
                     <h4 className="text-sm font-black text-gray-900 dark:text-white mb-1 uppercase tracking-tight">{rep.title}</h4>
                     <p className="text-[10px] font-bold text-gray-500 uppercase">{rep.desc}</p>
                     <div className="mt-4 flex items-center gap-2 text-[10px] font-black text-blue-600 uppercase">
-                      Générer maintenant <ChevronRight className="w-3 h-3" />
+                      {t('generateNow')} <ChevronRight className="w-3 h-3" />
                     </div>
                   </div>
                 );
@@ -861,8 +862,8 @@ export const Finance = () => {
         isOpen={confirmDeleteOpen}
         onClose={() => setConfirmDeleteOpen(false)}
         onConfirm={handleDeletePayment}
-        title="Supprimer le paiement"
-        message="Êtes-vous sûr de vouloir supprimer ce paiement ? Cette action est irréversible."
+        title={t('deletePaymentTitle')}
+        message={t('deletePaymentMessage')}
         loading={deleteLoading}
       />
     </div>

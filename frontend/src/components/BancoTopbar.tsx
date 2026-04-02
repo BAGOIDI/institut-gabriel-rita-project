@@ -18,6 +18,7 @@ import {
 } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import { useTheme } from '../contexts/ThemeContext';
+import { useTranslation } from '../hooks/useTranslation';
 import { translations } from '../lib/translations';
 import { useAuth } from '../contexts/AuthContext';
 import { useNotification } from '../contexts/NotificationContext';
@@ -36,7 +37,7 @@ export const BancoTopbar = ({ onMenuClick }: { onMenuClick: () => void }) => {
   const navigate = useNavigate();
   const { logout } = useAuth();
   const { success } = useNotification();
-  const t = translations[language];
+  const { t } = useTranslation();
   const [showUserMenu, setShowUserMenu] = useState(false);
   const [showNotifications, setShowNotifications] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
@@ -129,7 +130,7 @@ export const BancoTopbar = ({ onMenuClick }: { onMenuClick: () => void }) => {
           <Search className="w-4 h-4 text-gray-400 dark:text-gray-500 mr-3 flex-shrink-0" />
           <input 
             type="text" 
-            placeholder={`${t.search}...`}
+            placeholder={`${t('search')}...`}
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
             className="bg-transparent border-none outline-none text-sm w-full text-gray-700 dark:text-gray-200 placeholder-gray-400 dark:placeholder-gray-500 focus:ring-0 font-inter"
@@ -288,7 +289,7 @@ export const BancoTopbar = ({ onMenuClick }: { onMenuClick: () => void }) => {
                 Admin ISGR
               </div>
               <div className="text-[10px] text-gray-500 dark:text-gray-400 uppercase tracking-wide font-inter">
-                Administrateur
+                {t('administrator')}
               </div>
             </div>
             <div className="relative">
@@ -323,15 +324,15 @@ export const BancoTopbar = ({ onMenuClick }: { onMenuClick: () => void }) => {
                 <div className="py-2">
                   <button className="w-full px-4 py-2.5 text-left text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-slate-700 transition-colors flex items-center gap-3 font-inter">
                     <User className="w-4 h-4" />
-                    Mon profil
+                    {t('myProfile')}
                   </button>
                   <button className="w-full px-4 py-2.5 text-left text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-slate-700 transition-colors flex items-center gap-3 font-inter">
                     <Settings className="w-4 h-4" />
-                    Paramètres
+                    {t('settings')}
                   </button>
                   <button className="w-full px-4 py-2.5 text-left text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-slate-700 transition-colors flex items-center gap-3 font-inter">
                     <Mail className="w-4 h-4" />
-                    Support
+                    {t('support')}
                   </button>
                 </div>
                 
@@ -341,7 +342,7 @@ export const BancoTopbar = ({ onMenuClick }: { onMenuClick: () => void }) => {
                     className="w-full px-4 py-2.5 text-left text-sm text-red-600 dark:text-red-400 hover:bg-red-50 dark:hover:bg-red-900/20 transition-colors flex items-center gap-3 font-inter"
                   >
                     <LogOut className="w-4 h-4" />
-                    Déconnexion
+                    {t('logout')}
                   </button>
                 </div>
               </div>

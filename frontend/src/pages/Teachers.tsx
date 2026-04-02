@@ -38,9 +38,16 @@ import { SearchService } from '../services/search.service';
 import { CoreService } from '../services/core.service';
 import { useSystemOptions } from '../hooks/useSystemOptions';
 import { useTheme } from '../contexts/ThemeContext';
+import { useTranslation } from '../hooks/useTranslation';
 import { translations } from '../lib/translations';
 import { ConfirmDialog } from '../components/ConfirmDialog';
 import { useNotification } from '../contexts/NotificationContext';
+
+interface Assignment {
+  id?: number;
+  classId: number;
+  subjectId: number;
+}
 
 interface Teacher {
   id: string;
@@ -59,8 +66,9 @@ interface Teacher {
   status: string; // Permanent, Vacataire, Contractuel
   specialty: string; // Spécialité/Discipline principale
   diploma: string; // Niveau d'étude
-  subjects: string[]; // Matières enseignées
-  classes: string[]; // Classes assignées
+  assignments: Assignment[]; // Assignments (class + subject)
+  subjects?: string[]; // For display
+  classes?: string[]; // For display
   photo: string;
   idCardNumber: string;
   socialSecurityNumber: string;
@@ -109,7 +117,7 @@ export const Teachers = () => {
   const [classesFilter, setClassesFilter] = useState('');
   
   const { language } = useTheme();
-  const t = translations[language];
+  const { t } = useTranslation();
   const notify = useNotification();
   const { data: genderOptions } = useSystemOptions('GENDER');
   const { data: maritalOptions } = useSystemOptions('MARITAL_STATUS');
@@ -133,14 +141,13 @@ export const Teachers = () => {
     dateOfBirth: '',
     placeOfBirth: '',
     nationality: 'Ivoirienne',
-    gender: 'M',
+    gender: '',
     maritalStatus: 'Célibataire',
     hireDate: '',
     status: 'Permanent',
     specialty: '',
     diploma: '',
-    subjects: [],
-    classes: [],
+    assignments: [],
     idCardNumber: '',
     socialSecurityNumber: '',
     bankAccount: '',
@@ -235,7 +242,18 @@ export const Teachers = () => {
         const url = `/api/core/staff?${params.toString()}`;
         const response = await api.get(url);
         
-        setTeachers(response.data.items || []);
+        const teachersWithAssignments = (response.data.items || []).map((teacher: any) => {
+          const assignments = teacher.teacherAssignments || [];
+          const uniqueClasses = new Set(assignments.map((a: any) => a.classId || a.class?.id).filter(Boolean));
+          const uniqueSubjects = new Set(assignments.map((a: any) => a.subjectId || a.subject?.id).filter(Boolean));
+          return {
+            ...teacher,
+            classes: Array.from(uniqueClasses),
+            subjects: Array.from(uniqueSubjects)
+          };
+        });
+
+        setTeachers(teachersWithAssignments);
         setPagination(prev => ({
           ...prev,
           total: response.data.total || 0,
@@ -300,28 +318,73 @@ export const Teachers = () => {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
+      let teacherId = selectedTeacher?.id;
       if (selectedTeacher) {
         await api.put(`/api/core/staff/${selectedTeacher.id}`, formData);
       } else {
-        await api.post('/api/core/staff', formData);
+        const response = await api.post('/api/core/staff', formData);
+        teacherId = response.data.id;
       }
+
+      // Handle assignments update
+      if (teacherId) {
+        const assignments = (formData.assignments || []).map(a => ({
+          classId: Number(a.classId),
+          subjectId: Number(a.subjectId)
+        })).filter(a => a.classId && a.subjectId);
+
+        await api.post(`/api/core/teacher-subject-class/sync/${teacherId}`, assignments);
+      }
+
       setShowModal(false);
       setSelectedTeacher(null);
-      setFormData({});
+      setFormData({ assignments: [] });
       setFormStep(1);
       setSubjectsFilter('');
       setClassesFilter('');
       fetchTeachers();
       notify.success('Enseignant enregistré avec succès');
     } catch (error) {
+      console.error("Erreur lors de l'enregistrement", error);
       notify.error("Erreur lors de l'enregistrement");
     }
   };
 
-  const handleEdit = (teacher: Teacher) => {
+  const handleEdit = (teacher: any) => {
+    // Current assignments are already in teacherAssignments or can be mapped from assignments if we want
+    // But since findOne or findAll now includes them, let's use them
+    const assignments = teacher.teacherAssignments || teacher.assignments || [];
+    const currentAssignments = assignments.map((a: any) => ({
+      id: a.id,
+      classId: a.classId || a.class?.id,
+      subjectId: a.subjectId || a.subject?.id
+    }));
+    
     setSelectedTeacher(teacher);
-    setFormData(teacher);
+    setFormData({
+      ...teacher,
+      assignments: currentAssignments
+    });
     setFormStep(1);
+    setSubjectsFilter('');
+    setClassesFilter('');
+    setShowModal(true);
+  };
+
+  const handleOpenAssignments = (teacher: any) => {
+    const assignments = teacher.teacherAssignments || teacher.assignments || [];
+    const currentAssignments = assignments.map((a: any) => ({
+      id: a.id,
+      classId: a.classId || a.class?.id,
+      subjectId: a.subjectId || a.subject?.id
+    }));
+    
+    setSelectedTeacher(teacher);
+    setFormData({
+      ...teacher,
+      assignments: currentAssignments
+    });
+    setFormStep(4); // Open directly at assignments step
     setSubjectsFilter('');
     setClassesFilter('');
     setShowModal(true);
@@ -331,23 +394,21 @@ export const Teachers = () => {
     const missing: string[] = [];
 
     if (step === 1) {
-      if (!String(formData.lastName || '').trim()) missing.push(t.lastName);
-      if (!String(formData.gender || '').trim()) missing.push(t.gender);
+      if (!String(formData.lastName || '').trim()) missing.push(t('lastName'));
     }
 
     if (step === 2) {
-      if (!String(formData.email || '').trim()) missing.push(t.email);
+      // Email is no longer strictly required if we want to reduce required fields
     }
 
     if (step === 3) {
-      if (!String(formData.specialty || '').trim()) missing.push(t.specialty);
-      if (!String(formData.status || '').trim()) missing.push(t.teacherStatus);
+      if (!String(formData.specialty || '').trim()) missing.push(t('specialty'));
     }
 
     // step 4 has no strict required fields (subjects/classes optional)
 
     if (missing.length > 0) {
-      notify.error(`${t.requiredFields || 'Champs obligatoires'}: ${missing.join(', ')}`);
+      notify.error(`${t('requiredFields') || 'Champs obligatoires'}: ${missing.join(', ')}`);
       return false;
     }
     return true;
@@ -382,13 +443,13 @@ export const Teachers = () => {
         className="flex justify-between items-center"
       >
         <div>
-          <h1 className="text-xl font-bold text-gray-900 dark:text-white uppercase tracking-tight">{t.teacherManagement}</h1>
-          <p className="text-[11px] text-gray-500 dark:text-gray-400">{t.teacherManagementDesc}</p>
+          <h1 className="text-xl font-bold text-gray-900 dark:text-white uppercase tracking-tight">{t('teacherManagement')}</h1>
+          <p className="text-[11px] text-gray-500 dark:text-gray-400">{t('teacherManagementDesc')}</p>
         </div>
         <div className="flex gap-2">
           <label className="flex items-center gap-2 bg-primary hover:bg-primary/90 text-white px-3 py-1.5 rounded-md cursor-pointer transition-colors text-xs font-semibold border border-primary/30 shadow-sm shadow-blue-500/10">
             <Upload className="w-3.5 h-3.5" />
-            <span>{t.importExcel}</span>
+            <span>{t('importExcel')}</span>
             <input type="file" className="hidden" accept=".xlsx, .xls" onChange={handleFileUpload} />
           </label>
           <button 
@@ -400,7 +461,7 @@ export const Teachers = () => {
             className="flex items-center gap-2 bg-blue-600 hover:bg-blue-700 text-white px-3 py-1.5 rounded-md transition-colors text-xs font-normal border border-blue-700"
           >
             <Plus className="w-3.5 h-3.5" />
-            <span>{t.newTeacher}</span>
+            <span>{t('newTeacher')}</span>
           </button>
         </div>
       </div>
@@ -417,7 +478,7 @@ export const Teachers = () => {
           <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-3.5 h-3.5 text-gray-400" />
           <input 
             type="text"
-            placeholder={t.searchPlaceholder}
+            placeholder={t('searchPlaceholder')}
             className="w-full pl-9 pr-4 py-1.5 bg-gray-50 dark:bg-slate-700 border border-gray-200 dark:border-slate-600 rounded-md focus:ring-2 focus:ring-blue-500 dark:text-white text-xs"
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
@@ -432,7 +493,7 @@ export const Teachers = () => {
               value={filters.status}
               onChange={(e) => setFilters({...filters, status: e.target.value})}
             >
-            <option value="">{t.allStatuses}</option>
+            <option value="">{t('allStatuses')}</option>
             {(statusOptions || []).map((opt: any) => (
               <option key={opt.id} value={opt.value}>{getOptionLabel(opt)}</option>
             ))}
@@ -444,7 +505,7 @@ export const Teachers = () => {
             value={filters.specialty}
             onChange={(e) => setFilters({...filters, specialty: e.target.value})}
           >
-            <option value="">{t.allSpecialties}</option>
+            <option value="">{t('allSpecialties')}</option>
             {(specialtyOptions || []).map((opt: any) => (
               <option key={opt.id} value={opt.value}>{getOptionLabel(opt)}</option>
             ))}
@@ -455,7 +516,7 @@ export const Teachers = () => {
             value={filters.contractType}
             onChange={(e) => setFilters({...filters, contractType: e.target.value})}
           >
-            <option value="">{t.allContracts}</option>
+            <option value="">{t('allContracts')}</option>
             {(contractOptions || []).map((opt: any) => (
               <option key={opt.id} value={opt.value}>{getOptionLabel(opt)}</option>
             ))}
@@ -485,7 +546,7 @@ export const Teachers = () => {
               setPagination({...pagination, page: 1});
             }}
             className="p-1.5 text-gray-400 hover:text-gray-600 dark:hover:text-white transition-colors border border-gray-200 dark:border-slate-600 rounded-md hover:bg-gray-100 dark:hover:bg-slate-700"
-            title={t.reset}
+            title={t('reset')}
           >
             <RefreshCw className={`w-3.5 h-3.5 ${loading ? 'animate-spin' : ''}`} />
           </button>
@@ -496,21 +557,21 @@ export const Teachers = () => {
       {loading && teachers.length === 0 ? (
         <div className="flex flex-col items-center justify-center py-20">
           <div className="w-10 h-10 border-4 border-blue-500 border-t-transparent rounded-full animate-spin mb-4"></div>
-          <p className="text-gray-500 font-medium">{t.loadingSearch}</p>
+          <p className="text-gray-500 font-medium">{t('loadingSearch')}</p>
         </div>
       ) : backendError ? (
         <div className="bg-white dark:bg-slate-800 rounded-md p-20 text-center border border-dashed border-red-300 dark:border-red-700">
           <div className="w-48 h-48 mx-auto mb-6">
             <img src="/images/debrancher.jpg" alt="Connexion perdue" className="w-full h-full object-contain opacity-60" />
           </div>
-          <h3 className="text-lg font-bold text-red-600 dark:text-red-400 mb-2">{t.serverConnectionLost}</h3>
-          <p className="text-gray-600 dark:text-gray-400 mb-4">{t.serverConnectionLostDesc}</p>
+          <h3 className="text-lg font-bold text-red-600 dark:text-red-400 mb-2">{t('serverConnectionLost')}</h3>
+          <p className="text-gray-600 dark:text-gray-400 mb-4">{t('serverConnectionLostDesc')}</p>
           <button 
             onClick={fetchTeachers}
             className="inline-flex items-center gap-2 bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-md transition-colors text-sm"
           >
             <RefreshCw className="w-4 h-4" />
-            {t.retry}
+            {t('retry')}
           </button>
         </div>
       ) : teachers.length === 0 ? (
@@ -518,8 +579,8 @@ export const Teachers = () => {
           <div className="w-16 h-16 bg-gray-50 dark:bg-slate-700 rounded-full flex items-center justify-center mx-auto mb-4">
             <Search className="w-8 h-8 text-gray-300" />
           </div>
-          <h3 className="text-lg font-bold text-gray-900 dark:text-white">{t.noStudentFound}</h3>
-          <p className="text-gray-500">{t.noStudentFoundDesc}</p>
+          <h3 className="text-lg font-bold text-gray-900 dark:text-white">{t('noStudentFound')}</h3>
+          <p className="text-gray-500">{t('noStudentFoundDesc')}</p>
         </div>
       ) : viewMode === 'table' ? (
         <div className="bg-white dark:bg-slate-800 rounded-md border border-gray-200 dark:border-slate-700 overflow-hidden shadow-md">
@@ -529,22 +590,22 @@ export const Teachers = () => {
                 <tr className="bg-gray-50 dark:bg-slate-700/50 border-b border-gray-100 dark:border-slate-700">
                   <th className="px-6 py-4 text-xs font-normal text-gray-500 uppercase tracking-wider">
                     <div className="flex items-center gap-2">
-                      <span>{t.teacher}</span>
+                      <span>{t('teacher')}</span>
                       <button 
                         onClick={() => setShowColumnFilters(!showColumnFilters)}
                         className={`p-1 rounded hover:bg-gray-200 dark:hover:bg-slate-600 transition-colors ${
                           showColumnFilters ? 'bg-blue-100 dark:bg-blue-900/30 text-blue-600' : ''
                         }`}
-                        title={t.filterColumns}
+                        title={t('filterColumns')}
                       >
                         <Filter className="w-3.5 h-3.5" />
                       </button>
                     </div>
                   </th>
                   <th className="px-6 py-4 text-xs font-normal text-gray-500 uppercase tracking-wider">Matricule</th>
-                  <th className="px-6 py-4 text-xs font-normal text-gray-500 uppercase tracking-wider">Genre</th>
-                  <th className="px-6 py-4 text-xs font-normal text-gray-500 uppercase tracking-wider">Spécialité</th>
-                  <th className="px-6 py-4 text-xs font-normal text-gray-500 uppercase tracking-wider">Statut</th>
+                  <th className="px-6 py-4 text-xs font-normal text-gray-500 uppercase tracking-wider">{t('gender')}</th>
+                  <th className="px-6 py-4 text-xs font-normal text-gray-500 uppercase tracking-wider">{t('specialty')}</th>
+                  <th className="px-6 py-4 text-xs font-normal text-gray-500 uppercase tracking-wider">{t('status')}</th>
                   <th className="px-6 py-4 text-xs font-normal text-gray-500 uppercase tracking-wider">Contact</th>
                   <th className="px-6 py-4 text-xs font-normal text-gray-500 uppercase tracking-wider text-right">Actions</th>
                 </tr>
@@ -580,12 +641,12 @@ export const Teachers = () => {
                           </div>
                           <div>
                             <div className="text-sm font-normal text-gray-900 dark:text-white uppercase">{teacher.firstName} {teacher.lastName}</div>
-                            <div className="text-xs text-gray-500">{teacher.email || t.noEmail}</div>
+                            <div className="text-xs text-gray-500">{teacher.email || t('noEmail')}</div>
                           </div>
                         </div>
                       </td>
                       <td className="px-6 py-4">
-                        <span className="text-xs font-mono font-normal text-purple-600">{teacher.matricule || t.na}</span>
+                        <span className="text-xs font-mono font-normal text-purple-600">{teacher.matricule || t('na')}</span>
                       </td>
                       <td className="px-6 py-4">
                         <span className={`inline-flex items-center gap-1.5 px-2 py-1 rounded text-xs font-normal ${
@@ -593,12 +654,12 @@ export const Teachers = () => {
                             ? 'bg-blue-100 text-blue-700 dark:bg-blue-900/30 dark:text-blue-400' 
                             : 'bg-pink-100 text-pink-700 dark:bg-pink-900/30 dark:text-pink-400'
                         }`}>
-                          {teacher.gender === 'M' ? 'Masculin' : 'Féminin'}
+                          {teacher.gender === 'M' ? t('male') : t('female')}
                         </span>
                       </td>
                       <td className="px-6 py-4">
                         <span className="px-2 py-1 bg-blue-100 dark:bg-blue-900/30 rounded text-xs font-medium text-blue-700 dark:text-blue-400">
-                          {teacher.specialty || t.notDefined}
+                          {teacher.specialty || t('notDefined')}
                         </span>
                       </td>
                       <td className="px-6 py-4">
@@ -608,18 +669,25 @@ export const Teachers = () => {
                           teacher.status === 'Contractuel' ? 'bg-blue-100 text-blue-700 dark:bg-blue-900/30 dark:text-blue-400' :
                           'bg-gray-100 text-gray-600 dark:bg-slate-700 dark:text-gray-400'
                         }`}>
-                          {teacher.status || t.standard}
+                          {teacher.status || t('standard')}
                         </span>
                       </td>
                       <td className="px-6 py-4">
-                        <div className="text-xs text-gray-600 dark:text-gray-400">{teacher.phoneNumber || t.na}</div>
+                        <div className="text-xs text-gray-600 dark:text-gray-400">{teacher.phoneNumber || t('na')}</div>
                       </td>
                       <td className="px-6 py-4 text-right">
                         <div className="flex items-center justify-end gap-2">
                           <button 
+                            onClick={() => handleOpenAssignments(teacher)}
+                            className="p-2 text-purple-600 hover:bg-purple-50 dark:hover:bg-purple-900/20 rounded-md transition-colors border border-purple-200 dark:border-purple-700"
+                            title="Affecter matières/classes"
+                          >
+                            <BookOpen className="w-4 h-4" />
+                          </button>
+                          <button 
                             onClick={() => handleEdit(teacher)}
                             className="p-2 text-blue-600 hover:bg-blue-50 dark:hover:bg-blue-900/20 rounded-md transition-colors border border-blue-200 dark:border-blue-700"
-                            title={t.edit}
+                            title={t('edit')}
                           >
                             <Edit className="w-4 h-4" />
                           </button>
@@ -629,7 +697,7 @@ export const Teachers = () => {
                               setConfirmOpen(true);
                             }}
                             className="p-2 text-red-600 hover:bg-red-50 dark:hover:bg-red-900/20 rounded-md transition-colors border border-red-200 dark:border-red-700"
-                            title={t.delete}
+                            title={t('delete')}
                           >
                             <Trash2 className="w-4 h-4" />
                           </button>
@@ -689,7 +757,7 @@ export const Teachers = () => {
                     <span className={`text-xs font-normal ${
                       teacher.gender === 'M' ? 'text-blue-600' : 'text-pink-600'
                     }`}>
-                      {teacher.gender === 'M' ? 'Masculin' : 'Féminin'}
+                      {teacher.gender === 'M' ? t('male') : t('female')}
                     </span>
                   </div>
                   <div className="flex items-center gap-2 text-sm text-gray-900 dark:text-white font-semibold">
@@ -706,16 +774,37 @@ export const Teachers = () => {
                       </div>
                     )}
                   </div>
+                  
+                  {/* Display number of classes and subjects if available */}
+                  <div className="flex gap-3 mt-2">
+                    <div className="flex items-center gap-1 text-[10px] text-gray-500 bg-gray-50 dark:bg-slate-700/50 px-1.5 py-0.5 rounded border border-gray-100 dark:border-slate-700">
+                      <LayoutGrid className="w-3 h-3" />
+                      <span>{teacher.classes?.length || 0} classes</span>
+                    </div>
+                    <div className="flex items-center gap-1 text-[10px] text-gray-500 bg-gray-50 dark:bg-slate-700/50 px-1.5 py-0.5 rounded border border-gray-100 dark:border-slate-700">
+                      <BookOpen className="w-3 h-3" />
+                      <span>{teacher.subjects?.length || 0} matières</span>
+                    </div>
+                  </div>
                 </div>
 
                 <div className="flex items-center justify-between pt-4 border-t border-gray-50 dark:border-slate-700">
-                  <button 
-                    onClick={() => handleEdit(teacher)}
-                    className="text-xs text-blue-600 font-normal flex items-center gap-1 hover:underline"
-                  >
-                    <Edit className="w-3.5 h-3.5" />
-                    {t.modify}
-                  </button>
+                  <div className="flex gap-3">
+                    <button 
+                      onClick={() => handleEdit(teacher)}
+                      className="text-xs text-blue-600 font-normal flex items-center gap-1 hover:underline"
+                    >
+                      <Edit className="w-3.5 h-3.5" />
+                      {t('modify')}
+                    </button>
+                    <button 
+                      onClick={() => handleOpenAssignments(teacher)}
+                      className="text-xs text-purple-600 font-normal flex items-center gap-1 hover:underline"
+                    >
+                      <BookOpen className="w-3.5 h-3.5" />
+                      {t('assign')}
+                    </button>
+                  </div>
                   <button 
                     onClick={() => {
                       setTargetDeleteId(teacher.id);
@@ -724,7 +813,7 @@ export const Teachers = () => {
                     className="text-xs text-red-600 font-normal flex items-center gap-1 hover:underline"
                   >
                     <Trash2 className="w-3.5 h-3.5" />
-                    {t.delete}
+                    {t('delete')}
                   </button>
                 </div>
               </div>
@@ -744,10 +833,10 @@ export const Teachers = () => {
         >
           <div className="flex items-center gap-4">
             <div className="text-sm text-gray-500 dark:text-gray-400">
-              {t.showingFromToOfTotalTeachers.replace('{from}', String((pagination.page - 1) * pagination.limit + 1)).replace('{to}', String(Math.min(pagination.page * pagination.limit, pagination.total))).replace('{total}', String(pagination.total))}
+              {t('showingFromToOfTotal', { from: (pagination.page - 1) * pagination.limit + 1, to: Math.min(pagination.page * pagination.limit, pagination.total), total: pagination.total })}
             </div>
             <div className="flex items-center gap-2">
-              <span className="text-sm text-gray-500 dark:text-gray-400">{t.perPage}</span>
+              <span className="text-sm text-gray-500 dark:text-gray-400">{t('perPage')}</span>
               <select 
                 value={pagination.limit}
                 onChange={(e) => handleLimitChange(Number(e.target.value))}
@@ -818,7 +907,7 @@ export const Teachers = () => {
           <div className="bg-white dark:bg-slate-800 rounded-md border border-gray-200 dark:border-slate-700 shadow-2xl max-w-4xl w-full max-h-[90vh] overflow-y-auto">
             <div className="sticky top-0 bg-white dark:bg-slate-800 border-b border-gray-200 dark:border-slate-700 px-6 py-4 flex justify-between items-center">
               <h2 className="text-lg font-bold text-gray-900 dark:text-white uppercase">
-                {selectedTeacher ? t.editTeacher : t.newTeacher}
+                {selectedTeacher ? t('editTeacher') : t('newTeacher')}
               </h2>
               <button 
                 onClick={() => {
@@ -840,7 +929,7 @@ export const Teachers = () => {
               <div className="space-y-3">
                 <div className="flex items-center justify-between gap-3">
                   <div className="text-xs font-semibold text-gray-700 dark:text-gray-200 uppercase tracking-wide">
-                    {formStep === 1 ? t.personalInfo : formStep === 2 ? t.contact : formStep === 3 ? t.professionalInfo : t.assignedClasses}
+                    {formStep === 1 ? t('personalInfo') : formStep === 2 ? t('contact') : formStep === 3 ? t('professionalInfo') : t('assignedClasses')}
                   </div>
                   <div className="text-[11px] text-gray-500 dark:text-gray-400">
                     {formStep}/4
@@ -853,10 +942,10 @@ export const Teachers = () => {
                   />
                 </div>
                 <div className="grid grid-cols-4 gap-2 text-[10px] text-gray-500 dark:text-gray-400">
-                  <div className={`text-center ${formStep === 1 ? 'text-blue-600 font-semibold' : ''}`}>1. {t.personalInfo}</div>
-                  <div className={`text-center ${formStep === 2 ? 'text-blue-600 font-semibold' : ''}`}>2. {t.contact}</div>
-                  <div className={`text-center ${formStep === 3 ? 'text-blue-600 font-semibold' : ''}`}>3. {t.professionalInfo}</div>
-                  <div className={`text-center ${formStep === 4 ? 'text-blue-600 font-semibold' : ''}`}>4. {t.assignedClasses}</div>
+                  <div className={`text-center ${formStep === 1 ? 'text-blue-600 font-semibold' : ''}`}>1. {t('personalInfo')}</div>
+                  <div className={`text-center ${formStep === 2 ? 'text-blue-600 font-semibold' : ''}`}>2. {t('contact')}</div>
+                  <div className={`text-center ${formStep === 3 ? 'text-blue-600 font-semibold' : ''}`}>3. {t('professionalInfo')}</div>
+                  <div className={`text-center ${formStep === 4 ? 'text-blue-600 font-semibold' : ''}`}>4. {t('assignedClasses')}</div>
                 </div>
               </div>
 
@@ -865,7 +954,7 @@ export const Teachers = () => {
                 <div className="space-y-4">
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                     <div>
-                      <label className="block text-xs font-medium text-gray-700 dark:text-gray-300 mb-1">{t.lastName} *</label>
+                      <label className="block text-xs font-medium text-gray-700 dark:text-gray-300 mb-1">{t('lastName')} *</label>
                       <input
                         type="text"
                         value={formData.lastName || ''}
@@ -874,7 +963,7 @@ export const Teachers = () => {
                       />
                     </div>
                     <div>
-                      <label className="block text-xs font-medium text-gray-700 dark:text-gray-300 mb-1">{t.firstName}</label>
+                      <label className="block text-xs font-medium text-gray-700 dark:text-gray-300 mb-1">{t('firstName')}</label>
                       <input
                         type="text"
                         value={formData.firstName || ''}
@@ -883,7 +972,7 @@ export const Teachers = () => {
                       />
                     </div>
                     <div>
-                      <label className="block text-xs font-medium text-gray-700 dark:text-gray-300 mb-1">{t.birthDate}</label>
+                      <label className="block text-xs font-medium text-gray-700 dark:text-gray-300 mb-1">{t('birthDate')}</label>
                       <input
                         type="date"
                         value={formData.dateOfBirth || ''}
@@ -892,7 +981,7 @@ export const Teachers = () => {
                       />
                     </div>
                     <div>
-                      <label className="block text-xs font-medium text-gray-700 dark:text-gray-300 mb-1">{t.birthPlace}</label>
+                      <label className="block text-xs font-medium text-gray-700 dark:text-gray-300 mb-1">{t('birthPlace')}</label>
                       <input
                         type="text"
                         value={formData.placeOfBirth || ''}
@@ -901,19 +990,20 @@ export const Teachers = () => {
                       />
                     </div>
                     <div>
-                      <label className="block text-xs font-medium text-gray-700 dark:text-gray-300 mb-1">{t.gender} *</label>
+                      <label className="block text-xs font-medium text-gray-700 dark:text-gray-300 mb-1">{t('gender')}</label>
                       <select
-                        value={formData.gender || 'M'}
+                        value={formData.gender || ''}
                         onChange={(e) => setFormData({...formData, gender: e.target.value})}
                         className="w-full px-3 py-2 border border-gray-200 dark:border-slate-600 rounded-md bg-gray-50 dark:bg-slate-700 text-sm dark:text-white focus:ring-2 focus:ring-blue-500"
                       >
+                        <option value="">{t('select')}</option>
                         {(genderOptions || []).map((opt: any) => (
                           <option key={opt.id} value={opt.value}>{getOptionLabel(opt)}</option>
                         ))}
                       </select>
                     </div>
                     <div>
-                      <label className="block text-xs font-medium text-gray-700 dark:text-gray-300 mb-1">{t.maritalStatus}</label>
+                      <label className="block text-xs font-medium text-gray-700 dark:text-gray-300 mb-1">{t('maritalStatus')}</label>
                       <select
                         value={formData.maritalStatus || 'Célibataire'}
                         onChange={(e) => setFormData({...formData, maritalStatus: e.target.value})}
@@ -925,7 +1015,7 @@ export const Teachers = () => {
                       </select>
                     </div>
                     <div>
-                      <label className="block text-xs font-medium text-gray-700 dark:text-gray-300 mb-1">{t.nationality}</label>
+                      <label className="block text-xs font-medium text-gray-700 dark:text-gray-300 mb-1">{t('nationality')}</label>
                       <input
                         type="text"
                         value={formData.nationality || 'Ivoirienne'}
@@ -934,7 +1024,7 @@ export const Teachers = () => {
                       />
                     </div>
                     <div>
-                      <label className="block text-xs font-medium text-gray-700 dark:text-gray-300 mb-1">{t.idCardNumber}</label>
+                      <label className="block text-xs font-medium text-gray-700 dark:text-gray-300 mb-1">{t('idCardNumber')}</label>
                       <input
                         type="text"
                         value={formData.idCardNumber || ''}
@@ -951,11 +1041,11 @@ export const Teachers = () => {
                 <div className="space-y-6">
                   <div>
                     <h3 className="text-sm font-bold text-gray-900 dark:text-white mb-3 uppercase border-b border-gray-200 dark:border-slate-700 pb-2">
-                      {t.contact}
+                      {t('contact')}
                     </h3>
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                       <div>
-                        <label className="block text-xs font-medium text-gray-700 dark:text-gray-300 mb-1">{t.phone}</label>
+                        <label className="block text-xs font-medium text-gray-700 dark:text-gray-300 mb-1">{t('phone')}</label>
                         <input
                           type="tel"
                           value={formData.phoneNumber || ''}
@@ -964,7 +1054,7 @@ export const Teachers = () => {
                         />
                       </div>
                       <div>
-                        <label className="block text-xs font-medium text-gray-700 dark:text-gray-300 mb-1">{t.email} *</label>
+                        <label className="block text-xs font-medium text-gray-700 dark:text-gray-300 mb-1">{t('email')}</label>
                         <input
                           type="email"
                           value={formData.email || ''}
@@ -973,7 +1063,7 @@ export const Teachers = () => {
                         />
                       </div>
                       <div className="md:col-span-2">
-                        <label className="block text-xs font-medium text-gray-700 dark:text-gray-300 mb-1">{t.address}</label>
+                        <label className="block text-xs font-medium text-gray-700 dark:text-gray-300 mb-1">{t('address')}</label>
                         <input
                           type="text"
                           value={formData.address || ''}
@@ -986,11 +1076,11 @@ export const Teachers = () => {
 
                   <div>
                     <h3 className="text-sm font-bold text-gray-900 dark:text-white mb-3 uppercase border-b border-gray-200 dark:border-slate-700 pb-2">
-                      {t.emergencyContact}
+                      {t('emergencyContact')}
                     </h3>
                     <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                       <div>
-                        <label className="block text-xs font-medium text-gray-700 dark:text-gray-300 mb-1">{t.fullName}</label>
+                        <label className="block text-xs font-medium text-gray-700 dark:text-gray-300 mb-1">{t('fullName')}</label>
                         <input
                           type="text"
                           value={formData.emergencyContact?.name || ''}
@@ -1014,7 +1104,7 @@ export const Teachers = () => {
                         />
                       </div>
                       <div>
-                        <label className="block text-xs font-medium text-gray-700 dark:text-gray-300 mb-1">{t.relationship}</label>
+                        <label className="block text-xs font-medium text-gray-700 dark:text-gray-300 mb-1">{t('relationship')}</label>
                         <input
                           type="text"
                           value={formData.emergencyContact?.relationship || ''}
@@ -1035,37 +1125,37 @@ export const Teachers = () => {
                 <div className="space-y-6">
                   <div>
                     <h3 className="text-sm font-bold text-gray-900 dark:text-white mb-3 uppercase border-b border-gray-200 dark:border-slate-700 pb-2">
-                      {t.professionalInfo}
+                      {t('professionalInfo')}
                     </h3>
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                       <div>
-                        <label className="block text-xs font-medium text-gray-700 dark:text-gray-300 mb-1">{t.specialty} *</label>
+                        <label className="block text-xs font-medium text-gray-700 dark:text-gray-300 mb-1">{t('specialty')} *</label>
                         <select
                           value={formData.specialty || ''}
                           onChange={(e) => setFormData({...formData, specialty: e.target.value})}
                           className="w-full px-3 py-2 border border-gray-200 dark:border-slate-600 rounded-md bg-gray-50 dark:bg-slate-700 text-sm dark:text-white focus:ring-2 focus:ring-blue-500"
                         >
-                          <option value="">{t.select}</option>
+                          <option value="">{t('select')}</option>
                           {(specialtyOptions || []).map((opt: any) => (
                             <option key={opt.id} value={opt.value}>{getOptionLabel(opt)}</option>
                           ))}
                         </select>
                       </div>
                       <div>
-                        <label className="block text-xs font-medium text-gray-700 dark:text-gray-300 mb-1">{t.degree}</label>
+                        <label className="block text-xs font-medium text-gray-700 dark:text-gray-300 mb-1">{t('degree')}</label>
                         <select
                           value={formData.diploma || ''}
                           onChange={(e) => setFormData({...formData, diploma: e.target.value})}
                           className="w-full px-3 py-2 border border-gray-200 dark:border-slate-600 rounded-md bg-gray-50 dark:bg-slate-700 text-sm dark:text-white focus:ring-2 focus:ring-blue-500"
                         >
-                          <option value="">{t.select}</option>
+                          <option value="">{t('select')}</option>
                           {(degreeOptions || []).map((opt: any) => (
                             <option key={opt.id} value={opt.value}>{getOptionLabel(opt)}</option>
                           ))}
                         </select>
                       </div>
                       <div>
-                        <label className="block text-xs font-medium text-gray-700 dark:text-gray-300 mb-1">{t.teacherStatus} *</label>
+                        <label className="block text-xs font-medium text-gray-700 dark:text-gray-300 mb-1">{t('teacherStatus')}</label>
                         <select
                           value={formData.status || 'Permanent'}
                           onChange={(e) => setFormData({...formData, status: e.target.value})}
@@ -1077,7 +1167,7 @@ export const Teachers = () => {
                         </select>
                       </div>
                       <div>
-                        <label className="block text-xs font-medium text-gray-700 dark:text-gray-300 mb-1">{t.teacherContract}</label>
+                        <label className="block text-xs font-medium text-gray-700 dark:text-gray-300 mb-1">{t('teacherContract')}</label>
                         <select
                           value={formData.contractType || 'CDI'}
                           onChange={(e) => setFormData({...formData, contractType: e.target.value})}
@@ -1089,7 +1179,7 @@ export const Teachers = () => {
                         </select>
                       </div>
                       <div>
-                        <label className="block text-xs font-medium text-gray-700 dark:text-gray-300 mb-1">{t.hireDate}</label>
+                        <label className="block text-xs font-medium text-gray-700 dark:text-gray-300 mb-1">{t('hireDate')}</label>
                         <input
                           type="date"
                           value={formData.hireDate || ''}
@@ -1098,7 +1188,7 @@ export const Teachers = () => {
                         />
                       </div>
                       <div>
-                        <label className="block text-xs font-medium text-gray-700 dark:text-gray-300 mb-1">{t.salary}</label>
+                        <label className="block text-xs font-medium text-gray-700 dark:text-gray-300 mb-1">{t('salary')}</label>
                         <input
                           type="number"
                           value={formData.salary || 0}
@@ -1111,11 +1201,11 @@ export const Teachers = () => {
 
                   <div>
                     <h3 className="text-sm font-bold text-gray-900 dark:text-white mb-3 uppercase border-b border-gray-200 dark:border-slate-700 pb-2">
-                      {t.bankingInfo}
+                      {t('bankingInfo')}
                     </h3>
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                       <div>
-                        <label className="block text-xs font-medium text-gray-700 dark:text-gray-300 mb-1">{t.bankAccount}</label>
+                        <label className="block text-xs font-medium text-gray-700 dark:text-gray-300 mb-1">{t('bankAccount')}</label>
                         <input
                           type="text"
                           value={formData.bankAccount || ''}
@@ -1124,7 +1214,7 @@ export const Teachers = () => {
                         />
                       </div>
                       <div>
-                        <label className="block text-xs font-medium text-gray-700 dark:text-gray-300 mb-1">{t.socialSecurityNumber}</label>
+                        <label className="block text-xs font-medium text-gray-700 dark:text-gray-300 mb-1">{t('socialSecurityNumber')}</label>
                         <input
                           type="text"
                           value={formData.socialSecurityNumber || ''}
@@ -1137,100 +1227,98 @@ export const Teachers = () => {
                 </div>
               )}
 
-              {/* Step 4: Affectations */}
+              {/* Step 4: Assigned Classes */}
               {formStep === 4 && (
-                <div className="space-y-6">
-                  <div>
-                    <h3 className="text-sm font-bold text-gray-900 dark:text-white mb-3 uppercase border-b border-gray-200 dark:border-slate-700 pb-2">
-                      {t.subjectsTaught}
+                <div>
+                  <div className="flex justify-between items-center border-b border-gray-200 dark:border-slate-700 pb-2">
+                    <h3 className="text-sm font-bold text-gray-900 dark:text-white uppercase">
+                      {t('assignedClasses')}
                     </h3>
-                    <div className="mb-3">
-                      <input
-                        type="text"
-                        value={subjectsFilter}
-                        onChange={(e) => setSubjectsFilter(e.target.value)}
-                        placeholder={t.searchPlaceholder || 'Rechercher...'}
-                        className="w-full px-3 py-2 border border-gray-200 dark:border-slate-600 rounded-md bg-gray-50 dark:bg-slate-700 text-sm dark:text-white focus:ring-2 focus:ring-blue-500"
-                      />
-                      <div className="mt-1 text-[11px] text-gray-500 dark:text-gray-400">
-                        {(formData.subjects || []).length} {t.selected || 'sélectionné(s)'}
-                      </div>
-                    </div>
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-2">
-                      {(subjectsList || [])
-                        .filter((s: any) => {
-                          const label = String(s?.name || getOptionLabel(s) || '').toLowerCase();
-                          const q = subjectsFilter.trim().toLowerCase();
-                          return !q || label.includes(q);
-                        })
-                        .map((s: any) => {
-                        const val = s.name || s.value || s.id;
-                        const label = s.name || getOptionLabel(s);
-                        const checked = (formData.subjects || []).includes(val);
-                        return (
-                          <label key={val} className="flex items-center gap-2 text-sm">
-                            <input
-                              type="checkbox"
-                              checked={checked}
-                              onChange={(e) => {
-                                const current = new Set(formData.subjects || []);
-                                if (e.target.checked) current.add(val);
-                                else current.delete(val);
-                                setFormData({ ...formData, subjects: Array.from(current) });
-                              }}
-                            />
-                            <span className="text-gray-700 dark:text-gray-300">{label}</span>
-                          </label>
-                        );
-                      })}
-                    </div>
+                    <button
+                      type="button"
+                      onClick={() => {
+                        const current = formData.assignments || [];
+                        setFormData({
+                          ...formData,
+                          assignments: [...current, { classId: 0, subjectId: 0 }]
+                        });
+                      }}
+                      className="flex items-center gap-1.5 bg-blue-50 dark:bg-blue-900/20 text-blue-600 px-3 py-1.5 rounded-md hover:bg-blue-100 dark:hover:bg-blue-900/30 transition-colors text-xs font-semibold"
+                    >
+                      <Plus className="w-3.5 h-3.5" />
+                      <span>{t('addAssignment')}</span>
+                    </button>
                   </div>
 
-                  <div>
-                    <h3 className="text-sm font-bold text-gray-900 dark:text-white mb-3 uppercase border-b border-gray-200 dark:border-slate-700 pb-2">
-                      {t.assignedClasses}
-                    </h3>
-                    <div className="mb-3">
-                      <input
-                        type="text"
-                        value={classesFilter}
-                        onChange={(e) => setClassesFilter(e.target.value)}
-                        placeholder={t.searchPlaceholder || 'Rechercher...'}
-                        className="w-full px-3 py-2 border border-gray-200 dark:border-slate-600 rounded-md bg-gray-50 dark:bg-slate-700 text-sm dark:text-white focus:ring-2 focus:ring-blue-500"
-                      />
-                      <div className="mt-1 text-[11px] text-gray-500 dark:text-gray-400">
-                        {(formData.classes || []).length} {t.selected || 'sélectionné(s)'}
-                      </div>
+                  {(!formData.assignments || formData.assignments.length === 0) ? (
+                    <div className="text-center py-10 bg-gray-50 dark:bg-slate-700/50 rounded-md border border-dashed border-gray-300 dark:border-slate-600">
+                      <p className="text-sm text-gray-500 dark:text-gray-400">{t('noAssignment')}</p>
                     </div>
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-2">
-                      {(classesList || [])
-                        .filter((c: any) => {
-                          const label = String(c?.name || getOptionLabel(c) || '').toLowerCase();
-                          const q = classesFilter.trim().toLowerCase();
-                          return !q || label.includes(q);
-                        })
-                        .map((c: any) => {
-                        const val = c.name || c.value || c.id;
-                        const label = c.name || getOptionLabel(c);
-                        const checked = (formData.classes || []).includes(val);
-                        return (
-                          <label key={val} className="flex items-center gap-2 text-sm">
-                            <input
-                              type="checkbox"
-                              checked={checked}
+                  ) : (
+                    <div className="space-y-4">
+                      {formData.assignments.map((assignment, index) => (
+                        <div key={index} className="flex flex-wrap md:flex-nowrap gap-4 items-end bg-white dark:bg-slate-800 p-4 rounded-md border border-gray-200 dark:border-slate-700 shadow-sm relative group">
+                          <div className="flex-1 min-w-[200px]">
+                            <label className="block text-[10px] font-medium text-gray-500 dark:text-gray-400 mb-1 uppercase tracking-wider">
+                              {t('class')}
+                            </label>
+                            <select
+                              value={assignment.classId || ''}
                               onChange={(e) => {
-                                const current = new Set(formData.classes || []);
-                                if (e.target.checked) current.add(val);
-                                else current.delete(val);
-                                setFormData({ ...formData, classes: Array.from(current) });
+                                const newAssignments = [...(formData.assignments || [])];
+                                newAssignments[index] = { ...newAssignments[index], classId: Number(e.target.value), subjectId: 0 };
+                                setFormData({ ...formData, assignments: newAssignments });
                               }}
-                            />
-                            <span className="text-gray-700 dark:text-gray-300">{label}</span>
-                          </label>
-                        );
-                      })}
+                              className="w-full px-3 py-2 border border-gray-200 dark:border-slate-600 rounded-md bg-gray-50 dark:bg-slate-700 text-sm dark:text-white focus:ring-2 focus:ring-blue-500"
+                            >
+                              <option value="">{t('selectClass')}</option>
+                              {(classesList || []).map((c: any) => (
+                                <option key={c.id} value={c.id}>{c.name || getOptionLabel(c)}</option>
+                              ))}
+                            </select>
+                          </div>
+
+                          <div className="flex-1 min-w-[200px]">
+                            <label className="block text-[10px] font-medium text-gray-500 dark:text-gray-400 mb-1 uppercase tracking-wider">
+                              {t('subject')}
+                            </label>
+                            <select
+                              value={assignment.subjectId || ''}
+                              onChange={(e) => {
+                                const newAssignments = [...(formData.assignments || [])];
+                                newAssignments[index] = { ...newAssignments[index], subjectId: Number(e.target.value) };
+                                setFormData({ ...formData, assignments: newAssignments });
+                              }}
+                              disabled={!assignment.classId}
+                              className="w-full px-3 py-2 border border-gray-200 dark:border-slate-600 rounded-md bg-gray-50 dark:bg-slate-700 text-sm dark:text-white focus:ring-2 focus:ring-blue-500 disabled:opacity-50"
+                            >
+                              <option value="">{t('selectSubject')}</option>
+                              {(subjectsList || [])
+                                .filter((s: any) => {
+                                  const classId = Number(assignment.classId);
+                                  return s.class?.id === classId || s.classId === classId;
+                                })
+                                .map((s: any) => (
+                                  <option key={s.id} value={s.id}>{s.name || getOptionLabel(s)}</option>
+                                ))}
+                            </select>
+                          </div>
+
+                          <button
+                            type="button"
+                            onClick={() => {
+                              const newAssignments = (formData.assignments || []).filter((_, i) => i !== index);
+                              setFormData({ ...formData, assignments: newAssignments });
+                            }}
+                            className="p-2.5 text-red-500 hover:bg-red-50 dark:hover:bg-red-900/20 rounded-md transition-colors border border-red-100 dark:border-red-900/30"
+                            title={t('delete')}
+                          >
+                            <Trash2 className="w-4 h-4" />
+                          </button>
+                        </div>
+                      ))}
                     </div>
-                  </div>
+                  )}
                 </div>
               )}
 
@@ -1248,7 +1336,7 @@ export const Teachers = () => {
                   }}
                   className="px-4 py-2 text-sm font-normal text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-slate-700 rounded-md transition-colors border border-gray-200 dark:border-slate-600"
                 >
-                  {t.cancel}
+                  {t('cancel')}
                 </button>
 
                 <div className="flex items-center gap-2">
@@ -1258,7 +1346,7 @@ export const Teachers = () => {
                     disabled={formStep === 1}
                     className="px-4 py-2 text-sm font-normal rounded-md transition-colors border border-gray-200 dark:border-slate-600 text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-slate-700 disabled:opacity-40 disabled:hover:bg-transparent"
                   >
-                    {t.previous || 'Précédent'}
+                    {t('previous') || 'Précédent'}
                   </button>
 
                   {formStep < 4 ? (
@@ -1267,14 +1355,14 @@ export const Teachers = () => {
                       onClick={goNext}
                       className="px-4 py-2 text-sm font-normal bg-blue-600 hover:bg-blue-700 text-white rounded-md transition-colors border border-blue-700"
                     >
-                      {t.next || 'Suivant'}
+                      {t('next') || 'Suivant'}
                     </button>
                   ) : (
                     <button
                       type="submit"
                       className="px-4 py-2 text-sm font-normal bg-blue-600 hover:bg-blue-700 text-white rounded-md transition-colors border border-blue-700"
                     >
-                      {selectedTeacher ? t.update : t.save}
+                      {selectedTeacher ? t('update') : t('save')}
                     </button>
                   )}
                 </div>
@@ -1291,10 +1379,10 @@ export const Teachers = () => {
           setTargetDeleteId(null);
         }}
         onConfirm={deleteTeacher}
-        title="Supprimer l'enseignant"
-        message="Cette action est irréversible. Voulez-vous vraiment supprimer cet enseignant ?"
-        confirmText="Supprimer"
-        cancelText="Annuler"
+        title={t('deleteTeacher')}
+        message={t('confirmDeleteTeacher')}
+        confirmText={t('delete')}
+        cancelText={t('cancel')}
         type="danger"
         loading={deleteLoading}
       />

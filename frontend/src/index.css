@@ -100,6 +100,15 @@ body,
   overflow: hidden;
 }
 
+@keyframes spin-slow {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+.animate-spin-slow {
+  animation: spin-slow 3s linear infinite;
+}
+
 .banco-card-hover:hover {
   transform: translateY(-4px);
   box-shadow: 0 24px 36px -18px var(--shadow-primary), 0 12px 22px -16px rgba(2, 6, 23, 0.16);

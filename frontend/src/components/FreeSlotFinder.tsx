@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Search, Calendar, Clock, CheckCircle, XCircle } from 'lucide-react';
 
-const FreeSlotFinder = ({ teachers, classes, timeSlots, days, timeSlotOptions }) => {
+const FreeSlotFinder = ({ teachers, classes, timeSlots, days, timeSlotOptions, onCreateSlot }) => {
   const [selectedTeachers, setSelectedTeachers] = useState([]);
   const [selectedClasses, setSelectedClasses] = useState([]);
   const [freeSlots, setFreeSlots] = useState([]);
@@ -57,6 +57,17 @@ const FreeSlotFinder = ({ teachers, classes, timeSlots, days, timeSlotOptions })
 
   const deselectAllClasses = () => {
     setSelectedClasses([]);
+  };
+
+  const handleCreateSlot = (slot) => {
+    if (onCreateSlot) {
+      onCreateSlot({
+        dayOfWeek: slot.dayValue,
+        startTime: slot.timeValue,
+        endTime: slot.timeValue,
+        label: `${slot.day} - ${slot.time}`
+      });
+    }
   };
 
   return (
@@ -163,15 +174,24 @@ const FreeSlotFinder = ({ teachers, classes, timeSlots, days, timeSlotOptions })
               {freeSlots.map((slot, index) => (
                 <div 
                   key={index}
-                  className="p-3 bg-gray-50 dark:bg-slate-900/40 border border-gray-100 dark:border-slate-700 rounded-md hover:border-blue-300 dark:hover:border-blue-800 transition-colors"
+                  onClick={() => handleCreateSlot(slot)}
+                  className="p-3 bg-gray-50 dark:bg-slate-900/40 border border-gray-100 dark:border-slate-700 rounded-md hover:border-blue-300 dark:hover:border-blue-800 transition-all cursor-pointer group hover:shadow-lg hover:scale-105"
                 >
-                  <div className="flex items-center gap-2 text-xs font-bold text-gray-900 dark:text-white mb-1">
-                    <Calendar className="w-3 h-3 text-blue-500" />
-                    {slot.day}
+                  <div className="flex items-center justify-between mb-1">
+                    <div className="flex items-center gap-2 text-xs font-bold text-gray-900 dark:text-white">
+                      <Calendar className="w-3 h-3 text-blue-500" />
+                      {slot.day}
+                    </div>
+                    <div className="opacity-0 group-hover:opacity-100 transition-opacity">
+                      <CheckCircle className="w-4 h-4 text-green-500" />
+                    </div>
                   </div>
                   <div className="flex items-center gap-2 text-[11px] text-gray-600 dark:text-gray-400">
                     <Clock className="w-3 h-3 text-gray-400" />
                     {slot.time}
+                  </div>
+                  <div className="mt-2 text-[10px] text-blue-600 dark:text-blue-400 font-medium opacity-0 group-hover:opacity-100 transition-opacity">
+                    + Créer ce créneau
                   </div>
                 </div>
               ))}

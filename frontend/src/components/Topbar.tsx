@@ -3,13 +3,14 @@ import { Search, Bell, Settings, User, Menu, Moon, Sun, Globe, Maximize2, Minimi
 import { useNavigate } from 'react-router-dom';
 import { useTheme } from '../contexts/ThemeContext';
 import { useAuth } from '../contexts/AuthContext';
+import { useTranslation } from '../hooks/useTranslation';
 import { translations } from '../lib/translations';
 
 export const Topbar = ({ onMenuClick }: { onMenuClick: () => void }) => {
   const { theme, toggleTheme, language, toggleLanguage, interfaceSize, toggleInterfaceSize } = useTheme();
   const { user, logout } = useAuth();
   const navigate = useNavigate();
-  const t = translations[language];
+  const { t } = useTranslation();
   const [showUserMenu, setShowUserMenu] = useState(false);
   const disableAuth = ((import.meta as any).env?.VITE_DISABLE_AUTH || 'false') === 'true';
 
@@ -41,7 +42,7 @@ export const Topbar = ({ onMenuClick }: { onMenuClick: () => void }) => {
           <Search className="w-4 h-4 text-gray-400 dark:text-gray-500 mr-2" />
           <input 
             type="text" 
-            placeholder={t.search}
+            placeholder={t('search')}
             className="bg-transparent border-none outline-none text-sm w-full text-gray-700 dark:text-gray-200 placeholder-gray-400 dark:placeholder-gray-500 focus:ring-0 font-inter"
           />
         </div>
@@ -113,33 +114,41 @@ export const Topbar = ({ onMenuClick }: { onMenuClick: () => void }) => {
             onClick={() => setShowUserMenu(!showUserMenu)}
             className="flex items-center gap-2 pl-3 border-l border-gray-200 dark:border-slate-700 hover:bg-gray-100 dark:hover:bg-slate-700 rounded-lg p-2 transition-colors hover:text-primary"
           >
-            <div className="text-right hidden sm:block">
-              <div className="text-[10px] font-normal text-gray-900 dark:text-white uppercase font-inter">{user?.fullName || user?.username || t.admin}</div>
-              <div className="text-[8px] text-gray-500 dark:text-gray-400 uppercase tracking-wide font-inter">{user?.role || t.administrator}</div>
+            <div className="flex flex-col text-right hidden sm:block">
+              <div className="text-[10px] font-black text-gray-900 dark:text-white uppercase tracking-tight font-inter">{user?.fullName || user?.username || t('admin')}</div>
+              <div className="text-[8px] text-gray-400 font-bold uppercase tracking-wide font-inter">{user?.role || t('administrator')}</div>
             </div>
             <div className="w-8 h-8 bg-gradient-to-br from-primary to-primary-dark rounded-full flex items-center justify-center">
               <User className="w-4 h-4 text-white" />
             </div>
           </button>
 
-          {/* Dropdown Menu */}
           {showUserMenu && (
             <>
               <div 
                 className="fixed inset-0 z-10" 
                 onClick={() => setShowUserMenu(false)}
               />
-              <div className="absolute right-0 mt-2 w-48 bg-white dark:bg-slate-800 rounded-xl shadow-xl border border-gray-200 dark:border-slate-700 z-20">
-                <div className="p-3 border-b border-gray-200 dark:border-slate-700">
-                  <p className="text-sm font-medium text-gray-900 dark:text-white font-inter">{user?.fullName || user?.username}</p>
-                  <p className="text-xs text-gray-500 dark:text-gray-400 font-inter">{user?.email || ''}</p>
+              <div className="absolute right-0 mt-2 w-56 bg-white dark:bg-slate-800 rounded-xl shadow-xl border border-gray-200 dark:border-slate-700 py-2 z-50 animate-in fade-in slide-in-from-top-2">
+                <div className="px-4 py-3 border-b border-gray-200 dark:border-slate-700 mb-2">
+                  <p className="text-[10px] font-black text-gray-400 uppercase tracking-widest">{t('connectedAs')}</p>
+                  <p className="text-xs font-black text-gray-900 dark:text-white mt-0.5">{user?.email || 'admin@gabriel-rita.edu'}</p>
                 </div>
+                <button className="w-full flex items-center gap-3 px-4 py-2.5 text-xs font-bold text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-slate-700/50 transition-colors font-inter">
+                  <User className="w-4 h-4 text-gray-400" />
+                  {t('myProfile')}
+                </button>
+                <button className="w-full flex items-center gap-3 px-4 py-2.5 text-xs font-bold text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-slate-700/50 transition-colors font-inter">
+                  <Settings className="w-4 h-4 text-gray-400" />
+                  {t('settings')}
+                </button>
+                <div className="h-px bg-gray-100 dark:border-slate-700 my-2 mx-4" />
                 <button
                   onClick={handleLogout}
-                  className="w-full flex items-center gap-2 px-4 py-2 text-sm text-red-600 dark:text-red-400 hover:bg-gray-100 dark:hover:bg-slate-700 transition-colors font-inter"
+                  className="w-full flex items-center gap-3 px-4 py-2.5 text-xs font-bold text-rose-600 hover:bg-rose-50 dark:hover:bg-rose-900/20 transition-colors font-inter"
                 >
                   <LogOut className="w-4 h-4" />
-                  <span>Déconnexion</span>
+                  {t('logout')}
                 </button>
               </div>
             </>

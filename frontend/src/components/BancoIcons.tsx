@@ -251,6 +251,35 @@ export const BancoReportsIcon = ({ className = "w-5 h-5" }: { className?: string
   </svg>
 );
 
+// Icône Bulletins
+export const BancoBulletinsIcon = ({ className = "w-5 h-5" }: { className?: string }) => (
+  <svg className={className} viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path 
+      d="M15 3H5C3.89543 3 3 3.89543 3 5V15C3 16.1046 3.89543 17 5 17H15C16.1046 17 17 16.1046 17 15V5C17 3.89543 16.1046 3 15 3Z" 
+      stroke="currentColor" 
+      strokeWidth="1.5"
+    />
+    <path 
+      d="M7 7H13" 
+      stroke="currentColor" 
+      strokeWidth="1.5" 
+      strokeLinecap="round"
+    />
+    <path 
+      d="M7 10H13" 
+      stroke="currentColor" 
+      strokeWidth="1.5" 
+      strokeLinecap="round"
+    />
+    <path 
+      d="M7 13H10" 
+      stroke="currentColor" 
+      strokeWidth="1.5" 
+      strokeLinecap="round"
+    />
+  </svg>
+);
+
 // Icône Paramètres
 export const BancoSettingsIcon = ({ className = "w-5 h-5" }: { className?: string }) => (
   <svg className={className} viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">

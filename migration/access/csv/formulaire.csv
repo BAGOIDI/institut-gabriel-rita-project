@@ -1,0 +1,23 @@
+code,libelle
+EXP01,Budget Horaires
+EXP02,Affection des cours
+EXP03,Programmation des cours
+EXP04,Programmation des Salles
+EXP05,Impressions des programmations
+EXP06,Réalisation du budget
+EXP07,Situation du budget horaire
+IMP01,Importation des données
+IMP02,Données importées
+PAR01,Etablissement
+PAR02,Salles
+PAR03,Enseignants
+PAR04,Filières
+PAR05,Tronc commun
+PAR06,Niveaux
+PAR07,Matières
+PAR08,Semestres
+PAR09,Semaines
+PAR10,Seuils
+SEC01,Formulaire
+SEC02,Utilisateurs
+SEC03,Droits d'accès

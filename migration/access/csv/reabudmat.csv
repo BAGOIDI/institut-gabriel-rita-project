@@ -1,0 +1,1298 @@
+codmes,codfil,libfil,codniv,codmin,libmin,codisu,libisu,budmin,budisu,budget,realise,ecart
+semestre1,ACC,Business And Finance,01,ACC1111,General Mathematics I,GENEMATH1,General Mathematics 1,45,30,40,24,6.0
+semestre1,ACC,Business And Finance,01,ACC1112,General Computing I,GENECOMP1,General Computing 1,30,20,0,0,20.0
+semestre1,ACC,Business And Finance,01,ACC1131,Daily Operations I,DAILYOPE1,Daily Operations I,75,50,0,0,50.0
+semestre1,ACC,Business And Finance,01,ACC1132,Specific Operations And End Of Year Adjustments,SPEOPEEN1,Specific Operations And End Of Year Adjustments,30,20,0,0,20.0
+semestre1,ACC,Business And Finance,01,ACC1141,Full Costing I,FULLCOST1,Full Costing I,30,20,0,0,20.0
+semestre1,ACC,Business And Finance,01,ACC1142,Marginal Costing And The Break-Even Analysis I,MARCOSBR1,Marginal Costing And The Break-Even Analysis I,45,30,0,0,30.0
+semestre1,ACC,Business And Finance,01,ACC1151,Introduction To Taxation,INTROTAXA,Introduction To Taxation,45,30,12,8,22.0
+semestre1,ACC,Business And Finance,01,ACC1161,Introduction To Financial Analysis I,PROFINAN1,Introduction To Financial Analysis I,30,20,0,0,20.0
+semestre1,ACC,Business And Finance,01,ACC1162,Computer Assisted Accounting I,COMASSAC1,Computer Assisted Accounting I,30,20,0,0,20.0
+semestre1,ACC,Business And Finance,01,ACC1171,French Expression,FRENCH,French,15,12,0,0,12.0
+semestre1,ACC,Business And Finance,01,ACC1172,General Economics,GENECONOM,General Economy,30,20,16,11,9.0
+semestre2,ACC,Business And Finance,01,ACC1211,General Mathematics II,GENEMATH2,General Mathematics II,45,30,0,0,30.0
+semestre2,ACC,Business And Finance,01,ACC1221,Financial Mathematics II,FINAMATH2,Financial Mathematics II,30,20,0,0,20.0
+semestre2,ACC,Business And Finance,01,ACC1222,Statistics II,STATSTIC2,Statistics II,30,20,8,0,20.0
+semestre2,ACC,Business And Finance,01,ACC1231,Daily Operations II,DAILYOPE2,Daily Operations II,60,40,0,0,40.0
+semestre2,ACC,Business And Finance,01,ACC1232,Specific Operations And End Of Year Adjustments II,SPEOPEEN2,Specific Operations And End Of Year Adjustments II,45,30,0,0,30.0
+semestre2,ACC,Business And Finance,01,ACC1241,Full Costing II,FULLCOST2,Full Costing II,30,20,0,0,20.0
+semestre2,ACC,Business And Finance,01,ACC1242,Marginal Costing And The Break-Even Analysis II,MARCOSBR2,Marginal Costing And The Break-Even Analysis II,30,20,0,0,20.0
+semestre2,ACC,Business And Finance,01,ACC1252,Methodology For The Presentation Of End Of Internshit Report,METDRAINT,Methodology of drafting the internship report,15,12,0,0,12.0
+semestre2,ACC,Business And Finance,01,ACC1253,Vat And Tit,VATANDTIT,Vat And Tit,45,30,0,0,30.0
+semestre2,ACC,Business And Finance,01,ACC1261,Introduction To Financial Analysis II,PROFINAN2,Introduction To Financial Analysis II,30,20,0,0,20.0
+semestre2,ACC,Business And Finance,01,ACC1262,Computer Assisted Accounting II,COMASSAC2,Computer Assisted Accounting II,30,20,0,0,20.0
+semestre2,ACC,Business And Finance,01,ACC1271,English Expression,ENGLISH,English,15,12,24,16,-4.0
+semestre2,ACC,Business And Finance,01,ACC1272,Economy And Organization Of Enterprises,ECOBUSORG,Economy and business organization,30,20,0,0,20.0
+semestre2,ACC,Business And Finance,01,XXX0157,Statistics II,STATSTIC1,Statistics I,30,20,32,24,-4.0
+semestre1,ACC,Business And Finance,01,XXX0159,ICT for logistics,ICT,ICT,15,12,32,16,-4.0
+semestre1,AFI,Accounting And Finance,01,AFI1112,General Computing I,GENECOMP1,General Computing 1,15,12,20,20,-8.0
+semestre1,AFI,Accounting And Finance,01,AFI1114,General Mathematics I,GENEMATH1,General Mathematics 1,15,12,24,20,-8.0
+semestre1,AFI,Accounting And Finance,01,AFI1171,French,FRENCH,French,15,12,20,12,0.0
+semestre1,AFI,Accounting And Finance,01,AFI1172,General Economics,GENECONOM,General Economy,30,20,4,4,16.0
+semestre2,AFI,Accounting And Finance,01,AFI1271,English ,ENGLISH,English,15,12,0,0,12.0
+semestre1,AFI,Accounting And Finance,01,AFI2222,Practical work ICT,PRAWORICT,Practical Work ICT,100,100,4,0,100.0
+semestre2,AFI,Accounting And Finance,02,AFI2472,Labor law,LABORLAW,Labour Law,15,12,0,0,12.0
+semestre1,AFI,Accounting And Finance,01,XXX0158,Practical work ICT,PRAWORICT,Practical Work ICT,100,100,4,0,100.0
+semestre1,AMA,Assistant Manager,01,AMA1112,General computing I,GENECOMP1,General Computing 1,30,20,0,0,20.0
+semestre1,AMA,Assistant Manager,01,AMA1172,General economics,GENECONOM,General Economy,30,20,0,0,20.0
+semestre2,AMA,Assistant Manager,02,AMA2472,Labor law,LABORLAW,Labour Law,15,12,0,0,12.0
+semestre1,BAT,Bâtiment,01,BAT1111,Mathématiques I,MATMATIQ1,Mathématiques I,60,40,72,0,40.0
+semestre1,BAT,Bâtiment,01,BAT1121,TIC I ,TECINFCOM,TIC,75,50,28,0,50.0
+semestre1,BAT,Bâtiment,01,BAT1131,Procédés généraux de construction ,PROGENCO1,Procédés généraux de construction I,45,30,40,23,7.0
+semestre1,BAT,Bâtiment,01,BAT1141,Physique appliquée au Génie Civil,PHYAPPGEN,Physique appliquée au Génie Civil,45,30,0,0,30.0
+semestre1,BAT,Bâtiment,01,BAT1151,Organisation des chantiers ,ORGCHANTI,Organisation des chantiers,45,30,40,32,-2.0
+semestre1,BAT,Bâtiment,01,BAT1161,Architecture ,ARCHITECT,Architecture,60,40,0,0,40.0
+semestre2,BAT,Bâtiment,01,BAT1171,Techniques d’expression française ,FRANCAIS2,Francais,15,12,0,0,12.0
+semestre2,BAT,Bâtiment,01,BAT1172,Techniques d’expression anglaise ,ANGLAIS,Anglais,30,20,16,8,12.0
+semestre2,BAT,Bâtiment,01,BAT1211,Mathématiques II ,MATMATIQ2,Mathématique II,60,40,0,0,40.0
+semestre2,BAT,Bâtiment,01,BAT1221,Physiques I ,PHYSIQUE1,Physiques 1,45,30,44,21,9.0
+semestre2,BAT,Bâtiment,01,BAT1222,Chimie ,CHIMIE,Chimie,30,20,0,0,20.0
+semestre2,BAT,Bâtiment,01,BAT1231,Bureau d’étude I ,BUREAETUD,BUREAU DETUDE,45,30,0,0,30.0
+semestre2,BAT,Bâtiment,01,BAT1232,Ouvrage D’art,OUVRAGART,Ouvrage Art,30,20,0,0,20.0
+semestre2,BAT,Bâtiment,01,BAT1241,Topographie I ,TOPOGRAP1,Topographie I,45,30,0,0,30.0
+semestre2,BAT,Bâtiment,01,BAT1251,Béton armé I,BETOARME1,Béton armé I,30,20,0,0,20.0
+semestre2,BAT,Bâtiment,01,BAT1261,Géotechnique ,GEOTECHN,Géotechnique,45,30,20,12,18.0
+semestre1,BAT,Bâtiment,01,XXX0103,Dessin et technologie de bâtiment ,DESSINTE1,Dessin technique I,60,40,0,0,40.0
+semestre1,BAT,Bâtiment,01,XXX0104,Education civique et éthique ,DROITCIVI,Droit civil,15,12,0,0,12.0
+semestre2,BAT,Bâtiment,01,XXX0105,Entreprenariat ,ENTREPREN,Entreprenariat,60,40,0,0,40.0
+semestre1,BAT,Bâtiment,01,XXX0106,Résistance des matériaux I ,RESISMAT1,Résistance des matériaux I,60,40,36,28,12.0
+semestre2,BAT,Bâtiment,01,XXX0107,Résistance des matériaux II ,RESISMAT2,Résistance des matériaux II,45,30,4,0,30.0
+semestre1,BAT,Bâtiment,01,XXX0228,Dessin de base ,DESSIBASE,Dessin de Base,45,30,40,20,10.0
+semestre2,BAT,Bâtiment,01,XXX0239,Atelier Orientation,ATELORIENT,Atelier Orientation,15,12,8,0,12.0
+semestre1,BOW,Boiler Making And Welding,01,BOW1111,Engineering Mathematics I,ENGIMATH1,Engineering Mathematics I,75,50,8,8,42.0
+semestre1,BOW,Boiler Making And Welding,01,BOW1112,General Computing I,GENECOMP1,General Computing 1,15,12,20,20,-8.0
+semestre1,BOW,Boiler Making And Welding,01,BOW1114,General Mathematics I,GENEMATH1,General Mathematics 1,15,12,8,8,4.0
+semestre1,BOW,Boiler Making And Welding,01,BOW1171,English,ENGLISH,English,22,15,0,0,15.0
+semestre1,BOW,Boiler Making And Welding,01,BOW1172,French,FRENCH,French,22,15,16,11,4.0
+semestre2,BOW,Boiler Making And Welding,01,BOW1211,Engineering Mathematics II,ENGIMATH2,Engineering Mathematics II,75,50,0,0,50.0
+semestre1,BOW,Boiler Making And Welding,01,BOW1273,Strength of materials I,STRENMAT1,Strength of materials I,30,20,0,0,20.0
+semestre1,BOW,Boiler Making And Welding,01,BOW2222,Practical work ICT,PRAWORICT,Practical Work ICT,100,100,4,0,100.0
+semestre1,BOW,Boiler Making And Welding,02,BOW2311,Engineering Mathematics III ,ENGIMATH3,Engineering Mathematics III,60,40,0,0,40.0
+semestre1,BOW,Boiler Making And Welding,02,BOW2322,Computer Programming,COMPUPROG,Computer Programming,30,20,0,0,20.0
+semestre1,BOW,Boiler Making And Welding,02,BOW2323,"Basics of Quality, Health, Safety and Environment ",QHSE,QHSE anglais,30,20,0,0,20.0
+semestre1,BOW,Boiler Making And Welding,02,BOW2331,Computer Aided Manufacturing I,COMAIDMA2,Computer Aided Manufacturing II,30,20,0,0,20.0
+semestre1,BOW,Boiler Making And Welding,02,BOW2353,P machining II,PMACHINI2,P machining II,30,20,0,0,20.0
+semestre1,BOW,Boiler Making And Welding,02,BOW2362,Applied mechanics I,APPMECHA2,Applied mechanics II,45,30,0,0,30.0
+semestre1,BOW,Boiler Making And Welding,02,BOW2372,Enterpreneuriatship,ENTREPSHI,Enterpreneuriatship,15,12,0,0,12.0
+semestre1,BOW,Boiler Making And Welding,02,BOW2373,Methodology of drafting the internship report,INTERSHIP,INTERSHIP,15,12,0,0,12.0
+semestre2,BOW,Boiler Making And Welding,02,BOW2421,Physics I,PHYSICS1,Physics I,45,30,0,0,30.0
+semestre2,BOW,Boiler Making And Welding,02,BOW2472,Ingineering Management Law and Economics,ECONOMICS,Economics,30,20,0,0,20.0
+semestre2,BOW,Boiler Making And Welding,02,BOW2473,Labor law,LABORLAW,Labour Law,15,12,0,0,12.0
+semestre1,BST,Building Science And Technology ,01,BST1111,Mathematics I,GENEMATH1,General Mathematics 1,60,40,48,28,12.0
+semestre1,BST,Building Science And Technology ,01,BST1121,Physics I,PHYSICS1,Physics I,45,30,48,28,2.0
+semestre1,BST,Building Science And Technology ,01,BST1122,Chemistry,CHEMISTRY,Chemistry,30,20,56,24,-4.0
+semestre1,BST,Building Science And Technology ,01,BST1131,General construction processes I,GENERCONS,General Construction,45,30,52,24,6.0
+semestre1,BST,Building Science And Technology ,01,BST1133,ICT,ICT,ICT,22,15,0,0,15.0
+semestre1,BST,Building Science And Technology ,01,BST1141,Design and technology of building,DESIGNTEC,Design and technology,45,30,44,18,12.0
+semestre1,BST,Building Science And Technology ,01,BST1151,Organization of work sites ,ORGOFWORK,ORGANISATION OF WORK SITES,60,40,60,37,3.0
+semestre1,BST,Building Science And Technology ,01,BST1161,Architecture,ARCHITECT,Architecture,60,40,0,0,40.0
+semestre1,BST,Building Science And Technology ,01,BST1162,Resistance of Materials I,RESISMTER,Resistance of Materials I,60,40,48,30,10.0
+semestre1,BST,Building Science And Technology ,01,BST1171,English,ENGLISH,English,22,15,28,9,6.0
+semestre1,BST,Building Science And Technology ,01,BST1172,French ,FRENCH,French,22,15,4,1,14.0
+semestre2,BST,Building Science And Technology ,01,BST1211,Mathematics II,MATMATIC2,Mathematics II,60,40,0,0,40.0
+semestre2,BST,Building Science And Technology ,01,BST1221,Computer Science I,COMPSCIEN,Computer Science I,75,50,0,0,50.0
+semestre2,BST,Building Science And Technology ,01,BST1231,Reinforced concrete Projects ,PROJACADE,Projet académique,45,30,0,0,30.0
+semestre2,BST,Building Science And Technology ,01,BST1241,Topography I,TOPOGPHY1,Topography I,45,30,0,0,30.0
+semestre2,BST,Building Science And Technology ,01,BST1242,travaux pratique,TRAVPRATQ,Travaux Pratiques,20,12,0,0,12.0
+semestre2,BST,Building Science And Technology ,01,BST1251,Reinforced concrete I,REINCONCR,Reinforced concrete I,60,40,0,0,40.0
+semestre2,BST,Building Science And Technology ,01,BST1261,Geotechnical Engineering,GEOTECHNI,Geotechnical Engineering,45,30,0,0,30.0
+semestre2,BST,Building Science And Technology ,01,BST1262,Resistance of Materials II,RESMATERI,Resistance of Material II,45,30,0,0,30.0
+semestre2,BST,Building Science And Technology ,01,BST1272,Civic and Moral Education,LABORLAW,Labour Law,30,20,0,0,20.0
+semestre1,BST,Building Science And Technology ,01,BST1371,Methodology of drafting the internship report,INTERSHIP,INTERSHIP,22,15,0,0,15.0
+semestre1,BST,Building Science And Technology ,02,BST2133,ICT,ICT,ICT,22,15,12,11,4.0
+semestre1,BST,Building Science And Technology ,02,BST2172,French ,FRENCH,French,22,15,8,8,7.0
+semestre1,BST,Building Science And Technology ,02,BST2311,Mathematics III,MATMATIC3,Mathematics III,60,40,4,4,36.0
+semestre1,BST,Building Science And Technology ,02,BST2321,Physics III ,PHYSICS3,Physics III,45,30,0,0,30.0
+semestre1,BST,Building Science And Technology ,02,BST2322,"Basics of Quality, Health, Safety and Environment ",QHSE,QHSE anglais,30,20,0,0,20.0
+semestre1,BST,Building Science And Technology ,02,BST2333,Schémas électriques et commande,SCHEMAELE,Schémas électrique,40,25,0,0,25.0
+semestre2,BST,Building Science And Technology ,02,BST2452,Topography II,TOPOGPHY2,Topography II,30,20,0,0,20.0
+semestre2,BST,Building Science And Technology ,02,BST2472,Economics,ECONOMICS,Economics,30,20,0,0,20.0
+semestre1,BST,Building Science And Technology ,01,XXX0030,"Warm welcome, Guiding and Conseilling",WELCOME,"Warm welcome, Guiding and Conseilling",8,8,0,0,8.0
+semestre1,BST,Building Science And Technology ,02,XXX0031,"Warm welcome, Guiding and Conseilling",WELCOME,"Warm welcome, Guiding and Conseilling",8,8,8,0,8.0
+semestre1,BST,Building Science And Technology ,01,XXX0032,Tutorials,TUTORIALS,Tutorials,200,200,0,0,200.0
+semestre1,BST,Building Science And Technology ,02,XXX0033,Tutorials,TUTORIALS,Tutorials,200,200,12,8,192.0
+semestre1,BST,Building Science And Technology ,01,XXX0222,Engineer in the Society,ENGISOCIE,Engineer in the Society,60,40,20,12,28.0
+semestre1,BTSET,Electro Technique,01,ELT1111,Mathématiques I ,MATMATIQ1,Mathématiques I,60,40,96,0,40.0
+semestre1,BTSET,Electro Technique,01,ELT1121,Informatique I ,INFORGEN1,Informatique Général 1,75,50,20,0,50.0
+semestre1,BTSET,Electro Technique,01,ELT1131,Electricité générale ,ELECTGENE,Electricité générale ,45,30,0,0,30.0
+semestre1,BTSET,Electro Technique,01,ELT1132,Circuits électriques ,CIRELECTR,Circuits électriques,30,20,44,35,-15.0
+semestre1,BTSET,Electro Technique,01,ELT1141,Techniques de mesures ,TECHMESUR,TECHNIQUE DE MESURE ,30,20,32,20,0.0
+semestre1,BTSET,Electro Technique,01,ELT1142,Schémas électriques et TP câblage,SCHEMAELE,Schémas électrique,60,40,12,4,36.0
+semestre1,BTSET,Electro Technique,01,ELT1151,AUTOMATISME 1 + TP,AUTOMATI1,Automatisme I  ,30,20,0,0,20.0
+semestre1,BTSET,Electro Technique,01,ELT1152,Electronique analogique I ,ELECTANA1,Electronique Analogique 1,30,20,32,26,-6.0
+semestre1,BTSET,Electro Technique,01,ELT1161,Technologie de Construction ,TECHCONST,TECHNOLOGIE DE CONSTRUCTION,45,30,0,0,30.0
+semestre1,BTSET,Electro Technique,01,ELT1171,Techniques d’expression française ,FRANCAIS2,Francais,15,12,16,16,-4.0
+semestre1,BTSET,Electro Technique,01,ELT1172,Techniques d’expression anglaise ,ANGLAIS,Anglais,30,20,28,16,4.0
+semestre2,BTSET,Electro Technique,01,ELT1211,Mathématiques II ,MATMATIQ2,Mathématique II,60,40,0,0,40.0
+semestre2,BTSET,Electro Technique,01,ELT1215,Travaux pratiques,TRAVPRA,Travaux pratiques,15,12,0,0,12.0
+semestre2,BTSET,Electro Technique,01,ELT1221,Physiques I ,PHYSIQUE1,Physiques 1,45,30,56,18,12.0
+semestre2,BTSET,Electro Technique,01,ELT1222,Chimie,CHIMIE1,Chimie 1,30,20,44,17,3.0
+semestre2,BTSET,Electro Technique,01,ELT1231,Machines électriques I ,MACHIELCT,Machine Electrique1,75,50,0,0,50.0
+semestre1,BTSET,Electro Technique,01,ELT1233,Méthodologie de la rédaction du rapport de stage ,METHREDRS,Méthodologie de rédaction du rapport de stage,15,12,0,0,12.0
+semestre2,BTSET,Electro Technique,01,ELT1241,Electronique analogique II ,ELECTANA2,Electronique Analogique 2,45,30,0,0,30.0
+semestre2,BTSET,Electro Technique,01,ELT1242,Traitement du signal ,TRAITSIGN,Traitement du Signal,30,20,0,0,20.0
+semestre2,BTSET,Electro Technique,01,ELT1251,Electronique numérique I ,ELECNUME1,Electronique numérique I,15,12,44,33,-21.0
+semestre2,BTSET,Electro Technique,01,ELT1252,Communication des données ,COMDONNEE,Communication de données,30,20,0,0,20.0
+semestre2,BTSET,Electro Technique,01,ELT1261,CAO en Génie électrique ,CAOGENELC,CAO EN GENIE ELECTRIQUE,30,20,0,0,20.0
+semestre2,BTSET,Electro Technique,01,ELT1262,Electronique de Puissance I ,ELECTROPU1,Electronique de puissance I,45,30,0,0,30.0
+semestre2,BTSET,Electro Technique,01,ELT1271,Economie et Gestion des entreprises ,ECOORGENT,Economie et Organisation des Entreprises,45,30,0,0,30.0
+semestre2,BTSET,Electro Technique,01,ELT1272,Education civique et éthique,DROITCIVI,Droit civil,45,30,0,0,30.0
+semestre1,BTSET,Electro Technique,02,ELT2311,"Collecte, traitement et Exploitation Technique des statistiques ",COTREXTES,"Collecte, traitement et Exploitation Technique des statistiques",45,30,0,0,30.0
+semestre1,BTSET,Electro Technique,02,ELT2312,TIC II ,TECINFCOM2,TIC 2,30,20,0,0,20.0
+semestre1,BTSET,Electro Technique,02,ELT2321,Physiques III ,PHYSIQUE3,Physiques III,30,20,68,24,-4.0
+semestre1,BTSET,Electro Technique,02,ELT2322,Bases de qualité hygiène santé sécurité environnement (QHSSE) ,BASEQHSSE,Bases qlité hygiène santé sécurité environ.(QHSSE),30,20,28,15,5.0
+semestre1,BTSET,Electro Technique,02,ELT2331,"Technique de production, transport et distribution",TECPROTRA,"Technique of production,transport and distribution",45,30,52,16,14.0
+semestre1,BTSET,Electro Technique,02,ELT2332,Electronique de Puissance II ,ELECTROPU2,Electronique de puissance II,30,20,0,0,20.0
+semestre1,BTSET,Electro Technique,02,ELT2341,Machines électriques 2 ,MACHIELEC,Machine Electrique 2,45,30,52,32,-2.0
+semestre1,BTSET,Electro Technique,02,ELT2342,Automatismes 2 ,AUTOMATI2,Automatisme II,30,20,32,24,-4.0
+semestre1,BTSET,Electro Technique,02,ELT2351,Electronique numérique II,ELECNUME2,Electronique numériques II,30,20,0,0,20.0
+semestre1,BTSET,Electro Technique,02,ELT2352,Maintenance en Génie électrique ,MAIGENELE,Maintenance en génie électrique,30,20,0,0,20.0
+semestre1,BTSET,Electro Technique,02,ELT2361,TP Machines électriques I ,TPMACELE1,TP Machines électriques I ,60,40,0,0,40.0
+semestre1,BTSET,Electro Technique,02,ELT2371,Education citoyenne et déontologie professionnelle ,DROITTRAV,Droit du travail,45,30,16,16,14.0
+semestre2,BTSET,Electro Technique,02,ELT2411,Mathématiques III ,MATMATIQ3,Mathématiques III,60,40,96,0,40.0
+semestre2,BTSET,Electro Technique,02,ELT2431,Asservissements ,ASSERVISS,Asservissements,45,30,76,31,-1.0
+semestre2,BTSET,Electro Technique,02,ELT2432,Réseaux industriels ,RESINDUST,Réseaux industriels,30,20,0,0,20.0
+semestre2,BTSET,Electro Technique,02,ELT2441,Installations électriques et appareillages ,INSELEAPP,Installations électriques et appareillages ,60,40,0,0,40.0
+semestre2,BTSET,Electro Technique,02,ELT2451,TP Machines électriques II ,TPMACELE2,TP Machines électriques II ,45,30,4,4,26.0
+semestre2,BTSET,Electro Technique,02,ELT2461,Stage professionnel ,STAGEPROF,Stage professionnel,90,60,0,0,60.0
+semestre2,BTSET,Electro Technique,02,ELT2471,Entrepreneuriat et marketing ,ENTREPREN,Entreprenariat,30,20,0,0,20.0
+semestre1,BTSET,Electro Technique,01,PRESES001,Préparation session normale,PRESESNOR,Préparation session normale,99,99,0,0,99.0
+semestre1,BTSET,Electro Technique,01,XXX0034,Accueil Orientation et Conseils,ACCORICON,Accueil Orientation et Conseils,8,8,0,0,8.0
+semestre1,BTSET,Electro Technique,01,XXX0036,Travaux dirigés (TD),TRAVDIRIG,Travaux dirigés (TD),50,50,8,0,50.0
+semestre1,BTSET,Electro Technique,02,XXX0053,Accueil Orientation et Conseils,ACCORICON,Accueil Orientation et Conseils,8,8,8,0,8.0
+semestre1,BTSET,Electro Technique,02,XXX0054,Anglais médical/Français médical 2 ,ANGLAMEDI,Anglais médical,15,10,4,4,6.0
+semestre1,BTSET,Electro Technique,02,XXX0055,Comptabilité analytique/gene,COMPTAGE1,Comptabilité générale I,30,20,32,23,-3.0
+semestre2,BTSET,Electro Technique,02,XXX0056,Economie et organisation des entreprises,ECOORGENT,Economie et Organisation des Entreprises,30,20,0,0,20.0
+semestre1,BTSET,Electro Technique,02,XXX0057,Electronique III + TP,ELECTRONF3,Electronique 3,30,20,72,30,-10.0
+semestre1,BTSET,Electro Technique,02,XXX0058,EXPRESSION FRANCAISE,FRANCAIS2,Francais,15,12,8,8,4.0
+semestre1,BTSET,Electro Technique,02,XXX0059,Initiation à la Recherche,INITRECHE,Initiation à la recherche,8,8,8,0,8.0
+semestre1,BTSET,Electro Technique,02,XXX0060,Méthodologie de la rédaction du rapport de stage,METHREDRS,Méthodologie de rédaction du rapport de stage,100,12,20,17,-5.0
+semestre1,BTSET,Electro Technique,02,XXX0061,Préparation session normale,PRESESNOR,Préparation session normale,99,12,0,0,12.0
+semestre1,BTSET,Electro Technique,02,XXX0062,Projets,PROJACADE,Projet académique,100,100,8,0,100.0
+semestre1,BTSET,Electro Technique,02,XXX0063,Rédaction du rapport de stage,REDRAPSTA,Rédaction de rapports de stage,100,12,8,0,12.0
+semestre1,BTSET,Electro Technique,02,XXX0064,Schémas électriques et commande,SCHEMAELE,Schémas électrique,40,25,28,7,18.0
+semestre2,BTSET,Electro Technique,01,XXX0231,Optique géométrique et ondulatoire,POTGEOOND,Optique géométrique et ondulatoire,15,12,4,3,9.0
+semestre2,BTSET,Electro Technique,01,XXX0233,Atelier Orientation,ATELORIENT,Atelier Orientation,15,12,8,0,12.0
+semestre2,BTSET,Electro Technique,02,XXX0250,Communication des données ,COMDONNEE,Communication de données,30,20,8,5,15.0
+semestre1,CFP,Assistance en Cabinet Médical,01,CFP1101,Anatomie - Physiologie,ANATPHYS1,Anatomie et Physiologie 1,60,40,0,0,40.0
+semestre1,CFP,Assistance en Cabinet Médical,01,CFP1102,PHARMACOLOGIE,PHARMAGEN,Pharmacologie générale,80,20,0,0,20.0
+semestre1,CFP,Assistance en Cabinet Médical,01,CFP1105,SEMIOLOGIE GENERALE,SEMIOGEN,Semiologie generale,40,30,0,0,30.0
+semestre1,CFP,Assistance en Cabinet Médical,01,CFP1108,Maladies infectieuses et parasitaires,MALINFPAR,Maladie infectueuse et parasitaire,55,30,0,0,30.0
+semestre1,CFP,Assistance en Cabinet Médical,01,CFP1109,TECHNIQUES DE SOINS EN MEDECINE,SOINMEDEC,Soins en médecine,50,20,0,0,20.0
+semestre1,CFP,Assistance en Cabinet Médical,01,CFP1110,PEDIATRIE,PEDIATRIE,PEDIATRIE,40,30,0,0,30.0
+semestre2,CFP,Assistance en Cabinet Médical,01,CFP1111,Anatomie - Physiologie 2,ANATPHYS2,Anatomie et Physiologie 2,60,40,0,0,40.0
+semestre1,CFP,Assistance en Cabinet Médical,01,CFP1141,Concepts et théories en sciences infirmières ,CONTHESCI,Concept et théorie et science infirmière ,30,20,0,0,20.0
+semestre1,CFP,Assistance en Cabinet Médical,01,CFP1151,Histoire de la profession infirmière,HISPROINF,Histoire de la Profession Infirmière ,15,12,0,0,12.0
+semestre2,CFP,Assistance en Cabinet Médical,01,CFP1202,TECHNIQUE DE LABORATOIRE,TECHLABOR,TECHNIQUE DE LABORATOIRE ,50,20,0,0,20.0
+semestre2,CFP,Assistance en Cabinet Médical,01,CFP1205,SANTE PUBLIQUE,SANTEPUBL,Santé publique ,40,12,0,0,12.0
+semestre2,CFP,Assistance en Cabinet Médical,01,CFP1207,OBSTETRIQUE ET SOINS APPARENTES,OBSTOIAPP,OBSTETRIQUE ET SOINS APPARENTES,40,20,0,0,20.0
+semestre2,CFP,Assistance en Cabinet Médical,01,CFP1208,PUERICULTURE ET SOINS APPARENTES,PUESOIAPP,PUERICULTURE ET SOINS APPARENTES,40,20,0,0,20.0
+semestre2,CFP,Assistance en Cabinet Médical,01,CFP1209,LEGISLATION,DROITCIVI,Droit civil,35,12,0,0,12.0
+semestre2,CFP,Assistance en Cabinet Médical,01,CFP1210,Français,FRANCAIS2,Francais,60,20,0,0,20.0
+semestre2,CFP,Assistance en Cabinet Médical,01,CFP1211,Anglais,ANGLAMEDI,Anglais médical,60,20,0,0,20.0
+semestre1,CFP,Assistance en Cabinet Médical,01,CFP1212,Informatique,INFORGEN1,Informatique Général 1,15,12,0,0,12.0
+semestre1,CFP,Assistance en Cabinet Médical,01,CFP1231,Méthodologie de la rédaction du rapport de stage ,REDRAPSTA,Rédaction de rapports de stage,100,12,0,0,12.0
+semestre2,CFP,Assistance en Cabinet Médical,01,CFP1233,Premiers secours ,PREMSECOU,Premier Secours,30,20,0,0,20.0
+semestre1,CFP,Assistance en Cabinet Médical,01,CFP1323,Projet académique,PROJACADE,Projet académique,45,30,0,0,30.0
+semestre2,CFP,Assistance en Cabinet Médical,01,CFP1324,Épidémiologie,EPIDEMIO1,Epidémiologie,15,12,0,0,12.0
+semestre2,CFP,Assistance en Cabinet Médical,01,CFP1325,Démographie,DEMOGRAPH,Démographie,15,12,0,0,12.0
+semestre2,CFP,Assistance en Cabinet Médical,01,CFP1326,Planification des soins,PLANSOINS,Planification des Soins ,30,20,0,0,20.0
+semestre2,CFP,Assistance en Cabinet Médical,01,CFP1327,Microbiologie II ,MICROBIOF2,Microbiologie II,60,40,0,0,40.0
+semestre2,CFP,Assistance en Cabinet Médical,01,CFP1328,Santé environnementale ,SANTENVIR,Santé Environnementale,15,12,0,0,12.0
+semestre1,CFPACB,Aide Chimiste Biologiste,01,CFPACB01,Mathématique appliquée ,MATHAPPLI,Mathématique appliquée ,30,20,20,15,5.0
+semestre1,CFPACB,Aide Chimiste Biologiste,01,CFPACB02,Chimie Appliquée ,CHIMAPPLI,Chimie Appliquée ,15,12,12,12,0.0
+semestre1,CFPACB,Aide Chimiste Biologiste,01,CFPACB03,Technique de prélèvement et hygiène du laboratoire,TECPREHYG,Technique de prélèvement et hygiène du laboratoire,22,15,0,0,15.0
+semestre1,CFPACB,Aide Chimiste Biologiste,01,CFPACB04,Anglais,ANGLAIS,Anglais,22,15,24,12,3.0
+semestre1,CFPACB,Aide Chimiste Biologiste,01,CFPACB05,Biochimie générale et clinique,BIOCHIGEN,Biochimie générale,30,20,12,12,8.0
+semestre1,CFPACB,Aide Chimiste Biologiste,01,CFPACB06,Bactériologie générale,BACTGENER,Bactériologie générale,45,30,0,0,30.0
+semestre1,CFPACB,Aide Chimiste Biologiste,01,CFPACB07,Entomologie,ENTOMOL2,Entomologie,15,12,0,0,12.0
+semestre1,CFPACB,Aide Chimiste Biologiste,01,CFPACB08,Bonnes pratiques de laboratoire et maintenance,BOPRLAMAI,Bonnes pratiques de laboratoire et maintenance,22,15,0,0,15.0
+semestre1,CFPACB,Aide Chimiste Biologiste,01,CFPACB09,Informatique,INFORMATI,Informatique,22,15,44,0,15.0
+semestre1,CFPACB,Aide Chimiste Biologiste,01,CFPACB10,Hématologie générale et clinique + TP,HEMATHOCL,Hémathologie clinique,30,20,0,0,20.0
+semestre1,CFPACB,Aide Chimiste Biologiste,01,CFPACB11,Parasitologie général et clinique + TP,PARACLIN1,Parasitologie Clinique 1,30,20,32,17,3.0
+semestre1,CFPACB,Aide Chimiste Biologiste,01,CFPACB12,Histologie,HISTOLOGI,Histologie,22,15,0,0,15.0
+semestre1,CFPACB,Aide Chimiste Biologiste,01,CFPACB13,Biologie cellulaire,BIOLOGCEL,Biologie cellulaire,15,12,12,12,0.0
+semestre1,CFPACB,Aide Chimiste Biologiste,01,CFPACB14,Physiologie,PHYSIOLOG,Physiologie,22,15,0,0,15.0
+semestre1,CFPACB,Aide Chimiste Biologiste,01,CFPACB15,Secourisme,SECOURISM,Secourisme,22,15,20,16,-1.0
+semestre1,CFPACB,Aide Chimiste Biologiste,01,CFPACB16,Immunologie générale + TP,IMMUNOLOG,Immunology,0,0,0,0,0.0
+semestre1,CFPACB,Aide Chimiste Biologiste,01,CFPACB17,Epidémiologie,EPIDEMIO1,Epidémiologie,22,15,0,0,15.0
+semestre2,CFPACB,Aide Chimiste Biologiste,01,CFPACB18,Soins infirmiers + TP,SOININFIM,Soins infirmiers + TP,22,15,32,3,12.0
+semestre2,CFPACB,Aide Chimiste Biologiste,01,CFPACB19,Psychologie,PSYCHOLOG,Psychologie,38,15,0,0,15.0
+semestre2,CFPACB,Aide Chimiste Biologiste,01,CFPACB20,Mycologie,MUCOLOGIE,Mycologie,22,15,0,0,15.0
+semestre2,CFPACB,Aide Chimiste Biologiste,01,CFPACB21,Sante communautaire,SANTECOMM,Santé communautaire,22,15,0,0,15.0
+semestre2,CFPACB,Aide Chimiste Biologiste,01,CFPACB22,IEC,IEC,IEC 1,22,15,0,0,15.0
+semestre2,CFPACB,Aide Chimiste Biologiste,01,CFPACB23,PSS,PSS,PSS,22,15,0,0,15.0
+semestre2,CFPACB,Aide Chimiste Biologiste,01,CFPACB24,Travaux pratiques,TRAVPRA,Travaux pratiques,240,160,0,0,160.0
+semestre1,CFPACB,Aide Chimiste Biologiste,01,CFPACB25,Législation et éthique,DROITTRAV,Droit du travail,22,15,0,0,15.0
+semestre1,CFPACB,Aide Chimiste Biologiste,01,CFPACB26,Parasitologie,PARASITOL,Parasitologie,30,20,0,0,20.0
+semestre1,CFPACB,Aide Chimiste Biologiste,01,CFPACB27,Administration,ADMINISTR,Administration,22,15,0,0,15.0
+semestre1,CFPACB,Aide Chimiste Biologiste,01,CFPACB28,Bactériologie,BACTERIO,Bactériologie,38,25,0,0,25.0
+semestre1,CFPACB,Aide Chimiste Biologiste,01,CFPACB29,Hématologie,HEMATHOCL,Hémathologie clinique,30,20,0,0,20.0
+semestre1,CFPACB,Aide Chimiste Biologiste,01,CFPACB30,Virologie – VIH/SIDA,VIROLOGIE,Virologie – VIH/SIDA,22,15,28,16,-1.0
+semestre1,CFPACB,Aide Chimiste Biologiste,01,CFPACB31,Vaccination,VACCINATI,Vaccination,22,15,0,0,15.0
+semestre1,CFPACB,Aide Chimiste Biologiste,01,CFPACB32,Français,FRANCAIS2,Francais,22,15,8,8,7.0
+semestre1,CFPACB,Aide Chimiste Biologiste,01,CFPACB35,TP bactériologie,TPBACTERI,TP bactériologie,38,25,0,0,25.0
+semestre1,CFPACB,Aide Chimiste Biologiste,01,CFPACB36,TP Chimie analytique,TPCHIMANA,TP Chimie analytique,22,15,0,0,15.0
+semestre1,CFPACB,Aide Chimiste Biologiste,01,CFPACB37,TP Hématologie ,TPHEMATOL,TP Hématologie ,22,15,0,0,15.0
+semestre1,CFPACB,Aide Chimiste Biologiste,01,CFPACB38,Immunologie – sérologie,IMMUNOLOG,Immunology,15,12,0,0,12.0
+semestre1,CFPACB,Aide Chimiste Biologiste,01,CFPACB39,Rédaction mémoire,REDACMERE,Rédaction Mémoire ,15,12,0,0,12.0
+semestre2,CFPACB,Aide Chimiste Biologiste,01,CFPACB40,Contrôle des aliments ,CONTALIME,Contrôle des aliments ,22,15,0,0,15.0
+semestre2,CFPACB,Aide Chimiste Biologiste,01,CFPACB41,Toxicologie,TOXICOLOG,TOXICOLOGIE ,22,15,0,0,15.0
+semestre2,CFPACB,Aide Chimiste Biologiste,01,CFPACB42,TP Immunologie,TPIMMUNOL,TP Immunologie,30,20,0,0,20.0
+semestre2,CFPACB,Aide Chimiste Biologiste,01,CFPACB43,TP Parasitologie,TPPARASIT,TP Parasitologie,30,20,0,0,20.0
+semestre2,CFPACB,Aide Chimiste Biologiste,01,CFPACB44,TP Biochimie,TPBIOCHIM,TP Biochimie,22,15,0,0,15.0
+semestre2,CFPACB,Aide Chimiste Biologiste,01,CFPACB45,Biochimie,BIOCHIMIE,Biochimie,22,15,0,0,15.0
+semestre2,CFPACB,Aide Chimiste Biologiste,01,CFPACB46,Stages,STAGEPROF,Stage professionnel,255,170,0,0,170.0
+semestre2,CFPACB,Aide Chimiste Biologiste,01,CFPACB47,Mémoire et séminaire,MEMOSEMIN,Mémoire et séminaire,45,30,0,0,30.0
+semestre1,CFPACB,Aide Chimiste Biologiste,01,CFPACB48,Anatomie et physiologie,ANATPHYS1,Anatomie et Physiologie 1,100,60,56,36,24.0
+semestre1,CFPACB,Aide Chimiste Biologiste,01,CFPACB49,Histoire de la profession Infirmière,HISPROINF,Histoire de la Profession Infirmière ,20,12,8,8,4.0
+semestre1,CFPACB,Aide Chimiste Biologiste,01,XXX0170,Microbiologie - Bactériologie ,MICROBIOF1,Microbiologie I,15,12,12,12,0.0
+semestre1,CFPACB,Aide Chimiste Biologiste,01,XXX0181,Cycle de vie,CYCLDEVIE,Cycle de vie ,15,12,12,12,0.0
+semestre1,CFPACB,Aide Chimiste Biologiste,01,XXX0204,Physiques,PHYSIQUES,Physiques,20,12,20,18,-6.0
+semestre1,CFPACB,Aide Chimiste Biologiste,01,XXX0206,Concepts et théories infirmières,CONTHESCI,Concept et théorie et science infirmière ,20,12,24,20,-8.0
+semestre1,CFPACB,Aide Chimiste Biologiste,01,XXX0207,Concepts et théories infirmières,CONTHESCI,Concept et théorie et science infirmière ,20,12,24,20,-8.0
+semestre1,CFPACB,Aide Chimiste Biologiste,01,XXX0225,Sociologie - Anthropologie et Psychologie ,ANTPHYSOC,Anthropologie physiologique et sociologieque,90,60,32,12,48.0
+semestre1,CFPACB,Aide Chimiste Biologiste,01,XXX0245,Atelier Orientation,ATELORIENT,Atelier Orientation,22,15,8,0,15.0
+semestre1,CFPACM,Assistant en Cabinet Médical,01,CFPACB50,Histoire de la profession Infirmière,HISPROINF,Histoire de la Profession Infirmière ,20,12,8,8,4.0
+semestre1,CFPACM,Assistant en Cabinet Médical,01,CFPACM01,Anatomie et physiologie,ANATPHYS1,Anatomie et Physiologie 1,100,60,56,36,24.0
+semestre1,CFPACM,Assistant en Cabinet Médical,01,CFPACM02,Pharmacologie,PHARMACLI,Pharmacologie Clinique,80,40,0,0,40.0
+semestre1,CFPACM,Assistant en Cabinet Médical,01,CFPACM03,Secourisme,SECOURISM,Secourisme,40,12,16,12,0.0
+semestre1,CFPACM,Assistant en Cabinet Médical,01,CFPACM04,Vocabulaire médical,VOCAMEDIC,Vocabulaire médical,20,12,0,0,12.0
+semestre1,CFPACM,Assistant en Cabinet Médical,01,CFPACM05,Semiologie generale,SEMIOGEN,Semiologie generale,40,40,0,0,40.0
+semestre1,CFPACM,Assistant en Cabinet Médical,01,CFPACM06,Semiologie medicale,SEMIOMEDI,SEMIOLOGIE MEDICALE,50,20,0,0,20.0
+semestre1,CFPACM,Assistant en Cabinet Médical,01,CFPACM07,Semiologie chururgicale,SEMIOCHIR,Sémiologie Chirurgicale,40,20,0,0,20.0
+semestre1,CFPACM,Assistant en Cabinet Médical,01,CFPACM08,Maladies infectieuses et parasitaires,MALINFPAR,Maladie infectueuse et parasitaire,55,60,0,0,60.0
+semestre1,CFPACM,Assistant en Cabinet Médical,01,CFPACM09,Technique de soins en médecine,SOINMEDEC,Soins en médecine,50,40,12,0,40.0
+semestre2,CFPACM,Assistant en Cabinet Médical,01,CFPACM10,Technique de soins en chirurgie,SOINSCHIR,Soins en chirurgie ,40,40,0,0,40.0
+semestre2,CFPACM,Assistant en Cabinet Médical,01,CFPACM11,Technique de laboratoire,TECHLABOR,TECHNIQUE DE LABORATOIRE ,40,12,0,0,12.0
+semestre2,CFPACM,Assistant en Cabinet Médical,01,CFPACM12,Déontologie,ETHIQDEON,Ethique et déonthologie,35,12,48,21,-9.0
+semestre2,CFPACM,Assistant en Cabinet Médical,01,CFPACM13,Médecine du travail,MEDEMEDIC,Médécine Médicale,20,12,0,0,12.0
+semestre2,CFPACM,Assistant en Cabinet Médical,01,CFPACM14,Sante publique,SANTEPUBL,Santé publique ,40,12,0,0,12.0
+semestre2,CFPACM,Assistant en Cabinet Médical,01,CFPACM15,Semiologie obstetricale,SEMIOOBST,Sémiologie Obstétricale,40,20,0,0,20.0
+semestre2,CFPACM,Assistant en Cabinet Médical,01,CFPACM16,Obstetrique et soins apparentes ,OBSTOIAPP,OBSTETRIQUE ET SOINS APPARENTES,40,40,0,0,40.0
+semestre2,CFPACM,Assistant en Cabinet Médical,01,CFPACM17,Puériculture et soins apparentes,PUESOIAPP,PUERICULTURE ET SOINS APPARENTES,40,40,20,7,33.0
+semestre2,CFPACM,Assistant en Cabinet Médical,01,CFPACM18,Législation,DROITTRAV,Droit du travail,35,12,0,0,12.0
+semestre2,CFPACM,Assistant en Cabinet Médical,01,CFPACM19,Français,FRANCAIS2,Francais,60,40,8,8,32.0
+semestre2,CFPACM,Assistant en Cabinet Médical,01,CFPACM20,Anglais,ANGLAIS,Anglais,60,40,28,13,27.0
+semestre2,CFPACM,Assistant en Cabinet Médical,01,CFPACM21,Soins infirmiers + TP,SOININFIM,Soins infirmiers + TP,22,15,48,3,12.0
+semestre1,CFPACM,Assistant en Cabinet Médical,01,CFPACM22,Parasitologie général et clinique + TP,PARACLIN1,Parasitologie Clinique 1,30,20,32,17,3.0
+semestre1,CFPACM,Assistant en Cabinet Médical,01,CFPACM34,Informatique,INFORMATI,Informatique,22,15,44,0,15.0
+semestre1,CFPACM,Assistant en Cabinet Médical,01,XXX0179,Chimie Appliquée ,CHIMAPPLI,Chimie Appliquée ,15,12,12,12,0.0
+semestre1,CFPACM,Assistant en Cabinet Médical,01,XXX0180,Cycle de vie,CYCLDEVIE,Cycle de vie ,15,12,12,12,0.0
+semestre1,CFPACM,Assistant en Cabinet Médical,01,XXX0205,Physiques,PHYSIQUES,Physiques,20,12,20,18,-6.0
+semestre1,CFPACM,Assistant en Cabinet Médical,01,XXX0208,Mathématique appliquée ,MATHAPPLI,Mathématique appliquée ,30,20,20,15,5.0
+semestre1,CFPACM,Assistant en Cabinet Médical,01,XXX0226,Sociologie - Anthropologie et Psychologie ,ANTPHYSOC,Anthropologie physiologique et sociologieque,90,60,32,12,48.0
+semestre1,CFPACM,Assistant en Cabinet Médical,01,XXX0246,Atelier Orientation,ATELORIENT,Atelier Orientation,22,15,8,0,15.0
+semestre1,CFPFCL,Froid et Climatisation,01,CFPFCL01,Informatique,INFORMATI,Informatique,70,70,64,0,70.0
+semestre1,CFPFCL,Froid et Climatisation,01,CFPFCL02,Exercice de la profession,EXERPROFE,Exercice de la profession,30,12,164,0,12.0
+semestre1,CFPFCL,Froid et Climatisation,01,CFPFCL03,Sélectionner et préparer l’installation équipement frigorifique monoposte,SELPREINS,Sélectionner et préparer l’installation équipement frigorifique monoposte,105,105,52,0,105.0
+semestre1,CFPFCL,Froid et Climatisation,01,CFPFCL04,Réaliser montage fluidique et électrique équipement frigorifique monoposte a température négative,REAMONFLU,Réaliser montage fluidique et électrique équipement frigorifique monoposte a température négative,96,96,32,0,96.0
+semestre1,CFPFCL,Froid et Climatisation,01,CFPFCL05,Réaliser la mise en service équipement frigorifique monoposte a température positive,REMISEETP,Réaliser la mise en service équipement frigorifique monoposte a température positive,108,108,24,0,108.0
+semestre1,CFPFCL,Froid et Climatisation,01,CFPFCL06,Réaliser la mise en service équipement frigorifique monoposte a température négative,REMISEETN,Réaliser la mise en service équipement frigorifique monoposte a température négative,110,110,136,0,110.0
+semestre2,CFPFCL,Froid et Climatisation,01,CFPFCL07,Réaliser maintenance corective équipement frigorifique monoposte ou thermodynamique,REMACOEQF,Réaliser maintenance corective équipement frigorifique monoposte ou thermodynamique,96,96,0,0,96.0
+semestre2,CFPFCL,Froid et Climatisation,01,CFPFCL08,Elaborer plan de maintenance preventive équipement frigorifique monoposte ou thermodynamique,ELAPLAMAI,Elaborer plan de maintenance preventive équipement frigorifique monoposte ou thermodynamique,120,120,16,5,115.0
+semestre2,CFPFCL,Froid et Climatisation,01,CFPFCL09,Réaliser maintenance preventive équipement frigorifique monoposte ou thermodynamique,REMAPREQF,Réaliser maintenance preventive équipement frigorifique monoposte ou thermodynamique,122,122,0,0,122.0
+semestre2,CFPFCL,Froid et Climatisation,01,CFPFCL10,Stage,STAGECLIN,Stage clinique V,300,300,0,0,300.0
+semestre1,CFPFCL,Froid et Climatisation,01,CFPFCL11,Mathématique générale,MATHGENE1,Mathématiques générales I,30,20,4,0,20.0
+semestre1,CFPFCL,Froid et Climatisation,01,CFPFCL32,Français,FRANCAIS2,Francais,22,15,8,8,7.0
+semestre1,CFPFCL,Froid et Climatisation,01,CFPFCL33,Anglais,ANGLAIS,Anglais,22,15,24,12,3.0
+semestre1,CFPFCL,Froid et Climatisation,01,XXX0247,Atelier Orientation,ATELORIENT,Atelier Orientation,22,15,8,0,15.0
+semestre1,CFPISA,Installation Sanitaire,01,CFPISA01,Connaissances générales de base Français,CGBASEFRA,Connaissances générales de base Français,120,120,0,0,120.0
+semestre1,CFPISA,Installation Sanitaire,01,CFPISA02,Connaissances générales de base Anglais,CGBASEANG,Connaissances générales de base Anglais,80,80,0,0,80.0
+semestre1,CFPISA,Installation Sanitaire,01,CFPISA03,Sensibilisation aux IST/MST/VIH-SIDA,SENSIBILI,Sensibilisation aux IST/MST/VIH-SIDA,21,12,0,0,12.0
+semestre1,CFPISA,Installation Sanitaire,01,CFPISA04,Education à la citoyenneté,EDUCIVETH,Education civique et éthique,72,72,0,0,72.0
+semestre1,CFPISA,Installation Sanitaire,01,CFPISA05,Insertion Professionnelle,INSEPROFE,Insertion Professionnelle,112,112,0,0,112.0
+semestre1,CFPISA,Installation Sanitaire,01,CFPISA06,Legislation du travail,DROITTRAV,Droit du travail,72,72,0,0,72.0
+semestre1,CFPISA,Installation Sanitaire,01,CFPISA07,Installation du réseau de tuyauterie,INSRESTUY,Installation du réseau de tuyauterie,1148,1148,76,20,1128.0
+semestre2,CFPISA,Installation Sanitaire,01,CFPISA08,Installation des appareils sanitaires,INSAPPSAN,Installation des appareils sanitaires,1212,1212,20,12,1200.0
+semestre2,CFPISA,Installation Sanitaire,01,CFPISA09,Entretien et reparation ,ENTEREPAR,Entretien et reparation ,188,188,24,11,177.0
+semestre2,CFPISA,Installation Sanitaire,01,CFPISA10,Stage en entreprise,STAGEPROF,Stage professionnel,480,480,0,0,480.0
+semestre1,CFPISA,Installation Sanitaire,01,CFPISA11,Mathématique générale,MATHGENE1,Mathématiques générales I,30,20,36,0,20.0
+semestre1,CFPISA,Installation Sanitaire,01,CFPISA32,Français,FRANCAIS2,Francais,22,15,8,8,7.0
+semestre1,CFPISA,Installation Sanitaire,01,CFPISA33,Anglais,ANGLAIS,Anglais,22,15,24,12,3.0
+semestre1,CFPISA,Installation Sanitaire,01,CFPISA34,Informatique,INFORMATI,Informatique,22,15,80,0,15.0
+semestre1,CFPISA,Installation Sanitaire,01,XXX0171,Hydraulique,HYDRAULIQ,Hydraulique,21,12,24,4,8.0
+semestre2,CFPISA,Installation Sanitaire,01,XXX026,Travail Pratique,TRAVPRA,Travaux pratiques,480,480,112,0,480.0
+semestre1,CFPISA,Installation Sanitaire,01,XXX0248,Atelier Orientation,ATELORIENT,Atelier Orientation,22,15,8,0,15.0
+semestre1,CGE,Comptabilité Et Gestion Entreprises,01,CGE1111,Mathématiques générales I ,MATMATIQ1,Mathématiques I,45,30,104,0,30.0
+semestre1,CGE,Comptabilité Et Gestion Entreprises,01,CGE1112,Informatique générale I ,INFORGEN1,Informatique Général 1,30,20,56,0,20.0
+semestre1,CGE,Comptabilité Et Gestion Entreprises,01,CGE1121,Mathématiques financières I ,MATHFINA1,Mathématiques financières I ,30,20,28,20,0.0
+semestre1,CGE,Comptabilité Et Gestion Entreprises,01,CGE1122,Statistiques I ,STATISTI1,Statistiques I,30,20,16,11,9.0
+semestre1,CGE,Comptabilité Et Gestion Entreprises,01,CGE1131,Les principes généraux de la comptabilité ,PRIGENCPT,Principes généraux de la comptabilité ,60,40,0,0,40.0
+semestre1,CGE,Comptabilité Et Gestion Entreprises,01,CGE1141,Coûts complets I ,COUCPLET1,Coûts complets I,30,20,20,20,0.0
+semestre1,CGE,Comptabilité Et Gestion Entreprises,01,CGE1142,Coûts complets II ,COUCPLET2,Coûts complets II,30,20,0,0,20.0
+semestre1,CGE,Comptabilité Et Gestion Entreprises,01,CGE1151,Introduction à la fiscalité ,PRODUFISC,Introduction à la fiscalité  ,45,30,0,0,30.0
+semestre1,CGE,Comptabilité Et Gestion Entreprises,01,CGE1161,Introduction à l’analyse financière I ,INTANAFI1,Introduction à l’analyse financière I ,30,20,20,16,4.0
+semestre1,CGE,Comptabilité Et Gestion Entreprises,01,CGE1162,Comptabilité assistée par l’ordinateur I ,CPTASSOR1,Comptabilité assistée par l’ordinateur I,30,20,24,24,-4.0
+semestre1,CGE,Comptabilité Et Gestion Entreprises,01,CGE1171,Techniques d’expression française ,FRANCAIS2,Francais,15,12,16,16,-4.0
+semestre1,CGE,Comptabilité Et Gestion Entreprises,01,CGE1172,Techniques d’expression anglaise ,ANGLAIS,Anglais,30,20,28,16,4.0
+semestre2,CGE,Comptabilité Et Gestion Entreprises,01,CGE1211,Mathématiques générales II ,MATMATIQ2,Mathématique II,45,30,0,0,30.0
+semestre2,CGE,Comptabilité Et Gestion Entreprises,01,CGE1212,Informatique générale II ,INFORGEN2,Informatique générale II,30,20,0,0,20.0
+semestre2,CGE,Comptabilité Et Gestion Entreprises,01,CGE1221,Mathématiques financières II ,MATHFINA2,Mathématiques financières II ,30,20,0,0,20.0
+semestre2,CGE,Comptabilité Et Gestion Entreprises,01,CGE1222,Statistiques II ,STATISTI2,Statistiques II,30,20,0,0,20.0
+semestre2,CGE,Comptabilité Et Gestion Entreprises,01,CGE1231,Les opérations courantes ,OPECOURT1,Opérations courantes I,60,40,48,43,-3.0
+semestre2,CGE,Comptabilité Et Gestion Entreprises,01,CGE1241,Coûts partiels et SR I ,COUPARSE1,Coûts partiels et seuil de rentabilité I  ,30,20,20,20,0.0
+semestre2,CGE,Comptabilité Et Gestion Entreprises,01,CGE1242,Coûts partiels et SR II ,COUPARSE2,Coûts partiels et seuil de rentabilité II,30,20,0,0,20.0
+semestre2,CGE,Comptabilité Et Gestion Entreprises,01,CGE1251,TVA et IRPP ,TVAIRPP,TVA et IRPP,45,30,0,0,30.0
+semestre2,CGE,Comptabilité Et Gestion Entreprises,01,CGE1261,Introduction à l’analyse financière II ,INTANAFI2,Introduction à l’analyse financière II,30,20,0,0,20.0
+semestre2,CGE,Comptabilité Et Gestion Entreprises,01,CGE1262,Comptabilité assistée par ordinateur II ,CPTASSOR2,Comptabilité assistée par ordinateur II  ,30,20,0,0,20.0
+semestre2,CGE,Comptabilité Et Gestion Entreprises,01,CGE1271,Economie générale ,ECONOGENE,Economie générale,15,12,24,20,-8.0
+semestre2,CGE,Comptabilité Et Gestion Entreprises,01,CGE1272,Economie et organisation des entreprises ,ECOORGENT,Economie et Organisation des Entreprises,30,20,0,0,20.0
+semestre1,CGE,Comptabilité Et Gestion Entreprises,01,XXX0099,Chimie 1,CHIMIE1,Chimie 1,30,20,8,4,16.0
+semestre1,CGE,Comptabilité Et Gestion Entreprises,01,XXX0100,Fiscalité 1,FISCALITE1,Fiscalité 1,30,20,52,20,0.0
+semestre1,CGE,Comptabilité Et Gestion Entreprises,01,XXX0101,Physiques 1,PHYSIQUE1,Physiques 1,45,30,4,0,30.0
+semestre1,CGE,Comptabilité Et Gestion Entreprises,01,XXX0102,Travaux dirigés (TD),TRAVDIRIG,Travaux dirigés (TD),50,50,8,0,50.0
+semestre2,CGE,Comptabilité Et Gestion Entreprises,01,XXX0240,Atelier Orientation,ATELORIENT,Atelier Orientation,15,12,8,0,12.0
+semestre1,CHS,Chaudronerie Et Soudure,01,CHS1111,Mathématiques I ,MATMATIQ1,Mathématiques I,60,40,96,0,40.0
+semestre1,CHS,Chaudronerie Et Soudure,01,CHS1121,TIC I ,TECHNINFC,Technology of Information and communication,75,50,16,0,50.0
+semestre1,CHS,Chaudronerie Et Soudure,01,CHS1131,Sciences des matériaux ,SCIDESMAT,Science des materiaux,45,30,24,22,8.0
+semestre1,CHS,Chaudronerie Et Soudure,01,CHS1141,Procédés de mise en forme des Matériaux ,PROMISFOR,Procédés de mise en forme des Matériaux ,60,40,56,25,15.0
+semestre1,CHS,Chaudronerie Et Soudure,01,CHS1151,Statique ,STATIQUE,STATIQUE,30,20,40,19,1.0
+semestre1,CHS,Chaudronerie Et Soudure,01,CHS1152,Dessin de base ,DESSIBASE,Dessin de Base,45,30,44,24,6.0
+semestre1,CHS,Chaudronerie Et Soudure,01,CHS1161,Technologie du soudage ,TECHSOUDA,Technologie du soudage ,30,20,0,0,20.0
+semestre1,CHS,Chaudronerie Et Soudure,01,CHS1162,Travaux pratiques ,TRAVPRA,Travaux pratiques,60,40,0,0,40.0
+semestre1,CHS,Chaudronerie Et Soudure,01,CHS1171,Techniques d’expression française ,FRANCAIS2,Francais,15,12,16,16,-4.0
+semestre1,CHS,Chaudronerie Et Soudure,01,CHS1172,Techniques d’expression anglaise ,ANGLAIS,Anglais,30,20,28,16,4.0
+semestre2,CHS,Chaudronerie Et Soudure,01,CHS1211,Mathématiques II ,MATMATIQ2,Mathématique II,60,40,0,0,40.0
+semestre2,CHS,Chaudronerie Et Soudure,01,CHS1221,Physiques I ,PHYSIQUE1,Physiques 1,45,30,64,27,3.0
+semestre2,CHS,Chaudronerie Et Soudure,01,CHS1222,Chimie ,CHIMIE1,Chimie 1,30,20,36,16,4.0
+semestre2,CHS,Chaudronerie Et Soudure,01,CHS1231,Résistance des Matériaux I ,RESISMAT1,Résistance des matériaux I,30,20,0,0,20.0
+semestre2,CHS,Chaudronerie Et Soudure,01,CHS1232,Analyse et conception des structures métalliques I ,ANACONSTR,Analyse et conception des structures métalliques I ,45,30,0,0,30.0
+semestre2,CHS,Chaudronerie Et Soudure,01,CHS1241,DAO I ,DESASSOR1,Dessin assisté par ordinateur I (DAO),30,20,0,0,20.0
+semestre2,CHS,Chaudronerie Et Soudure,01,CHS1242,Géométrie descriptive ,GEODESCRI,Géométrie descriptive,45,30,0,0,30.0
+semestre2,CHS,Chaudronerie Et Soudure,01,CHS1251,Métallographie ,METALLOGR,Métallographie ,45,30,0,0,30.0
+semestre2,CHS,Chaudronerie Et Soudure,01,CHS1261,Analyse de Fabrication ,ANAFABRIC,Analyse de fabrication,30,20,0,0,20.0
+semestre2,CHS,Chaudronerie Et Soudure,01,CHS1271,Economie et Gestion des entreprises ,ECOORGENT,Economie et Organisation des Entreprises,45,30,0,0,30.0
+semestre2,CHS,Chaudronerie Et Soudure,01,XXX0069,Création d’entreprise,CREATENTR,Création d’entreprise,15,12,0,0,12.0
+semestre2,CHS,Chaudronerie Et Soudure,01,XXX0070,Education civique et éthique,EDUCIVETH,Education civique et éthique,30,20,0,0,20.0
+semestre1,CHS,Chaudronerie Et Soudure,01,XXX0071,Environnement juridique,DROITTRAV,Droit du travail,30,20,0,0,20.0
+semestre1,CHS,Chaudronerie Et Soudure,01,XXX0072,Expression écrite,EXPRECRIT,Expression écrite,15,12,0,0,12.0
+semestre1,CHS,Chaudronerie Et Soudure,01,XXX0073,Matériaux métalliques,MATMETALL,Matériaux métalliques,30,20,20,8,12.0
+semestre2,CHS,Chaudronerie Et Soudure,01,XXX0074,Métallurgie I,METALLURG,Métallurgie I,60,40,0,0,40.0
+semestre1,CHS,Chaudronerie Et Soudure,01,XXX0075,Méthodes et outillages et machines-outils I,METOUTMAC,Méthodes et outillages et machines-outils I,60,40,0,0,40.0
+semestre2,CHS,Chaudronerie Et Soudure,01,XXX0076,Physique II,PHYSIQUE2,Physiques II,30,20,0,0,20.0
+semestre1,CHS,Chaudronerie Et Soudure,01,XXX0077,Traçage I,TRACAGE,Traçage I,60,40,0,0,40.0
+semestre1,CHS,Chaudronerie Et Soudure,01,XXX0078,Travaux dirigés (TD),TRAVDIRIG,Travaux dirigés (TD),50,50,8,0,50.0
+semestre1,CHS,Chaudronerie Et Soudure,01,XXX0176,Electroique 1 et électricité,ELECTRONF1,Electronique 1,30,20,12,11,9.0
+semestre2,CHS,Chaudronerie Et Soudure,01,XXX0224,Mécanique générale,MECAGENE1,Mécanique générale I,30,20,12,12,8.0
+semestre2,CHS,Chaudronerie Et Soudure,01,XXX0238,Atelier Orientation,ATELORIENT,Atelier Orientation,15,12,8,0,12.0
+semestre1,COM,Communication Des Organisations,01,COM111,Mathématiques I,MATMATIQ1,Mathématiques I,60,40,0,0,40.0
+semestre1,COM,Communication Des Organisations,01,COM1121,Physiques I,PHYSIQUE1,Physiques 1,45,30,0,0,30.0
+semestre1,ELN,Electronics,01,ELN1121,Physics ,PHYSICS,Physics,45,30,0,0,30.0
+semestre1,ELN,Electronics,01,ELN1131,"Basics of Electricity and Electrical Circuits 5 credits (75 h); L, T, PW",BASELECIR,Basics of electricity and electrical circuit,0,0,0,0,0.0
+semestre1,ELN,Electronics,01,ELN1152,Electronics I ,ELECTRONI,Electronics,30,20,0,0,20.0
+semestre1,ELN,Electronics,01,ELN1161,Construction Design,CONSTDESI,Construction Design,45,30,0,0,30.0
+semestre1,ELN,Electronics,01,ELN1171,English ,ENGLISH,English,22,15,0,0,15.0
+semestre1,ELN,Electronics,01,ELN1172,French ,FRENCH,French,22,15,0,0,15.0
+semestre2,ELN,Electronics,01,ELN1221,Physics II,PHYSICS2,Physics II,30,20,0,0,20.0
+semestre2,ELN,Electronics,01,ELN1222,Computer Science I ,COMPUTRAI,Computer training,45,30,0,0,30.0
+semestre1,ELN,Electronics,01,ELN1323,Academic project,PROJACADE,Projet académique,45,30,0,0,30.0
+semestre1,ELN,Electronics,01,ELN1372,Methodology of drafting the internship report,REDRAPSTA,Rédaction de rapports de stage,22,15,0,0,15.0
+semestre1,ELN,Electronics,02,ELN2311,Mathematics III ,MATMATIC3,Mathematics III,60,40,0,0,40.0
+semestre1,ELN,Electronics,02,ELN2321,Physics III ,PHYSICS3,Physics III,45,30,0,0,30.0
+semestre1,ELN,Electronics,02,ELN2322,"Basics of Quality, Health, Safety and Environment 2  ",BASOFQUAL,"Basics of quality, health, safety and envi.",30,20,0,0,20.0
+semestre1,ELN,Electronics,02,ELN2331,Practical Work Electronic P II,PRAWOREL2,Practical Work Electronic P II,60,40,0,0,40.0
+semestre1,ELN,Electronics,02,ELN2333,Electrical Schema and command,ELESCHCOM,Electrical Schema and command,40,25,0,0,25.0
+semestre1,ELN,Electronics,02,ELN2341,Servomechanism and robotics ,SERVOROBO,Servomechanism and robotics,30,20,0,0,20.0
+semestre1,ELN,Electronics,02,ELN2342,Electronics construction,ELECTRCON,Electronics construction,45,30,0,0,30.0
+semestre1,ELN,Electronics,02,ELN2351,Maintenance of complex systems ,MAICOMSYS,Maintenance of complex systems,60,40,0,0,40.0
+semestre1,ELN,Electronics,02,ELN2361,Telecommunication Networks ,TELECONET,Telecommunication Networks,30,20,0,0,20.0
+semestre1,ELN,Electronics,02,ELN2362,Analog and digital data processing and storage ,ANADIGDAT,Analogy and digital data processing and storage,45,30,0,0,30.0
+semestre1,ELN,Electronics,02,ELN2371,Accounting,ACCOUNTIN,Accounting,15,12,0,0,12.0
+semestre1,ELN,Electronics,02,ELN2372,Labor law,LABORLAW,Labour Law,15,12,0,0,12.0
+semestre2,ELN,Electronics,02,ELN2411,Mathematics IV,MATMATIC4,Mathematics IV,60,40,0,0,40.0
+semestre2,ELN,Electronics,02,ELN2421,Computer Science II ,CMPSCIENS,Computer Science II,75,50,0,0,50.0
+semestre2,ELN,Electronics,02,ELN2431,Maintenance of complex systems,MAICOMSYS,Maintenance of complex systems,30,20,0,0,20.0
+semestre2,ELN,Electronics,02,ELN2432,Basics of digital Servoing,BASDIGSER,Basics of digital Servoing,30,20,0,0,20.0
+semestre2,ELN,Electronics,02,ELN2441,Home Electronics,HOMELECTR,Home Electronics,60,40,0,0,40.0
+semestre2,ELN,Electronics,02,ELN2442,Electrical installations and apparatus ,ELEINSAPP,Electrical installations and apparatus,75,50,0,0,50.0
+semestre2,ELN,Electronics,02,ELN2451,Practical work - Digital electronics and power con,DIGELEPOW,Practical work Digital electronics & power control,60,40,0,0,40.0
+semestre2,ELN,Electronics,02,ELN2461,Professional internship,PROFINTER,Professional Internship,90,60,0,0,60.0
+semestre2,ELN,Electronics,02,ELN2471,Economy and business organization ,ECONOMICS,Economics,45,30,0,0,30.0
+semestre2,ELN,Electronics,02,ELN2473,Entrepreneurship,ENTREPSHI,Enterpreneuriatship,15,12,0,0,12.0
+semestre1,ELN,Electronics,02,XXX0001,"Warm welcome, Guiding and Conseilling",WELCOME,"Warm welcome, Guiding and Conseilling",8,8,0,0,8.0
+semestre1,ELN,Electronics,01,XXX0002,"Warm welcome, Guiding and Conseilling",WELCOME,"Warm welcome, Guiding and Conseilling",8,8,0,0,8.0
+semestre1,FCL,Genie Thermique Et Energie-Froid Et Climatisation  ,01,FCL1111,Mathématiques I ,MATMATIQ1,Mathématiques I,60,40,0,0,40.0
+semestre1,FCL,Genie Thermique Et Energie-Froid Et Climatisation  ,01,FCL1121,Physiques I ,PHYSIQUE1,Physiques 1,45,30,0,0,30.0
+semestre1,FCL,Genie Thermique Et Energie-Froid Et Climatisation  ,01,FCL1122,Chimie ,CHIMIE,Chimie,45,30,0,0,30.0
+semestre1,FCL,Genie Thermique Et Energie-Froid Et Climatisation  ,01,FCL1131,Electronique ,ELECTGENE,Electricité générale ,30,20,0,0,20.0
+semestre1,FCL,Genie Thermique Et Energie-Froid Et Climatisation  ,01,FCL1132,Electrotechnique ,ELECTECH1,Electrotechnique I,30,20,0,0,20.0
+semestre1,FCL,Genie Thermique Et Energie-Froid Et Climatisation  ,01,FCL1133,CIRCUITS ELECTRIQUE,CIRELECTR,Circuits électriques,30,20,0,0,20.0
+semestre1,FCL,Genie Thermique Et Energie-Froid Et Climatisation  ,01,FCL1134,Electronique de base,ELECTROB1,Electronique de base I,30,20,0,0,20.0
+semestre1,FCL,Genie Thermique Et Energie-Froid Et Climatisation  ,01,FCL1141,Thermodynamique ,THERMODIN,Thermodynamique,60,40,0,0,40.0
+semestre1,FCL,Genie Thermique Et Energie-Froid Et Climatisation  ,01,FCL1151,Transferts thermiques ,TRANSTHER,Transfert thermique,60,40,0,0,40.0
+semestre1,FCL,Genie Thermique Et Energie-Froid Et Climatisation  ,01,FCL1161,Mécanique des fluides ,MECAFLUID,Mécanique des fluides,45,30,0,0,30.0
+semestre1,FCL,Genie Thermique Et Energie-Froid Et Climatisation  ,01,FCL1162,Techniques de mesures,TECHMESUR,TECHNIQUE DE MESURE ,45,30,0,0,30.0
+semestre1,FCL,Genie Thermique Et Energie-Froid Et Climatisation  ,01,FCL1171,Expression écrite ,FRANCAIS2,Francais,15,12,0,0,12.0
+semestre1,FCL,Genie Thermique Et Energie-Froid Et Climatisation  ,01,FCL1172,Environnement juridique ,DROITCIVI,Droit civil,30,20,0,0,20.0
+semestre1,FCL,Genie Thermique Et Energie-Froid Et Climatisation  ,01,FCL1173,Expression écrite anglaise,ANGLAIS,Anglais,15,12,0,0,12.0
+semestre2,FCL,Genie Thermique Et Energie-Froid Et Climatisation  ,01,FCL1211,Mathématique II ,MATMATIQ2,Mathématique II,60,40,0,0,40.0
+semestre2,FCL,Genie Thermique Et Energie-Froid Et Climatisation  ,01,FCL1215,Travaux pratiques,TRAVPRA,Travaux pratiques,50,12,0,0,12.0
+semestre2,FCL,Genie Thermique Et Energie-Froid Et Climatisation  ,01,FCL1221,Physique II ,PHYSIQUE2,Physiques II,45,30,0,0,30.0
+semestre2,FCL,Genie Thermique Et Energie-Froid Et Climatisation  ,01,FCL1222,Informatique I ,INFORMAT1,Informatique I,30,20,0,0,20.0
+semestre2,FCL,Genie Thermique Et Energie-Froid Et Climatisation  ,01,FCL1231,Climatisation - Ventilation ,CLIMAVENT,CLIMATISATION ET VENTILLATION,60,40,0,0,40.0
+semestre2,FCL,Genie Thermique Et Energie-Froid Et Climatisation  ,01,FCL1232,Technologie des installations frigorifiques ,TECINFFRI,Technologie des installations frigorifiques ,60,40,0,0,40.0
+semestre1,FCL,Genie Thermique Et Energie-Froid Et Climatisation  ,01,FCL1233,Méthodologie de la rédaction du rapport de stage ,REDRAPSTA,Rédaction de rapports de stage,100,12,0,0,12.0
+semestre2,FCL,Genie Thermique Et Energie-Froid Et Climatisation  ,01,FCL1241,Régulation et gestion de l’énergie ,REGESTENG,Régulation et Gestion de l energie,15,12,0,0,12.0
+semestre2,FCL,Genie Thermique Et Energie-Froid Et Climatisation  ,01,FCL1251,Automatisme frigorifique ,AUTOFRIGO,Automatisme Frigoritique ,60,40,0,0,40.0
+semestre2,FCL,Genie Thermique Et Energie-Froid Et Climatisation  ,01,FCL1262,Schémas électriques appliqués au froid,SCHELCFRO,schema electrique applique au froid ,45,30,0,0,30.0
+semestre2,FCL,Genie Thermique Et Energie-Froid Et Climatisation  ,01,FCL127,Comptabilité et Gestion des entreprises,COMPTABIL,Comptabilité,20,12,0,0,12.0
+semestre2,FCL,Genie Thermique Et Energie-Froid Et Climatisation  ,01,FCL1271,Création d’entreprise ,ECONOGENE,Economie générale,15,12,0,0,12.0
+semestre2,FCL,Genie Thermique Et Energie-Froid Et Climatisation  ,01,FCL1272,Education civique et éthique ,EDUCIVETH,Education civique et éthique,15,12,0,0,12.0
+semestre2,FCL,Genie Thermique Et Energie-Froid Et Climatisation  ,02,FCL1277,Comptabilité ,COMPTAGE1,Comptabilité générale I,15,12,0,0,12.0
+semestre1,FCL,Genie Thermique Et Energie-Froid Et Climatisation  ,01,FCL1323,Projet académique,PROJACADE,Projet académique,45,30,0,0,30.0
+semestre2,FCL,Genie Thermique Et Energie-Froid Et Climatisation  ,01,FCL1472,Economie et organisation des entreprises,ECOORGENT,Economie et Organisation des Entreprises,30,20,0,0,20.0
+semestre1,FCL,Genie Thermique Et Energie-Froid Et Climatisation  ,02,FCL2132,CIRCUITS ELECTRIQUE,CIRELECTR,Circuits électriques,30,20,0,0,20.0
+semestre2,FCL,Genie Thermique Et Energie-Froid Et Climatisation  ,02,FCL2272,Education civique et éthique ,DROITCIVI,Droit civil,45,20,0,0,20.0
+semestre1,FCL,Genie Thermique Et Energie-Froid Et Climatisation  ,02,FCL2321,Physiques III ,PHYSIQUE3,Physiques III,45,30,0,0,30.0
+semestre1,FME,Fabrication Mécanique,01,FME111,Mathématiques I,MATMATIQ1,Mathématiques I,60,40,0,0,40.0
+semestre1,FME,Fabrication Mécanique,01,FME1121,Physiques I,PHYSIQUE1,Physiques 1,45,30,0,0,30.0
+semestre1,GTO,Géomètre Topographe,01,GTO1111,Mathématiques I ,MATMATIQ1,Mathématiques I,60,40,96,0,40.0
+semestre1,GTO,Géomètre Topographe,01,GTO1121,Informatique I ,INFORMAT1,Informatique I,75,50,0,0,50.0
+semestre1,GTO,Géomètre Topographe,01,GTO1131,Calcul Topométriques I ,CALTOPME1,Calcul Topométriques I,45,30,20,4,26.0
+semestre1,GTO,Géomètre Topographe,01,GTO1132,Technologie Topométriques I ,TECHTOPO1,Technologie Topométriques I,45,30,56,31,-1.0
+semestre1,GTO,Géomètre Topographe,01,GTO1141,Dessin technique I ,DESSINTE1,Dessin technique I,30,20,0,0,20.0
+semestre1,GTO,Géomètre Topographe,01,GTO1142,Cartographie I ,CARTOGRA1,Cartographie I,30,20,12,12,8.0
+semestre1,GTO,Géomètre Topographe,01,GTO1151,GPS I ,GPS I,GPS I,30,20,8,0,20.0
+semestre1,GTO,Géomètre Topographe,01,GTO1152,Photogrammetrie I ,PHOTOGRA1,Photogrammetrie I,30,20,0,0,20.0
+semestre1,GTO,Géomètre Topographe,01,GTO1161,Géologie de l’ingénieur / Topologie ,GEOINGTOP,Géologie de l’ingénieur / Topologie,60,40,36,4,36.0
+semestre1,GTO,Géomètre Topographe,01,GTO1171,Techniques d’expression française ,FRANCAIS2,Francais,15,12,16,16,-4.0
+semestre1,GTO,Géomètre Topographe,01,GTO1172,Economie et Gestion des entreprises ,ECOORGENT,Economie et Organisation des Entreprises,45,30,0,0,30.0
+semestre1,GTO,Géomètre Topographe,01,GTO1173,Techniques d’expression anglaise ,ANGLAIS,Anglais,30,20,28,16,4.0
+semestre2,GTO,Géomètre Topographe,01,GTO1211,Mathématiques II ,MATMATIQ2,Mathématique II,60,40,0,0,40.0
+semestre2,GTO,Géomètre Topographe,01,GTO1221,Physiques I ,PHYSIQUE1,Physiques 1,45,30,64,27,3.0
+semestre2,GTO,Géomètre Topographe,01,GTO1222,Chimie ,CHIMIE1,Chimie 1,30,20,44,17,3.0
+semestre2,GTO,Géomètre Topographe,01,GTO1231,GPS II ,GPS II,GPS II,30,20,0,0,20.0
+semestre2,GTO,Géomètre Topographe,01,GTO1232,Photogrammetrie II ,PHOTOGRA2,Photogrammetrie II ,30,20,0,0,20.0
+semestre2,GTO,Géomètre Topographe,01,GTO1241,Dessin technique II ,DESSINTE2,Dessin technique II,30,20,0,0,20.0
+semestre2,GTO,Géomètre Topographe,01,GTO1242,Cartographie II ,CARTOGRA2,Cartographie II,30,20,8,4,16.0
+semestre2,GTO,Géomètre Topographe,01,GTO1251,Régime foncier et domanial ,REGFONDOM,Régime foncier et domanial,45,30,32,18,12.0
+semestre2,GTO,Géomètre Topographe,01,GTO1261,Calculs topométriques II ,CALTOPME2,Calculs topométriques II,60,40,0,0,40.0
+semestre2,GTO,Géomètre Topographe,01,GTO1262,Technologie topométriques II ,TECHTOPO2,Technologie topométriques II,45,30,0,0,30.0
+semestre2,GTO,Géomètre Topographe,01,XXX0092,Education civique et éthique ,EDUCIVETH,Education civique et éthique,15,12,0,0,12.0
+semestre2,GTO,Géomètre Topographe,01,XXX0093,Entreprenariat ,ENTREPREN,Entreprenariat,30,20,0,0,20.0
+semestre1,GTO,Géomètre Topographe,01,XXX0094,Expression écrite ,EXPRECRIT,Expression écrite,15,12,0,0,12.0
+semestre1,GTO,Géomètre Topographe,01,XXX0095,Formation bilingue ,FORMABILI,Formation bilingue,45,30,0,0,30.0
+semestre2,GTO,Géomètre Topographe,01,XXX0096,Physiques II ,PHYSIQUE2,Physiques II,30,20,0,0,20.0
+semestre1,GTO,Géomètre Topographe,01,XXX0097,Projet académique,PROJACADE,Projet académique,45,30,0,0,30.0
+semestre1,GTO,Géomètre Topographe,01,XXX0098,Travaux dirigés (TD),TRAVDIRIG,Travaux dirigés (TD),50,50,8,0,50.0
+semestre1,GTO,Géomètre Topographe,01,XXX0173,TIC,TECINFCOM,TIC,50,50,16,0,50.0
+semestre1,GTO,Géomètre Topographe,01,XXX0227,Dessin de base ,DESSIBASE,Dessin de Base,45,30,40,24,6.0
+semestre2,GTO,Géomètre Topographe,01,XXX0237,Atelier Orientation,ATELORIENT,Atelier Orientation,15,12,8,0,12.0
+semestre1,HNDET,Electrotechnics ,01,ELT 1111,Mathematics ,GENEMATH1,General Mathematics 1,60,40,56,36,4.0
+semestre1,HNDET,Electrotechnics ,01,ELT 1112,Engineering Mathematics I,ENGIMATH1,Engineering Mathematics I,75,50,8,8,42.0
+semestre1,HNDET,Electrotechnics ,01,ELT 1113,General Computing I,GENECOMP1,General Computing 1,15,12,20,20,-8.0
+semestre1,HNDET,Electrotechnics ,01,ELT 1121,Physics 1,PHYSICS1,Physics I,45,30,48,28,2.0
+semestre1,HNDET,Electrotechnics ,01,ELT 1122,Chemistry ,CHEMISTRY,Chemistry,30,20,56,24,-4.0
+semestre1,HNDET,Electrotechnics ,01,ELT 1131,Basics of Electricity and Electrical Circuits ,BASELECIR,Basics of electricity and electrical circuit,75,50,16,1,49.0
+semestre1,HNDET,Electrotechnics ,01,ELT 1132,Electrical circuits ,ELECIRCUI,Electrical circuits,30,20,0,0,20.0
+semestre1,HNDET,Electrotechnics ,02,ELT 1133,ICT,ICT,ICT,22,15,12,11,4.0
+semestre1,HNDET,Electrotechnics ,01,ELT 1141,Electrical machines I,ELEMACHI1,Electrical machines I,75,50,0,0,50.0
+semestre1,HNDET,Electrotechnics ,01,ELT 1151,Automatism ant Practical Work,AUTPRAWOR,Automatism and Pratical Work,45,30,24,22,8.0
+semestre1,HNDET,Electrotechnics ,01,ELT 1152,Electronics I ,ELECTRONA1,Electronics I,30,20,12,0,20.0
+semestre1,HNDET,Electrotechnics ,01,ELT 1161,Construction Design,CONSTDESI,Construction Design,45,30,32,0,30.0
+semestre1,HNDET,Electrotechnics ,01,ELT 1171,English ,ENGLISH,English,22,15,32,17,-2.0
+semestre1,HNDET,Electrotechnics ,01,ELT 1172,French ,FRENCH,French,22,15,20,12,3.0
+semestre2,HNDET,Electrotechnics ,01,ELT 1211,Mathematics II ,MATMATIC2,Mathematics II,60,40,0,0,40.0
+semestre2,HNDET,Electrotechnics ,01,ELT 1221,Physics II ,PHYSICS2,Physics II,30,20,0,0,20.0
+semestre2,HNDET,Electrotechnics ,01,ELT 1222,Computer Science I ,COMPSCIEN,Computer Science I,45,30,0,0,30.0
+semestre2,HNDET,Electrotechnics ,01,ELT 1231,Measurement techniques,MEASUTECH,Measurement techniques,30,20,0,0,20.0
+semestre2,HNDET,Electrotechnics ,01,ELT 1241,Electronics II,ELECTRONA2,Electronics II,45,30,0,0,30.0
+semestre2,HNDET,Electrotechnics ,01,ELT 1242,Travaux pratiques,TRAVPRATQ,Travaux Pratiques,50,12,0,0,12.0
+semestre2,HNDET,Electrotechnics ,01,ELT 1251,Power electronics and actuator control,POWELECON,Power electronics and actuator control,60,40,0,0,40.0
+semestre2,HNDET,Electrotechnics ,01,ELT 1261,CAO in Electrical Engineering,CADELEENG,CAD in Electrical Engineering,60,40,0,0,40.0
+semestre2,HNDET,Electrotechnics ,01,ELT 1272,Civic and moral education,LABORLAW,Labour Law,30,20,0,0,20.0
+semestre1,HNDET,Electrotechnics ,01,ELT 1323,Academic project,ACADPROJE,Academic Project,45,30,0,0,30.0
+semestre2,HNDET,Electrotechnics ,01,ELT 1461,Professional internship,INTERSHIP,INTERSHIP,90,60,0,0,60.0
+semestre1,HNDET,Electrotechnics ,02,ELT 2172,French ,FRENCH,French,22,15,8,8,7.0
+semestre1,HNDET,Electrotechnics ,01,ELT 2222,Practical work ICT,PRAWORICT,Practical Work ICT,100,100,4,0,100.0
+semestre1,HNDET,Electrotechnics ,02,ELT 2311,Mathematics III,MATMATIC3,Mathematics III,60,40,68,41,-1.0
+semestre1,HNDET,Electrotechnics ,02,ELT 2321,Physics III ,PHYSICS3,Physics III,45,30,60,27,3.0
+semestre1,HNDET,Electrotechnics ,02,ELT 2322,"Basics of Quality, Health, Safety and Environment ",BASOFQUAL,"Basics of quality, health, safety and envi.",30,20,32,19,1.0
+semestre1,HNDET,Electrotechnics ,02,ELT 2323,Academic project,ACADPROJE,Academic Project,45,30,8,0,30.0
+semestre1,HNDET,Electrotechnics ,02,ELT 2324,Medical english,MEDICENGL,Medical english,30,20,16,4,16.0
+semestre1,HNDET,Electrotechnics ,02,ELT 2331,Electrical Schema and command,ELESCHCOM,Electrical Schema and command,40,25,28,24,1.0
+semestre1,HNDET,Electrotechnics ,02,ELT 2332,"Technic of production, transport and distribution",TECPROTRA,"Technique of production,transport and distribution",35,25,28,23,2.0
+semestre1,HNDET,Electrotechnics ,02,ELT 2341,Servoing,SERVOING,Servoing,45,30,32,0,30.0
+semestre1,HNDET,Electrotechnics ,02,ELT 2342,Data Communication,DATACOMMU,Data Communication,30,20,20,17,3.0
+semestre1,HNDET,Electrotechnics ,02,ELT 2351,Electronics III + TP,ELECTRONA3,Electronics III + TP,60,40,68,39,1.0
+semestre1,HNDET,Electrotechnics ,02,ELT 2361,Advanced Electronics,ADVANELEC,Advanced Electronics,30,20,68,20,0.0
+semestre1,HNDET,Electrotechnics ,02,ELT 2362,Practical Work: Automation and Logic,PRAWORAUT,Practical Work Automation and Logic,15,12,24,17,-5.0
+semestre1,HNDET,Electrotechnics ,02,ELT 2371,Accounting,ACCOUNTIN,Accounting,15,12,12,10,2.0
+semestre1,HNDET,Electrotechnics ,02,ELT 2372,Labor law,LABORLAW,Labour Law,15,12,20,0,12.0
+semestre1,HNDET,Electrotechnics ,02,ELT 2373,Methodology of drafting the internship report,INTERSHIP,INTERSHIP,15,12,0,0,12.0
+semestre2,HNDET,Electrotechnics ,02,ELT 2411,Mathematics IV ,MATMATIC4,Mathematics IV,60,40,0,0,40.0
+semestre2,HNDET,Electrotechnics ,02,ELT 2421,Computer Science II ,CMPSCIENS,Computer Science II,75,50,72,44,6.0
+semestre2,HNDET,Electrotechnics ,02,ELT 2431,Maintenance in electrical Engineering ,MAICOMSYS,Maintenance of complex systems,30,20,0,0,20.0
+semestre2,HNDET,Electrotechnics ,02,ELT 2432,Industrial networks,INDUSNETW,Industrial networks,45,30,40,28,2.0
+semestre2,HNDET,Electrotechnics ,02,ELT 2441,Electrical installations and apparatus ,ELEINSAPP,Electrical installations and apparatus,75,50,0,0,50.0
+semestre2,HNDET,Electrotechnics ,02,ELT 2451,Practical Work : Electrical Machines II,PRAWORMAC,Practical Work : Electrical Machines II,15,12,28,16,-4.0
+semestre2,HNDET,Electrotechnics ,02,ELT 2461,Professional internship,PROFINTER,Professional Internship,90,60,0,0,60.0
+semestre2,HNDET,Electrotechnics ,02,ELT 2471,Economy and business organization,ECONOMICS,Economics,45,30,0,0,30.0
+semestre1,HNDET,Electrotechnics ,02,ELT 2473,Analog and digital data processing and storage ,ANADIGDAT,Analogy and digital data processing and storage,45,30,0,0,30.0
+semestre2,HNDET,Electrotechnics ,01,ELT 2474,Entrepreneurship,ENTREPSHI,Enterpreneuriatship,15,12,0,0,12.0
+semestre1,HNDET,Electrotechnics ,02,XXX0003,"Warm welcome, Guiding and Conseilling",WELCOME,"Warm welcome, Guiding and Conseilling",8,8,8,0,8.0
+semestre1,HNDET,Electrotechnics ,01,XXX0004,"Warm welcome, Guiding and Conseilling",WELCOME,"Warm welcome, Guiding and Conseilling",8,8,0,0,8.0
+semestre1,HNDET,Electrotechnics ,02,XXX0006,Tutorials,TUTORIALS,Tutorials,200,200,32,12,188.0
+semestre1,HNDET,Electrotechnics ,01,XXX0007,Tutorials,TUTORIALS,Tutorials,200,200,0,0,200.0
+semestre1,HNDET,Electrotechnics ,02,XXX0160,Initiation to research,INITRESEA,Initiation to research,8,8,12,12,-4.0
+semestre1,HNDET,Electrotechnics ,01,XXX0212,Engineer in the society,ENGISOCIE,Engineer in the Society,15,12,8,6,6.0
+semestre1,HNDET,Electrotechnics ,02,XXX0213,Automatisme 2,AUTOMATI2,Automatisme II,8,8,0,0,8.0
+semestre1,HRM,Human Ressource Management,01,HRM1112,General computing I,GENECOMP1,General Computing 1,30,20,0,0,20.0
+semestre1,HRM,Human Ressource Management,01,MHR1152,Computing I,GENECOMP1,General Computing 1,30,20,0,0,20.0
+semestre1,HRM,Human Ressource Management,01,MHR1172,General economics,GENECONOM,General Economy,30,20,0,0,20.0
+semestre2,HRM,Human Ressource Management,02,MHR2472,Labor law,LABORLAW,Labour Law,15,12,0,0,12.0
+semestre1,IGL,Génie Logiciel,01,IGL1111,Analyse Mathématiques I ,ANAMATHE1,Analyse mathématique I,45,30,0,0,30.0
+semestre1,IGL,Génie Logiciel,01,IGL1112,Algèbre Linéaire ,ALGLINEA1,Algèbre linéaire I,30,20,0,0,20.0
+semestre1,IGL,Génie Logiciel,01,IGL1113,Chimie,CHIMIE1,Chimie 1,30,20,44,17,3.0
+semestre1,IGL,Génie Logiciel,01,IGL1121,Environnement Micro-ordinateur ,ENVMICORD,Environnement Micro-ordinateur,30,20,20,0,20.0
+semestre1,IGL,Génie Logiciel,01,IGL1122,Outils bureautiques ,OUTBUREAU,Outils bureautiques,30,20,40,0,20.0
+semestre1,IGL,Génie Logiciel,01,IGL1131,Architecture des ordinateurs ,ARCHIORDI,Architecture des ordinateurs,45,30,0,0,30.0
+semestre1,IGL,Génie Logiciel,01,IGL1141,Algorithmique de Base ,ALGORBASE,Algorithmique de Base,45,30,28,19,11.0
+semestre1,IGL,Génie Logiciel,01,IGL1151,Introduction au Système d’information ,INTSYSINF,Introduction au Système d’information,45,30,48,32,-2.0
+semestre1,IGL,Génie Logiciel,01,IGL1152,Introduction au Génie Logiciel ,INTGENLOG,Introduction au Génie Logiciel,60,40,48,40,0.0
+semestre1,IGL,Génie Logiciel,01,IGL1161,Infographie ,INFOPGRAP,Infographie,45,30,24,0,30.0
+semestre1,IGL,Génie Logiciel,01,IGL1171,Techniques d’expression française ,FRANCAIS2,Francais,15,12,16,16,-4.0
+semestre1,IGL,Génie Logiciel,01,IGL1172,Techniques d’expression anglaise ,ANGLAIS,Anglais,30,20,28,16,4.0
+semestre2,IGL,Génie Logiciel,01,IGL1211,Statistique descriptive ,STATDESCR,Statistique descriptive,30,20,0,0,20.0
+semestre2,IGL,Génie Logiciel,01,IGL1212,Algèbre de BOOLE et des circuits ,ALGBOOCIR,Algèbre de BOOLE et des circuits,30,20,0,0,20.0
+semestre2,IGL,Génie Logiciel,01,IGL1221,Système d’Exploitation I ,SYSTEXPL1,Système d’Exploitation I,30,20,0,0,20.0
+semestre2,IGL,Génie Logiciel,01,IGL1222,Programmation web 1 ,PROGRWEB1,Programmation web 1 ,45,30,0,0,30.0
+semestre2,IGL,Génie Logiciel,01,IGL1231,Programmation Structurée ,PROGSTRUC,Programmation Structurée,60,40,0,0,40.0
+semestre2,IGL,Génie Logiciel,01,IGL1241,Introduction aux Bases de Données ,INTBASDON,Introduction aux Bases de Données,45,30,0,0,30.0
+semestre2,IGL,Génie Logiciel,01,IGL1242,Système d’Information II (MERISE) ,SYSTINFO2,Système d’information II,30,20,0,0,20.0
+semestre2,IGL,Génie Logiciel,01,IGL1251,Programmation Evènementielle I ,PROGEVEN1,Programmation Evènementielle I,45,30,0,0,30.0
+semestre2,IGL,Génie Logiciel,01,IGL1252,Mini Projet Informatique ,MINPROINF,Mini Projet Informatique,30,20,0,0,20.0
+semestre2,IGL,Génie Logiciel,01,IGL1261,Installation et Maintenance Matériels et Logiciel ,INSMAIMAT,Installation et Maintenance Matériels et Logiciel,30,20,0,0,20.0
+semestre2,IGL,Génie Logiciel,01,IGL1262,Négociations Informatiques ,NEGINFORM,Négociations Informatiques,30,20,0,0,20.0
+semestre2,IGL,Génie Logiciel,01,IGL1271,Economie et Gestion des entreprises ,ECOORGENT,Economie et Organisation des Entreprises,30,20,0,0,20.0
+semestre2,IGL,Génie Logiciel,01,IGL1272,Comptabilité,COMPTAGEN,Comptabilité Générale,15,12,0,0,12.0
+semestre1,IGL,Génie Logiciel,03,ISGRGL511,Analyse Numerique,ANANUMERI,Analyse Numérique,30,30,20,12,18.0
+semestre1,IGL,Génie Logiciel,03,ISGRGL521,"Techniques De 
+Communication",TECHNICOM,Technique de Communication,15,15,4,4,11.0
+semestre1,IGL,Génie Logiciel,03,ISGRGL531,Ccna 1,CCNA1,Ccna 1,45,45,28,0,45.0
+semestre1,IGL,Génie Logiciel,03,ISGRGL541,"Concepts Generaux des 
+Systèmes D’Information",CONGENSYS,Concepts Generaux Des Systèmes D’Information,45,45,32,0,45.0
+semestre1,IGL,Génie Logiciel,03,ISGRGL542,"Introduction A La 
+Securite Informatique",INTSECINF,Introduction a la sécurité informatique,60,60,16,0,60.0
+semestre1,IGL,Génie Logiciel,03,ISGRGL551,"Administration  de 
+Bases De Donnees",ADMBASDON,Administration des bases de données,45,45,64,38,7.0
+semestre1,IGL,Génie Logiciel,03,ISGRGL552,Developpement Web,DEVELOWEB,Developpement Web,45,45,44,0,45.0
+semestre1,IGL,Génie Logiciel,01,XXX0080,Accueil Orientation et Conseils,ACCORICON,Accueil Orientation et Conseils,8,8,0,0,8.0
+semestre2,IGL,Génie Logiciel,01,XXX0082,Chimie,CHIMIE1,Chimie 1,30,20,44,17,3.0
+semestre1,IGL,Génie Logiciel,01,XXX0084,Mathématiques I ,MATMATIQ1,Mathématiques I,60,40,96,0,40.0
+semestre1,IGL,Génie Logiciel,01,XXX0085,Physiques I ,PHYSIQUE1,Physiques 1,45,30,56,21,9.0
+semestre1,IGL,Génie Logiciel,01,XXX0086,Travaux dirigés (TD),TRAVDIRIG,Travaux dirigés (TD),50,50,8,0,50.0
+semestre1,IGL,Génie Logiciel,01,XXX0191,Informatique 1,INFORMAT1,Informatique I,50,50,12,0,50.0
+semestre1,IGL,Génie Logiciel,03,XXX0209,Developpement Durable,DEVELDURA,Developpement Durable,30,30,20,19,11.0
+semestre1,IGL,Génie Logiciel,03,XXX0216,Equations différentielles,EQUADIFFE,Equations différentielles,30,30,12,12,18.0
+semestre2,IHA,Industrie Du Textile Et De L’Habillement-Industrie Habillement ,01,IHA1211,Mathématiques,MATMATIQ1,Mathématiques I,30,20,0,0,20.0
+semestre2,IHA,Industrie Du Textile Et De L’Habillement-Industrie Habillement ,01,IHA1212,Physiques,PHYSIQUE1,Physiques 1,30,20,0,0,20.0
+semestre2,IHA,Industrie Du Textile Et De L’Habillement-Industrie Habillement ,01,IHA1272,Informatique,INFORGEN1,Informatique Général 1,15,12,0,0,12.0
+semestre2,IIA,Informatique Industriel Et Automatisme,01,IIA1111,Analyse mathématique II ,MATMATIQ2,Mathématique II,30,20,0,0,20.0
+semestre1,IIA,Informatique Industriel Et Automatisme,01,IIA1174,Anglais,ANGLAIS,Anglais,30,20,12,4,16.0
+semestre2,IIA,Informatique Industriel Et Automatisme,01,IIA1211,Analyse mathématique I ,MATMATIQ1,Mathématiques I,30,20,24,0,20.0
+semestre2,IIA,Informatique Industriel Et Automatisme,01,IIA1221,Physique générales I ,PHYSIQUE1,Physiques 1,30,20,32,7,13.0
+semestre1,IIA,Informatique Industriel Et Automatisme,01,IIA1224,Chimie,CHIMIE1,Chimie 1,30,20,24,8,12.0
+semestre2,IIA,Informatique Industriel Et Automatisme,01,IIA1231,Schémas électrique ,SCHEMAELE,Schémas électrique,30,20,0,0,20.0
+semestre1,IIA,Informatique Industriel Et Automatisme,01,IIA1252,Français,FRANCAIS2,Francais,45,30,8,8,22.0
+semestre1,IIA,Informatique Industriel Et Automatisme,01,IIA1253,Chimie,FRANCAIS2,Francais,45,30,8,8,22.0
+semestre2,IIA,Informatique Industriel Et Automatisme,02,IIA2312,Analyse mathématique III ,MATMATIQ3,Mathématiques III,30,20,0,0,20.0
+semestre2,IIA,Informatique Industriel Et Automatisme,02,IIA2411,Analyse mathématique IV ,MATMATIQ4,Mathématiques IV,30,20,0,0,20.0
+semestre1,ISA,Installation Sanitaire,01,ISA1111,Mathématiques I ,MATMATIQ1,Mathématiques I,60,40,92,0,40.0
+semestre1,ISA,Installation Sanitaire,01,ISA1121,TIC I ,TECINFCOM,TIC,45,30,32,0,30.0
+semestre1,ISA,Installation Sanitaire,01,ISA1131,Statique et dynamique des fluides ,STADYNFLU,Statique et dynamique des fluides ,45,30,32,21,9.0
+semestre1,ISA,Installation Sanitaire,01,ISA1141,Hydraulique ,HYDRAULIQ,Hydraulique,60,40,4,4,36.0
+semestre1,ISA,Installation Sanitaire,01,ISA1151,Technologie des systèmes thermiques ,TECSYSTHE,Technologie des systèmes thermiques,45,30,44,30,0.0
+semestre1,ISA,Installation Sanitaire,01,ISA1161,Thermodynamique ,THERMODIN,Thermodynamique,75,50,64,48,2.0
+semestre1,ISA,Installation Sanitaire,01,ISA1171,Techniques d’expression française ,FRANCAIS2,Francais,15,12,16,16,-4.0
+semestre1,ISA,Installation Sanitaire,01,ISA1172,Techniques d’expression anglaise ,ANGLAIS,Anglais,30,20,28,16,4.0
+semestre2,ISA,Installation Sanitaire,01,ISA1211,Mathématiques II ,MATMATIQ1,Mathématiques I,60,40,92,0,40.0
+semestre2,ISA,Installation Sanitaire,01,ISA1221,Physiques I ,PHYSIQUE1,Physiques 1,45,30,64,27,3.0
+semestre2,ISA,Installation Sanitaire,01,ISA1222,Chimie ,CHIMIE1,Chimie 1,30,20,44,17,3.0
+semestre2,ISA,Installation Sanitaire,01,ISA1231,Mécanique ,MECAGENE1,Mécanique générale I,30,20,0,0,20.0
+semestre2,ISA,Installation Sanitaire,01,ISA1232,Ondes mécaniques ,ONDEMECAN,Ondes mécaniques ,30,20,0,0,20.0
+semestre2,ISA,Installation Sanitaire,01,ISA1241,Mécanique des fluides hydrauliques ,MECFLUHYD,Mécanique des fluides hydrauliques ,30,20,44,12,8.0
+semestre2,ISA,Installation Sanitaire,01,ISA1242,Mécanique des fluides aérodynamiques ,MECFLUAER,Mécanique des fluides aérodynamiques ,30,20,0,0,20.0
+semestre2,ISA,Installation Sanitaire,01,ISA1251,Distribution de l’énergie électrique ,DISENEELE,Distribution de l’énergie électrique ,30,20,0,0,20.0
+semestre2,ISA,Installation Sanitaire,01,ISA1252,Electricité ,ELECTGENE,Electricité générale ,45,30,0,0,30.0
+semestre2,ISA,Installation Sanitaire,01,ISA1261,Transfert thermique I ,TRANSTHER,Transfert thermique,45,30,0,0,30.0
+semestre2,ISA,Installation Sanitaire,01,ISA1262,Organisation de la maintenance II ,ORGAMAINT,Organisation de la maintenance II ,30,20,0,0,20.0
+semestre2,ISA,Installation Sanitaire,01,ISA1271,Economie et Gestion des entreprises ,ECOORGENT,Economie et Organisation des Entreprises,45,30,0,0,30.0
+semestre1,ISA,Installation Sanitaire,01,XXX0087,Expression écrite,EXPRECRIT,Expression écrite,15,12,0,0,12.0
+semestre1,ISA,Installation Sanitaire,01,XXX0088,Formation bilingue,FORMABILI,Formation bilingue,45,30,0,0,30.0
+semestre2,ISA,Installation Sanitaire,01,XXX0089,Entreprenariat,ENTREPREN,Entreprenariat,30,20,0,0,20.0
+semestre2,ISA,Installation Sanitaire,01,XXX0090,Education civique et éthique,EDUCIVETH,Education civique et éthique,15,12,0,0,12.0
+semestre1,ISA,Installation Sanitaire,01,XXX0091,Travaux dirigés (TD),TRAVDIRIG,Travaux dirigés (TD),50,50,8,0,50.0
+semestre1,ISA,Installation Sanitaire,01,XXX0190,Installation du réseau de tuyauterie,INSRESTUY,Installation du réseau de tuyauterie,15,12,48,24,-12.0
+semestre1,IWD,Infographie Et Web Design  ,01,IWD1152,Initiation à l'animation,ATEANIMA1,Atelier d’animation I,75,20,0,0,20.0
+semestre1,IWD,Infographie Et Web Design  ,01,IWD1171,Techniques expression française,FRANCAIS2,Francais,15,12,0,0,12.0
+semestre1,IWD,Infographie Et Web Design  ,01,IWD1172,Français spécialisé à l’infographie et webdesign,FRASPEINF,Français spécialisé inforgraphie,15,12,0,0,12.0
+semestre1,IWD ,Infographie Et Web Design  ,01,IWD1173,Techniques expression anglaise,EXPREANGL,Expression anglaise,30,20,0,0,20.0
+semestre1,IWD,Infographie Et Web Design  ,01,IWD1174,Anglais spécialisé à l’infographie et webdesign,EXPREANGL,Expression anglaise,15,12,0,0,12.0
+semestre2,IWD ,Infographie Et Web Design  ,01,IWD1221,SCIENCES PHYSIQUES,PHYSIQUES,Physiques,45,30,0,0,30.0
+semestre2,IWD ,Infographie Et Web Design  ,01,IWD1232,ANIMATION 2D,ATEANIMA2,Atelier d’animation II,0,30,0,0,30.0
+semestre1,IWD,Infographie Et Web Design  ,02,IWD2111,INFORMATIQUE GENERALE II,INFORGEN2,Informatique générale II,15,12,0,0,12.0
+semestre1,IWD,Infographie Et Web Design  ,02,IWD2171,Techniques expression anglaise,EXPREANGL,Expression anglaise,15,12,0,0,12.0
+semestre1,IWD,Infographie Et Web Design  ,02,IWD2172,Techniques expression française,FRANCAIS2,Francais,15,12,0,0,12.0
+semestre2,IWD ,Infographie Et Web Design  ,02,IWD2241,Techniques graphiques et artistiques,TGA 2,TGA II,15,12,0,0,12.0
+semestre1,IWD,Infographie Et Web Design  ,02,IWD2311,Histoire de l’art,HISTOIART,Histoire de l’Art,30,20,0,0,20.0
+semestre1,IWD,Infographie Et Web Design  ,02,IWD2323,Projet académique,PROJACADE,Projet académique,45,30,0,0,30.0
+semestre1,IWD,Infographie Et Web Design  ,02,IWD2331,Streaming,STREAMING,Streaming,30,20,0,0,20.0
+semestre1,IWD,Infographie Et Web Design  ,02,IWD2332,Animation 3D,ATEANIMA3,Atelier d’animation III,45,30,0,0,30.0
+,IWD ,Infographie Et Web Design  ,02,IWD234,Programmation II,PROGRWEB2,Programmation web II,45,30,0,0,30.0
+semestre1,IWD,Infographie Et Web Design  ,02,IWD2351,Traitement audionumérique ,DESGRAPH3,Design graphique III,60,40,0,0,40.0
+semestre1,IWD,Infographie Et Web Design  ,02,IWD2352,Montage vidéonumérique,MONTPROJT,Montage de projets,30,20,0,0,20.0
+semestre1,IWD,Infographie Et Web Design  ,02,IWD2362,DAO et digital painting avec Photoshop,ATEDESSI2,Atelier dessin II,30,20,0,0,20.0
+semestre1,IWD,Infographie Et Web Design  ,02,IWD2371,Economie générale ,ECONOGENE,Economie générale,45,30,0,0,30.0
+semestre1,IWD,Infographie Et Web Design  ,02,IWD2372,Droit de la propriété intellectuelle,DROITCIVI,Droit civil,15,12,0,0,12.0
+semestre2,IWD,Infographie Et Web Design  ,02,IWD2411,Leadership ,LEADESHIP,Leadership,30,20,0,0,20.0
+semestre2,IWD,Infographie Et Web Design  ,02,IWD2412,Montage de projets ,MONTPROJT,Montage de projets,45,30,0,0,30.0
+semestre2,IWD ,Infographie Et Web Design  ,02,IWD2421,Programmation évènementielle II ,PROGEVEN2,Programmation évènementielle II,30,20,0,0,20.0
+semestre2,IWD,Infographie Et Web Design  ,02,IWD2422,Informatique générale II ,INFORGEN2,Informatique générale II,30,20,0,0,20.0
+semestre2,IWD,Infographie Et Web Design  ,02,IWD2431,Atelier dessin II ,ATEDESSI2,Atelier dessin II,45,30,0,0,30.0
+semestre2,IWD,Infographie Et Web Design  ,02,IWD2432,Atelier d’animation IV ,ATELANIM4,Atelier d’animation IV ,30,20,0,0,20.0
+semestre2,IWD,Infographie Et Web Design  ,02,IWD2441,Design graphique IV ,DESGRAPH4,Design graphique IV,30,20,0,0,20.0
+semestre2,IWD ,Infographie Et Web Design  ,02,IWD2442,Montage vidéo ,MONTPROJT,Montage de projets,30,20,0,0,20.0
+,IWD ,Infographie Et Web Design  ,,IWD2451,Programmation web III ,PROGRWEB3,Programmation web III,15,12,0,0,12.0
+semestre2,IWD,Infographie Et Web Design  ,02,IWD2452,Administration d’un site web ,ADMSITWEB,Administration d’un site web,30,20,0,0,20.0
+semestre2,IWD,Infographie Et Web Design  ,02,IWD2461,Stage professionnel,STAGEPROF,Stage professionnel,90,60,0,0,60.0
+semestre1,IWD ,Infographie Et Web Design  ,02,IWD2472,GENERALITE SUR LE DESIGN GRAPHIQUE,WEBDESIGN,Web design,45,30,0,0,30.0
+semestre2,IWD,Infographie Et Web Design  ,02,IWD2481,EXPRESSION ANGLAISE,EXPREANGL,Expression anglaise,30,20,0,0,20.0
+semestre1,LGA,Administration Of Local Government,01,LGA1112,General Computing I,GENECOMP1,General Computing 1,15,12,0,0,12.0
+semestre1,LTM,Logistics And Transport Management,01,LTM1111,Principles of management ,PRINCMANG,Principles of management ,15,12,16,12,0.0
+semestre1,LTM,Logistics And Transport Management,01,LTM1112,Principles of business lawl,PRIBUSLAW,Principles of business lawl,15,12,0,0,12.0
+semestre1,LTM,Logistics And Transport Management,01,LTM1113,Engineering Mathematics I,ENGIMATH1,Engineering Mathematics I,75,50,0,0,50.0
+semestre1,LTM,Logistics And Transport Management,01,LTM1122,General mathematics I,GENEMATH1,General Mathematics 1,26,18,84,63,-45.5
+semestre1,LTM,Logistics And Transport Management,01,LTM1123,General mathematics II,GENEMATH2,General Mathematics II,26,18,0,0,17.5
+semestre1,LTM,Logistics And Transport Management,01,LTM1124,Quantitative technics,QUANTECHN,Quantitative technics,52,35,0,0,35.0
+semestre1,LTM,Logistics And Transport Management,01,LTM1125,Statistics I,STATSTIC1,Statistics I,13,9,32,24,-15.0
+semestre1,LTM,Logistics And Transport Management,01,LTM1126,General computing I,GENECOMP1,General Computing 1,15,12,20,20,-8.0
+semestre1,LTM,Logistics And Transport Management,01,LTM1127,Statistics II,STATSTIC2,Statistics II,13,9,8,0,9.0
+semestre1,LTM,Logistics And Transport Management,01,LTM1131,Introduction to logistics management,INTLOGMAN,Introduction to logistics management,38,25,40,28,-3.0
+semestre1,LTM,Logistics And Transport Management,01,LTM1132,ICT for logistics,ICT,ICT,22,15,40,20,-5.0
+semestre1,LTM,Logistics And Transport Management,01,LTM1141,Ship representation ,SHIPREPRE,Ship representation ,30,20,28,28,-8.0
+semestre1,LTM,Logistics And Transport Management,01,LTM1142,Freight forwarding (cargo representation),FREIGFORW,Freight forwarding (cargo representation),30,20,0,0,20.0
+semestre1,LTM,Logistics And Transport Management,01,LTM1143,Cargo handling,CARGOHAND,Cargo handling,20,20,0,0,20.0
+semestre1,LTM,Logistics And Transport Management,01,LTM1151,Shipping and international trade,SHIINTTRA,Shipping and international trade,30,20,20,19,1.0
+semestre1,LTM,Logistics And Transport Management,01,LTM1152,Maritime transport,MARITRANS,Maritime transport,30,20,24,24,-4.0
+semestre1,LTM,Logistics And Transport Management,01,LTM1161,Transport law,TRANSPLAW,Transport law,30,20,24,23,-3.0
+semestre1,LTM,Logistics And Transport Management,01,LTM1162,Carriage law ,CARRIALAW,Carriage law ,30,20,0,0,20.0
+semestre1,LTM,Logistics And Transport Management,01,LTM1171,French expression,FRENCH,French,15,12,20,12,0.0
+semestre1,LTM,Logistics And Transport Management,01,LTM1172,General economics,GENECONOM,General Economy,30,20,32,21,-1.0
+semestre2,LTM,Logistics And Transport Management,01,LTM1211,Government politics,GOVERPOLI,Government politics,60,40,0,0,40.0
+semestre2,LTM,Logistics And Transport Management,01,LTM1221,Methodology for drafting the report of internship,METDRAINT,Methodology of drafting the internship report,75,50,0,0,50.0
+semestre2,LTM,Logistics And Transport Management,01,LTM1231,International transport management,INTTRAMAN,International transport management,30,20,0,0,20.0
+semestre2,LTM,Logistics And Transport Management,01,LTM1232,Safe transport of dangerous goods,SAFTRAGOO,Safe transport of dangerous goods,30,20,0,0,20.0
+semestre2,LTM,Logistics And Transport Management,01,LTM1241,Warehouse management,WAREHMANG,Warehouse management,30,20,0,0,20.0
+semestre2,LTM,Logistics And Transport Management,01,LTM1242,Procurement and inventory management,PROINVMAN,Procurement and inventory management,45,30,0,0,30.0
+semestre2,LTM,Logistics And Transport Management,01,LTM1251,Total quality management,TOTQUAMAN,Total quality management,30,20,0,0,20.0
+semestre2,LTM,Logistics And Transport Management,01,LTM1252,Maritime Administration I and II,MARIADM12,Maritime Administration I and II,15,30,0,0,30.0
+semestre2,LTM,Logistics And Transport Management,01,LTM1253,Maritime Administration I,MARIADMI1,Maritime Administration I,22,15,0,0,15.0
+semestre2,LTM,Logistics And Transport Management,01,LTM1254,Maritime Administration II,MARIADMI2,Maritime Administration II,22,15,0,0,15.0
+semestre2,LTM,Logistics And Transport Management,01,LTM1261,Marine Insurance,MARININSU,Marine Insurance,38,25,0,0,25.0
+semestre2,LTM,Logistics And Transport Management,01,LTM1262,Fundamentals of Cargo Insurance,FUNCARINS,Fundamentals of Cargo Insurance,22,15,0,0,15.0
+semestre2,LTM,Logistics And Transport Management,01,LTM1271,English Expression,ENGLISH,English,15,12,28,17,-5.0
+semestre2,LTM,Logistics And Transport Management,01,LTM1272,Economy and organization of enterprises,ECOBUSORG,Economy and business organization,30,20,0,0,20.0
+semestre1,LTM,Logistics And Transport Management,01,LTM2222,Practical work ICT,PRAWORICT,Practical Work ICT,100,100,4,0,100.0
+semestre2,LTM,Logistics And Transport Management,01,XXX0249,Financial Mathematics,FINAMATH1,Financial Mathematics I,30,20,20,20,0.0
+semestre1,MAV,Maintenance Après-Vente (Mava),01,MAV111,Mathématiques I,MATMATIQ1,Mathématiques I,60,40,0,0,40.0
+semestre1,MAV,Maintenance Après-Vente (Mava),01,MAV1121,Physiques I,PHYSIQUE1,Physiques 1,45,30,0,0,30.0
+semestre1,MEB,Menuiserie Et Ebenisterie,01,MEB1111,Mathématiques I ,MATMATIQ1,Mathématiques I,60,40,92,0,40.0
+semestre1,MEB,Menuiserie Et Ebenisterie,01,MEB1121,Statique ,STATIQUE,STATIQUE,30,20,44,23,-3.0
+semestre1,MEB,Menuiserie Et Ebenisterie,01,MEB1122,TIC ,TECINFCOM,TIC,45,30,24,0,30.0
+semestre1,MEB,Menuiserie Et Ebenisterie,01,MEB1131,Dessin style I ,DESSINSTY,Dessin style I ,60,40,8,0,40.0
+semestre1,MEB,Menuiserie Et Ebenisterie,01,MEB1132,Dessin style I ,DESSIBASE,Dessin de Base,60,40,32,16,24.0
+semestre1,MEB,Menuiserie Et Ebenisterie,01,MEB1141,Botanique et anatomie ,BOTANANAT,Botanique et anatomie ,60,40,48,33,7.0
+semestre1,MEB,Menuiserie Et Ebenisterie,01,MEB1151,Gestion des opérations et cubage ,GESOPECUB,Gestion des opérations et cubage ,45,30,32,29,1.0
+semestre1,MEB,Menuiserie Et Ebenisterie,01,MEB1152,Cubage des grumes ,CUBAGRUME,Cubage des grumes ,45,30,0,0,30.0
+semestre1,MEB,Menuiserie Et Ebenisterie,01,MEB1161,Dessin assisté par ordinateur (DAO) ,DESASSORD,Dessin assisté par ordinateur,60,40,32,26,14.0
+semestre1,MEB,Menuiserie Et Ebenisterie,01,MEB1171,Techniques d’expression française ,FRANCAIS2,Francais,15,12,16,16,-4.0
+semestre1,MEB,Menuiserie Et Ebenisterie,01,MEB1172,Economie et Gestion des entreprises ,ECOORGENT,Economie et Organisation des Entreprises,45,30,0,0,30.0
+semestre1,MEB,Menuiserie Et Ebenisterie,01,MEB1173,Techniques d’expression anglaise ,ANGLAIS,Anglais,30,20,28,16,4.0
+semestre2,MEB,Menuiserie Et Ebenisterie,01,MEB1211,Mathématiques II ,MATMATIQ1,Mathématiques I,60,40,92,0,40.0
+semestre2,MEB,Menuiserie Et Ebenisterie,01,MEB1221,Physiques I ,PHYSIQUE1,Physiques 1,30,20,68,27,-7.0
+semestre2,MEB,Menuiserie Et Ebenisterie,01,MEB1222,Chimie I ,CHIMIE1,Chimie 1,30,20,44,17,3.0
+semestre2,MEB,Menuiserie Et Ebenisterie,01,MEB1231,Propriétés physiques du bois ,PROPHYBOI,Propriétés physiques du bois ,60,40,0,0,40.0
+semestre2,MEB,Menuiserie Et Ebenisterie,01,MEB1241,Résistance des matériaux ,RESISMAT1,Résistance des matériaux I,45,30,24,16,14.0
+semestre2,MEB,Menuiserie Et Ebenisterie,01,MEB1251,Procédés de fabrication ,PROCEFABR,Procédés de fabrication ,45,30,0,0,30.0
+semestre2,MEB,Menuiserie Et Ebenisterie,01,MEB1252,Séchage et préservation du bois ,SECCPREBOI,Séchage et préservation du bois ,45,30,0,0,30.0
+semestre2,MEB,Menuiserie Et Ebenisterie,01,MEB1261,TP synthèse I ,TPSYNTHES,TP synthèse I ,75,50,0,0,50.0
+semestre2,MEB,Menuiserie Et Ebenisterie,01,XXX0108,Création d'entreprise,CREATENTR,Création d’entreprise,30,20,0,0,20.0
+semestre2,MEB,Menuiserie Et Ebenisterie,01,XXX0109,Education civique et éthique,EDUCIVETH,Education civique et éthique,15,12,0,0,12.0
+semestre1,MEB,Menuiserie Et Ebenisterie,01,XXX0110,Travaux dirigés (TD),TRAVDIRIG,Travaux dirigés (TD),50,50,8,0,50.0
+semestre1,MEB,Menuiserie Et Ebenisterie,01,XXX0229,Dessin de base ,DESSIBASE,Dessin de Base,45,30,32,16,14.0
+semestre1,MEC,Mecanical Construction,01,MEC1111,Engineering Mathematics I,ENGIMATH1,Engineering Mathematics I,75,50,8,8,42.0
+semestre1,MEC,Mecanical Construction,01,MEC1114,General Mathematics I,GENEMATH1,General Mathematics 1,15,12,56,36,-24.0
+semestre1,MEC,Mecanical Construction,01,MEC1121,Engineer in the Society,ENGISOCIE,Engineer in the Society,60,40,24,16,24.0
+semestre1,MEC,Mecanical Construction,01,MEC1122,Chemistry,CHEMISTRY,Chemistry,30,20,56,24,-4.0
+semestre1,MEC,Mecanical Construction,01,MEC1126,General computing I,GENECOMP1,General Computing 1,15,12,16,16,-4.0
+semestre1,MEC,Mecanical Construction,01,MEC1131,Manufacturing technology,MANUTECHN,Manufacturing technology,45,30,52,29,1.0
+semestre1,MEC,Mecanical Construction,01,MEC1141,Materials science I,MATESCIE1,Materials science I,30,20,24,19,1.0
+semestre1,MEC,Mecanical Construction,01,MEC1142,Applied Mechanics I,APPMECHA1,Applied mechanics I,45,30,24,14,16.0
+semestre1,MEC,Mecanical Construction,01,MEC1151,Industrial maintenance,INDUSMAIN,Industrial maintenance,45,30,24,19,11.0
+semestre1,MEC,Mecanical Construction,01,MEC1152,Automation I,AUTOMAT1,Automation I,45,30,40,36,-6.0
+semestre1,MEC,Mecanical Construction,01,MEC1161,Analysis and design drawing I ,ANADEDRA1,Analysis and design drawing I,45,30,40,32,-2.0
+semestre1,MEC,Mecanical Construction,01,MEC1171,English,ENGLISH,English,22,15,28,17,-2.0
+semestre1,MEC,Mecanical Construction,01,MEC1172,French ,FRENCH,French,22,15,20,12,3.0
+semestre2,MEC,Mecanical Construction,01,MEC1211,Engineering Mathematics II,ENGIMATH2,Engineering Mathematics II,75,50,0,0,50.0
+semestre2,MEC,Mecanical Construction,01,MEC1231,Analysis and design drawing II,ANADEDRA2,Analysis and design drawing II,30,20,0,0,20.0
+semestre2,MEC,Mecanical Construction,01,MEC1232,Analysis of manufacture II,ANAMANUF2,Analysis of manufacture II,45,30,0,0,30.0
+semestre2,MEC,Mecanical Construction,01,MEC1421,Physics I,PHYSICS1,Physics I,45,30,48,24,6.0
+semestre2,MEC,Mecanical Construction,02,MEC2151,Industrial maintenance,INDUSMAIN,Industrial maintenance,45,30,0,0,30.0
+semestre1,MEC,Mecanical Construction,01,MEC2222,Practical work ICT,PRAWORICT,Practical Work ICT,100,100,4,0,100.0
+semestre2,MEC,Mecanical Construction,02,MEC2241,CAD (AUTOCAD),CADAUTCAD,CAD (AUTOCAD),60,40,0,0,40.0
+semestre1,MEC,Mecanical Construction,02,MEC2311,Engineering Mathematics III ,ENGIMATH3,Engineering Mathematics III,60,40,0,0,40.0
+semestre1,MEC,Mecanical Construction,02,MEC2312,Legal and Economics Environment,LEGECOENV,Legal and Economics Environment,60,40,0,0,40.0
+semestre1,MEC,Mecanical Construction,02,MEC2321,Computer for Business II,COMPUBUS2,Computer for Business II,45,30,0,0,30.0
+semestre1,MEC,Mecanical Construction,02,MEC2322,"Basics of Quality, Health, Safety and Environment ",QHSE,QHSE anglais,30,20,0,0,20.0
+semestre1,MEC,Mecanical Construction,02,MEC2331,Analysis and design drawing III,ANADEDRA3,Analysis and design drawing III,45,30,0,0,30.0
+semestre1,MEC,Mecanical Construction,02,MEC2332,Analysis of manufacture III,ANAMANUF3,Analysis of manufacture III,30,20,0,0,20.0
+semestre1,MEC,Mecanical Construction,01,MEC2341,Strength of materials I,STRENMAT1,Strength of materials I,30,20,12,4,16.0
+semestre1,MEC,Mecanical Construction,02,MEC2342,Materials Science II,MATESCIE2,Materials Science II,30,20,0,0,20.0
+semestre1,MEC,Mecanical Construction,02,MEC2351,Computer Aided Manufacturing I,COMAIDMA1,Computer Aided Manufacturing I,30,20,0,0,20.0
+semestre1,MEC,Mecanical Construction,02,MEC2352,P machining II,PMACHINI2,P machining II,30,20,0,0,20.0
+semestre1,MEC,Mecanical Construction,02,MEC2361,Applied mechanics I,APPMECHA2,Applied mechanics II,45,30,0,0,30.0
+semestre1,MEC,Mecanical Construction,02,MEC2371,Environmental Engineering,ENVIENGIN,Environmental Engineering,30,20,0,0,20.0
+semestre1,MEC,Mecanical Construction,02,MEC2372,Enterpreneuriatship,ENTREPSHI,Enterpreneuriatship,15,12,0,0,12.0
+semestre2,MEC,Mecanical Construction,02,MEC2411,Engineering Mathematics IV,ENGIMATH4,Engineering Mathematics IV,60,40,0,0,40.0
+semestre2,MEC,Mecanical Construction,02,MEC2421,Physics I,PHYSICS1,Physics I,45,30,0,0,30.0
+semestre2,MEC,Mecanical Construction,02,MEC2422,Chemistry,CHEMISTRY,Chemistry,30,20,0,0,20.0
+semestre2,MEC,Mecanical Construction,02,MEC2431,Strength of material II,STRENMAT2,Strength of material II,30,20,0,0,20.0
+semestre2,MEC,Mecanical Construction,02,MEC2441,Analysis and design drawing IV,ANADEDRA4,Analysis and design drawing IV,45,30,0,0,30.0
+semestre2,MEC,Mecanical Construction,02,MEC2442,Automation III,AUTOMATIS,Automation III,45,30,0,0,30.0
+semestre2,MEC,Mecanical Construction,02,MEC2451,Computer Aided Manufacturing II,COMAIDMA2,Computer Aided Manufacturing II,45,30,0,0,30.0
+semestre2,MEC,Mecanical Construction,02,MEC2471,Industrial safety 1 credit,INDSAFCRE,Industrial safety 1 credit,15,12,0,0,12.0
+semestre2,MEC,Mecanical Construction,02,MEC2472,Ingineering Management Law and Economics,INGMAGLAW,Ingineering Management Law and Economics,30,20,0,0,20.0
+semestre2,MEC,Mecanical Construction,02,MEC2473,Labor law,LABORLAW,Labour Law,15,12,0,0,12.0
+semestre1,MEC,Mecanical Construction,02,MEC2474,Computer Programming,COMPUPROG,Computer Programming,30,20,0,0,20.0
+semestre1,MEC,Mecanical Construction,02,MEC2475,Economics,ECONOMICS,Economics,30,20,0,0,20.0
+semestre2,MEC,Mecanical Construction,01,XXX0172,Analysis of manufacture I,ANAMANUF1,Analysis of manufacture I,45,30,24,19,11.0
+semestre1,MEC,Mecanical Construction,01,XXX0221,Resistance of Materials I,RESISMTER,Resistance of Materials I,60,40,32,22,18.0
+semestre1,MID,Midwifery,02,MID2343,Community health,COMMUNITY,Community Health,15,12,0,0,12.0
+semestre1,MKA,Mécatronique,01,MKA1111,Mathématiques I ,MATMATIQ1,Mathématiques I,60,40,96,0,40.0
+semestre1,MKA,Mécatronique,01,MKA1121,TIC I ,TECINFCOM,TIC,75,50,32,0,50.0
+semestre1,MKA,Mécatronique,01,MKA1131,Bases en Electronique ,BASEELECT,Bases électricité,30,30,0,0,30.0
+semestre1,MKA,Mécatronique,01,MKA1141,Mécanique générale I ,MECAGENE1,Mécanique générale I,30,20,20,20,0.0
+semestre1,MKA,Mécatronique,01,MKA1142,Optique géométrique et ondulatoire ,POTGEOOND,Optique géométrique et ondulatoire,30,20,24,23,-3.0
+semestre1,MKA,Mécatronique,01,MKA1143,Electromagnétisme ,ELETROMAG,Electromagnétisme,30,20,0,0,20.0
+semestre1,MKA,Mécatronique,01,MKA1151,Développement du véhicule automobile ,DEVVEHAUT,Développement du véhicule automobile,30,20,28,4,16.0
+semestre1,MKA,Mécatronique,01,MKA1152,Organes de châssis/carrosserie ,ORGCHACAR,Organes de châssis/carrosserie,45,30,32,5,25.0
+semestre1,MKA,Mécatronique,01,MKA1161,Structure et fonctionnement du Groupe Moto Propulseur (GMP) ,STRFONGMP,Structure et fonctiont Grpe Moto Propulseur(GMP),45,30,36,34,-4.0
+semestre1,MKA,Mécatronique,01,MKA1171,Techniques d’expression française ,FRANCAIS2,Francais,15,12,16,16,-4.0
+semestre1,MKA,Mécatronique,01,MKA1172,Techniques d’expression anglaise ,ANGLAIS,Anglais,30,20,28,16,4.0
+semestre2,MKA,Mécatronique,01,MKA1211,Mathématique II,MATMATIQ2,Mathématique II,60,40,0,0,40.0
+semestre2,MKA,Mécatronique,01,MKA1221,Physiques I ,PHYSIQUE1,Physiques 1,45,30,56,18,12.0
+semestre2,MKA,Mécatronique,01,MKA1222,Chimie ,CHIMIE1,Chimie 1,30,20,44,17,3.0
+semestre2,MKA,Mécatronique,01,MKA1231,"Algorithmique, programmation digitale technique et TPs ",ALGPRODIG,"Algorithmique, programmat° digitale techniq et TPs",30,20,0,0,20.0
+semestre2,MKA,Mécatronique,01,MKA1232,Bases d’électronique numérique et TPs ,BASELENUM,Bases d’électronique numérique et TPs,30,20,0,0,20.0
+semestre2,MKA,Mécatronique,01,MKA1241,Dessin technique II et géométrie descriptive ,DESTEC2GD,Dessin technique II et géométrie descriptive,30,20,0,0,20.0
+semestre2,MKA,Mécatronique,01,MKA1242,Méthodologie de construction ,METHCONST,Méthodologie de construction,30,20,0,0,20.0
+semestre2,MKA,Mécatronique,01,MKA1251,Notions de bases en CAO/DAO/CFAO ,NOTBASCAO,Notions de bases en CAO/DAO/CFAO,60,40,0,0,40.0
+semestre2,MKA,Mécatronique,01,MKA1261,Mécanique générale II ,MECAGENE2,Mécanique générale II,30,20,0,0,20.0
+semestre2,MKA,Mécatronique,01,MKA1262,Résistance des matériaux (RDM) ,RESISMAT1,Résistance des matériaux I,30,20,0,0,20.0
+semestre2,MKA,Mécatronique,01,MKA1271,Economie et Gestion des entreprises ,ECOORGENT,Economie et Organisation des Entreprises,45,30,0,0,30.0
+semestre1,MKA,Mécatronique,01,XXX0065,Projet académique,PROJACADE,Projet académique,0,30,0,0,30.0
+semestre1,MKA,Mécatronique,01,XXX0066,Travaux dirigés (TD),TRAVDIRIG,Travaux dirigés (TD),0,50,8,0,50.0
+semestre1,MKA,Mécatronique,01,XXX0067,Electronique I et électricité générale,ELECTRONF1,Electronique 1,0,8,44,33,-25.0
+semestre1,MKA,Mécatronique,01,XXX0068,Circuits électriques ,CIRELECTR,Circuits électriques,0,8,12,12,-4.0
+semestre1,MKA,Mécatronique,01,XXX0194,Techniques de mesures,TECHMESUR,TECHNIQUE DE MESURE ,45,30,8,8,22.0
+semestre1,MLS,Medical Laboratory Sciences,01,MLS1111,Cell Biology and histology,CELLBIOLO,Cell Biology,15,12,16,6,6.0
+semestre1,MLS,Medical Laboratory Sciences,01,MLS1112,Anatomy - Physiology I,ANATAPHY1,Anatomy and physiology 1,60,40,52,32,8.0
+semestre1,MLS,Medical Laboratory Sciences,01,MLS1113,General Chemistry,GENECHEME,General Chemistry,15,12,0,0,12.0
+semestre1,MLS,Medical Laboratory Sciences,01,MLS1114,General Computing I,GENECOMP1,General Computing 1,15,12,8,8,4.0
+semestre1,MLS,Medical Laboratory Sciences,01,MLS1121,General Microbiology I,MICROBIOA1,Microbiology I,15,12,0,0,12.0
+semestre1,MLS,Medical Laboratory Sciences,01,MLS1122,General biochemistry,GENBIOCHE,General Biochemistry,30,20,36,6,14.0
+semestre2,MLS,Medical Laboratory Sciences,01,MLS1123,Parasitology,PARASITHO,PARASITOLOGY,15,12,0,0,12.0
+semestre1,MLS,Medical Laboratory Sciences,01,MLS1124,Chemistry,CHEMISTRY,Chemistry,30,20,56,24,-4.0
+semestre1,MLS,Medical Laboratory Sciences,01,MLS1131,Sociology and medical anthropology,SOCANTPHY,Sociology anthopology and physiology,15,12,44,31,-19.0
+semestre1,MLS,Medical Laboratory Sciences,01,MLS1132,Medical Psychology,MEDIPSYCH,Medical Psychology,15,12,0,0,12.0
+semestre1,MLS,Medical Laboratory Sciences,01,MLS1133,Ethics and medical deontology,ETHMEDDEO,Ethics and medical deontology,60,20,28,9,11.0
+semestre1,MLS,Medical Laboratory Sciences,01,MLS1134,ICT,ICT,ICT,22,15,0,0,15.0
+semestre1,MLS,Medical Laboratory Sciences,01,MLS1141,Life Cycle,LIFECYCLE,Life cycle,15,12,24,10,2.0
+semestre1,MLS,Medical Laboratory Sciences,01,MLS1142,Nursing,NURSINCAR,NURSING CARE,30,20,20,20,0.0
+semestre1,MLS,Medical Laboratory Sciences,01,MLS1143,First aid Practice,FIRSTAID1,first aid,15,12,20,0,12.0
+semestre1,MLS,Medical Laboratory Sciences,01,MLS1151,Physics,PHYSICS1,Physics I,15,12,24,7,5.0
+semestre1,MLS,Medical Laboratory Sciences,01,MLS1152,Mathematical,GENEMATH1,General Mathematics 1,15,12,56,36,-24.0
+semestre1,MLS,Medical Laboratory Sciences,01,MLS1153,Biostatistics,BIOSTATI1,Biostatistics 1,30,20,20,19,1.0
+semestre1,MLS,Medical Laboratory Sciences,01,MLS1154,History of the nursing profession ,HISTORYNU,History of nursing profession,15,12,0,0,12.0
+semestre1,MLS,Medical Laboratory Sciences,01,MLS1161,Clinical Internship 1,CLININTE1,Clinical Internship 1,90,60,0,0,60.0
+semestre1,MLS,Medical Laboratory Sciences,01,MLS1171,French ,FRENCH,French,30,30,12,9,21.0
+semestre1,MLS,Medical Laboratory Sciences,01,MLS1172,English,ENGLISH,English,22,15,32,17,-2.0
+semestre2,MLS,Medical Laboratory Sciences,02,MLS1173,Medical French,MEDICFREN,Medical French,30,20,0,0,20.0
+semestre2,MLS,Medical Laboratory Sciences,01,MLS1211,Anatomy and Physiology 2,ANATAPHY2,Anatomy and physiology 2,75,50,0,0,50.0
+semestre2,MLS,Medical Laboratory Sciences,01,MLS1212,Organic Chemistry ,ORGANCHEM,Organic Chemistry,15,12,0,0,12.0
+semestre2,MLS,Medical Laboratory Sciences,01,MLS1221,General Microbiology 2,MICROBIOA2,Microbiology II,15,12,0,0,12.0
+semestre2,MLS,Medical Laboratory Sciences,01,MLS1223,Microbiology II (Virology - Mycology - Immunology),MICROBIOA2,Microbiology II,60,40,0,0,40.0
+semestre2,MLS,Medical Laboratory Sciences,01,MLS1241,IEC 1,IEC,IEC 1,15,12,0,0,12.0
+semestre2,MLS,Medical Laboratory Sciences,01,MLS1242,General hygiene and hospitable,GENHYGHOS,General hygiene and hospitable,30,20,0,0,20.0
+semestre2,MLS,Medical Laboratory Sciences,01,MLS1243,Infectious and parasitic diseases,INFPARDES,Infectious and parasitic desease,45,30,0,0,30.0
+semestre2,MLS,Medical Laboratory Sciences,01,MLS1251,General Pharmacology,GENERPHAR,General Pharmacology,15,12,0,0,12.0
+semestre2,MLS,Medical Laboratory Sciences,01,MLS1252,Nutrition,NUTRIHUMA,Nutrition humaine et pathologies associée,8,8,0,0,8.0
+semestre2,MLS,Medical Laboratory Sciences,01,MLS1253,Epidemiology,EPIDEMIOL,EPIDEMIOLOGY ,15,12,0,0,12.0
+semestre2,MLS,Medical Laboratory Sciences,01,MLS1261,Clinical Internship 2,CLININTE2,Clinical Internship 2,90,60,0,0,60.0
+semestre2,MLS,Medical Laboratory Sciences,01,MLS1271,General Economy,GENECONOM,General Economy,30,20,0,0,20.0
+semestre2,MLS,Medical Laboratory Sciences,01,MLS1272,Demography,DEMGRAPHY,DEMOGRAPHY,15,12,0,0,12.0
+semestre2,MLS,Medical Laboratory Sciences,01,MLS1299,General Parasitology,PARASITHO,PARASITOLOGY,30,30,0,0,30.0
+semestre1,MLS,Medical Laboratory Sciences,01,MLS1371,Technics of Information and Communication 1,COMPUTRAI,Computer training,0,0,0,0,0.0
+semestre1,MLS,Medical Laboratory Sciences,01,MLS1372,Concepts and Theories in Nursing Sciences,CONTHENUR,Concepts and theories in nursing profesion,15,12,0,0,12.0
+semestre1,MLS,Medical Laboratory Sciences,02,MLS2133,ICT2,ICT2,ICT2,22,15,8,8,7.0
+semestre1,MLS,Medical Laboratory Sciences,02,MLS2152,Mathematical,APPLMATHS,Applied Mathematics,15,12,28,23,-11.0
+semestre1,MLS,Medical Laboratory Sciences,02,MLS2171,French ,FRENCH,French,30,30,16,16,14.0
+semestre1,MLS,Medical Laboratory Sciences,02,MLS2222,Practical work ICT,PRAWORICT,Practical Work ICT,100,100,16,12,88.0
+semestre2,MLS,Medical Laboratory Sciences,02,MLS2311,IEC 2,IEC2,Information Education Communication 2 -IEC2,30,20,32,0,20.0
+semestre1,MLS,Medical Laboratory Sciences,02,MLS2312,Health and Development,HEALTHDEV,Health and development,45,30,32,2,28.0
+semestre1,MLS,Medical Laboratory Sciences,02,MLS2313,Community health,COMMUNITY,Community Health,30,20,16,15,5.0
+semestre1,MLS,Medical Laboratory Sciences,02,MLS2315,Biophysique et technologie ,BIOPHYSIC,Biophysics,15,12,16,12,0.0
+semestre1,MLS,Medical Laboratory Sciences,02,MLS2316,Applied Mathematics,APPLMATHS,Applied Mathematics,30,20,28,23,-3.0
+semestre1,MLS,Medical Laboratory Sciences,02,MLS2322,Biostatistics I,BIOSTATI1,Biostatistics 1,30,25,40,21,4.0
+semestre1,MLS,Medical Laboratory Sciences,02,MLS2323,Biostatistics II,BIOSTATI2,Biostatistics 2,30,20,0,0,20.0
+semestre2,MLS,Medical Laboratory Sciences,02,MLS2324,Medical english,MEDICENGL,Medical english,30,20,24,9,11.0
+semestre1,MLS,Medical Laboratory Sciences,02,MLS2325,General Pharmacology,GENERPHAR,General Pharmacology,60,40,52,31,9.0
+semestre1,MLS,Medical Laboratory Sciences,02,MLS2331,Clinical hematology 1,CLINHEMA1,Clinical hematology 1,45,30,76,3,27.0
+semestre2,MLS,Medical Laboratory Sciences,02,MLS2332,Medical Entomology,MEDICENTO,Medical Entomology,15,12,16,7,5.0
+semestre1,MLS,Medical Laboratory Sciences,02,MLS2333,Blood Transfusion,BLOODTRAN,Blood transfusion,15,12,8,8,4.0
+semestre1,MLS,Medical Laboratory Sciences,02,MLS2341,Clinical Biochemistry 1 - Laboratory,CLIBIOCHE1,Clinical Biochemistry 1,60,40,20,3,37.0
+semestre1,MLS,Medical Laboratory Sciences,02,MLS2351,Clinical Bacteriology 1 - Laboratory,BACTERIOL,Bacteriology,45,30,12,2,28.0
+semestre2,MLS,Medical Laboratory Sciences,02,MLS2371,Technology of Information and Communication 1,TECHNINFC,Technology of Information and communication,15,12,0,0,12.0
+semestre1,MLS,Medical Laboratory Sciences,02,MLS2373,Methodology of drafting the internship report,INTERSHIP,INTERSHIP,15,12,0,0,12.0
+semestre2,MLS,Medical Laboratory Sciences,02,MLS2411,Clinical parasitology 1,CLINPATHO,Clinical Parasitology 1,30,20,4,0,20.0
+semestre2,MLS,Medical Laboratory Sciences,02,MLS2412,Medical Mycology,MEDICMYCO,Medical Mycologie,30,20,0,0,20.0
+semestre2,MLS,Medical Laboratory Sciences,02,MLS2413,Immunology / Serology,IMMUNOLOG,Immunology,30,20,0,0,20.0
+semestre2,MLS,Medical Laboratory Sciences,02,MLS2421,The economics of health,ECONHEALT,The economics of health,15,12,0,0,12.0
+semestre2,MLS,Medical Laboratory Sciences,02,MLS2432,Clinical Biochemistry 2,CLIBIOCHE2,Clinical Biochemistry 2,30,20,0,0,20.0
+semestre2,MLS,Medical Laboratory Sciences,02,MLS2441,Hematology clinic 2 - Laboratory,HEMATOLOG,Hematology,30,20,4,0,20.0
+semestre2,MLS,Medical Laboratory Sciences,03,MLS3324,Medical english,MEDICENGL,Medical english,30,20,0,0,20.0
+semestre1,MLS,Medical Laboratory Sciences,03,MLS3511,IEC 3,IEC3,IEC3,30,20,8,0,20.0
+semestre1,MLS,Medical Laboratory Sciences,03,MLS3512,Health Information System,SYSHEAINF,Système health information,30,20,0,0,20.0
+semestre1,MLS,Medical Laboratory Sciences,03,MLS3513,Health management,HEALMANAG,Health management,30,20,8,0,20.0
+semestre1,MLS,Medical Laboratory Sciences,03,MLS3531,Clinical parasitology 2,CLINPARA2,Clinical Parasitology 2,60,40,44,7,33.0
+semestre1,MLS,Medical Laboratory Sciences,03,MLS3532,Clinical hematology 3,CLINHEMA3,Clinical hematology 3,45,30,12,0,30.0
+semestre1,MLS,Medical Laboratory Sciences,03,MLS3541,Clinical Bacteriology 3,CLINBACTE,Clinical Bacteriology 3,30,20,12,0,20.0
+semestre1,MLS,Medical Laboratory Sciences,03,MLS3571,Ethics and Civic education,ETHCIVEDU,Ethics and Civic education,30,20,0,0,20.0
+semestre1,MLS,Medical Laboratory Sciences,03,MLS3572,Labor law,LABORLAW,Labour Law,15,12,16,0,12.0
+semestre2,MLS,Medical Laboratory Sciences,03,MLS3611,Microbiology of the environment,MICROENVA,Microbiologie of the environment,45,30,0,0,30.0
+semestre2,MLS,Medical Laboratory Sciences,03,MLS3612,Microbiology of food,MICROFOOD,Microbiology of food,30,20,0,0,20.0
+semestre2,MLS,Medical Laboratory Sciences,03,MLS3632,Clinical parasitology 3,CLINPARA3,Clinical Parasitology 3,30,20,0,0,20.0
+semestre1,MLS,Medical Laboratory Sciences,02,XXX0011,"Warm welcome, Guiding and Conseilling",WELCOME,"Warm welcome, Guiding and Conseilling",8,8,8,0,8.0
+semestre1,MLS,Medical Laboratory Sciences,01,XXX0012,"Warm welcome, Guiding and Conseilling",WELCOME,"Warm welcome, Guiding and Conseilling",8,8,0,0,8.0
+semestre1,MLS,Medical Laboratory Sciences,02,XXX0013,Tutorials,TUTORIALS,Tutorials,200,200,44,24,176.0
+semestre1,MLS,Medical Laboratory Sciences,01,XXX0014,Tutorials,TUTORIALS,Tutorials,200,200,0,0,200.0
+semestre1,MLS,Medical Laboratory Sciences,03,XXX0015,"Warm welcome, Guiding and Conseilling",WELCOME,"Warm welcome, Guiding and Conseilling",8,8,8,0,8.0
+semestre1,MLS,Medical Laboratory Sciences,03,XXX0016,Tutorials,TUTORIALS,Tutorials,200,200,20,12,188.0
+semestre1,MLS,Medical Laboratory Sciences,03,XXX0161,Clinical pharmacology,CLINPHARMA,Clinical Pharmacololy,0,12,28,10,2.0
+semestre2,MLS,Medical Laboratory Sciences,03,XXX0162,Infectious and parasitic diseases,INFPARDES,Infectious and parasitic desease,45,30,8,4,26.0
+semestre1,MLS,Medical Laboratory Sciences,01,XXX0163,General Mathematics 1,GENEMATH1,General Mathematics 1,15,12,56,36,-24.0
+semestre2,MLS,Medical Laboratory Sciences,02,XXX0164,Infectious and parasitic diseases,INFPARDES,Infectious and parasitic desease,45,30,24,24,6.0
+semestre1,MLS,Medical Laboratory Sciences,03,XXX0165,Elements of health at work,ELEHEAWOR,Elements of health at work,0,12,16,0,12.0
+semestre1,MLS,Medical Laboratory Sciences,03,XXX0166,Elements of school medicine,SCHOMEDEC,Elements of school medicine,0,12,12,8,4.0
+semestre1,MLS,Medical Laboratory Sciences,03,XXX0167,Initiation to research,INITRESEA,Initiation to research,8,8,8,8,0.0
+semestre1,MLS,Medical Laboratory Sciences,02,XXX0196,Simulation,SIMULATIO,Simulation,8,8,4,0,8.0
+semestre1,MLS,Medical Laboratory Sciences,01,XXX0241,Basics of science of nurse 1,BASSCINU1,Basics of science of nurse 1,8,8,16,0,8.0
+semestre1,NUS,Nursing,01,NUS1111,Cell Biology - Histology,CELLBIOLO,Cell Biology,15,12,16,6,6.0
+semestre1,NUS,Nursing,01,NUS1112,Anatomy - Physiology I,ANATAPHY1,Anatomy and physiology 1,60,40,44,28,12.0
+semestre1,NUS,Nursing,01,NUS1113,General Chemistry,CHEMISTRY,Chemistry,15,12,28,20,-8.0
+semestre1,NUS,Nursing,01,NUS1121,Microbiology - Bacteriology,MICROBIOA1,Microbiology I,15,12,0,0,12.0
+semestre1,NUS,Nursing,01,NUS1122,Parasitology,PARASITHO,PARASITOLOGY,15,12,0,0,12.0
+semestre1,NUS,Nursing,01,NUS1123,Biochemistry,GENBIOCHE,General Biochemistry,15,12,24,6,6.0
+semestre1,NUS,Nursing,01,NUS1131,Sociology - Anthropology and Psychology ,SOCANTPHY,Sociology anthopology and physiology,90,60,44,31,29.0
+semestre1,NUS,Nursing,02,NUS1133,ICT,ICT,ICT,22,15,28,26,-11.0
+semestre1,NUS,Nursing,01,NUS1141,Concepts and Theories in Nursing Sciences,CONTHENUR,Concepts and theories in nursing profesion,30,20,0,0,20.0
+semestre1,NUS,Nursing,01,NUS1151,History of the nursing profession ,HISTORYNU,History of nursing profession,15,12,12,0,12.0
+semestre1,NUS,Nursing,01,NUS1152,Life Cycle,LIFECYCLE,Life cycle,30,20,24,10,10.0
+semestre1,NUS,Nursing,01,NUS1171,French ,FRENCH,French,30,30,0,0,30.0
+semestre1,NUS,Nursing,01,NUS1172,English,ENGLISH,English,22,15,24,17,-2.0
+semestre2,NUS,Nursing,02,NUS1173,Medical French,MEDICFREN,Medical French,30,20,0,0,20.0
+semestre2,NUS,Nursing,01,NUS1221,Microbiology II (Virology - Mycology - Immunology),MICROBIOA2,Microbiology II,60,40,0,0,40.0
+semestre2,NUS,Nursing,01,NUS1231,Approach of care,APPROCHCA,APPROCH OF CARE,15,12,0,0,12.0
+semestre2,NUS,Nursing,01,NUS1232,Planning care ,PLANNCARE,Planning care,30,20,0,0,20.0
+semestre2,NUS,Nursing,01,NUS1233,First aid,FIRSTAID1,first aid,30,20,20,0,20.0
+semestre2,NUS,Nursing,01,NUS1241,Care in Medicine,NURSINCAR,NURSING CARE,30,20,20,20,0.0
+semestre2,NUS,Nursing,01,NUS1242,Ethics and Professional Deontology,ETHMEDDEO,Ethics and medical deontology,30,20,28,9,11.0
+semestre2,NUS,Nursing,01,NUS1251,Epidemiology,EPIDEMIOL,EPIDEMIOLOGY ,15,12,0,0,12.0
+semestre2,NUS,Nursing,01,NUS1252,Demography,DEMGRAPHY,DEMOGRAPHY,8,8,0,0,8.0
+semestre2,NUS,Nursing,01,NUS1253,Environmental Health,ENVIRHEAL,Environnemental Health,22,15,0,0,15.0
+semestre2,NUS,Nursing,01,NUS1261,Medicine Course in paediatric II,MEDCOUPE2,Medecine Course in paediatric II,90,60,0,0,60.0
+semestre2,NUS,Nursing,01,NUS1271,Technics of Information and Communication 1,TECHNINFC,Technology of Information and communication,15,12,0,0,12.0
+semestre1,NUS,Nursing,01,NUS1273,Biostatistics,BIOSTATI1,Biostatistics 1,15,10,20,19,-9.0
+semestre1,NUS,Nursing,01,NUS1323,Academic project,PROJACADE,Projet académique,45,30,0,0,30.0
+semestre1,NUS,Nursing,01,NUS1373,Methodology of drafting the internship report,INTERSHIP,INTERSHIP,15,12,0,0,12.0
+semestre1,NUS,Nursing,01,NUS1374,Medical english,MEDICENGL,Medical english,30,20,0,0,20.0
+semestre1,NUS,Nursing,02,NUS2133,ICT2,ICT2,ICT2,22,15,12,12,3.0
+semestre1,NUS,Nursing,02,NUS2171,French ,FRENCH,French,30,30,16,16,14.0
+semestre1,NUS,Nursing,02,NUS2172,English ,MEDICENGL,Medical english,15,12,24,9,3.0
+semestre1,NUS,Nursing,02,NUS2222,Practical work ICT,PRAWORICT,Practical Work ICT,100,100,16,12,88.0
+semestre2,NUS,Nursing,02,NUS2272,Technique of information and communication 2,TECHNINFC,Technology of Information and communication,15,12,0,0,12.0
+semestre1,NUS,Nursing,02,NUS2311,Applied Mathematics,APPLMATHS,Applied Mathematics,30,20,36,23,-3.0
+semestre1,NUS,Nursing,02,NUS2312,Biostatistics ,BIOSTATI1,Biostatistics 1,30,20,40,21,-1.0
+semestre1,NUS,Nursing,02,NUS2313,Biophysics and technology,BIOPHYSIC,Biophysics,15,12,16,12,0.0
+semestre1,NUS,Nursing,02,NUS2314,IEC 2,IEC2,Information Education Communication 2 -IEC2,30,20,32,0,20.0
+semestre1,NUS,Nursing,02,NUS2321,General Pharmacology,GENERPHAR,General Pharmacology,60,40,56,35,5.0
+semestre1,NUS,Nursing,02,NUS2331,Care in surgery,CAREINSUR,Care in Surgery,15,12,4,0,12.0
+semestre1,NUS,Nursing,02,NUS2332,Blood transfusion,BLOODTRAN,Blood transfusion,8,8,8,8,0.0
+semestre1,NUS,Nursing,02,NUS2333,Care in Pediatrics,CAREPEDIAT,Care in Pediatric,15,12,12,0,12.0
+semestre1,NUS,Nursing,02,NUS2334,Child care,CHIDCARE,Chid Care,8,8,8,3,5.0
+semestre1,NUS,Nursing,02,NUS2335,Obstetrical care and gynecologic,OBSTETGEN,Obstetrical and Genicology,15,12,0,0,12.0
+semestre1,NUS,Nursing,02,NUS2342,Intrapartum Care,INTPARTU2,Intra partum,8,8,4,4,4.0
+semestre1,NUS,Nursing,02,NUS2343,Post-partum care to,POSPARTU2,Post partum,8,8,16,4,4.0
+semestre1,NUS,Nursing,02,NUS2344,Care of new-born,CARNEWBOR,Care of new born,8,8,16,1,7.0
+semestre1,NUS,Nursing,02,NUS2345,Breast-feeding,BREASTFEE,Breast feeding,8,8,8,8,0.0
+semestre1,NUS,Nursing,02,NUS2346,Artificial feeding,ARTIFEEDI,Artificial feeding,8,8,8,0,8.0
+semestre1,NUS,Nursing,02,NUS2347,Gynecological Care,GYNCOLCAR,Gynecological care,15,12,16,12,0.0
+semestre1,NUS,Nursing,02,NUS2351,Infectious diseases and parasitic diseases,INFPARDES,Infectious and parasitic desease,30,20,36,24,-4.0
+semestre1,NUS,Nursing,02,NUS2352,Infectious pathology localized,INFPATLOC,infectious pathologies localize,8,8,12,4,4.0
+semestre1,NUS,Nursing,02,NUS2353,Surgical pathologies,SURGPATHO,Surgical Pathologies,8,8,0,0,8.0
+semestre1,NUS,Nursing,02,NUS2354,Pathologies by system,PATHOLOGI,Pathologies by system,15,12,20,12,0.0
+semestre1,NUS,Nursing,02,NUS2373,Methodology of drafting the internship report,METDRAINT,Methodology of drafting the internship report,15,12,0,0,12.0
+semestre1,NUS,Nursing,02,NUS2374,Medical english,MEDICENGL,Medical english,30,20,24,9,11.0
+semestre1,NUS,Nursing,02,NUS2411,Communication for behavior change II,COMMUBEH2,Communication for behavior change2,15,12,0,0,12.0
+semestre2,NUS,Nursing,02,NUS2412,Community health,COMMUNITY,Community Health,30,20,16,15,5.0
+semestre2,NUS,Nursing,02,NUS2413,Health and Development,HEALTHDEV,Health and development,15,12,32,2,10.0
+semestre2,NUS,Nursing,02,NUS2422,Medical Imaging,MEDIMAGIG,MEDICAL IMAGING ,15,12,0,0,12.0
+semestre2,NUS,Nursing,02,NUS2431,Obstetrical pathologies,OBSTRPATH,Obstrical Pathology,45,30,0,0,30.0
+semestre2,NUS,Nursing,02,NUS2432,Gynecological pathologies,GYNEPATHO,Gynecological Pathologies,30,20,0,0,20.0
+semestre2,NUS,Nursing,02,NUS2441,Nursing care to emergencies,NUSCAREME,Nusing Care to Emergency,15,12,0,0,12.0
+semestre2,NUS,Nursing,02,NUS2442,Nursing care to the block operator,NUSCAROPR,Nursing care to the bloc oparator,30,20,0,0,20.0
+semestre2,NUS,Nursing,02,NUS2443,Nursing care in anesthesia,NUSCARASE,Nursing care to Anesthesia,15,12,0,0,12.0
+semestre2,NUS,Nursing,02,NUS2452,Human Nutrition and pathologies associated,HUMNUTPAT,Human Nutrition and pathology associated,30,20,0,0,20.0
+semestre2,NUS,Nursing,03,NUS3272,Technologie of information and communication 2,COMPUTRAI,Computer training,15,12,0,0,12.0
+semestre1,NUS,Nursing,03,NUS3373,Methodology of drafting the internship report,METDRAINT,Methodology of drafting the internship report,15,12,4,4,8.0
+semestre1,NUS,Nursing,03,NUS3511,The health programs in Cameroon ,PRIOHEATH,The priority Program of Health in Cameroon,30,20,28,16,4.0
+semestre1,NUS,Nursing,03,NUS3512,CBC III (Communication for behavior change (III),CBC3,CBC3-Communication for behavior change,30,20,20,12,8.0
+semestre1,NUS,Nursing,03,NUS3521,The economics of health,ECONHEALT,The economics of health,30,20,24,20,0.0
+semestre1,NUS,Nursing,03,NUS3522,Hospital management,HOSPITMAN,hospital Management,30,20,16,13,7.0
+semestre1,NUS,Nursing,03,NUS3523,Health Information System,SYSHEAINF,Système health information,15,12,16,2,10.0
+semestre1,NUS,Nursing,03,NUS3531,Mental health and Nursing care in psychiatry,MENTALHEA,Mental health,15,12,20,10,2.0
+semestre1,NUS,Nursing,03,NUS3532,Geriatrics and care for the elderly,GERIANUSI,Geriatric Nursing,15,12,12,8,4.0
+semestre1,NUS,Nursing,03,NUS3533,Clinical Pharmacology,CLINPHARMA,Clinical Pharmacololy,15,12,28,10,2.0
+semestre1,NUS,Nursing,03,NUS3534,Therapeutic monitoring,THERAMONI,Therapeutic Monitoring,30,20,32,1,19.0
+semestre1,NUS,Nursing,03,NUS3539,Clinical experience,CLINEXPER,Clinical experience,15,12,12,0,12.0
+semestre1,NUS,Nursing,03,NUS3541,Resuscitation,PERSONRES,Person in resuscitation,15,12,12,12,0.0
+semestre1,NUS,Nursing,03,NUS3551,Internship Community Health II,COMMUNITY,Community Health,90,60,0,0,60.0
+semestre1,NUS,Nursing,03,NUS3561,Internship of clinical health V,INTCLIHEA,Internship of clinical health V,90,60,0,0,60.0
+semestre1,NUS,Nursing,03,NUS3571,Elements of labor law,LABORLAW,Labour Law,15,12,20,0,12.0
+semestre1,NUS,Nursing,03,NUS3572,The elements of health at work,ELEHEAWOR,Elements of health at work,15,12,16,0,12.0
+semestre1,NUS,Nursing,03,NUS3573,Elements of school medicine,SCHOMEDEC,Elements of school medicine,15,12,20,15,-3.0
+semestre1,NUS,Nursing,03,NUS3574,Labor law,LABORLAW,Labour Law,15,12,20,0,12.0
+semestre2,NUS,Nursing,03,NUS3611,Technics of specific care 1,TECHCASPE,Technical care specific 1,75,50,12,8,42.0
+semestre2,NUS,Nursing,03,NUS3621,Technics of specific care 2,TECHCARPE,Technical care specific 2,60,40,0,0,40.0
+semestre2,NUS,Nursing,03,NUS3624,Medical english,MEDICENGL,Medical english,30,20,0,0,20.0
+semestre2,NUS,Nursing,03,NUS3631,Implementation in the Professional Situation 1,IMPPROSIT,Implementation Profetionnal Situation 1,60,40,0,0,40.0
+semestre2,NUS,Nursing,03,NUS3641,Implementation in the professional situation 2,IMPLEMENT,Implementation II,45,30,0,0,30.0
+semestre2,NUS,Nursing,03,NUS3651,Implementation in the professional situation 3,IMPLEMEN3,Implementation III,90,60,0,0,60.0
+semestre2,NUS,Nursing,03,NUS3652,School Medecine,SCHOMEDEC,Elements of school medicine,15,12,20,15,-3.0
+semestre2,NUS,Nursing,03,NUS3661,Drafting of the research project,DAVRESPRO,Drafting of the research project,75,50,0,0,50.0
+semestre2,NUS,Nursing,03,NUS3671,Professional ethics and deontology ,ETHMEDDEO,Ethics and medical deontology,30,12,0,0,12.0
+semestre2,NUS,Nursing,03,NUS3672,ANGLAIS,ANGLAMEDI,Anglais médical,15,12,0,0,12.0
+semestre1,NUS,Nursing,02,XXX0009,"Warm welcome, Guiding and Conseilling",WELCOME,"Warm welcome, Guiding and Conseilling",8,8,8,0,8.0
+semestre1,NUS,Nursing,02,XXX0010,Tutorials,TUTORIALS,Tutorials,200,200,56,28,172.0
+semestre1,NUS,Nursing,03,XXX0017,Tutorials,TUTORIALS,Tutorials,200,200,64,24,176.0
+semestre1,NUS,Nursing,03,XXX0038,Projects,PROJECTS,Projects,8,8,20,0,8.0
+semestre1,NUS,Nursing,03,XXX0049,Health tutorials,PRIOHEATH,The priority Program of Health in Cameroon,200,200,28,16,184.0
+semestre1,NUS,Nursing,03,XXX0051,Health Tutorials,HEALTUTOR,Health Tutorials,200,200,4,0,200.0
+semestre2,NUS,Nursing,03,XXX0168,Initiation to research,INITRESEA,Initiation to research,15,12,12,12,0.0
+semestre1,NUS,Nursing,03,XXX0169,Infectious diseases and parasitic diseases,INFPARDES,Infectious and parasitic desease,30,20,8,4,16.0
+semestre1,NUS,Nursing,03,XXX0195,Pratical,PRATICE,Pratice,200,200,8,0,200.0
+semestre1,NUS,Nursing,02,XXX0197,Simulation,SIMULATIO,Simulation,8,8,4,0,8.0
+semestre1,NUS,Nursing,03,XXX0198,Simulation,SIMULATIO,Simulation,8,8,4,0,8.0
+semestre1,NUS,Nursing,01,XXX0223,Biostatistics,BIOSTATI1,Biostatistics 1,30,20,20,19,1.0
+semestre1,NUS,Nursing,01,XXX0242,Basics of science of nurse 1,BASSCINU1,Basics of science of nurse 1,8,8,16,0,8.0
+semestre1,QMA,Quality Management  ,01,QMA1112,General computing I,GENECOMP1,General Computing 1,30,20,0,0,20.0
+semestre2,QMA,Quality Management  ,02,QMA2472,Labor law,LABORLAW,Labour Law,30,20,0,0,20.0
+semestre1,RES,Réseau Et Sécurité,01,RES1123,Physique générale ,PHYSIGENE,Physique générale,30,20,0,0,20.0
+semestre1,RES,Réseau Et Sécurité,01,RES1191,Expression anglaise,ANGLAIS,Anglais,30,20,0,0,20.0
+semestre1,RES,Réseau Et Sécurité,01,RES1192,EXPRESSION FRANCAISE,FRANCAIS2,Francais,15,12,0,0,12.0
+semestre1,RES,Réseau Et Sécurité,02,RES2123,Optique pour les Télécoms,OPTTELECO,Optique pour les Télécoms,30,20,0,0,20.0
+semestre1,RES,Réseau Et Sécurité,02,RES2191,EXPRESSION ANGLAISE,EXPREANGL,Expression anglaise,30,20,0,0,20.0
+semestre1,RES,Réseau Et Sécurité,02,RES2311,Probabilité ,PROBABILI,Probabilité,30,20,0,0,20.0
+semestre1,RES,Réseau Et Sécurité,02,RES2312,Outils scientifiques de base III,ANAMATHE3,Analyse mathématique III,30,30,0,0,30.0
+semestre1,RES,Réseau Et Sécurité,02,RES2321,Système d’exploitation ,SYSTEXPLO,Système d’exploitation,45,30,0,0,30.0
+semestre1,RES,Réseau Et Sécurité,02,RES2322,Propagation des ondes ,PROPAONDE,Propagation des ondes,30,20,0,0,20.0
+semestre1,RES,Réseau Et Sécurité,01,RES2323,Projet académique,PROJACADE,Projet académique,45,30,0,0,30.0
+semestre1,RES,Réseau Et Sécurité,02,RES2331,Téléphonie (RTC/RNIS) ,TELRTCRNI,Téléphonie (RTC/RNIS),45,30,0,0,30.0
+semestre1,RES,Réseau Et Sécurité,02,RES2332,Téléphonie sur IP ,TELEPHOIP,Téléphonie sur IP,45,30,0,0,30.0
+semestre1,RES,Réseau Et Sécurité,02,RES2341,Transmission sur fibre optique ,TRAFIBOPT,Transmission sur fibre optique,45,30,0,0,30.0
+semestre1,RES,Réseau Et Sécurité,02,RES2342,Modulation numérique et notion de compression ,MODNUMCOM,Modulation numérique et notion de compression,30,20,0,0,20.0
+semestre1,RES,Réseau Et Sécurité,02,RES2351,Réseaux étendu et technologie IP ,RESETENDU,Réseau étendu et technologie IP,30,20,0,0,20.0
+semestre1,RES,Réseau Et Sécurité,02,RES2352,TP Réseaux ,TPRESEAUX,TP Réseaux ,15,12,0,0,12.0
+semestre1,RES,Réseau Et Sécurité,02,RES2361,Administration des Système d’Exploitation réseaux ,ADMSYSEXP,Administration des Système d’Exploitation réseaux,45,30,0,0,30.0
+semestre1,RES,Réseau Et Sécurité,02,RES2362,Authentification et service d’annuaires ,AUTSERANN,Authentification et service d’annuaires,30,20,0,0,20.0
+semestre1,RES,Réseau Et Sécurité,02,RES2371,Création d’Entreprise ,ENTREPREN,Entreprenariat,30,20,0,0,20.0
+semestre1,RES,Réseau Et Sécurité,02,RES2372,Education civique et éthique ,EDUCIVETH,Education civique et éthique,15,12,0,0,12.0
+semestre2,RES,Réseau Et Sécurité,02,RES2411,Outils scientifiques de base IV,ANAMATHE4,Analyse mathématique IV,30,20,0,0,20.0
+semestre2,RES,Réseau Et Sécurité,02,RES2421,Base de données ,BASEDEDON,Base de données,45,30,0,0,30.0
+semestre2,RES,Réseau Et Sécurité,02,RES2422,Informatique générale II ,INFORGEN2,Informatique générale II,75,50,0,0,50.0
+semestre2,RES,Réseau Et Sécurité,02,RES2431,Traitement analogique et numérique du signal ,ANANUMSIG,Analogique et numérique du signal,30,20,0,0,20.0
+semestre2,RES,Réseau Et Sécurité,02,RES2432,Réseaux locaux sans fil ,RESLOCSAF,Réseaux locaux sans fil,30,20,0,0,20.0
+semestre2,RES,Réseau Et Sécurité,02,RES2433,Veille technologique ,VEILLETEC,Veille technologique,15,12,0,0,12.0
+semestre2,RES,Réseau Et Sécurité,02,RES2441,Les réseaux de transmission ,RESEATRAN,Réseau de Transmission ,30,20,0,0,20.0
+semestre2,RES,Réseau Et Sécurité,02,RES2442,Application client-serveur et Web ,APPCLISER,Application client-serveur et Web,30,20,0,0,20.0
+semestre2,RES,Réseau Et Sécurité,02,RES2451,Réseaux mobiles ,RESEMOBIL,Réseaux mobiles,30,20,0,0,20.0
+semestre2,RES,Réseau Et Sécurité,02,RES2452,Sécurité avancée des réseaux ,SECAVARES,Sécurité avancée des réseaux,30,20,0,0,20.0
+semestre2,RES,Réseau Et Sécurité,02,RES2461,Stage professionnel ,STAGEPROF,Stage professionnel,90,60,0,0,60.0
+semestre2,RES,Réseau Et Sécurité,02,RES2471,Economie générale ,ECOORGENT,Economie et Organisation des Entreprises,45,30,0,0,30.0
+semestre1,SFM,Sages Femmes,04,LSF4010, Préparation Psychoprophylactique À L’Accouchement,PRESPYACC,Préparation Psychoprophylactique À L’Accouchement,12,12,12,12,0.0
+semestre1,SFM,Sages Femmes,04,LSF4032, Diagnostic Anténatal Et Médecine Fœtale,DIAANTMED,Diagnostic Anténatal Et Médecine Fœtale,12,12,4,4,8.0
+semestre2,SFM,Sages Femmes,04,LSF4042, Environnement Juridique,ENVIJURID,Environnement juridique,12,12,8,0,12.0
+semestre1,SFM,Sages Femmes,04,LSF4050," Santé Génésique Des Femmes, Pharmacologie",SANGENFEM,"Santé Génésique Des Femmes, Pharmacologie",16,16,24,15,1.0
+semestre1,SFM,Sages Femmes,04,LSF4070," Soins De La Maternité, Sante De La Reproduction Et Pédiatrie",SOIMATSRP,"Soins De La Maternité, Sante De La Reproduction Et Pédiatrie",16,16,20,16,0.0
+semestre1,SFM,Sages Femmes,04,LSF4090," Suivi Prénatal, Et Postnatal",SUIPREPOS,"Suivi Prénatal, Et Postnatal",16,16,12,11,5.0
+semestre2,SFM,Sages Femmes,04,LSF4110, Projet De Recherche,PRORECHER,Projet de recherche,12,12,4,3,9.0
+semestre1,SFM,Sages Femmes,04,LSF4112, Droit et législation,DROIETLEG,Droit Et Législation,16,16,20,0,16.0
+semestre1,SFM,Sages Femmes,04,LSF4113, Gestion Hospitalière,GESTHOSPI,Gestion Hospitalieres,16,16,12,10,6.0
+semestre1,SFM,Sages Femmes,01,SFM1111,Biologie cellulaire et histologie ,BIOLOGCEL,Biologie cellulaire,15,12,12,12,0.0
+semestre1,SFM,Sages Femmes,01,SFM1112,Anatomie -Physiologie 1 ,ANATPHYS1,Anatomie et Physiologie 1,45,30,60,40,-10.0
+semestre1,SFM,Sages Femmes,01,SFM1113,Embryologie ,EMBRYOLOG,Embryologie ,15,12,0,0,12.0
+semestre1,SFM,Sages Femmes,01,SFM1114,Biologie de la reproduction ,BIOLREPRO,Biologie de la reproduction ,15,12,0,0,12.0
+semestre1,SFM,Sages Femmes,01,SFM1121,Puériculture ,PUECULTUR,Puericulture,15,12,24,7,5.0
+semestre1,SFM,Sages Femmes,01,SFM1122,Nutrition ,NUTRIHUMA,Nutrition humaine et pathologies associée,15,12,12,8,4.0
+semestre1,SFM,Sages Femmes,01,SFM1123,Diététique ,DIETETIQU,Diététique ,15,12,0,0,12.0
+semestre1,SFM,Sages Femmes,01,SFM1131,Histoire de la profession de la sage-femme,HISPROINF,Histoire de la Profession Infirmière ,15,12,28,12,0.0
+semestre1,SFM,Sages Femmes,01,SFM1132,Éthique et déontologie professionnelle ,ETHIQDEON,Ethique et déonthologie,15,12,48,21,-9.0
+semestre1,SFM,Sages Femmes,01,SFM1133,Soins infirmiers de base ,SOININFIM,Soins infirmiers + TP,45,40,32,0,40.0
+semestre1,SFM,Sages Femmes,01,SFM1141,Législation professionnelle ,LEGIPROFE,Législation professionnelle ,15,12,0,0,12.0
+semestre1,SFM,Sages Femmes,01,SFM1142,Système national de santé / Politique de santé ,SYSNATSAN,Système national de santé / Politique de santé ,15,12,0,0,12.0
+semestre1,SFM,Sages Femmes,01,SFM1143,Microbiologie ,MICROBIOF1,Microbiologie I,15,12,12,12,0.0
+semestre1,SFM,Sages Femmes,01,SFM1151,Pharmacologie générale ,PHARMAGEN,Pharmacologie générale,15,12,0,0,12.0
+semestre1,SFM,Sages Femmes,01,SFM1152,Hématologie ,HEMATHOCL,Hémathologie clinique,15,12,0,0,12.0
+semestre1,SFM,Sages Femmes,01,SFM1153,Pathologie générale ,PATHGENER,Pathologie générale ,60,40,0,0,40.0
+semestre1,SFM,Sages Femmes,01,SFM1161,Psychologie-sociologie ,PSYCHOLOG,Psychologie,15,12,0,0,12.0
+semestre1,SFM,Sages Femmes,01,SFM1162,Éducation pour la santé ,EDUCSANTE,Éducation pour la santé ,15,12,0,0,12.0
+semestre1,SFM,Sages Femmes,01,SFM1163,Prévention des infections ,PREVINFEC,Prévention des infections ,15,12,0,0,12.0
+semestre1,SFM,Sages Femmes,01,SFM1171,Méthode de travail ,METHTRAVA,Méthode de travail ,15,12,0,0,12.0
+semestre1,SFM,Sages Femmes,01,SFM1172,Langue officielle 1 ,LANGOFFIC,Langue officielle 1 ,15,12,0,0,12.0
+semestre1,SFM,Sages Femmes,01,SFM1173,Techniques de l’information et de la communication 1 ,INFORGEN1,Informatique Général 1,15,12,0,0,12.0
+semestre2,SFM,Sages Femmes,01,SFM1211,Anatomie physiologie 2 ,ANATPHYS2,Anatomie et Physiologie 2,60,40,0,0,40.0
+semestre2,SFM,Sages Femmes,01,SFM1212,Sémiologie ,SEMIOGEN,Semiologie generale,15,12,0,0,12.0
+semestre2,SFM,Sages Femmes,01,SFM1213,Pharmacologie spéciale ,PHARSPECI,Pharmacologie spéciale ,15,12,0,0,12.0
+semestre2,SFM,Sages Femmes,01,SFM1221,Techniques de laboratoire ,TECHLABOR,TECHNIQUE DE LABORATOIRE ,15,12,0,0,12.0
+semestre2,SFM,Sages Femmes,01,SFM1222,Biochimie clinique ,BIOCHICLI1,Biochimie Clinique 1 – Laboratoire ,15,12,12,12,0.0
+semestre2,SFM,Sages Femmes,01,SFM1223,Parasitologie/Mycologie ,PARASITOL,Parasitologie,15,12,32,17,-5.0
+semestre2,SFM,Sages Femmes,01,SFM1231,Grossesse ,GROSSESSE,Grossesse ,15,12,0,0,12.0
+semestre2,SFM,Sages Femmes,01,SFM1232,Suivi-prénatal ,SUIVPRENA,Suivi-prénatal ,15,12,0,0,12.0
+semestre2,SFM,Sages Femmes,01,SFM1233,Accouchement en présentation du sommet ,ACCPRESOM,Accouchement en présentation du sommet ,15,12,0,0,12.0
+semestre2,SFM,Sages Femmes,01,SFM1234,Suivi post natal ,SOINSPOPA,Soins posts partum,15,12,0,0,12.0
+semestre2,SFM,Sages Femmes,01,SFM1241,Communication pour le développement ,COMDEVPT,Communication pour le développement ,15,12,0,0,12.0
+semestre2,SFM,Sages Femmes,01,SFM1242,Éducation à la vie familiale ,EDUVIEFAM,Éducation à la vie familiale ,15,12,0,0,12.0
+semestre2,SFM,Sages Femmes,01,SFM1243,Soins de base à la naissance/Néonatologie ,SOINSANNE,Soins aux NNE,15,12,0,0,12.0
+semestre2,SFM,Sages Femmes,01,SFM1251,Soins de santé primaire ,SOISANPRI,Soins de santé primaire ,15,12,0,0,12.0
+semestre2,SFM,Sages Femmes,01,SFM1252,Soins infirmiers/Obstétricaux/Néonataux de base ,URGENOBST,Urgences Obstéricales et néonatales,15,12,0,0,12.0
+semestre2,SFM,Sages Femmes,01,SFM1253,Hygiène et assainissement ,HYGASSAIN,Hygiène et assainissement ,15,12,0,0,12.0
+semestre2,SFM,Sages Femmes,01,SFM1254,Secourisme ,SECOURISM,Secourisme,15,12,0,0,12.0
+semestre2,SFM,Sages Femmes,01,SFM1261,Activités ,ACTIVITES,Activités ,90,60,0,0,60.0
+semestre2,SFM,Sages Femmes,01,SFM1271,Démarche des soins ,DEMARSOIN,Demarche de Soins ,15,12,0,0,12.0
+semestre2,SFM,Sages Femmes,01,SFM1272,Genre ,GENRE,Genre ,15,12,0,0,12.0
+semestre2,SFM,Sages Femmes,01,SFM1273,Droits humains ,DROIHUMAI,Droits humains ,15,12,0,0,12.0
+semestre1,SFM,Sages Femmes,01,XXX0111,Anglais,ANGLAIS,Anglais,15,12,28,16,-4.0
+semestre1,SFM,Sages Femmes,01,XXX0112,Français ,FRANCAIS2,Francais,15,12,16,16,-4.0
+semestre1,SFM,Sages Femmes,01,XXX0113,Travaux dirigés (TD),TRAVDIRIG,Travaux dirigés (TD),50,50,8,0,50.0
+semestre1,SFM,Sages Femmes,01,XXX0192,Cycle de vie ,CYCLDEVIE,Cycle de vie ,30,20,16,16,4.0
+semestre1,SFM,Sages Femmes,01,XXX0193,Chimie générale ,CHIMIEGEN,Chimie generale,15,12,12,12,0.0
+semestre1,SFM,Sages Femmes,01,XXX0200,Physiques,PHYSIQUES,Physiques,50,50,16,14,36.0
+semestre1,SFM,Sages Femmes,01,XXX0201,Concepts et théories en sciences infirmières ,CONTHESCI,Concept et théorie et science infirmière ,30,20,20,20,0.0
+semestre1,SFM,Sages Femmes,01,XXX0202,Mathématiques,MATMATIQ1,Mathématiques I,15,12,24,11,1.0
+semestre2,SFM,Sages Femmes,01,XXX0235,Atelier Orientation,ATELORIENT,Atelier Orientation,15,12,8,0,12.0
+semestre1,SIN,Soins Infirmiers,04,LSI4010, Fondamentaux Des Soins Infirmiers,FONSOIINF,Fondamentaux Des Soins Infirmiers,16,16,20,12,4.0
+semestre1,SIN,Soins Infirmiers,04,LSI4020, Gestion De La Santé,GESTSANTE,Gestion De La Santé,16,16,8,4,12.0
+semestre1,SIN,Soins Infirmiers,04,LSI4031, Soins Infirmiers Médicaux,SOIINFMED,Soins Infirmiers Médicaux,12,12,8,8,4.0
+semestre1,SIN,Soins Infirmiers,04,LSI4032, Soins Infirmiers Chirurgicaux,SOIINFCHI,Soins Infirmiers Chirurgicaux,12,12,12,0,12.0
+semestre1,SIN,Soins Infirmiers,04,LSI4050, Soins Intensifs Et Urgences Médicales ,SOIINTURM,Soins Intensifs Et Urgences Médicales,16,16,4,0,16.0
+semestre2,SIN,Soins Infirmiers,04,LSI4062, Environnement Juridique,ENVIJURID,Environnement juridique,12,12,8,0,12.0
+semestre1,SIN,Soins Infirmiers,04,LSI4070," Soins Maternels, Santé Reproductive Et Pédiatrie ",SOIMATSRP,"Soins De La Maternité, Sante De La Reproduction Et Pédiatrie",16,16,20,16,0.0
+semestre2,SIN,Soins Infirmiers,04,LSI4110, Projet De Recherche,PRORECHER,Projet de recherche,12,12,0,0,12.0
+semestre1,SIN,Soins Infirmiers,01,SIN1111,Biologie cellulaire - Histologie ,BIOLOGCEL,Biologie cellulaire,15,12,12,12,0.0
+semestre1,SIN,Soins Infirmiers,01,SIN1112,Anatomie - Physiologie I ,ANATPHYS1,Anatomie et Physiologie 1,60,40,60,40,0.0
+semestre1,SIN,Soins Infirmiers,01,SIN1113,Chimie générale ,CHIMIEGEN,Chimie generale,15,12,12,12,0.0
+semestre1,SIN,Soins Infirmiers,01,SIN1121,Microbiologie - Bactériologie ,MICROBIOF1,Microbiologie I,15,12,12,12,0.0
+semestre1,SIN,Soins Infirmiers,01,SIN1122,Parasitologie ,PARASITOL,Parasitologie,15,12,32,17,-5.0
+semestre1,SIN,Soins Infirmiers,01,SIN1123,Biochimie ,BIOCHIMIE,Biochimie,15,12,4,4,8.0
+semestre1,SIN,Soins Infirmiers,01,SIN1131,Sociologie - Anthropologie et Psychologie ,ANTPHYSOC,Anthropologie physiologique et sociologieque,90,60,32,28,32.0
+semestre1,SIN,Soins Infirmiers,01,SIN1141,Concepts et théories en sciences infirmières ,CONTHESCI,Concept et théorie et science infirmière ,30,20,20,20,0.0
+semestre1,SIN,Soins Infirmiers,01,SIN1151,Histoire de la profession infirmière ,HISPROINF,Histoire de la Profession Infirmière ,15,12,12,12,0.0
+semestre1,SIN,Soins Infirmiers,01,SIN1152,Cycle de vie ,CYCLDEVIE,Cycle de vie ,30,20,16,16,4.0
+semestre1,SIN,Soins Infirmiers,01,SIN1161,Stage clinique I (médecine-pédiatrie) ,STAGECLI2,Stage clinique II,900,60,0,0,60.0
+semestre1,SIN,Soins Infirmiers,01,SIN1171,Anglais ,ANGLAIS,Anglais,15,12,28,16,-4.0
+semestre1,SIN,Soins Infirmiers,01,SIN1172,Technique de l’information et de la communication ,TECINFCOM,TIC,15,12,16,0,12.0
+semestre1,SIN,Soins Infirmiers,01,SIN1173,Français médical ,FRANCMEDI,Francais médical,15,12,0,0,12.0
+semestre2,SIN,Soins Infirmiers,01,SIN1211,Système cardiovasculaire ,SYSCARVAS,Système cardiovasculaire ,15,12,0,0,12.0
+semestre2,SIN,Soins Infirmiers,01,SIN1212,Système respiratoire ,SYSTRESPI,Système respiratoire ,15,12,0,0,12.0
+semestre2,SIN,Soins Infirmiers,01,SIN1213,Système digestif ,SYSTDIGES,Système digestif ,15,12,0,0,12.0
+semestre2,SIN,Soins Infirmiers,01,SIN1214,Système génito-urinaire (femme-homme) ,SYSGENURI,Système génito-urinaire (femme-homme) ,30,20,0,0,20.0
+semestre2,SIN,Soins Infirmiers,01,SIN1221,Microbiologie II (Virologie - Mycologie - Immunologie) ,MICROBIOF2,Microbiologie II,60,40,0,0,40.0
+semestre2,SIN,Soins Infirmiers,01,SIN1231,Démarche des soins ,DEMARSOIN,Demarche de Soins ,15,12,0,0,12.0
+semestre2,SIN,Soins Infirmiers,01,SIN1232,Planification des soins ,PLANSOINS,Planification des Soins ,30,20,0,0,20.0
+semestre2,SIN,Soins Infirmiers,01,SIN1233,Premiers secours ,PREMSECOU,Premier Secours,30,20,0,0,20.0
+semestre2,SIN,Soins Infirmiers,01,SIN1241,Soins en médecine ,SOINMEDEC,Soins en médecine,30,20,20,3,17.0
+semestre2,SIN,Soins Infirmiers,01,SIN1242,Ethique et déontologie professionnelle,ETHIQDEON,Ethique et déonthologie,30,20,48,21,-1.0
+semestre2,SIN,Soins Infirmiers,01,SIN1251,Épidémiologie ,EPIDEMIO1,Epidémiologie,15,12,0,0,12.0
+semestre2,SIN,Soins Infirmiers,01,SIN1252,Démographie ,DEMOGRAPH,Démographie,0,8,0,0,8.0
+semestre2,SIN,Soins Infirmiers,01,SIN1253,Santé environnementale ,SANTENVIR,Santé Environnementale,22,15,0,0,15.0
+semestre2,SIN,Soins Infirmiers,01,SIN1261,Stage de médecine et pédiatrique II ,STAMEDPEII,Stage de médecine et pédiatrique II ,90,60,0,0,60.0
+semestre2,SIN,Soins Infirmiers,01,SIN1272,Technique de l’Information et de la Communication ,TECINFCOM,TIC,15,12,16,0,12.0
+semestre2,SIN,Soins Infirmiers,01,SIN1273,Français ,FRANCAIS2,Francais,15,12,16,16,-4.0
+semestre1,SIN,Soins Infirmiers,02,SIN2311,Mathématiques appliquées ,MATHMAAPP,Mathématique Appliqué,30,20,32,0,20.0
+semestre1,SIN,Soins Infirmiers,02,SIN2312,Biostatistiques ,BIOSTATIC,BIOSTATISTIQUE ,30,20,36,15,5.0
+semestre1,SIN,Soins Infirmiers,02,SIN2313,Biophysique et technologie ,BIOPHYSIQ,BIO-PHYSIQUE ,15,12,20,10,2.0
+semestre1,SIN,Soins Infirmiers,02,SIN2321,Pharmacologie générale ,PHARMAGEN,Pharmacologie générale,60,40,68,42,-2.0
+semestre1,SIN,Soins Infirmiers,02,SIN2331,Soins en chirurgie ,SOINSCHIR,Soins en chirurgie ,15,12,0,0,12.0
+semestre1,SIN,Soins Infirmiers,02,SIN2332,Transfusion sanguine ,TRANSFSAN,Transfusion sanguine,0,8,8,0,8.0
+semestre1,SIN,Soins Infirmiers,02,SIN2333,Soins en pédiatrie ,SOINPEDIA,Soins en pédiatrie,15,12,12,12,0.0
+semestre1,SIN,Soins Infirmiers,02,SIN2334,Puériculture ,PUECULTUR,Puericulture,15,8,8,8,0.0
+semestre1,SIN,Soins Infirmiers,02,SIN2335,Soins obstétricaux et gynécologique ,SOINSOBST,Soins Obstetricaux ,15,12,24,7,5.0
+semestre1,SIN,Soins Infirmiers,02,SIN2341,La planification familiale (PF) ,PLANIFAMI,Planification familiale,0,8,8,8,0.0
+semestre1,SIN,Soins Infirmiers,02,SIN2342,Soins intra-partum ,SOININTRA,Soins intra partum,0,8,16,12,-4.0
+semestre1,SIN,Soins Infirmiers,02,SIN2343,Soins post-partum ,SOINSPOPA,Soins posts partum,0,8,4,3,5.0
+semestre1,SIN,Soins Infirmiers,02,SIN2344,Soins au nouveau-né ,SOINSANNE,Soins aux NNE,0,8,16,8,0.0
+semestre1,SIN,Soins Infirmiers,02,SIN2345,Allaitement maternel ,ALLAITMAT,Allaitement maternel,0,8,24,12,-4.0
+semestre1,SIN,Soins Infirmiers,02,SIN2346,Allaitement artificiel ,ALLARTSI2,Allaitement artificiel,0,8,0,0,8.0
+semestre1,SIN,Soins Infirmiers,02,SIN2347,Soins gynécologiques ,SOINGENIC,Soins en génicologie,15,12,28,10,2.0
+semestre1,SIN,Soins Infirmiers,02,SIN2351,Pathologies infectieuses et parasitaires ,PATINFPAR,Pathologie infect et parasitaire,30,20,28,28,-8.0
+semestre1,SIN,Soins Infirmiers,02,SIN2352,Pathologie infectieuse localisée ,PATINFLOC,Pathologies infect et localisées,0,8,4,0,8.0
+semestre1,SIN,Soins Infirmiers,02,SIN2353,Pathologies chirurgicales ,PATHOCHIR,Pathologie chirurgicale,0,8,8,8,0.0
+semestre1,SIN,Soins Infirmiers,02,SIN2354,Pathologies par système ,PATPARSYS,Pathologie par système,15,12,12,12,0.0
+semestre1,SIN,Soins Infirmiers,02,SIN2361,Stage clinique III ,STAGECLI3,Stage clinique III,90,60,0,0,60.0
+semestre1,SIN,Soins Infirmiers,02,SIN2371,Français ,FRANCAIS2,Francais,15,12,8,8,4.0
+semestre1,SIN,Soins Infirmiers,02,SIN2372,Anglais ,ANGLAIS,Anglais,15,12,4,1,11.0
+semestre1,SIN,Soins Infirmiers,02,SIN2373,Technologies de l’information et de la communication ,TECINFCOM,TIC,15,12,16,4,8.0
+semestre2,SIN,Soins Infirmiers,02,SIN2411,Communication pour le changement de comportement II ,COMCHACO3,CCC3 - Communication changement comportement III,15,12,0,0,12.0
+semestre2,SIN,Soins Infirmiers,02,SIN2412,Sante communautaire ,SANTECOMM,Santé communautaire,30,20,0,0,20.0
+semestre2,SIN,Soins Infirmiers,02,SIN2413,Sante et développement ,SANTEDEV,Santé et développement ,15,12,0,0,12.0
+semestre2,SIN,Soins Infirmiers,02,SIN2421,Techniques de laboratoire ,TECHLABOR,TECHNIQUE DE LABORATOIRE ,15,12,0,0,12.0
+semestre2,SIN,Soins Infirmiers,02,SIN2422,Imagerie médicale ,IMAGMEDIC,Imagerie Medical,15,12,0,0,12.0
+semestre2,SIN,Soins Infirmiers,02,SIN2431,Pathologies obstétricales ,PATHOBSTR,Pathologie Obstétrical ,45,30,0,0,30.0
+semestre2,SIN,Soins Infirmiers,02,SIN2432,Pathologies gynécologiques ,PATHOGYNE,Pathologies gynécologiques,30,20,0,0,20.0
+semestre2,SIN,Soins Infirmiers,02,SIN2441,Soins infirmiers aux urgences ,SOINSURGE,Soins aux urgences,15,12,4,4,8.0
+semestre2,SIN,Soins Infirmiers,02,SIN2442,Soins infirmiers au bloc opérateur ,BLOCOPERT,BLOC OPERATOIRE,30,20,0,0,20.0
+semestre2,SIN,Soins Infirmiers,02,SIN2443,Soins infirmiers en anesthésie ,SOINFIANE,Soins Infirmier en Anesthésie,15,12,8,4,8.0
+semestre2,SIN,Soins Infirmiers,02,SIN2451,Pharmacologie clinique ,PHARMACLI,Pharmacologie Clinique,60,40,0,0,40.0
+semestre2,SIN,Soins Infirmiers,02,SIN2452,Nutrition humaine et pathologies associée ,NUTRIHUMA,Nutrition humaine et pathologies associée,30,20,0,0,20.0
+semestre2,SIN,Soins Infirmiers,02,SIN2461,Stage clinique IV ,STAGECLI4,Stage clinique IV,90,60,0,0,60.0
+semestre2,SIN,Soins Infirmiers,02,SIN2471,Initiation à la Recherche ,INITRECHE,Initiation à la recherche,45,30,0,0,30.0
+semestre1,SIN,Soins Infirmiers,03,SIN3511,Programmes de santé au Cameroun ,PROSANPRI,Programme de santé prioritaire,30,20,20,18,2.0
+semestre1,SIN,Soins Infirmiers,03,SIN3512,CCC III (Communication pour le changement de comportement III) ,COMCHACO3,CCC3 - Communication changement comportement III,30,20,24,0,20.0
+semestre1,SIN,Soins Infirmiers,03,SIN3521,Économie de la santé ,ECONOSANT,Economie de la santé,30,20,44,19,1.0
+semestre1,SIN,Soins Infirmiers,03,SIN3522,Gestion hospitalière ,GESTHOSPI,Gestion Hospitalieres,30,20,20,20,0.0
+semestre1,SIN,Soins Infirmiers,03,SIN3523,Système d’information sanitaire ,SYSINFSAN,Systeme d'information sanitaire,15,12,28,18,-6.0
+semestre1,SIN,Soins Infirmiers,03,SIN3531,Santé mentale et soins infirmiers en psychiatrie ,PSYCHIATR,psychiatrie,15,12,8,8,4.0
+semestre1,SIN,Soins Infirmiers,03,SIN3532,Gériatrie et soins aux personnes âgées ,GERIARTRI,Gériartrie,15,12,36,16,-4.0
+semestre1,SIN,Soins Infirmiers,03,SIN3533,Pharmacologie clinique ,PHARMACLI,Pharmacologie Clinique,15,12,12,11,1.0
+semestre1,SIN,Soins Infirmiers,03,SIN3534,Surveillance thérapeutique ,SURTHERAP,Surveillance therapeutique,30,20,36,20,0.0
+semestre1,SIN,Soins Infirmiers,03,SIN3541,Réanimation ,REANIMATI,Réanimation,15,12,24,10,2.0
+semestre1,SIN,Soins Infirmiers,03,SIN3542,Soins aux personnes atteintes de déficiences spéciales ,SOINPERSP,Soins aux personnes atteint de deficiences special,30,20,20,20,0.0
+semestre1,SIN,Soins Infirmiers,03,SIN3551,Stage de santé communautaire II ,STAGECOMM,Stage Communautaire ,90,60,0,0,60.0
+semestre1,SIN,Soins Infirmiers,03,SIN3561,Stage de santé clinique V ,STAGECLIN,Stage clinique V,90,60,0,0,60.0
+semestre1,SIN,Soins Infirmiers,03,SIN3571,Éléments de droit du travail ,DROITTRAV,Droit du travail,15,12,16,16,-4.0
+semestre1,SIN,Soins Infirmiers,03,SIN3572,Éléments de santé au travail ,ELESANTRA,Éléments de santé au travail ,15,12,0,0,12.0
+semestre1,SIN,Soins Infirmiers,03,SIN3573,Éléments de médecine scolaire ,MEDECISCO,Médecine Scolaire,15,12,0,0,12.0
+semestre2,SIN,Soins Infirmiers,03,SIN3611,Techniques de soins spécifiques 1 ,TECHSOIN1,TECHNIQUE SOINS SPECIFIQUE 1,75,50,0,0,50.0
+semestre2,SIN,Soins Infirmiers,03,SIN3621,Techniques de soins spécifiques 2 ,TECSOISPE,TECHNIQUE SOINS SPECIFIQUE 2,60,40,40,40,0.0
+semestre2,SIN,Soins Infirmiers,03,SIN3631,Mise en situation professionnelle 1 ,MISSIPRO1,Mise en Situation Professionel 1,60,40,0,0,40.0
+semestre2,SIN,Soins Infirmiers,03,SIN3641,Mise en situation professionnelle 2 ,MISSIPRO2,Mise en Situation Professionel 2,45,30,0,0,30.0
+semestre2,SIN,Soins Infirmiers,03,SIN3651,Mise en situation professionnelle 3 ,MISSIPRO3,Mise en Situation Professionel 3,90,60,0,0,60.0
+semestre2,SIN,Soins Infirmiers,03,SIN3661,Rédaction du projet de recherche ,REDPROREC,Rédaction du projet de recherche,75,50,4,0,50.0
+semestre2,SIN,Soins Infirmiers,03,SIN3671,Éducation civique et éthique ,EDUCIVETH,Education civique et éthique,45,30,0,0,30.0
+semestre1,SIN,Soins Infirmiers,01,XXX0114,Préparation session normale,PRESESNOR,Préparation session normale,15,12,0,0,12.0
+semestre1,SIN,Soins Infirmiers,02,XXX0115,Préparation session normale,PRESESNOR,Préparation session normale,15,12,0,0,12.0
+semestre1,SIN,Soins Infirmiers,03,XXX0116,Préparation session normale,PRESESNOR,Préparation session normale,15,12,0,0,12.0
+semestre1,SIN,Soins Infirmiers,03,XXX0117,Programmes de santé au Cameroun,PROSANPRI,Programme de santé prioritaire,30,20,20,18,2.0
+semestre2,SIN,Soins Infirmiers,01,XXX0118,Projet académique,PROJACADE,Projet académique,45,30,0,0,30.0
+semestre1,SIN,Soins Infirmiers,03,XXX0119,Techniques de l’information et de la communication 4,TECINFCOM4,TIC 4,30,20,16,4,16.0
+semestre1,SIN,Soins Infirmiers,02,XXX0120,TIC 3,TECINFCOM3,TIC 3,30,20,32,12,8.0
+semestre1,SIN,Soins Infirmiers,03,XXX0121,TIC 3,TECINFCOM3,TIC 3,30,20,40,0,20.0
+semestre1,SIN,Soins Infirmiers,03,XXX0122,TP santé,TPSANTE,TP santé,50,50,4,0,50.0
+semestre1,SIN,Soins Infirmiers,01,XXX0123,Travaux dirigés (TD),TRAVDIRIG,Travaux dirigés (TD),50,50,8,0,50.0
+semestre1,SIN,Soins Infirmiers,02,XXX0124,Travaux dirigés (TD),TRAVDIRIG,Travaux dirigés (TD),30,20,52,0,20.0
+semestre1,SIN,Soins Infirmiers,03,XXX0125,Travaux dirigés (TD),TRAVDIRIG,Travaux dirigés (TD),50,50,28,0,50.0
+semestre1,SIN,Soins Infirmiers,01,XXX0126,Accueil Orientation et Conseils,ACCORICON,Accueil Orientation et Conseils,8,8,0,0,8.0
+semestre1,SIN,Soins Infirmiers,02,XXX0127,Accueil Orientation et Conseils,ACCORICON,Accueil Orientation et Conseils,8,8,0,0,8.0
+semestre1,SIN,Soins Infirmiers,03,XXX0128,Allaitement maternel ,ALLAITMAT,Allaitement maternel,10,8,8,0,8.0
+semestre2,SIN,Soins Infirmiers,01,XXX0129,Anatomie - Physiologie 2,ANATPHYS2,Anatomie et Physiologie 2,60,40,0,0,40.0
+semestre2,SIN,Soins Infirmiers,03,XXX0130,Anglais,ANGLAIS,Anglais,15,12,0,0,12.0
+semestre2,SIN,Soins Infirmiers,01,XXX0131,Anthropologie ,GENERANTH,Généralités sur l’anthropologie,15,12,0,0,12.0
+semestre2,SIN,Soins Infirmiers,02,XXX0132,Economie et Organisation des Entreprises ,ECOORGENT,Economie et Organisation des Entreprises,30,20,0,0,20.0
+semestre1,SIN,Soins Infirmiers,02,XXX0133,Education civique et éthique ,EDUCIVETH,Education civique et éthique,15,12,0,0,12.0
+semestre1,SIN,Soins Infirmiers,02,XXX0134,IEC 2,IEC2,Information Education Communication 2 -IEC2,30,20,0,0,20.0
+semestre1,SIN,Soins Infirmiers,02,XXX0135,Informatique générale 1,INFORGEN1,Informatique Général 1,15,12,0,0,12.0
+semestre1,SIN,Soins Infirmiers,03,XXX0136,Initiation à la Recherche,INITRECHE,Initiation à la recherche,45,30,8,0,30.0
+semestre1,SIN,Soins Infirmiers,03,XXX0137,Medecine de travail,MEDECITRA,Médécine de travail,15,12,0,0,12.0
+semestre1,SIN,Soins Infirmiers,02,XXX0138,Médecine Médicale,MEDEMEDIC,Médécine Médicale,15,12,16,0,12.0
+semestre1,SIN,Soins Infirmiers,03,XXX0139,Médecine Médicale,MEDEMEDIC,Médécine Médicale,15,12,16,0,12.0
+semestre2,SIN,Soins Infirmiers,03,XXX0140,Médecine scolaire,MEDECISCO,Médecine Scolaire,15,12,0,0,12.0
+semestre1,SIN,Soins Infirmiers,03,XXX0141,Méthodologie de la rédaction du mémoire,METREDMEM,Méthodologie de rédaction du mémoire,15,12,16,13,-1.0
+semestre1,SIN,Soins Infirmiers,01,XXX0142,Méthodologie de la rédaction du rapport de stage ,REDRAPSTA,Rédaction de rapports de stage,15,12,0,0,12.0
+semestre1,SIN,Soins Infirmiers,02,XXX0143,Méthodologie de la rédaction du rapport de stage ,REDRAPSTA,Rédaction de rapports de stage,15,12,0,0,12.0
+semestre1,SIN,Soins Infirmiers,01,XXX0144,Pathologies infectieuses et parasitaires ,MALINFPAR,Maladie infectueuse et parasitaire,30,20,0,0,20.0
+semestre1,SIN,Soins Infirmiers,01,XXX0199,Physiques,PHYSIQUES,Physiques,50,50,16,14,36.0
+semestre1,SIN,Soins Infirmiers,01,XXX0203,Mathématiques,MATMATIQ1,Mathématiques I,15,12,24,11,1.0
+semestre1,SIN,Soins Infirmiers,04,XXX216, Préparation Psychoprophylactique À L’Accouchement,PRESPYACC,Préparation Psychoprophylactique À L’Accouchement,12,12,12,12,0.0
+semestre2,SIN,Soins Infirmiers,01,XXX0234,Atelier Orientation,ATELORIENT,Atelier Orientation,15,12,8,0,12.0
+semestre1,TEL,Telecommunication  ,01,TEL1122,Physique générale,PHYSIGENE,Physique générale,30,20,0,0,20.0
+semestre1,TLB,Technicien De Laboratoire,01,TLB1111,Biologie cellulaire et histologie ,BIOLOGCEL,Biologie cellulaire,15,12,12,0,12.0
+semestre1,TLB,Technicien De Laboratoire,01,TLB1112,Anatomie - Physiologie I ,ANATPHYS1,Anatomie et Physiologie 1,60,40,56,36,4.0
+semestre1,TLB,Technicien De Laboratoire,01,TLB1113,Chimie générale ,CHIMIEGEN,Chimie generale,15,12,16,16,-4.0
+semestre1,TLB,Technicien De Laboratoire,01,TLB1121,Microbiologie générale I ,MICROBIOF1,Microbiologie I,15,12,16,16,-4.0
+semestre1,TLB,Technicien De Laboratoire,01,TLB1122,Biochimie générale ,BIOCHIMIE,Biochimie,30,20,12,12,8.0
+semestre1,TLB,Technicien De Laboratoire,01,TLB1131,Sociologie et anthropologie médicale ,SOCANTMED,Sociologie et anthropologie médicale ,15,12,32,28,-16.0
+semestre1,TLB,Technicien De Laboratoire,01,TLB1132,Psychologie médicale ,PSYCHOLOG,Psychologie,15,12,0,0,12.0
+semestre1,TLB,Technicien De Laboratoire,01,TLB1133,Éthique et déontologie médicale ,ETHDEOMED,Éthique et déontologie médicale ,60,20,48,21,-1.0
+semestre1,TLB,Technicien De Laboratoire,01,TLB1141,Cycle de vie ,CYCLDEVIE,Cycle de vie ,15,12,12,12,0.0
+semestre1,TLB,Technicien De Laboratoire,01,TLB1142,Soins infirmiers ,SOINMEDEC,Soins en médecine,30,20,52,3,17.0
+semestre1,TLB,Technicien De Laboratoire,01,TLB1143,Travaux pratiques,TRAVPRATQ,Travaux Pratiques,6,8,0,0,8.0
+semestre1,TLB,Technicien De Laboratoire,01,TLB1144,Secourisme ,SECOURISM,Secourisme,15,12,16,12,0.0
+semestre1,TLB,Technicien De Laboratoire,01,TLB1151,Physique ,PHYSIGENE,Physique générale,15,12,16,14,-2.0
+semestre1,TLB,Technicien De Laboratoire,01,TLB1152,Mathématique ,MATMATIQU,Mathématiques,15,12,20,11,1.0
+semestre1,TLB,Technicien De Laboratoire,01,TLB1153,Biostatistique ,BIOSTATI1,Biostatistics 1,30,20,0,0,20.0
+semestre1,TLB,Technicien De Laboratoire,01,TLB1161,Stage clinique 1 ,STAGECLI1,Stage clinique 1 ,90,60,0,0,60.0
+semestre1,TLB,Technicien De Laboratoire,01,TLB1171,Langue officielle 1 - francais,FRANCAIS2,Francais,30,20,16,16,4.0
+semestre1,TLB,Technicien De Laboratoire,01,TLB1172,Techniques de l’information et de la communication 1 ,TECINFCOM,TIC,15,12,28,0,12.0
+semestre2,TLB,Technicien De Laboratoire,01,TLB1211,Anatomie et physiologie 2 ,ANATPHYS2,Anatomie et Physiologie 2,75,50,0,0,50.0
+semestre2,TLB,Technicien De Laboratoire,01,TLB1212,Chimie organique ,CHIMORGAN,Chimie organique ,15,12,0,0,12.0
+semestre2,TLB,Technicien De Laboratoire,01,TLB1221,Microbiologie générale 2 ,MICROBIOF2,Microbiologie II,15,12,0,0,12.0
+semestre2,TLB,Technicien De Laboratoire,01,TLB1222,Parasitologie générale ,PARASITOL,Parasitologie,30,20,32,17,3.0
+semestre2,TLB,Technicien De Laboratoire,01,TLB1231,Techniques de laboratoire ,TECHLABOR,TECHNIQUE DE LABORATOIRE ,45,30,0,0,30.0
+semestre2,TLB,Technicien De Laboratoire,01,TLB1242,Hygiène générale et hospitalière ,HYGASSAIN,Hygiène et assainissement ,30,20,0,0,20.0
+semestre2,TLB,Technicien De Laboratoire,01,TLB1243,Maladies infectieuses et parasitaires ,MALINFPAR,Maladie infectueuse et parasitaire,45,30,0,0,30.0
+semestre2,TLB,Technicien De Laboratoire,01,TLB1251,Pharmacologie générale ,PHARMAGEN,Pharmacologie générale,15,12,0,0,12.0
+semestre2,TLB,Technicien De Laboratoire,01,TLB1252,Nutrition ,NUTRIHUMA,Nutrition humaine et pathologies associée,15,12,0,0,12.0
+semestre2,TLB,Technicien De Laboratoire,01,TLB1253,Épidémiologie ,EPIDEMIO1,Epidémiologie,15,12,0,0,12.0
+semestre2,TLB,Technicien De Laboratoire,01,TLB1261,Stage clinique 2 ,STAGECLI2,Stage clinique II,90,60,0,0,60.0
+semestre2,TLB,Technicien De Laboratoire,01,TLB1271,Économie générale ,ECONOGENE,Economie générale,30,20,0,0,20.0
+semestre2,TLB,Technicien De Laboratoire,01,TLB1272,Démographie ,DEMOGRAPH,Démographie,15,12,0,0,12.0
+semestre1,TLB,Technicien De Laboratoire,03,TLB3511,IEC 3 ,IEC3,IEC3,30,20,24,0,20.0
+semestre1,TLB,Technicien De Laboratoire,03,TLB3512,Système d’information sanitaire ,SYSINFSAN,Systeme d'information sanitaire,30,20,28,18,2.0
+semestre1,TLB,Technicien De Laboratoire,03,TLB3513,Gestion sanitaire ,GESTHOSPI,Gestion Hospitalieres,30,20,20,20,0.0
+semestre1,TLB,Technicien De Laboratoire,03,TLB3521,Rédaction de mémoire ,REDACMERE,Rédaction Mémoire ,45,30,4,0,30.0
+semestre1,TLB,Technicien De Laboratoire,03,TLB3531,Parasitologie clinique 2 ,PARACLIN2,Parasitologie Clinique 2,60,40,44,39,1.0
+semestre1,TLB,Technicien De Laboratoire,03,TLB3532,Hématologie clinique 2 ,HEMATCLI2,Hématologie clinique 2,45,30,44,29,1.0
+semestre1,TLB,Technicien De Laboratoire,03,TLB3541,Bactériologie clinique 3 ,BACTERCL3,Bactériologie clinique 3,30,20,40,20,0.0
+semestre1,TLB,Technicien De Laboratoire,03,TLB3542,Travaux pratiques,TRAVPRATQ,Travaux Pratiques,15,12,0,0,12.0
+semestre1,TLB,Technicien De Laboratoire,03,TLB3543,Virologie ,VIROLOGIE,Virologie – VIH/SIDA,15,12,24,12,0.0
+semestre1,TLB,Technicien De Laboratoire,03,TLB3551,Chimie analytique – Laboratoire ,CHIMIANAL,Chimie analytique,30,20,20,20,0.0
+semestre1,TLB,Technicien De Laboratoire,03,TLB3561,Stage de santé communautaire 2 ,STASANCO2,Stage de santé communautaire 2 ,90,60,0,0,60.0
+semestre1,TLB,Technicien De Laboratoire,03,TLB3571,Initiation à la recherche ,INITRECHE,Initiation à la recherche,30,20,8,0,20.0
+semestre1,TLB,Technicien De Laboratoire,03,TLB3572,Techniques de l’information et de la communication ,TECINFCOM,TIC,15,12,4,0,12.0
+semestre2,TLB,Technicien De Laboratoire,03,TLB3611,Microbiologie de l’environnement ,MICROENVF,Microbiologie de lenvironnement,45,30,0,0,30.0
+semestre2,TLB,Technicien De Laboratoire,03,TLB3612,Microbiologie des aliments ,MICROALIM,Microbiologie des aliments,30,20,20,18,2.0
+semestre2,TLB,Technicien De Laboratoire,03,TLB3621,Histopathologie ,HISTOPATO,Histopathologie ,30,20,0,0,20.0
+semestre2,TLB,Technicien De Laboratoire,03,TLB3622,Cytologie humaine ,CYTOHUMAI,Cytologie humaine ,30,20,0,0,20.0
+semestre2,TLB,Technicien De Laboratoire,03,TLB3631,Biochimie clinique 3 ,BIOCHICLI3,Biochimie Clinique 3,30,20,20,20,0.0
+semestre2,TLB,Technicien De Laboratoire,03,TLB3632,Travaux pratiques,TRAVPRATQ,Travaux Pratiques,15,12,0,0,12.0
+semestre2,TLB,Technicien De Laboratoire,03,TLB3633,Parasitologie clinique 3 ,PARACLIN3,Parasitologie Clinique 3,30,20,0,0,20.0
+semestre2,TLB,Technicien De Laboratoire,03,TLB3641,Biologie moléculaire ,BIOLMOLEC,Biologie moléculaire ,30,20,0,0,20.0
+semestre2,TLB,Technicien De Laboratoire,03,TLB3651,Stage clinique 5 ,STAGECLIN,Stage clinique V,90,60,0,0,60.0
+semestre2,TLB,Technicien De Laboratoire,03,TLB3661,Stage clinique 6 ,STAGECLI6,Stage clinique 6 ,90,60,0,0,60.0
+semestre2,TLB,Technicien De Laboratoire,03,TLB3671,Rédaction et présentation des mémoires d’initiations à la recherche ,REDACMERE,Rédaction Mémoire ,45,30,4,0,30.0
+semestre1,TLB,Technicien De Laboratoire,01,XXX0145,Accueil Orientation et Conseils,ACCORICON,Accueil Orientation et Conseils,8,8,0,0,8.0
+semestre1,TLB,Technicien De Laboratoire,03,XXX0146,Accueil Orientation et Conseils,ACCORICON,Accueil Orientation et Conseils,8,8,8,0,8.0
+semestre1,TLB,Technicien De Laboratoire,01,XXX0147,Anglais,ANGLAIS,Anglais,15,12,28,16,-4.0
+semestre2,TLB,Technicien De Laboratoire,03,XXX0148,Droit du travail ,DROITTRAV,Droit du travail,15,12,16,16,-4.0
+semestre1,TLB,Technicien De Laboratoire,03,XXX0149,Économie de la santé ,ECONOSANT,Economie de la santé,30,20,44,19,1.0
+semestre2,TLB,Technicien De Laboratoire,03,XXX0150,Gestion hospitalière ,GESTHOSPI,Gestion Hospitalieres,30,20,20,20,0.0
+semestre1,TLB,Technicien De Laboratoire,03,XXX0151,Méthodologie de la rédaction du mémoire,METREDMEM,Méthodologie de rédaction du mémoire,15,12,16,13,-1.0
+semestre1,TLB,Technicien De Laboratoire,03,XXX0152,Projets,PROJSANTE,Projets santé,8,8,0,0,8.0
+semestre1,TLB,Technicien De Laboratoire,03,XXX0153,Technologies information et communication 4,TECINFCOM4,TIC 4,15,12,24,8,4.0
+semestre1,TLB,Technicien De Laboratoire,03,XXX0154,TIC 3,TECINFCOM3,TIC 3,30,20,12,0,20.0
+semestre1,TLB,Technicien De Laboratoire,01,XXX0155,Travaux dirigés (TD),TRAVDIRIG,Travaux dirigés (TD),50,50,8,0,50.0
+semestre1,TLB,Technicien De Laboratoire,03,XXX0156,Travaux dirigés (TD),TRAVDIRIG,Travaux dirigés (TD),50,50,32,0,50.0
+semestre1,TLB,Technicien De Laboratoire,01,XXX0211,Concepts et théories en sciences infirmières ,CONTHESCI,Concept et théorie et science infirmière ,30,20,24,20,0.0
+semestre2,TLB,Technicien De Laboratoire,01,XXX0236,Atelier Orientation,ATELORIENT,Atelier Orientation,15,12,4,0,12.0

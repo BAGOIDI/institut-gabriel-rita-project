@@ -1,0 +1,1771 @@
+annee,code,libelle
+2024/2025,ACCOUNTIN,Accounting
+2024/2025,ADMBASDON,Administration des bases de données
+2024/2025,ADMSITWEB,Administration d’un site web
+2024/2025,ADMSUPRES,Administration et supervision des réseaux
+2024/2025,ADMSYSEXP,Administration des Système d’Exploitation réseaux
+2024/2025,ADMSYSRES,Administration des systèmes et réseaux Linux
+2024/2025,ADVANELEC,Advanced Electronics
+2024/2025,ALGBOOCIR,Algèbre de BOOLE et des circuits
+2024/2025,ALGLINEA1,Algèbre linéaire I
+2024/2025,ALGLINEA2,Algèbre linéaire II
+2024/2025,ALGLINEAI,Algèbre Linéaire
+2024/2025,ALGOPROGM,Algorithme et programmation
+2024/2025,ALGORBASE,Algorithmique de Base
+2024/2025,ALGORITHM,Algorithme
+2024/2025,ALGPRODIG,"Algorithmique, programmat° digitale techniq et TPs"
+2024/2025,ALGSTRDON,Algorithmique et structure de données
+2024/2025,ALLAITMAT,Allaitement maternel
+2024/2025,ALLARTSI2,Allaitement artificiel
+2024/2025,ANABILAN1,Analyse du bilan I
+2024/2025,ANABILAN2,Analyse du bilan II
+2024/2025,ANACPTRE1,Analyse du compte de résultat I
+2024/2025,ANACPTRE2,Analyse du compte de résultat II
+2024/2025,ANADEDRA1,Analysis and design drawing I
+2024/2025,ANADEDRA2,Analysis and design drawing II
+2024/2025,ANADEDRA3,Analysis and design drawing III
+2024/2025,ANADEDRA4,Analysis and design drawing IV
+2024/2025,ANADIGDAT,Analogy and digital data processing and storage
+2024/2025,ANAMANUF1,Analysis of manufacture I
+2024/2025,ANAMANUF2,Analysis of manufacture II
+2024/2025,ANAMANUF3,Analysis of manufacture III
+2024/2025,ANAMATHE1,Analyse mathématique I
+2024/2025,ANAMATHE2,Analyse mathématique II
+2024/2025,ANAMATHE3,Analyse mathématique III
+2024/2025,ANAMATHE4,Analyse mathématique IV
+2024/2025,ANANUMERI,Analyse Numérique
+2024/2025,ANANUMSIG,Analogique et numérique du signal
+2024/2025,ANATAPHY1,Anatomy and physiology 1
+2024/2025,ANATAPHY2,Anatomy and physiology 2
+2024/2025,ANATPHYS1,Anatomie et Physiologie 1
+2024/2025,ANATPHYS2,Anatomie et Physiologie 2
+2024/2025,ANESTHESI,Anesthesiologie
+2024/2025,ANGLAMEDI,Anglais médical
+2024/2025,ANTPHYSOC,Anthropologie physiologique et sociologieque
+2024/2025,APPACQDON,"Appareillage, acquisition des données et TPs"
+2024/2025,APPCLISER,Application client-serveur et Web
+2024/2025,APPLMATHS,Applied Mathematics
+2024/2025,APPMECHA1,Applied mechanics I
+2024/2025,APPMECHA2,Applied mechanics II
+2024/2025,APPROCHCA,APPROCH OF CARE
+2024/2025,ARCHIORDI,Architecture des ordinateurs
+2024/2025,ARCHITECT,Architecture
+2024/2025,ARTIFEEDI,Artificial feeding
+2024/2025,ASSGROPAT,Association Grossesse et pathologie
+2024/2025,ASSURQUAL,Assurance Qualité
+2024/2025,ATEANIMA1,Atelier d’animation I
+2024/2025,ATEANIMA2,Atelier d’animation II
+2024/2025,ATEANIMA3,Atelier d’animation III
+2024/2025,ATEDESSI1,Atelier de dessin I
+2024/2025,ATEDESSI2,Atelier dessin II
+2024/2025,ATELANIM4,Atelier d’animation IV 
+2024/2025,AUTINDUS1,Automatisme industriel I
+2024/2025,AUTINDUS2,Automatisme Industriel II
+2024/2025,AUTOFRIGO,Automatisme Frigoritique 
+2024/2025,AUTOMAT1,Automation I
+2024/2025,AUTOMAT3,Automation III
+2024/2025,AUTOMATI1,Automatisme I  
+2024/2025,AUTOMATI2,Automatisme II
+2024/2025,AUTOMATIS,Automation III
+2024/2025,AUTPRAWOR,Automatism and Pratical Work
+2024/2025,AUTSERANN,Authentification et service d’annuaires
+2024/2025,BACTELOGI,Bacteriologie 2
+2024/2025,BACTERCL1,Bactériologie clinique 1
+2024/2025,BACTERIO2,Bacteriology 2
+2024/2025,BACTERIOL,Bacteriology
+2024/2025,BASDIGELE,Basis of the digital electronic
+2024/2025,BASDIGSER,Basics of digital Servoing
+2024/2025,BASDONIHM,Base de données et IHM
+2024/2025,BASDONSQL,Base de données et SQL
+2024/2025,BASEDEDON,Base de données
+2024/2025,BASELECIR,Basics of electricity and electrical circuit
+2024/2025,BASELEIND,Bases électricité et électronique industrielle
+2024/2025,BASELENUM,Bases d’électronique numérique et TPs
+2024/2025,BASEQHSSE,Bases qlité hygiène santé sécurité environ.(QHSSE)
+2024/2025,BASEQSHE,Base QSHE
+2024/2025,BASHYGSEC,Bases de qualité hygiène santé sécurité environnem
+2024/2025,BASICELEC,Basics Electronics
+2024/2025,BASOFQUAL,"Basics of quality, health, safety and envi."
+2024/2025,BENNETERI,Bonneterie
+2024/2025,BETOARME1,Béton armé I
+2024/2025,BETOARME2,Béton Armé II
+2024/2025,BIOCHICLI1,Biochimie Clinique 1 – Laboratoire 
+2024/2025,BIOCHICLI2,Biochimie Clinique 2
+2024/2025,BIOCHICLI3,Biochimie Clinique 3
+2024/2025,BIOCHIGEN,Biochimie générale
+2024/2025,BIOCHIMIE,Biochimie
+2024/2025,BIOLOGCEL,Biologie cellulaire
+2024/2025,BIOLOGYLA,BIOLOGY
+2024/2025,BIOPHYSIC,Biophysics
+2024/2025,BIOPHYSIQ,BIO-PHYSIQUE 
+2024/2025,BIOSTATI1,Biostatistics 1
+2024/2025,BIOSTATI2,Biostatistics 2
+2024/2025,BIOSTATIC,BIOSTATISTIQUE 
+2024/2025,BLOCOPERT,BLOC OPERATOIRE
+2024/2025,BLOODTRAN,Blood transfusion
+2024/2025,BRAMANMAR,Brand management des marques
+2024/2025,BREASTFEE,Breast feeding
+2024/2025,BUREAETUD,BUREAU DETUDE
+2024/2025,CADAUTCAD,CAD (AUTOCAD)
+2024/2025,CADELEENG,CAD in Electrical Engineering
+2024/2025,CADSOLWOR,CAD (SOLIDWORK)
+2024/2025,CALCTOPOM,calcul topométrique IV
+2024/2025,CALRESIMP,Calcul du résultat fiscal et impôts
+2024/2025,CALTOPME1,Calcul Topométriques I
+2024/2025,CALTOPME2,Calculs topométriques II
+2024/2025,CALTOPME3,Calculs topométriques III
+2024/2025,CALTOPME4,Calculs topométriques IV
+2024/2025,CAOGENELC,CAO EN GENIE ELECTRIQUE
+2024/2025,CAPACTBUS,"Capteurs,actionneurs et systèmes de bus de données"
+2024/2025,CAREINSUR,Care in Surgery
+2024/2025,CAREMEDEC,Care in Medecine
+2024/2025,CAREPEDIAT,Care in Pediatric
+2024/2025,CARNEWBOR,Care of new born
+2024/2025,CARTOGRA1,Cartographie I
+2024/2025,CARTOGRA2,Cartographie II
+2024/2025,CCC,CCC
+2024/2025,CCHEMATOL,CC hématologie
+2024/2025,CELLBIOLO,Cell Biology
+2024/2025,CHEMISTRY,Chemistry
+2024/2025,CHIDCARE,Child Care
+2024/2025,CHIMATPRO,"Chimie,sciences matériaux et processus fabrication"
+2024/2025,CHIMIANAL,Chimie analytique
+2024/2025,CHIMIE,Chimie
+2024/2025,CHIMIEGEN,Chimie generale
+2024/2025,CHIMIETEX,Chimie du textile
+2024/2025,CIRELECTR,Circuits électriques
+2024/2025,CIRLOGIQ1,Circuits logiques I
+2024/2025,CIRLOGIQ2,Circuits logiques II
+2024/2025,CIVMOREDU,Civic and moral education
+2024/2025,CLIBIOCHE1,Clinical Biochemistry 1
+2024/2025,CLIBIOCHE2,Clinical Biochemistry 2
+2024/2025,CLIMAVENT,CLIMATISATION ET VENTILLATION
+2024/2025,CLINPATHO,Clinical Parasitology 1
+2024/2025,CMPSCIENS,Computer Science II
+2024/2025,COMAIDMA1,Computer Aided Manufacturing I
+2024/2025,COMAIDMA2,Computer Aided Manufacturing II
+2024/2025,COMANABU2,Comptabilité analytique et gestion budgétaire II
+2024/2025,COMANABUD,Comptabilité analytique et gestion budgétaire
+2024/2025,COMCHACOM,Communication pour  changement de comportement III
+2024/2025,COMMUBEH2,Communication for behavior change2
+2024/2025,COMMUNICA,CAM II
+2024/2025,COMMUNITY,Community
+2024/2025,COMPROIN1,Commande de processus industriels I
+2024/2025,COMPROIN2,Commande de processus industriels II
+2024/2025,COMPSCIEN,Computer Science I
+2024/2025,COMPTAANA,Comptabilité analytique
+2024/2025,COMPTABIL,Comptabilité
+2024/2025,COMPTAGE1,Comptabilité générale I
+2024/2025,COMPTAGE2,Comptabilité générale II 
+2024/2025,COMPTAGEN,Comptabilité Générale
+2024/2025,COMPUBUS1,Computer for Business I
+2024/2025,COMPUBUS2,Computer for Business II
+2024/2025,COMPUPROG,Computer Programming
+2024/2025,COMPUTRAI,Computer training
+2024/2025,COMUDONNE,Communicatio des données
+2024/2025,COMUNMOD1,Communication de mode I 
+2024/2025,COMUNNICA,English Communication
+2024/2025,CONCEPTSO,concepts and theories en science infirmiere
+2024/2025,CONDMANU1,Conditionnement et manutention I 
+2024/2025,CONDMANU2,Conditionnement et manutention II 
+2024/2025,CONGENRES,Concept généraux des réseaux (réseaux NGN)
+2024/2025,CONSTDESI,Construction Design
+2024/2025,CONSTSOC1,Constitution des sociétés I
+2024/2025,CONSTSOC2,Constitution des sociétés II
+2024/2025,CONTHENUR,Concepts and theories in nursing profesion
+2024/2025,CONTHESCI,Concept et théorie et science infirmière 
+2024/2025,COUCPLET1,Coûts complets I
+2024/2025,COUCPLET2,Coûts complets II
+2024/2025,COUPARSE1,Coûts partiels et seuil de rentabilité I  
+2024/2025,COUPARSE2,Coûts partiels et seuil de rentabilité II
+2024/2025,CPTASSOR1,Comptabilité assistée par l’ordinateur I
+2024/2025,CPTASSOR2,Comptabilité assistée par ordinateur II  
+2024/2025,CREATENTR,Création d’entreprise
+2024/2025,CYCLDEVIE,Cycle de vie 
+2024/2025,DATACOMMU,Data Communication
+2024/2025,DAVRESPRO,Drafting of the research project
+2024/2025,DEMARSOIN,Demarche de Soins 
+2024/2025,DEMCREAT1,Démarche créative I
+2024/2025,DEMCREAT2,Démarche créative II
+2024/2025,DEMGRAPHY,DEMOGRAPHY
+2024/2025,DEMOGRAPH,Démographie
+2024/2025,DEONTHOLO,Déontologie
+2024/2025,DESASSOR1,Dessin assisté par ordinateur I (DAO)
+2024/2025,DESASSOR2,Dessin assisté par ordinateur II
+2024/2025,DESASSORD,Dessin assisté par ordinateur
+2024/2025,DESGRAPH1,Design graphique I
+2024/2025,DESGRAPH2,Design graphique II
+2024/2025,DESGRAPH3,Design graphique III
+2024/2025,DESGRAPH4,Design graphique IV
+2024/2025,DESIGNTEC,Design and technology
+2024/2025,DESSINMEC,Dessin mécanique
+2024/2025,DESSINTE1,Dessin technique I
+2024/2025,DESSINTE2,Dessin technique II
+2024/2025,DESSINTEC,Dessin technique
+2024/2025,DESTEC1SI,Dessin technique I et Système d’information
+2024/2025,DESTEC2GD,Dessin technique II et géométrie descriptive
+2024/2025,DESTECBAT,Dessin et technologie de bâtiment
+2024/2025,DEVVEHAUT,Développement du véhicule automobile
+2024/2025,DIAGNOAUT,Diagnostiques automobile et TPs
+2024/2025,DIGELEPOW,Practical work Digital electronics & power control
+2024/2025,DISSOSOC1,Dissolution des sociétés I  
+2024/2025,DISSOSOC2,Dissolution des sociétés II
+2024/2025,DOMOTIQU1,Domotique I
+2024/2025,DROITCIVI,Droit civil
+2024/2025,DROITTRAV,Droit du travail
+2024/2025,DROPROINT,Droit de la propriété intellectuelle   
+2024/2025,DROSOCCO1,Droit des sociétés commerciales I
+2024/2025,DROSOCCO2,Droit des sociétés commerciales II
+2024/2025,ECOBUSORG,Economy and business organization
+2024/2025,ECONHEALT,The economics of health
+2024/2025,ECONOGENE,Economie générale
+2024/2025,ECONOMICS,Economics
+2024/2025,ECONOMIE,Economie
+2024/2025,ECONOSANT,Economie de la santé
+2024/2025,ECOORGENT,Economie et Organisation des Entreprises
+2024/2025,EDUCIVETH,Education civique et éthique
+2024/2025,ELEBASLO1,Elément de Base de la Logistique I 
+2024/2025,ELEBASLO2,Elément de base de la logistique II 
+2024/2025,ELECIRCUI,Electrical circuits
+2024/2025,ELECNUME1,Electronique numérique I
+2024/2025,ELECNUME2,Electronique numériques II
+2024/2025,ELECTANAL,Electronique Analogique
+2024/2025,ELECTECH1,Electrotechnique I
+2024/2025,ELECTECH2,Electrotechnique II
+2024/2025,ELECTECHN,Electrotechnique
+2024/2025,ELECTGENE,Electricité générale 
+2024/2025,ELECTR2PW,Electronics II and Practical Works
+2024/2025,ELECTRCON,Electronics construction
+2024/2025,ELECTRGEN,Electronique générale 
+2024/2025,ELECTROB1,Electronique de base I
+2024/2025,ELECTROB2,Electronique de base II
+2024/2025,ELECTROEG,Electronique I et Electricité générale
+2024/2025,ELECTROFO,Electronique des fonctions
+2024/2025,ELECTROGP,Electronique grand public
+2024/2025,ELECTROME,Electronique et mesure
+2024/2025,ELECTRONA1,Electronics I
+2024/2025,ELECTRONA2,Electronics II
+2024/2025,ELECTRONA3,Electronics III + TP
+2024/2025,ELECTRONF1,Electronique 1
+2024/2025,ELECTRONF2,Electronique 2
+2024/2025,ELECTRONF3,Electronique 3
+2024/2025,ELECTRONI,Electronics
+2024/2025,ELECTROPU1,Electronique de puissance I
+2024/2025,ELECTROPU2,Electronique de puissance II
+2024/2025,ELEINSAPP,Electrical installations and apparatus
+2024/2025,ELEMACHI1,Electrical machines I
+2024/2025,ELESCHCOM,Electrical Schema and command
+2024/2025,ELETROMAG,Electromagnétisme
+2024/2025,ENGIMATH1,Engineering Mathematics I
+2024/2025,ENGIMATH2,Engineering Mathematics II
+2024/2025,ENGIMATH3,Engineering Mathematics III
+2024/2025,ENGIMATH4,Engineering Mathematics IV
+2024/2025,ENGISOCIE,Engineer in the Society
+2024/2025,ENGLISH,English
+2024/2025,ENNOBLIS1,Ennoblissement I
+2024/2025,ENNOBLIS2,Ennoblissement II
+2024/2025,ENNOBLIS3,Ennoblissement III
+2024/2025,ENTOMEDIC,Entomologie médicale 
+2024/2025,ENTOMOL2,Entomologie
+2024/2025,ENTPRENSH,Entrepreneurship
+2024/2025,ENTREPREN,Entreprenariat
+2024/2025,ENTREPSHI,Enterpreneuriatship
+2024/2025,ENVIENGIN,Environmental Engineering
+2024/2025,ENVIJURID,Environnement juridique
+2024/2025,ENVIRHEAL,Environnemental Health
+2024/2025,ENVMICORD,Environnement Micro-ordinateur
+2024/2025,EPIDEMIO1,Epidémiologie
+2024/2025,EPIDEMIOL,EPIDEMIOLOGY 
+2024/2025,EQUIBATIM,Equipement du bâtiment
+2024/2025,ESSAILABO,Essais en laboratoire
+2024/2025,ESTPHIART,Esthétique et philosophie de l’art
+2024/2025,ETHIQDEON,Ethique et déonthologie
+2024/2025,ETHMEDDEO,Ethics and medical deontology
+2024/2025,ETUDEPRIX,Etude de prix
+2024/2025,EXPREANGL,Expression anglaise
+2024/2025,EXPRECRIT,Expression écrite
+2024/2025,EXPREFRAN,Expression française
+2024/2025,EXPREORAL,Expression orale
+2024/2025,FILATURE,Filature
+2024/2025,FIRSTAID1,first aid
+2024/2025,FONDSOUTE,Fondations et soutènements
+2024/2025,FORMABILI,Formation bilingue
+2024/2025,FRANCAIS2,Francais
+2024/2025,FRANCMEDI,Francais médical
+2024/2025,FRASPEINF,Français spécialisé inforgraphie
+2024/2025,FRENCH,French
+2024/2025,FUNANAELE,Function of the analogical electronic
+2024/2025,GENBIOCHE,General Biochemistry
+2024/2025,GENECONOM,General Economy
+2024/2025,GENERANTH,Généralités sur l’anthropologie
+2024/2025,GENERCON2,General Construction Processes 2
+2024/2025,GENERCONS,General Construction
+2024/2025,GENERPHAR,General Pharmacology
+2024/2025,GENHYGHOS,General hygiene and hospitable
+2024/2025,GENIPHARM,Genical Pharmacology
+2024/2025,GENSOIAGE,Gériatrie et soins aux personnes âgées 
+2024/2025,GEODESIE,Géodesie
+2024/2025,GEOFUXTR1,Géographie des flux et transport des voyageurs I 
+2024/2025,GEOFUXTR2,Géographie des flux et transport des voyageurs II
+2024/2025,GEOINGTOP,Géologie de l’ingénieur / Topologie
+2024/2025,GEOTECHNI,Geotechnical Engineering
+2024/2025,GERIANUSI,Geriatric Nursing
+2024/2025,GERIARTRI,Gériartrie
+2024/2025,GESAPPST1,Gestion des approvisionnements et des stocks I 
+2024/2025,GESAPPST2,Gestion des approvisionnements et des stocks II 
+2024/2025,GESPROINF,Gestion des projets informatiques
+2024/2025,GESTBUDG1,Gestion budgétaire I 
+2024/2025,GESTBUDG2,Gestion Budgétaire II
+2024/2025,GESTENTR1,Gestion des entrepôts I 
+2024/2025,GESTENTR2,Gestion des entrepôts II 
+2024/2025,GESTHOSPI,Gestion Hospitalieres
+2024/2025,GESTPRODU,Gestion de la production
+2024/2025,GPS I,GPS I
+2024/2025,GPS II,GPS II
+2024/2025,GYNCOLCAR,Gynecological care
+2024/2025,GYNEPATHO,Gynecological Pathologies
+2024/2025,HEALTHDEV,Health and development
+2024/2025,HEALTHWOR,Health at work
+2024/2025,HEMATCLI2,Hématologie clinique 2
+2024/2025,HEMATCLIN,Hématologie clinique 1 
+2024/2025,HEMATHOCL,Hémathologie clinique
+2024/2025,HEMATOLOG,Hematology
+2024/2025,HISPROINF,Histoire de la Profession Infirmière 
+2024/2025,HISTOIART,Histoire de l’Art
+2024/2025,HISTORYNU,History of nursing profession
+2024/2025,HOMELECTR,Home Electronics
+2024/2025,HOSPITMAN,hospital Management
+2024/2025,HUMNUTPAT,Human Nutrition and pathology associated
+2024/2025,IEC2,Information Education Communication 2 -IEC2
+2024/2025,IMAGMEDIC,Imagerie Medical
+2024/2025,IMMUNOLOG,Immunology
+2024/2025,IMPLEMEN3,Implementation III
+2024/2025,IMPLEMENT,Implementation II
+2024/2025,IMPPROSI2,Implementation Profetionnal Situation 2
+2024/2025,IMPPROSI3,Implementation Profetionnal Situation 3
+2024/2025,IMPPROSIT,Implementation Profetionnal Situation 1
+2024/2025,IMPSURSOC,Impôt sur les sociétés  
+2024/2025,INDSAFCRE,Industrial safety 1 credit
+2024/2025,INDUSMAIN,Industrial maintenance
+2024/2025,INDUSNETW,Industrial networks
+2024/2025,INFEINFEC,Infertilité et infécondité
+2024/2025,INFOPGRAP,Infographie
+2024/2025,INFORAPP1,Informatique appliquée I
+2024/2025,INFORAPP2,Informatique Appliquée II
+2024/2025,INFORGEN1,Informatique Général 1
+2024/2025,INFORGEN2,Informatique générale II
+2024/2025,INFORMAT1,Informatique I
+2024/2025,INFORMAT2,Informatique II
+2024/2025,INFORMATI,Informatique
+2024/2025,INFORMATP,TP Informatique
+2024/2025,INFPARDES,Infectious and parasitic desease
+2024/2025,INFPATLOC,infectious pathologies localize
+2024/2025,INFTRATRA,Information transport and transmission
+2024/2025,INGMAGLAW,Ingineering Management Law and Economics
+2024/2025,INITIAINF,Initiation à l’informatique
+2024/2025,INITIAOP1,Initiation à l’optimisation I 
+2024/2025,INITIAOP2,Initiation à l’Optimisation II 
+2024/2025,INSMAIMAT,Installation et Maintenance Matériels et Logiciel
+2024/2025,INSTACONG,Installation et configuration
+2024/2025,INSTRUMEN,Instrumentation
+2024/2025,INTANAFI1,Introduction à l’analyse financière I 
+2024/2025,INTANAFI2,Introduction à l’analyse financière II
+2024/2025,INTBASDON,Introduction aux Bases de Données
+2024/2025,INTCLIHEA,Internship of clinical health V
+2024/2025,INTEGRWEB,Intégration web
+2024/2025,INTELEMAC,Introduction aux éléments de machine
+2024/2025,INTERSHIP,INTERSHIP
+2024/2025,INTGENLOG,Introduction au Génie Logiciel
+2024/2025,INTMODOBJ,Introduction à la modélisation objet
+2024/2025,INTPARTU2,Intra partum
+2024/2025,INTRODSAV,Introduction au SAV
+2024/2025,INTSECINF,Introduction a la sécurité informatique
+2024/2025,INTSYSINF,Introduction au Système d’information
+2024/2025,LABOURLAW,Labour Law
+2024/2025,LEADESHIP,Leadership
+2024/2025,LEGECOENV,Legal and Economics Environment
+2024/2025,LIFECYCLE,Life cycle
+2024/2025,LOGINTER1,Logistique Internationale I 
+2024/2025,LOGINTER2,Logistique Internationale II 
+2024/2025,MACHCONFE,Machine de confection
+2024/2025,MACHIELCT,Machine Electrique1
+2024/2025,MACHIELEC,Machine Electrique 2
+2024/2025,MACHTEXTI,Machines des textiles  
+2024/2025,MAICOMSYS,Maintenance of complex systems
+2024/2025,MAIELEENG,Maintenance in electrical Engineering
+2024/2025,MAINRELIA,Maintenance and reliability
+2024/2025,MALINFPAR,Maladie infectueuse et parasitaire
+2024/2025,MANUTECHN,Manufacturing technology
+2024/2025,MARAPTRA1,Marketing appliqué au transport I 
+2024/2025,MARAPTRA2,Marketing appliqué au transport II 
+2024/2025,MARENTCUL,Marketing des entreprises culturelles   
+2024/2025,MATECONST,Matériaux de construction
+2024/2025,MATESCIE1,Materials science I
+2024/2025,MATESCIE2,Materials Science II
+2024/2025,MATETEXTI,Matériaux textile
+2024/2025,MATHFINA1,Mathématiques financières I 
+2024/2025,MATHFINA2,Mathématiques financières II 
+2024/2025,MATHFINA3,Mathématiques financières III 
+2024/2025,MATHFINA4,Mathématiques financières IV
+2024/2025,MATHGENE1,Mathématiques générales I
+2024/2025,MATHGENE2,Mathématiques générales II 
+2024/2025,MATHMAAPP,Mathématique Appliqué
+2024/2025,MATMATIC1,Mathematics I
+2024/2025,MATMATIC2,Mathematics II
+2024/2025,MATMATIC3,Mathematics III
+2024/2025,MATMATIC4,Mathematics IV
+2024/2025,MATMATICS,Mathematics
+2024/2025,MATMATIQ1,Mathématiques I
+2024/2025,MATMATIQ2,Mathématique II
+2024/2025,MATMATIQ3,Mathématiques III
+2024/2025,MATMATIQ4,Mathématiques IV
+2024/2025,MATMATIQU,Mathématiques
+2024/2025,MEASUTECH,Measurement techniques
+2024/2025,MECAFLUID,Mécanique des fluides
+2024/2025,MECAGENE1,Mécanique générale I
+2024/2025,MECAGENE2,Mécanique générale II
+2024/2025,MEDCOUPE2,Medecine Course in paediatric II
+2024/2025,MEDECISCO,Médecine Scolaire
+2024/2025,MEDECITRA,Médécine de travail
+2024/2025,MEDICENGL,MEDICAL ENGLISH
+2024/2025,MEDICENTO,Medical Entomology
+2024/2025,MEDICFREN,Medical French
+2024/2025,MEDICMYCO,Medical Mycologie
+2024/2025,MEDIMAGIG,MEDICAL IMAGING 
+2024/2025,MENTALHEA,Mental health
+2024/2025,METHCONST,Méthodologie de construction
+2024/2025,METHREDRS,Méthodologie de rédaction du rapport de stage
+2024/2025,METROLOGI,Métrologie
+2024/2025,MICROALIM,Microbiologie des aliments
+2024/2025,MICROBIOA1,Microbiology I
+2024/2025,MICROBIOA2,Microbiology II
+2024/2025,MICROBIOF1,Microbiologie I
+2024/2025,MICROBIOF2,Microbiologie II
+2024/2025,MICROENVA,Microbiologie of the environment
+2024/2025,MICROENVF,Microbiologie de lenvironnement
+2024/2025,MICROFOOD,Microbiology of food
+2024/2025,MICROPRO1,Microprocesseur I
+2024/2025,MICROPRO2,Microprocesseur II 
+2024/2025,MINPROINF,Mini Projet Informatique
+2024/2025,MISESIPRO,Mise en Situation Professionel
+2024/2025,MISETUMAT,Mise en situation maternité 
+2024/2025,MISSIPRO1,Mise en Situation Professionel 1
+2024/2025,MISSIPRO2,Mise en Situation Professionel 2
+2024/2025,MISSIPRO3,Mise en Situation Professionel 3
+2024/2025,MODASSORD,Modélisme assisté par ordinateur
+2024/2025,MODNUMCOM,Modulation numérique et notion de compression
+2024/2025,MONTMAQUE,Montage des maquettes
+2024/2025,MONTMULME,Montage multimédia
+2024/2025,MONTPROJT,Montage de projets
+2024/2025,MOTCOMINT,Moteur à combustion interne
+2024/2025,MSPEDIATR,MSP pédiatrie 
+2024/2025,MSPMATERN,MSP Maternité 
+2024/2025,MYCOLOGIE,MYCOLOGIE II 
+2024/2025,NEGACHVT1,Négociation achat vente I 
+2024/2025,NEGACHVT2,Négociation achat vente II 
+2024/2025,NEGINFORM,Négociations Informatiques
+2024/2025,NOMADISME,Nomadisme
+2024/2025,NONTISSES,Non tissés
+2024/2025,NOTBASCAO,Notions de bases en CAO/DAO/CFAO
+2024/2025,NURSINCAR,NURSING CARE
+2024/2025,NUSCARASE,Nursing care to Anesthesia
+2024/2025,NUSCAREME,Nusing Care to Emergency
+2024/2025,NUSCAROPR,Nursing care to the bloc oparator
+2024/2025,NUTRIHUMA,Nutrition humaine et pathologies associée
+2024/2025,OBSTETGEN,Obstetrical and Genicology
+2024/2025,OBSTOIAPP,OBSTETRIQUE ET SOINS APPARENTES
+2024/2025,OBSTRPATH,Obstrical Pathology
+2024/2025,OBTEMARCH,Obtention marché
+2024/2025,OPECOURT1,Opérations courantes I
+2024/2025,OPECOURT2,Opérations courantes II 
+2024/2025,OPESPETR1,Opérations spécifiques et Travaux fin exercice I
+2024/2025,OPESPETR2,Opérations spécifiques et travaux fin exercice II
+2024/2025,OPTTELECO,Optique pour les Télécoms
+2024/2025,ORGANCHEM,Organic Chemistry
+2024/2025,ORGATELIE,Organisation de l’atelier
+2024/2025,ORGCHACAR,Organes de châssis/carrosserie
+2024/2025,ORGCHANTI,Organisation des chantiers
+2024/2025,ORGOFWORK,ORGANISATION OF WORK SITES
+2024/2025,OUTBUREAU,Outils bureautiques
+2024/2025,PAO,PAO
+2024/2025,PARASCLIN,Parasitologie clinique 1
+2024/2025,PARASITHO,PARASITOLOGY
+2024/2025,PARASITOL,Parasitologie
+2024/2025,PATHOBSTR,Pathologie Obstétrical 
+2024/2025,PATHOCHIR,Pathologie chirurgicale
+2024/2025,PATHOGYNE,Pathologies gynécologiques
+2024/2025,PATHOLOGI,Pathologies by system
+2024/2025,PATINFLOC,Pathologies infect et localisées
+2024/2025,PATINFPAR,Pathologie infect et parasitaire
+2024/2025,PATPARSYS,Pathologie par système
+2024/2025,PEDIATRIE,PEDIATRIE
+2024/2025,PERIPHERI,Périphériques d’E/S
+2024/2025,PERSONDIS,Person with disability forces
+2024/2025,PERSONRES,Person in resuscitation
+2024/2025,PHARMACLI,Pharmacologie Clinique
+2024/2025,PHARMACOL,Pharmacology
+2024/2025,PHARMAGEN,Pharmacologie générale
+2024/2025,PHOTOGRA1,Photogrammetrie I
+2024/2025,PHOTOGRA2,Photogrammetrie II 
+2024/2025,PHYSICAPT,Physique des capteurs
+2024/2025,PHYSICS,Physics
+2024/2025,PHYSICS1,Physics I
+2024/2025,PHYSICS2,Physics II
+2024/2025,PHYSICS3,Physics III
+2024/2025,PHYSIGEN1,Physique générales I
+2024/2025,PHYSIGEN2,Physiques générales II
+2024/2025,PHYSIGENE,Physique générale
+2024/2025,PHYSIQUE1,Physiques 1
+2024/2025,PHYSIQUE2,Physiques II
+2024/2025,PHYSIQUE3,Physiques III
+2024/2025,PHYSIQUES,Physiques
+2024/2025,PLANIFAMI,Planification familiale
+2024/2025,PLANNCARE,Planning care
+2024/2025,PLANSOINS,Planification des Soins 
+2024/2025,PMACHINI2,P machining II
+2024/2025,PMANUFAC1,P manufacture I
+2024/2025,POSPARTU2,Post partum
+2024/2025,POTGEOOND,Optique géométrique et ondulatoire
+2024/2025,POWELECON,Power electronics and actuator control
+2024/2025,PRATICE,Pratice
+2024/2025,PRAWORAUT,Practical Work Automation and Logic
+2024/2025,PRAWOREL2,Practical Work Electronic P II
+2024/2025,PRAWORELE,Practical Work in Electronic
+2024/2025,PRAWORMAC,Practical Work : Electrical Machines II
+2024/2025,PRECIME,PCIME
+2024/2025,PREMSECOU,Premier Secours
+2024/2025,PRESESNOR,Préparation session normale
+2024/2025,PRIOHEATH,The priority Program of Health in Cameroon
+2024/2025,PRISPARAM,Prise de paramètres
+2024/2025,PROASSORD,Programmation assistée par ordinateur
+2024/2025,PROBABIL1,Probabilités I
+2024/2025,PROBABIL2,Probabilités II
+2024/2025,PROBABILI,Probabilité
+2024/2025,PROBETARM,Projets béton armé
+2024/2025,PRODUFISC,Introduction à la fiscalité  
+2024/2025,PROEVEIHM,Programmation évènementielle et IHM II
+2024/2025,PROFINTER,Professional Internship
+2024/2025,PROGENCO1,Procédés généraux de construction I
+2024/2025,PROGENCO2,Procédés généraux de construction II
+2024/2025,PROGEVEN1,Programmation Evènementielle I
+2024/2025,PROGEVEN2,Programmation évènementielle II
+2024/2025,PROGPROCE,Programmation procédurale
+2024/2025,PROGRWEB1,Programmation web 1 
+2024/2025,PROGRWEB2,Programmation web II
+2024/2025,PROGRWEB3,Programmation web III
+2024/2025,PROGSTRUC,Programmation Structurée
+2024/2025,PROJACADE,Projet académique
+2024/2025,PROORIOBJ,Programmation orientée objet
+2024/2025,PROPAONDE,Propagation des ondes
+2024/2025,PROPRODU1,Production et productique I 
+2024/2025,PROPRODU2,Production et Productique II 
+2024/2025,PRORECOP1,Probabilités et recherche opérationnelle I
+2024/2025,PRORECOP2,Probabilités et recherche opérationnelle II
+2024/2025,PROSANPRI,Programme de santé prioritaire
+2024/2025,PROSTAINF,Probabilité statistique inférencielle
+2024/2025,PROTECREA,Procédés et techniques de réalisation
+2024/2025,PROTERMOB,Programmation pour terminaux mobiles
+2024/2025,PSYCHIATR,psychiatrie
+2024/2025,PUECULTUR,Puericulture
+2024/2025,PUESOIAPP,PUERICULTURE ET SOINS APPARENTES
+2024/2025,QHSE,QHSE anglais
+2024/2025,QUASERAUT,Qualité pour service automobile
+2024/2025,REANIMATI,Réanimation
+2024/2025,RECHOPER1,Recherche opérationnelle I
+2024/2025,RECHOPER2,Recherche opérationnelle II
+2024/2025,RECHOPERA,Recherche opérationnelle
+2024/2025,REDACMERE,Rédaction Mémoire 
+2024/2025,REDCPTREN,Rédaction compte rendu
+2024/2025,REDRAPSTA,Rédaction de rapports de stage
+2024/2025,REGESTENG,Régulation et Gestion de l energie
+2024/2025,REGFONDOM,Régime foncier et domanial
+2024/2025,REGUASSE1,Régulation et Asservissements I
+2024/2025,REGUASSE2,Régulation et Asservissements II
+2024/2025,REINCONCR,Reinforced concrete I
+2024/2025,RESEATRAN,Réseau de Transmission 
+2024/2025,RESEAUINF,Réseau d information
+2024/2025,RESEMOBIL,Réseaux mobiles
+2024/2025,RESETENDU,Réseau étendu et technologie IP
+2024/2025,RESINFTE1,Réseaux informatique et Téléinformatique I
+2024/2025,RESINFTE2,Réseaux Informatiques et Téléinformatique II
+2024/2025,RESISMAT1,Résistance des matériaux I
+2024/2025,RESISMAT2,Résistance des matériaux II
+2024/2025,RESISMAT3,Résistance des matériaux III
+2024/2025,RESISMATE,Résistance des matériaux (RDM)
+2024/2025,RESISMTER,Resistance of Materials I
+2024/2025,RESLOCSAF,Réseaux locaux sans fil
+2024/2025,RESMATERI,Resistance of Material II
+2024/2025,RESMOBILE,Réseaux mobiles
+2024/2025,RESTELINF,Réseaux et Téléinformatiques
+2024/2025,RESTRANSM,Les réseaux de transmission
+2024/2025,SANGENDRO,Santé génésique et droit sexuel
+2024/2025,SANTECOMM,Santé communautaire
+2024/2025,SANTEDEV,Santé et développement 
+2024/2025,SANTENVIR,Santé Environnementale
+2024/2025,SANTEPUBL,Santé publique 
+2024/2025,SCHELCFRO,schema electrique applique au froid 
+2024/2025,SCHEMAELE,Schémas électrique
+2024/2025,SCHOMEDEC,Elements of school medicine
+2024/2025,SCIDESMAT,Science des materiaux
+2024/2025,SCIENPHY1,Sciences physiques I
+2024/2025,SECAVARES,Sécurité avancée des réseaux
+2024/2025,SECOURISM,Secourisme
+2024/2025,SEMIOCHIR,Sémiologie Chirurgicale
+2024/2025,SEMIOGEN,Semiologie generale
+2024/2025,SEMIOMEDI,SEMIOLOGIE MEDICALE
+2024/2025,SEMIOOBST,Sémiologie Obstétricale
+2024/2025,SEMIOPROD,Sémiotique des produits de luxe 
+2024/2025,SERVOING,Servoing
+2024/2025,SERVOROBO,Servomechanism and robotics
+2024/2025,SEURENCP1,Seuil de rentabilité et coût préétablis I
+2024/2025,SEURENCP2,Seuil de rentabilité et coût préétablis II
+2024/2025,SI2MERISE,Système d’Information II (MERISE)
+2024/2025,SIG,SIG
+2024/2025,SIGNAPROC,Signal Processing
+2024/2025,SIGNSYSTE,Signaux et Système
+2024/2025,SOCANTPHY,Sociology anthopology and physiology
+2024/2025,SOCANTPSY,Sociology - Anthropology and Psychology 
+2024/2025,SOINFIANE,Soins Infirmier en Anesthésie
+2024/2025,SOINGENIC,Soins en génicologie
+2024/2025,SOININTRA,Soins intra partum
+2024/2025,SOINMEDEC,Soins en médecine
+2024/2025,SOINPEDIA,Soins en pédiatrie
+2024/2025,SOINPERSP,Soins aux personnes atteint de deficiences special
+2024/2025,SOINSANNE,Soins aux NNE
+2024/2025,SOINSCHIR,Soins en chirurgie 
+2024/2025,SOINSOBST,Soins Obstetricaux 
+2024/2025,SOINSPOPA,Soins posts partum
+2024/2025,SOINSURGE,Soins aux urgences
+2024/2025,SOIPERDEM,Soins aux personnes atteintes démence spécialisée
+2024/2025,STAGECLIN,Stage clinique V
+2024/2025,STAGECOMM,Stage Communautaire 
+2024/2025,STAGEPROF,Stage professionnel
+2024/2025,STATDESCR,Statistique descriptive
+2024/2025,STATISTI1,Statistiques I
+2024/2025,STATISTI2,Statistiques II
+2024/2025,STATISTIQ,Statistique
+2024/2025,STONURPRO,Story of nursing profession
+2024/2025,STRDONAVA,Structure de données avancées
+2024/2025,STREAMING,Streaming
+2024/2025,STRENMAT1,Strength of materials I
+2024/2025,STRENMAT2,Strength of material II
+2024/2025,STRFONGMP,Structure et fonctiont Grpe Moto Propulseur(GMP)
+2024/2025,STUDIOPH1,Studio photo I
+2024/2025,STUDIOPH2,Studio photo II 
+2024/2025,STYLMODEL,Stylisme/Modélisme
+2024/2025,SUIVMANOE,Suivi et Manoeuvre
+2024/2025,SURGPATHO,Surgical Pathologies
+2024/2025,SURTHERAP,Surveillance therapeutique
+2024/2025,SYSELCAUT,Système electronique des vehicules automonile
+2024/2025,SYSELEVEH,Système électronique véhicules automobiles et TPs
+2024/2025,SYSHEAINF,Système health information
+2024/2025,SYSINFGEO,Système d’information géographique
+2024/2025,SYSINFSAN,Systeme d'information sanitaire
+2024/2025,SYSTEXPL1,Système d’Exploitation I
+2024/2025,SYSTEXPL2,Système d’Exploitation II
+2024/2025,SYSTEXPLO,Système d’exploitation
+2024/2025,SYSTINFO2,Système d’information II
+2024/2025,SYSTINFOR,Système d’Information
+2024/2025,SYSTLOGI1,Système Logistique I 
+2024/2025,SYSTLOGI2,Système Logistique II 
+2024/2025,SYSTTRANS,Système de transmission
+2024/2025,TABMESPE1,Tableau de bord et mesure performance logistique I
+2024/2025,TABMESPE2,Tableau de bord & mesure performance logistique II
+2024/2025,TECEFFSPE,Techniques des effets spéciaux
+2024/2025,TECHCARPE,Technical care specific 2
+2024/2025,TECHCASPE,Technical care specific 1
+2024/2025,TECHCONST,TECHNOLOGIE DE CONSTRUCTION
+2024/2025,TECHEXPRE,Techniques d’Expression
+2024/2025,TECHINTER,Technologie de l’internet
+2024/2025,TECHLABOR,TECHNIQUE DE LABORATOIRE 
+2024/2025,TECHMESUR,TECHNIQUE DE MESURE 
+2024/2025,TECHNINFC,Technology of Information and communication 1
+2024/2025,TECHNLABO,Technics in the laboratory
+2024/2025,TECHREALI,Technique de realisation
+2024/2025,TECHREGUL,Technique de régulation
+2024/2025,TECHSOIN1,TECHNIQUE SOINS SPECIFIQUE 1
+2024/2025,TECHTOPO1,Technologie Topométriques I
+2024/2025,TECHTOPO2,Technologie topométriques II
+2024/2025,TECHTOPO3,Technologie topométrique III
+2024/2025,TECHTOPO4,Technologie topométrique IV
+2024/2025,TECINFCO2,Technology of Information and communication 2
+2024/2025,TECINFCOM,Technologie de Information et la Communication 
+2024/2025,TECINFFRI,Technologie des installations frigorifiques 
+2024/2025,TECMICPRO,Technologie des microprocesseurs et TPs
+2024/2025,TECPROTRA,"Technique of production,transport and distribution"
+2024/2025,TECSOICHI,Techniques de soins en Chirurgie
+2024/2025,TECSOISPE,TECHNIQUE SOINS SPECIFIQUE 2
+2024/2025,TECTRAANA,Technique de transmission analogique
+2024/2025,TECTRANUM,Technique de Transmissions numérique
+2024/2025,TELECOMMU,Télécommunications
+2024/2025,TELECONET,Telecommunication Networks
+2024/2025,TELEDETE1,Télédétection I
+2024/2025,TELEDETE2,Télédétection II
+2024/2025,TELEPHOIP,Téléphonie sur IP
+2024/2025,TELEPRTC,Telephonie rtc
+2024/2025,TELRTCRNI,Téléphonie (RTC/RNIS)
+2024/2025,TGA 1,TGA I 
+2024/2025,TGA 2,TGA II
+2024/2025,THERAMONI,Therapeutic Monitoring
+2024/2025,THERAPEUT,Therapeutic monitoring
+2024/2025,THERMODIN,Thermodynamique
+2024/2025,TISSAGE,Tissage
+2024/2025,TOPOGPHY1,Topography I
+2024/2025,TOPOGPHY2,Topography II
+2024/2025,TOPOGRAP1,Topographie I
+2024/2025,TOPOGRAP2,Topographie II
+2024/2025,TOXICOLOG,TOXICOLOGIE 
+2024/2025,TPPROTECH,TP de procede et technique de realisation
+2024/2025,TPRESEAUX,TP Réseaux 
+2024/2025,TPSCIMAT ,TP sciences des matériaux
+2024/2025,TRAFIBOPT,Transmission sur fibre optique
+2024/2025,TRAITIMA1,Traitement d’image I
+2024/2025,TRAITIMA2,Traitement d’image II
+2024/2025,TRAITSIGN,Traitement du Signal
+2024/2025,TRAMARFL1,Transport maritime et fluvial I 
+2024/2025,TRAMARFL2,Transport maritime et fluvial II 
+2024/2025,TRANSAER1,Transport aérien I 
+2024/2025,TRANSAER2,Transport aérien II 
+2024/2025,TRANSFER1,Transport ferroviaire I 
+2024/2025,TRANSFER2,Transport ferroviaire II 
+2024/2025,TRANSFSAN,Transfusion sanguine
+2024/2025,TRANSROU1,Transport routier I 
+2024/2025,TRANSROU2,Transport routier II 
+2024/2025,TRANSTHER,Transfert thermique
+2024/2025,TRAPERETD,Travaux personnels des etudiants
+2024/2025,TRAPRACO1,Travaux pratique de confection I
+2024/2025,TRAPRACO2,Travaux pratique de confection II
+2024/2025,TRAPRACO3,Travaux Pratique de Confection III
+2024/2025,TRAVPRA,Travaux pratiques
+2024/2025,TRAVPRATQ,Travaux Pratiques
+2024/2025,TRAVSYNT1,Travaux de synthèse I
+2024/2025,TRAVSYNT2,Travaux de synthèse II
+2024/2025,TVAIRPP,TVA et IRPP
+2024/2025,URBANISME,Urbanisme
+2024/2025,URGENOBST,Urgences Obstéricales et néonatales
+2024/2025,VEILLETEC,Veille technologique
+2024/2025,VOIRESDIV,Voiris et Réseaux divers
+2024/2025,WEBDESIGN,Web design
+2024/2025,WORSUPMAN,Workshop supervisor Management
+2025/2026,ACADPROJE,Academic Project
+2025/2026,ACCORICON,Accueil Orientation et Conseils
+2025/2026,ACCOUNTIN,Accounting
+2025/2026,ACCPRESOM,Accouchement en présentation du sommet 
+2025/2026,ACTIVITES,Activités 
+2025/2026,ADMBASDON,Administration des bases de données
+2025/2026,ADMINISTR,Administration
+2025/2026,ADMSITWEB,Administration d’un site web
+2025/2026,ADMSUPRES,Administration et supervision des réseaux
+2025/2026,ADMSYSEXP,Administration des Système d’Exploitation réseaux
+2025/2026,ADMSYSRES,Administration des systèmes et réseaux Linux
+2025/2026,ADVANELEC,Advanced Electronics
+2025/2026,ALGBOOCIR,Algèbre de BOOLE et des circuits
+2025/2026,ALGLINEA1,Algèbre linéaire I
+2025/2026,ALGLINEA2,Algèbre linéaire II
+2025/2026,ALGLINEAI,Algèbre Linéaire
+2025/2026,ALGOPROGM,Algorithme et programmation
+2025/2026,ALGORBASE,Algorithmique de Base
+2025/2026,ALGORITHM,Algorithme
+2025/2026,ALGPRODIG,"Algorithmique, programmat° digitale techniq et TPs"
+2025/2026,ALGSTRDON,Algorithmique et structure de données
+2025/2026,ALLAITMAT,Allaitement maternel
+2025/2026,ALLARTSI2,Allaitement artificiel
+2025/2026,ANABILAN1,Analyse du bilan I
+2025/2026,ANABILAN2,Analyse du bilan II
+2025/2026,ANACONSTR,Analyse et conception des structures métalliques I 
+2025/2026,ANACPTRE1,Analyse du compte de résultat I
+2025/2026,ANACPTRE2,Analyse du compte de résultat II
+2025/2026,ANADEDRA1,Analysis and design drawing I
+2025/2026,ANADEDRA2,Analysis and design drawing II
+2025/2026,ANADEDRA3,Analysis and design drawing III
+2025/2026,ANADEDRA4,Analysis and design drawing IV
+2025/2026,ANADIGDAT,Analogy and digital data processing and storage
+2025/2026,ANADIMTHM,Analyse Dimensionnelle Et Theorie Des Maquettes
+2025/2026,ANAFABRIC,Analyse de fabrication
+2025/2026,ANAMANUF1,Analysis of manufacture I
+2025/2026,ANAMANUF2,Analysis of manufacture II
+2025/2026,ANAMANUF3,Analysis of manufacture III
+2025/2026,ANAMATHE1,Analyse mathématique I
+2025/2026,ANAMATHE2,Analyse mathématique II
+2025/2026,ANAMATHE3,Analyse mathématique III
+2025/2026,ANAMATHE4,Analyse mathématique IV
+2025/2026,ANANUMERI,Analyse Numérique
+2025/2026,ANANUMING,Analyse Numerique Pour Ingenieur
+2025/2026,ANANUMSIG,Analogique et numérique du signal
+2025/2026,ANASYSGEM,Analyse Des Systemes Et Gestion De La Maintenance
+2025/2026,ANATAPHY1,Anatomy and physiology 1
+2025/2026,ANATAPHY2,Anatomy and physiology 2
+2025/2026,ANATPHYS1,Anatomie et Physiologie 1
+2025/2026,ANATPHYS2,Anatomie et Physiologie 2
+2025/2026,ANESTHESI,Anesthesiologie
+2025/2026,ANGLAIS,Anglais
+2025/2026,ANGLAMEDI,Anglais médical
+2025/2026,ANTPHYSOC,Anthropologie physiologique et sociologieque
+2025/2026,APPACQDON,"Appareillage, acquisition des données et TPs"
+2025/2026,APPCLISER,Application client-serveur et Web
+2025/2026,APPLMATHS,Applied Mathematics
+2025/2026,APPMECHA1,Applied mechanics I
+2025/2026,APPMECHA2,Applied mechanics II
+2025/2026,APPROCHCA,APPROCH OF CARE
+2025/2026,ARCHIORDI,Architecture des ordinateurs
+2025/2026,ARCHITECT,Architecture
+2025/2026,ARTIFEEDI,Artificial feeding
+2025/2026,ASSERVISS,Asservissements
+2025/2026,ASSGROPAT,Association Grossesse et pathologie
+2025/2026,ASSURQUAL,Assurance Qualité
+2025/2026,ATEANIMA1,Atelier d’animation I
+2025/2026,ATEANIMA2,Atelier d’animation II
+2025/2026,ATEANIMA3,Atelier d’animation III
+2025/2026,ATEDESSI1,Atelier de dessin I
+2025/2026,ATEDESSI2,Atelier dessin II
+2025/2026,ATELANIM4,Atelier d’animation IV 
+2025/2026,ATELORIENT,Atelier Orientation
+2025/2026,AUTINDUS1,Automatisme industriel I
+2025/2026,AUTINDUS2,Automatisme Industriel II
+2025/2026,AUTOFRIGO,Automatisme Frigoritique 
+2025/2026,AUTOMAT1,Automation I
+2025/2026,AUTOMAT3,Automation III
+2025/2026,AUTOMATI1,Automatisme I  
+2025/2026,AUTOMATI2,Automatisme II
+2025/2026,AUTOMATIS,Automation III
+2025/2026,AUTPRAWOR,Automatism and Pratical Work
+2025/2026,AUTSERANN,Authentification et service d’annuaires
+2025/2026,BACTELOGI,Bacteriologie 2
+2025/2026,BACTERCL1,Bactériologie clinique 1
+2025/2026,BACTERCL3,Bactériologie clinique 3
+2025/2026,BACTERIO,Bactériologie
+2025/2026,BACTERIO2,Bacteriology 2
+2025/2026,BACTERIOL,Bacteriology
+2025/2026,BACTGENER,Bactériologie générale
+2025/2026,BASDIGELE,Basis of the digital electronic
+2025/2026,BASDIGSER,Basics of digital Servoing
+2025/2026,BASDONIHM,Base de données et IHM
+2025/2026,BASDONSQL,Base de données et SQL
+2025/2026,BASEDEDON,Base de données
+2025/2026,BASEELECT,Bases électricité
+2025/2026,BASELECIR,Basics of electricity and electrical circuit
+2025/2026,BASELEIND,Bases électricité et électronique industrielle
+2025/2026,BASELENUM,Bases d’électronique numérique et TPs
+2025/2026,BASEQHSSE,Bases qlité hygiène santé sécurité environ.(QHSSE)
+2025/2026,BASEQSHE,Base QSHE
+2025/2026,BASHYGSEC,Bases de qualité hygiène santé sécurité environnem
+2025/2026,BASICELEC,Basics Electronics
+2025/2026,BASOFQUAL,"Basics of quality, health, safety and envi."
+2025/2026,BASSCINU1,Basics of science of nurse 1
+2025/2026,BASSCINU2,Basics of science of nurse 2
+2025/2026,BENNETERI,Bonneterie
+2025/2026,BETOARME1,Béton armé I
+2025/2026,BETOARME2,Béton Armé II
+2025/2026,BILSCHPRO,Bilan Et Schemas Des Procedes
+2025/2026,BIOCHICLI1,Biochimie Clinique 1 – Laboratoire 
+2025/2026,BIOCHICLI2,Biochimie Clinique 2
+2025/2026,BIOCHICLI3,Biochimie Clinique 3
+2025/2026,BIOCHIGEN,Biochimie générale
+2025/2026,BIOCHIMIE,Biochimie
+2025/2026,BIOLMOLEC,Biologie moléculaire 
+2025/2026,BIOLOGCEL,Biologie cellulaire
+2025/2026,BIOLOGYLA,BIOLOGY
+2025/2026,BIOLREPRO,Biologie de la reproduction 
+2025/2026,BIOPHYSIC,Biophysics
+2025/2026,BIOPHYSIQ,BIO-PHYSIQUE 
+2025/2026,BIOSTATI1,Biostatistics 1
+2025/2026,BIOSTATI2,Biostatistics 2
+2025/2026,BIOSTATIC,BIOSTATISTIQUE 
+2025/2026,BLOCOPERT,BLOC OPERATOIRE
+2025/2026,BLOODTRAN,Blood transfusion
+2025/2026,BOPRLAMAI,Bonnes pratiques de laboratoire et maintenance
+2025/2026,BOTANANAT,Botanique et anatomie 
+2025/2026,BRAMANMAR,Brand management des marques
+2025/2026,BREASTFEE,Breast feeding
+2025/2026,BUREAETUD,BUREAU DETUDE
+2025/2026,CADAUTCAD,CAD (AUTOCAD)
+2025/2026,CADELEENG,CAD in Electrical Engineering
+2025/2026,CADSOLWOR,CAD (SOLIDWORK)
+2025/2026,CALCTOPOM,calcul topométrique IV
+2025/2026,CALCUSTRU,Calcul Des Structures I
+2025/2026,CALRESIMP,Calcul du résultat fiscal et impôts
+2025/2026,CALTOPME1,Calcul Topométriques I
+2025/2026,CALTOPME2,Calculs topométriques II
+2025/2026,CALTOPME3,Calculs topométriques III
+2025/2026,CALTOPME4,Calculs topométriques IV
+2025/2026,CAOGENELC,CAO EN GENIE ELECTRIQUE
+2025/2026,CAPACTBUS,"Capteurs,actionneurs et systèmes de bus de données"
+2025/2026,CAREINSUR,Care in Surgery
+2025/2026,CAREMEDEC,Care in Medecine
+2025/2026,CAREPEDIAT,Care in Pediatric
+2025/2026,CARGOHAND,Cargo handling
+2025/2026,CARNEWBOR,Care of new born
+2025/2026,CARRIALAW,Carriage law 
+2025/2026,CARTOGRA1,Cartographie I
+2025/2026,CARTOGRA2,Cartographie II
+2025/2026,CBC3,CBC3-Communication for behavior change
+2025/2026,CCC,CCC
+2025/2026,CCHEMATOL,CC hématologie
+2025/2026,CCNA1,Ccna 1
+2025/2026,CELLBIOLO,Cell Biology
+2025/2026,CFAO,Cfao
+2025/2026,CGBASEANG,Connaissances générales de base Anglais
+2025/2026,CGBASEFRA,Connaissances générales de base Français
+2025/2026,CHEMISTRY,Chemistry
+2025/2026,CHIDCARE,Chid Care
+2025/2026,CHIMAPPLI,Chimie Appliquée 
+2025/2026,CHIMATPRO,"Chimie,sciences matériaux et processus fabrication"
+2025/2026,CHIMIANAL,Chimie analytique
+2025/2026,CHIMIE,Chimie
+2025/2026,CHIMIE1,Chimie 1
+2025/2026,CHIMIEGEN,Chimie generale
+2025/2026,CHIMIETEX,Chimie du textile
+2025/2026,CHIMORGAN,Chimie organique 
+2025/2026,CIRELECTR,Circuits électriques
+2025/2026,CIRLOGIQ1,Circuits logiques I
+2025/2026,CIRLOGIQ2,Circuits logiques II
+2025/2026,CIVMOREDU,Civic and moral education
+2025/2026,CLIBIOCHE1,Clinical Biochemistry 1
+2025/2026,CLIBIOCHE2,Clinical Biochemistry 2
+2025/2026,CLIMAVENT,CLIMATISATION ET VENTILLATION
+2025/2026,CLINBACTE,Clinical Bacteriology 3
+2025/2026,CLINEXPER,Clinical experience
+2025/2026,CLINHEMA1,Clinical hematology 1
+2025/2026,CLINHEMA2,Clinical hematology 2
+2025/2026,CLINHEMA3,Clinical hematology 3
+2025/2026,CLININTE1,Clinical Internship 1
+2025/2026,CLININTE2,Clinical Internship 2
+2025/2026,CLININTER,Clinical Internship 5
+2025/2026,CLINPARA2,Clinical Parasitology 2
+2025/2026,CLINPARA3,Clinical Parasitology 3
+2025/2026,CLINPATHO,Clinical Parasitology 1
+2025/2026,CLINPHARMA,Clinical Pharmacololy
+2025/2026,CMPSCIENS,Computer Science II
+2025/2026,COMAIDMA1,Computer Aided Manufacturing I
+2025/2026,COMAIDMA2,Computer Aided Manufacturing II
+2025/2026,COMANABU2,Comptabilité analytique et gestion budgétaire II
+2025/2026,COMANABUD,Comptabilité analytique et gestion budgétaire
+2025/2026,COMASSAC1,Computer Assisted Accounting I
+2025/2026,COMASSAC2,Computer Assisted Accounting II
+2025/2026,COMCHACO3,CCC3 - Communication changement comportement III
+2025/2026,COMDEVPT,Communication pour le développement 
+2025/2026,COMDONNEE,Communication de données
+2025/2026,COMMUBEH2,Communication for behavior change2
+2025/2026,COMMUNICA,CAM II
+2025/2026,COMMUNITY,Community Health
+2025/2026,COMPECOMM,Compétences En Communication
+2025/2026,COMPROIN1,Commande de processus industriels I
+2025/2026,COMPROIN2,Commande de processus industriels II
+2025/2026,COMPSCIEN,Computer Science I
+2025/2026,COMPTAANA,Comptabilité analytique
+2025/2026,COMPTABIL,Comptabilité
+2025/2026,COMPTAGE1,Comptabilité générale I
+2025/2026,COMPTAGE2,Comptabilité générale II 
+2025/2026,COMPTAGEN,Comptabilité Générale
+2025/2026,COMPUBUS1,Computer for Business I
+2025/2026,COMPUBUS2,Computer for Business II
+2025/2026,COMPUPROG,Computer Programming
+2025/2026,COMPUTRAI,Computer training
+2025/2026,COMUNMOD1,Communication de mode I 
+2025/2026,COMUNNICA,English Communication
+2025/2026,CONDMANU1,Conditionnement et manutention I 
+2025/2026,CONDMANU2,Conditionnement et manutention II 
+2025/2026,CONGENRES,Concept généraux des réseaux (réseaux NGN)
+2025/2026,CONGENSYS,Concepts Generaux Des Systèmes D’Information
+2025/2026,CONSMECA1,Construction Mecanique I
+2025/2026,CONSMECA2,Construction Mecanique II
+2025/2026,CONSTDESI,Construction Design
+2025/2026,CONSTSOC1,Constitution des sociétés I
+2025/2026,CONSTSOC2,Constitution des sociétés II
+2025/2026,CONTALIME,Contrôle des aliments 
+2025/2026,CONTHENUR,Concepts and theories in nursing profesion
+2025/2026,CONTHESCI,Concept et théorie et science infirmière 
+2025/2026,COTREXTES,"Collecte, traitement et Exploitation Technique des statistiques"
+2025/2026,COUCPLET1,Coûts complets I
+2025/2026,COUCPLET2,Coûts complets II
+2025/2026,COUPARSE1,Coûts partiels et seuil de rentabilité I  
+2025/2026,COUPARSE2,Coûts partiels et seuil de rentabilité II
+2025/2026,CPTASSOR1,Comptabilité assistée par l’ordinateur I
+2025/2026,CPTASSOR2,Comptabilité assistée par ordinateur II  
+2025/2026,CREATENTR,Création d’entreprise
+2025/2026,CUBAGRUME,Cubage des grumes 
+2025/2026,CYCLDEVIE,Cycle de vie 
+2025/2026,CYTOHUMAI,Cytologie humaine 
+2025/2026,DAILYOPE1,Daily Operations I
+2025/2026,DAILYOPE2,Daily Operations II
+2025/2026,DATACOMMU,Data Communication
+2025/2026,DAVRESPRO,Drafting of the research project
+2025/2026,DEMARSOIN,Demarche de Soins 
+2025/2026,DEMCREAT1,Démarche créative I
+2025/2026,DEMCREAT2,Démarche créative II
+2025/2026,DEMGRAPHY,DEMOGRAPHY
+2025/2026,DEMOGRAPH,Démographie
+2025/2026,DESASSOR1,Dessin assisté par ordinateur I (DAO)
+2025/2026,DESASSOR2,Dessin assisté par ordinateur II
+2025/2026,DESASSORD,Dessin assisté par ordinateur
+2025/2026,DESGENDAO,Dessin Du Genie Civil Et Dao
+2025/2026,DESGRAPH1,Design graphique I
+2025/2026,DESGRAPH2,Design graphique II
+2025/2026,DESGRAPH3,Design graphique III
+2025/2026,DESGRAPH4,Design graphique IV
+2025/2026,DESIGNTEC,Design and technology
+2025/2026,DESSIBASE,Dessin de Base
+2025/2026,DESSINMEC,Dessin mécanique
+2025/2026,DESSINSTY,Dessin style I 
+2025/2026,DESSINTE1,Dessin technique I
+2025/2026,DESSINTE2,Dessin technique II
+2025/2026,DESSINTEC,Dessin technique
+2025/2026,DESTEC1SI,Dessin technique I et Système d’information
+2025/2026,DESTEC2GD,Dessin technique II et géométrie descriptive
+2025/2026,DESTECBAT,Dessin et technologie de bâtiment
+2025/2026,DEVELDURA,Developpement Durable
+2025/2026,DEVELOWEB,Developpement Web
+2025/2026,DEVVEHAUT,Développement du véhicule automobile
+2025/2026,DIAANTMED,Diagnostic Anténatal Et Médecine Fœtale
+2025/2026,DIAGNOAUT,Diagnostiques automobile et TPs
+2025/2026,DIETETIQU,Diététique 
+2025/2026,DIGELEPOW,Practical work Digital electronics & power control
+2025/2026,DISENEELE,Distribution de l’énergie électrique 
+2025/2026,DISSOSOC1,Dissolution des sociétés I  
+2025/2026,DISSOSOC2,Dissolution des sociétés II
+2025/2026,DOMOTIQU1,Domotique I
+2025/2026,DROIETLEG,Droit Et Législation
+2025/2026,DROIHUMAI,Droits humains 
+2025/2026,DROITCIVI,Droit civil
+2025/2026,DROITTRAV,Droit du travail
+2025/2026,DROPROINT,Droit de la propriété intellectuelle   
+2025/2026,DROSOCCO1,Droit des sociétés commerciales I
+2025/2026,DROSOCCO2,Droit des sociétés commerciales II
+2025/2026,ECOBUSORG,Economy and business organization
+2025/2026,ECONHEALT,The economics of health
+2025/2026,ECONOGENE,Economie générale
+2025/2026,ECONOMICS,Economics
+2025/2026,ECONOMIE,Economie
+2025/2026,ECONOSANT,Economie de la santé
+2025/2026,ECOORGENT,Economie et Organisation des Entreprises
+2025/2026,EDUCIVETH,Education civique et éthique
+2025/2026,EDUCSANTE,Éducation pour la santé 
+2025/2026,EDUVIEFAM,Éducation à la vie familiale 
+2025/2026,ELAPLAMAI,Elaborer plan de maintenance preventive équipement frigorifique monoposte ou thermodynamique
+2025/2026,ELCTRONI3,Electronique 3
+2025/2026,ELEBASLO1,Elément de Base de la Logistique I 
+2025/2026,ELEBASLO2,Elément de base de la logistique II 
+2025/2026,ELECIRCUI,Electrical circuits
+2025/2026,ELECNUME1,Electronique numérique I
+2025/2026,ELECNUME2,Electronique numériques II
+2025/2026,ELECTANA1,Electronique Analogique 1
+2025/2026,ELECTANA2,Electronique Analogique 2
+2025/2026,ELECTANAL,Electronique Analogique
+2025/2026,ELECTECH1,Electrotechnique I
+2025/2026,ELECTECH2,Electrotechnique II
+2025/2026,ELECTECHN,Electrotechnique
+2025/2026,ELECTGENE,Electricité générale 
+2025/2026,ELECTR2PW,Electronics II and Practical Works
+2025/2026,ELECTRCON,Electronics construction
+2025/2026,ELECTRGEN,Electronique générale 
+2025/2026,ELECTROB1,Electronique de base I
+2025/2026,ELECTROB2,Electronique de base II
+2025/2026,ELECTROEG,Electronique I et Electricité générale
+2025/2026,ELECTROFO,Electronique des fonctions
+2025/2026,ELECTROGP,Electronique grand public
+2025/2026,ELECTROME,Electronique et mesure
+2025/2026,ELECTRONA1,Electronics I
+2025/2026,ELECTRONA2,Electronics II
+2025/2026,ELECTRONA3,Electronics III + TP
+2025/2026,ELECTRONF1,Electronique 1
+2025/2026,ELECTRONF2,Electronique 2
+2025/2026,ELECTRONF3,Electronique 3
+2025/2026,ELECTRONI,Electronics
+2025/2026,ELECTROPU1,Electronique de puissance I
+2025/2026,ELECTROPU2,Electronique de puissance II
+2025/2026,ELEHEAWOR,Elements of health at work
+2025/2026,ELEINSAPP,Electrical installations and apparatus
+2025/2026,ELEMACHI1,Electrical machines I
+2025/2026,ELEMCHAUD,Elements De Chaudronnerie
+2025/2026,ELESANTRA,Éléments de santé au travail 
+2025/2026,ELESCHCOM,Electrical Schema and command
+2025/2026,ELETROMAG,Electromagnétisme
+2025/2026,EMBRYOLOG,Embryologie 
+2025/2026,ENGIMATH1,Engineering Mathematics I
+2025/2026,ENGIMATH2,Engineering Mathematics II
+2025/2026,ENGIMATH3,Engineering Mathematics III
+2025/2026,ENGIMATH4,Engineering Mathematics IV
+2025/2026,ENGISOCIE,Engineer in the Society
+2025/2026,ENGLISH,English
+2025/2026,ENNOBLIS1,Ennoblissement I
+2025/2026,ENNOBLIS2,Ennoblissement II
+2025/2026,ENNOBLIS3,Ennoblissement III
+2025/2026,ENTEREPAR,Entretien et reparation 
+2025/2026,ENTOMEDIC,Entomologie médicale 
+2025/2026,ENTOMOL2,Entomologie
+2025/2026,ENTPRENSH,Entrepreneurship
+2025/2026,ENTREPREN,Entreprenariat
+2025/2026,ENTREPSHI,Enterpreneuriatship
+2025/2026,ENVIENGIN,Environmental Engineering
+2025/2026,ENVIJURID,Environnement juridique
+2025/2026,ENVIRHEAL,Environnemental Health
+2025/2026,ENVMICORD,Environnement Micro-ordinateur
+2025/2026,EPIDEMIO1,Epidémiologie
+2025/2026,EPIDEMIOL,EPIDEMIOLOGY 
+2025/2026,EQUADIFFE,Equations différentielles
+2025/2026,EQUDERPAI,Equation Aux Derivees Partielles Pour Ingenieur
+2025/2026,EQUDERPAR,Equation Aux Derivees Partielles
+2025/2026,EQUIBATIM,Equipement du bâtiment
+2025/2026,ESSAILABO,Essais en laboratoire
+2025/2026,ESTPHIART,Esthétique et philosophie de l’art
+2025/2026,ETHCIVEDU,Ethics and Civic education
+2025/2026,ETHDEOMED,Éthique et déontologie médicale 
+2025/2026,ETHIQDEON,Ethique et déonthologie
+2025/2026,ETHMEDDEO,Ethics and medical deontology
+2025/2026,ETUDEPRIX,Etude de prix
+2025/2026,EXERPROFE,Exercice de la profession
+2025/2026,EXPREANGL,Expression anglaise
+2025/2026,EXPRECRIT,Expression écrite
+2025/2026,EXPREFRAN,Expression française
+2025/2026,EXPREORAL,Expression orale
+2025/2026,FABRIMECA,Fabrication Mecanique
+2025/2026,FILATURE,Filature
+2025/2026,FINAMATH1,Financial Mathematics I
+2025/2026,FINAMATH2,Financial Mathematics II
+2025/2026,FIRSTAID1,first aid
+2025/2026,FISCALITE1,Fiscalité 1
+2025/2026,FONDPEDAG,Fondements Pédagogiques
+2025/2026,FONDSOUTE,Fondations et soutènements
+2025/2026,FONSOIINF,Fondamentaux Des Soins Infirmiers
+2025/2026,FORMABILI,Formation bilingue
+2025/2026,FRANCAIS2,Francais
+2025/2026,FRANCMEDI,Francais médical
+2025/2026,FRASPEINF,Français spécialisé inforgraphie
+2025/2026,FREIGFORW,Freight forwarding (cargo representation)
+2025/2026,FRENCH,French
+2025/2026,FULLCOST1,Full Costing I
+2025/2026,FULLCOST2,Full Costing II
+2025/2026,FUNANAELE,Function of the analogical electronic
+2025/2026,FUNCARINS,Fundamentals of Cargo Insurance
+2025/2026,GENBIOCHE,General Biochemistry
+2025/2026,GENECHEME,General Chemistry
+2025/2026,GENECOMP1,General Computing 1
+2025/2026,GENECONOM,General Economy
+2025/2026,GENEMATH1,General Mathematics 1
+2025/2026,GENEMATH2,General Mathematics II
+2025/2026,GENERANTH,Généralités sur l’anthropologie
+2025/2026,GENERCONS,General Construction
+2025/2026,GENERPHAR,General Pharmacology
+2025/2026,GENHYGHOS,General hygiene and hospitable
+2025/2026,GENIPHARM,Genical Pharmacology
+2025/2026,GENRE,Genre 
+2025/2026,GENSOIAGE,Gériatrie et soins aux personnes âgées 
+2025/2026,GEOAPPSON,Geophysique Appliquee Et Sondages
+2025/2026,GEODESCRI,Géométrie descriptive
+2025/2026,GEODESIE,Géodesie
+2025/2026,GEOFUXTR1,Géographie des flux et transport des voyageurs I 
+2025/2026,GEOFUXTR2,Géographie des flux et transport des voyageurs II
+2025/2026,GEOINGTOP,Géologie de l’ingénieur / Topologie
+2025/2026,GEOTECHN,Géotechnique
+2025/2026,GEOTECHNI,Geotechnical Engineering
+2025/2026,GERIANUSI,Geriatric Nursing
+2025/2026,GERIARTRI,Gériartrie
+2025/2026,GESAPPST1,Gestion des approvisionnements et des stocks I 
+2025/2026,GESAPPST2,Gestion des approvisionnements et des stocks II 
+2025/2026,GESOPECUB,Gestion des opérations et cubage 
+2025/2026,GESPROINF,Gestion des projets informatiques
+2025/2026,GESRISCAT,Gestion Des Risques Et Catastrophes Industrielles
+2025/2026,GESTBUDG1,Gestion budgétaire I 
+2025/2026,GESTBUDG2,Gestion Budgétaire II
+2025/2026,GESTENTR1,Gestion des entrepôts I 
+2025/2026,GESTENTR2,Gestion des entrepôts II 
+2025/2026,GESTHOSPI,Gestion Hospitalieres
+2025/2026,GESTPRODU,Gestion de la production
+2025/2026,GESTSANTE,Gestion De La Santé
+2025/2026,GOVERPOLI,Government politics
+2025/2026,GPS I,GPS I
+2025/2026,GPS II,GPS II
+2025/2026,GROSSESSE,Grossesse 
+2025/2026,GYNCOLCAR,Gynecological care
+2025/2026,GYNEPATHO,Gynecological Pathologies
+2025/2026,HEALMANAG,Health management
+2025/2026,HEALTHDEV,Health and development
+2025/2026,HEALTHWOR,Health at work
+2025/2026,HEALTUTOR,Health Tutorials
+2025/2026,HEMACLIN3,Hématologie clinique 3
+2025/2026,HEMATCLI2,Hématologie clinique 2
+2025/2026,HEMATCLIN,Hématologie clinique 1 
+2025/2026,HEMATHOCL,Hémathologie clinique
+2025/2026,HEMATOLOG,Hematology
+2025/2026,HISPROINF,Histoire de la Profession Infirmière 
+2025/2026,HISPROSAF,Histoire de la profession de la sage-femme
+2025/2026,HISTOIART,Histoire de l’Art
+2025/2026,HISTOLOGI,Histologie
+2025/2026,HISTOPATO,Histopathologie 
+2025/2026,HISTORYNU,History of nursing profession
+2025/2026,HOMELECTR,Home Electronics
+2025/2026,HOSPITMAN,hospital Management
+2025/2026,HUMNUTPAT,Human Nutrition and pathology associated
+2025/2026,HYDRAULIQ,Hydraulique
+2025/2026,HYDROAPPL,Hydrologie Appliquee
+2025/2026,HYGASSAIN,Hygiène et assainissement 
+2025/2026,ICT,ICT
+2025/2026,ICT2,ICT2
+2025/2026,IEC,IEC 1
+2025/2026,IEC2,Information Education Communication 2 -IEC2
+2025/2026,IEC3,IEC3
+2025/2026,IMAGMEDIC,Imagerie Medical
+2025/2026,IMMUNOLOG,Immunology
+2025/2026,IMPLEMEN3,Implementation III
+2025/2026,IMPLEMENT,Implementation II
+2025/2026,IMPPROSI2,Implementation Profetionnal Situation 2
+2025/2026,IMPPROSI3,Implementation Profetionnal Situation 3
+2025/2026,IMPPROSIT,Implementation Profetionnal Situation 1
+2025/2026,IMPSURSOC,Impôt sur les sociétés  
+2025/2026,INDSAFCRE,Industrial safety 1 credit
+2025/2026,INDUSMAIN,Industrial maintenance
+2025/2026,INDUSNETW,Industrial networks
+2025/2026,INFEINFEC,Infertilité et infécondité
+2025/2026,INFOPGRAP,Infographie
+2025/2026,INFORAPP1,Informatique appliquée I
+2025/2026,INFORAPP2,Informatique Appliquée II
+2025/2026,INFORGEN1,Informatique Général 1
+2025/2026,INFORGEN2,Informatique générale II
+2025/2026,INFORMAT1,Informatique I
+2025/2026,INFORMAT2,Informatique II
+2025/2026,INFORMATI,Informatique
+2025/2026,INFORMATP,TP Informatique
+2025/2026,INFPARDES,Infectious and parasitic desease
+2025/2026,INFPATLOC,infectious pathologies localize
+2025/2026,INFTRATRA,Information transport and transmission
+2025/2026,INGEBETON,Ingenierie Des Betons
+2025/2026,INGMAGLAW,Ingineering Management Law and Economics
+2025/2026,INITIAINF,Initiation à l’informatique
+2025/2026,INITIAOP1,Initiation à l’optimisation I 
+2025/2026,INITIAOP2,Initiation à l’Optimisation II 
+2025/2026,INITRECHE,Initiation à la recherche
+2025/2026,INITRESEA,Initiation to research
+2025/2026,INSAPPSAN,Installation des appareils sanitaires
+2025/2026,INSELEAPP,Installations électriques et appareillages 
+2025/2026,INSEPROFE,Insertion Professionnelle
+2025/2026,INSMAIMAT,Installation et Maintenance Matériels et Logiciel
+2025/2026,INSRESTUY,Installation du réseau de tuyauterie
+2025/2026,INSTACONG,Installation et configuration
+2025/2026,INSTRUMEN,Instrumentation
+2025/2026,INTANAFI1,Introduction à l’analyse financière I 
+2025/2026,INTANAFI2,Introduction à l’analyse financière II
+2025/2026,INTBASDON,Introduction aux Bases de Données
+2025/2026,INTCLIHEA,Internship of clinical health V
+2025/2026,INTDEVDUR,Introduction Au Developpement Durable
+2025/2026,INTEGRWEB,Intégration web
+2025/2026,INTELEMAC,Introduction aux éléments de machine
+2025/2026,INTERSHIP,INTERSHIP
+2025/2026,INTGENLOG,Introduction au Génie Logiciel
+2025/2026,INTGESMAI,Introduction A La Gestion De La Maintenance
+2025/2026,INTLOGMAN,Introduction to logistics management
+2025/2026,INTMODOBJ,Introduction à la modélisation objet
+2025/2026,INTPARTU2,Intra partum
+2025/2026,INTRODSAV,Introduction au SAV
+2025/2026,INTROTAXA,Introduction To Taxation
+2025/2026,INTSECINF,Introduction a la sécurité informatique
+2025/2026,INTSYSINF,Introduction au Système d’information
+2025/2026,INTTRAMAN,International transport management
+2025/2026,LABORLAW,Labour Law
+2025/2026,LANGOFFIC,Langue officielle 1 
+2025/2026,LEADESHIP,Leadership
+2025/2026,LEGECOENV,Legal and Economics Environment
+2025/2026,LEGIPROFE,Législation professionnelle 
+2025/2026,LIFECYCLE,Life cycle
+2025/2026,LOGINTER1,Logistique Internationale I 
+2025/2026,LOGINTER2,Logistique Internationale II 
+2025/2026,MACHCONFE,Machine de confection
+2025/2026,MACHIELCT,Machine Electrique1
+2025/2026,MACHIELEC,Machine Electrique 2
+2025/2026,MACHTEXTI,Machines des textiles  
+2025/2026,MAICOMSYS,Maintenance of complex systems
+2025/2026,MAIELEENG,Maintenance in electrical Engineering
+2025/2026,MAIGENELE,Maintenance en génie électrique
+2025/2026,MAINRELIA,Maintenance and reliability
+2025/2026,MALINFPAR,Maladie infectueuse et parasitaire
+2025/2026,MANAPPSAN,Maintenance des Appareils Sanitaire
+2025/2026,MANUTECHN,Manufacturing technology
+2025/2026,MARAPTRA1,Marketing appliqué au transport I 
+2025/2026,MARAPTRA2,Marketing appliqué au transport II 
+2025/2026,MARCOSBR1,Marginal Costing And The Break-Even Analysis I
+2025/2026,MARCOSBR2,Marginal Costing And The Break-Even Analysis II
+2025/2026,MARENTCUL,Marketing des entreprises culturelles   
+2025/2026,MARIADM12,Maritime Administration I and II
+2025/2026,MARIADMI1,Maritime Administration I
+2025/2026,MARIADMI2,Maritime Administration II
+2025/2026,MARININSU,Marine Insurance
+2025/2026,MARITRANS,Maritime transport
+2025/2026,MATECONST,Matériaux de construction
+2025/2026,MATESCIE1,Materials science I
+2025/2026,MATESCIE2,Materials Science II
+2025/2026,MATETEXTI,Matériaux textile
+2025/2026,MATHAPPLI,Mathématique appliquée 
+2025/2026,MATHFINA1,Mathématiques financières I 
+2025/2026,MATHFINA2,Mathématiques financières II 
+2025/2026,MATHFINA3,Mathématiques financières III 
+2025/2026,MATHFINA4,Mathématiques financières IV
+2025/2026,MATHGENE1,Mathématiques générales I
+2025/2026,MATHGENE2,Mathématiques générales II 
+2025/2026,MATHMAAPP,Mathématique Appliqué
+2025/2026,MATMATIC1,Mathematics I
+2025/2026,MATMATIC2,Mathematics II
+2025/2026,MATMATIC3,Mathematics III
+2025/2026,MATMATIC4,Mathematics IV
+2025/2026,MATMATICS,Mathematics
+2025/2026,MATMATIQ1,Mathématiques I
+2025/2026,MATMATIQ2,Mathématique II
+2025/2026,MATMATIQ3,Mathématiques III
+2025/2026,MATMATIQ4,Mathématiques IV
+2025/2026,MATMATIQU,Mathématiques
+2025/2026,MATMETALL,Matériaux métalliques
+2025/2026,MEASUTECH,Measurement techniques
+2025/2026,MECAFLUID,Mécanique des fluides
+2025/2026,MECAGENE1,Mécanique générale I
+2025/2026,MECAGENE2,Mécanique générale II
+2025/2026,MECANSOLS,Mecanique Des Sols
+2025/2026,MECFLUAER,Mécanique des fluides aérodynamiques 
+2025/2026,MECFLUHYD,Mécanique des fluides hydrauliques 
+2025/2026,MECMILCON,Mecanique Des Milieux Continus
+2025/2026,MEDCOUPE2,Medecine Course in paediatric II
+2025/2026,MEDECISCO,Médecine Scolaire
+2025/2026,MEDECITRA,Médécine de travail
+2025/2026,MEDEMEDIC,Médécine Médicale
+2025/2026,MEDICENGL,Medical english
+2025/2026,MEDICENTO,Medical Entomology
+2025/2026,MEDICFREN,Medical French
+2025/2026,MEDICMYCO,Medical Mycologie
+2025/2026,MEDIMAGIG,MEDICAL IMAGING 
+2025/2026,MEDIPSYCH,Medical Psychology
+2025/2026,MEMOSEMIN,Mémoire et séminaire
+2025/2026,MENTALHEA,Mental health
+2025/2026,METALLOGR,Métallographie 
+2025/2026,METALLURG,Métallurgie I
+2025/2026,METDRAINT,Methodology of drafting the internship report
+2025/2026,METHCONST,Méthodologie de construction
+2025/2026,METHREDRS,Méthodologie de rédaction du rapport de stage
+2025/2026,METHTRAVA,Méthode de travail 
+2025/2026,METOUTMAC,Méthodes et outillages et machines-outils I
+2025/2026,METREDMEM,Méthodologie de rédaction du mémoire
+2025/2026,METROLOGI,Métrologie
+2025/2026,MICROALIM,Microbiologie des aliments
+2025/2026,MICROBIOA1,Microbiology I
+2025/2026,MICROBIOA2,Microbiology II
+2025/2026,MICROBIOF1,Microbiologie I
+2025/2026,MICROBIOF2,Microbiologie II
+2025/2026,MICROENVA,Microbiologie of the environment
+2025/2026,MICROENVF,Microbiologie de lenvironnement
+2025/2026,MICROFOOD,Microbiology of food
+2025/2026,MICROPRO1,Microprocesseur I
+2025/2026,MICROPRO2,Microprocesseur II 
+2025/2026,MINPROINF,Mini Projet Informatique
+2025/2026,MISESIPRO,Mise en Situation Professionel
+2025/2026,MISETUMAT,Mise en situation maternité 
+2025/2026,MISSIPRO1,Mise en Situation Professionel 1
+2025/2026,MISSIPRO2,Mise en Situation Professionel 2
+2025/2026,MISSIPRO3,Mise en Situation Professionel 3
+2025/2026,MODASSORD,Modélisme assisté par ordinateur
+2025/2026,MODNUMCOM,Modulation numérique et notion de compression
+2025/2026,MONTMAQUE,Montage des maquettes
+2025/2026,MONTMULME,Montage multimédia
+2025/2026,MONTPROJT,Montage de projets
+2025/2026,MOTCOMINT,Moteur à combustion interne
+2025/2026,MSPEDIATR,MSP pédiatrie 
+2025/2026,MSPMATERN,MSP Maternité 
+2025/2026,MUCOLOGIE,Mycologie
+2025/2026,MYCOLOGIE,MYCOLOGIE II 
+2025/2026,NEGACHVT1,Négociation achat vente I 
+2025/2026,NEGACHVT2,Négociation achat vente II 
+2025/2026,NEGINFORM,Négociations Informatiques
+2025/2026,NOMADISME,Nomadisme
+2025/2026,NONTISSES,Non tissés
+2025/2026,NOTBASCAO,Notions de bases en CAO/DAO/CFAO
+2025/2026,NURSINCAR,NURSING CARE
+2025/2026,NUSCARASE,Nursing care to Anesthesia
+2025/2026,NUSCAREME,Nusing Care to Emergency
+2025/2026,NUSCAROPR,Nursing care to the bloc oparator
+2025/2026,NUTRIHUMA,Nutrition humaine et pathologies associée
+2025/2026,OBSMAIDEM,"Obstétrique, Maïeutique, Démarche Clinique"
+2025/2026,OBSTETGEN,Obstetrical and Genicology
+2025/2026,OBSTOIAPP,OBSTETRIQUE ET SOINS APPARENTES
+2025/2026,OBSTRPATH,Obstrical Pathology
+2025/2026,OBTEMARCH,Obtention marché
+2025/2026,ONDEMECAN,Ondes mécaniques 
+2025/2026,OPECOURT1,Opérations courantes I
+2025/2026,OPECOURT2,Opérations courantes II 
+2025/2026,OPESPETR1,Opérations spécifiques et Travaux fin exercice I
+2025/2026,OPESPETR2,Opérations spécifiques et travaux fin exercice II
+2025/2026,OPTTELECO,Optique pour les Télécoms
+2025/2026,ORGAMAINT,Organisation de la maintenance II 
+2025/2026,ORGANCHEM,Organic Chemistry
+2025/2026,ORGATELIE,Organisation de l’atelier
+2025/2026,ORGCHACAR,Organes de châssis/carrosserie
+2025/2026,ORGCHANTI,Organisation des chantiers
+2025/2026,ORGOFWORK,ORGANISATION OF WORK SITES
+2025/2026,OUTBUREAU,Outils bureautiques
+2025/2026,OUVRAGART,Ouvrage Art
+2025/2026,PAO,PAO
+2025/2026,PARACLIN1,Parasitologie Clinique 1
+2025/2026,PARACLIN2,Parasitologie Clinique 2
+2025/2026,PARACLIN3,Parasitologie Clinique 3
+2025/2026,PARASCLIN,Parasitologie clinique 1
+2025/2026,PARASITHO,PARASITOLOGY
+2025/2026,PARASITOL,Parasitologie
+2025/2026,PATHGENER,Pathologie générale 
+2025/2026,PATHOBSTR,Pathologie Obstétrical 
+2025/2026,PATHOCHIR,Pathologie chirurgicale
+2025/2026,PATHOGYNE,Pathologies gynécologiques
+2025/2026,PATHOLOGI,Pathologies by system
+2025/2026,PATINFLOC,Pathologies infect et localisées
+2025/2026,PATINFPAR,Pathologie infect et parasitaire
+2025/2026,PATPARSYS,Pathologie par système
+2025/2026,PEDIATRIE,PEDIATRIE
+2025/2026,PERIPHERI,Périphériques d’E/S
+2025/2026,PERSONDIS,Person with disability forces
+2025/2026,PERSONRES,Person in resuscitation
+2025/2026,PHARMACLI,Pharmacologie Clinique
+2025/2026,PHARMACOL,Pharmacology
+2025/2026,PHARMAGEN,Pharmacologie générale
+2025/2026,PHARSPECI,Pharmacologie spéciale 
+2025/2026,PHOTOGRA1,Photogrammetrie I
+2025/2026,PHOTOGRA2,Photogrammetrie II 
+2025/2026,PHYAPPGEN,Physique appliquée au Génie Civil
+2025/2026,PHYSICAPT,Physique des capteurs
+2025/2026,PHYSICS,Physics
+2025/2026,PHYSICS1,Physics I
+2025/2026,PHYSICS2,Physics II
+2025/2026,PHYSICS3,Physics III
+2025/2026,PHYSIGEN1,Physique générales I
+2025/2026,PHYSIGEN2,Physiques générales II
+2025/2026,PHYSIGENE,Physique générale
+2025/2026,PHYSIOLOG,Physiologie
+2025/2026,PHYSIQUE1,Physiques 1
+2025/2026,PHYSIQUE2,Physiques II
+2025/2026,PHYSIQUE3,Physiques III
+2025/2026,PHYSIQUES,Physiques
+2025/2026,PLANIFAMI,Planification familiale
+2025/2026,PLANNCARE,Planning care
+2025/2026,PLANSOINS,Planification des Soins 
+2025/2026,PMACHINI2,P machining II
+2025/2026,PMANUFAC1,P manufacture I
+2025/2026,POSPARTU2,Post partum
+2025/2026,POTGEOOND,Optique géométrique et ondulatoire
+2025/2026,POWELECON,Power electronics and actuator control
+2025/2026,PRAPROINF,Pratique Professionnelle Infirmière
+2025/2026,PRATICE,Pratice
+2025/2026,PRAWORAUT,Practical Work Automation and Logic
+2025/2026,PRAWOREL2,Practical Work Electronic P II
+2025/2026,PRAWORELE,Practical Work in Electronic
+2025/2026,PRAWORICT,Practical Work ICT
+2025/2026,PRAWORMAC,Practical Work : Electrical Machines II
+2025/2026,PRECIME,PCIME
+2025/2026,PREMSECOU,Premier Secours
+2025/2026,PRESESNOR,Préparation session normale
+2025/2026,PRESPYACC,Préparation Psychoprophylactique À L’Accouchement
+2025/2026,PREVINFEC,Prévention des infections 
+2025/2026,PRIBUSLAW,Principles of business lawl
+2025/2026,PRIGENCPT,Principes généraux de la comptabilité 
+2025/2026,PRINCMANG,Principles of management 
+2025/2026,PRIOHEATH,The priority Program of Health in Cameroon
+2025/2026,PRISPARAM,Prise de paramètres
+2025/2026,PROASSORD,Programmation assistée par ordinateur
+2025/2026,PROBABIL1,Probabilités I
+2025/2026,PROBABIL2,Probabilités II
+2025/2026,PROBABILI,Probabilité
+2025/2026,PROBETARM,Projets béton armé
+2025/2026,PROCEFABR,Procédés de fabrication 
+2025/2026,PRODUFISC,Introduction à la fiscalité  
+2025/2026,PROEVEIHM,Programmation évènementielle et IHM II
+2025/2026,PROFINAN1,Introduction To Financial Analysis I
+2025/2026,PROFINAN2,Introduction To Financial Analysis II
+2025/2026,PROFINTER,Professional Internship
+2025/2026,PROGENCO1,Procédés généraux de construction I
+2025/2026,PROGENCO2,Procédés généraux de construction II
+2025/2026,PROGEVEN1,Programmation Evènementielle I
+2025/2026,PROGEVEN2,Programmation évènementielle II
+2025/2026,PROGPROCE,Programmation procédurale
+2025/2026,PROGRWEB1,Programmation web 1 
+2025/2026,PROGRWEB2,Programmation web II
+2025/2026,PROGRWEB3,Programmation web III
+2025/2026,PROGSTRUC,Programmation Structurée
+2025/2026,PROINVMAN,Procurement and inventory management
+2025/2026,PROJACADE,Projet académique
+2025/2026,PROJECTS,Projects
+2025/2026,PROJERECH,Projet De Recherche
+2025/2026,PROJSANTE,Projets santé
+2025/2026,PROMISFOR,Procédés de mise en forme des Matériaux 
+2025/2026,PROORIOBJ,Programmation orientée objet
+2025/2026,PROPAONDE,Propagation des ondes
+2025/2026,PROPHYBOI,Propriétés physiques du bois 
+2025/2026,PROPRODU1,Production et productique I 
+2025/2026,PROPRODU2,Production et Productique II 
+2025/2026,PRORECHER,Projet de recherche
+2025/2026,PRORECOP1,Probabilités et recherche opérationnelle I
+2025/2026,PRORECOP2,Probabilités et recherche opérationnelle II
+2025/2026,PROSANPRI,Programme de santé prioritaire
+2025/2026,PROSTAINF,Probabilité statistique inférencielle
+2025/2026,PROTECREA,Procédés et techniques de réalisation
+2025/2026,PROTERMOB,Programmation pour terminaux mobiles
+2025/2026,PROTUTRAP,Projet Tutore Et Rapport de Stage
+2025/2026,PSS,PSS
+2025/2026,PSYCHIATR,psychiatrie
+2025/2026,PSYCHOLOG,Psychologie
+2025/2026,PUECULTUR,Puericulture
+2025/2026,PUESOIAPP,PUERICULTURE ET SOINS APPARENTES
+2025/2026,QHSE,QHSE anglais
+2025/2026,QHSEF,QHSE francais
+2025/2026,QUANTECHN,Quantitative technics
+2025/2026,QUASERAUT,Qualité pour service automobile
+2025/2026,REAMONFLU,Réaliser montage fluidique et électrique équipement frigorifique monoposte a température négative
+2025/2026,REANIMATI,Réanimation
+2025/2026,RECHOPER1,Recherche opérationnelle I
+2025/2026,RECHOPER2,Recherche opérationnelle II
+2025/2026,RECHOPERA,Recherche opérationnelle
+2025/2026,REDACMERE,Rédaction Mémoire 
+2025/2026,REDCPTREN,Rédaction compte rendu
+2025/2026,REDPROREC,Rédaction du projet de recherche
+2025/2026,REDRAPSTA,Rédaction de rapports de stage
+2025/2026,REGESTENG,Régulation et Gestion de l energie
+2025/2026,REGFONDOM,Régime foncier et domanial
+2025/2026,REGUASSE1,Régulation et Asservissements I
+2025/2026,REGUASSE2,Régulation et Asservissements II
+2025/2026,REINCONCR,Reinforced concrete I
+2025/2026,REMACOEQF,Réaliser maintenance corective équipement frigorifique monoposte ou thermodynamique
+2025/2026,REMAPREQF,Réaliser maintenance preventive équipement frigorifique monoposte ou thermodynamique
+2025/2026,REMISEETN,Réaliser la mise en service équipement frigorifique monoposte a température négative
+2025/2026,REMISEETP,Réaliser la mise en service équipement frigorifique monoposte a température positive
+2025/2026,RESEATRAN,Réseau de Transmission 
+2025/2026,RESEAUINF,Réseau d information
+2025/2026,RESEMOBIL,Réseaux mobiles
+2025/2026,RESETENDU,Réseau étendu et technologie IP
+2025/2026,RESINDUST,Réseaux industriels
+2025/2026,RESINFTE1,Réseaux informatique et Téléinformatique I
+2025/2026,RESINFTE2,Réseaux Informatiques et Téléinformatique II
+2025/2026,RESISMAT1,Résistance des matériaux I
+2025/2026,RESISMAT2,Résistance des matériaux II
+2025/2026,RESISMAT3,Résistance des matériaux III
+2025/2026,RESISMATE,Résistance des matériaux (RDM)
+2025/2026,RESISMTER,Resistance of Materials I
+2025/2026,RESLOCSAF,Réseaux locaux sans fil
+2025/2026,RESMATERI,Resistance of Material II
+2025/2026,RESMOBILE,Réseaux mobiles
+2025/2026,RESTELINF,Réseaux et Téléinformatiques
+2025/2026,RESTRANSM,Les réseaux de transmission
+2025/2026,SAFTRAGOO,Safe transport of dangerous goods
+2025/2026,SANGENDRO,Santé génésique et droit sexuel
+2025/2026,SANGENFEM,"Santé Génésique Des Femmes, Pharmacologie"
+2025/2026,SANTECOMM,Santé communautaire
+2025/2026,SANTEDEV,Santé et développement 
+2025/2026,SANTENVIR,Santé Environnementale
+2025/2026,SANTEPUBL,Santé publique 
+2025/2026,SCHELCFRO,schema electrique applique au froid 
+2025/2026,SCHEMAELE,Schémas électrique
+2025/2026,SCHOMEDEC,Elements of school medicine
+2025/2026,SCIDESMAT,Science des materiaux
+2025/2026,SCIENPHY1,Sciences physiques I
+2025/2026,SCIHUMSOC,Sciences Humaines Et Sociales
+2025/2026,SCRLINPOW,"Scripting Linux Et Power
+Shell"
+2025/2026,SECAVARES,Sécurité avancée des réseaux
+2025/2026,SECCPREBOI,Séchage et préservation du bois 
+2025/2026,SECOURISM,Secourisme
+2025/2026,SELPREINS,Sélectionner et préparer l’installation équipement frigorifique monoposte
+2025/2026,SEMIOCHIR,Sémiologie Chirurgicale
+2025/2026,SEMIOGEN,Semiologie generale
+2025/2026,SEMIOMEDI,SEMIOLOGIE MEDICALE
+2025/2026,SEMIOOBST,Sémiologie Obstétricale
+2025/2026,SEMIOPROD,Sémiotique des produits de luxe 
+2025/2026,SEMSFMPRO,Séminaires En Sage- Femme Professionnels
+2025/2026,SEMSIPROF,Séminaires En Soins Infirmiers Professionnels
+2025/2026,SENSIBILI,Sensibilisation aux IST/MST/VIH-SIDA
+2025/2026,SERVOING,Servoing
+2025/2026,SERVOROBO,Servomechanism and robotics
+2025/2026,SEURENCP1,Seuil de rentabilité et coût préétablis I
+2025/2026,SEURENCP2,Seuil de rentabilité et coût préétablis II
+2025/2026,SHIINTTRA,Shipping and international trade
+2025/2026,SHIPREPRE,Ship representation 
+2025/2026,SI2MERISE,Système d’Information II (MERISE)
+2025/2026,SIG,SIG
+2025/2026,SIGNAPROC,Signal Processing
+2025/2026,SIGNSYSTE,Signaux et Système
+2025/2026,SIMULATIO,Simulation
+2025/2026,SOCANTMED,Sociologie et anthropologie médicale 
+2025/2026,SOCANTPHY,Sociology anthopology and physiology
+2025/2026,SOCANTPSY,Sociology - Anthropology and Psychology 
+2025/2026,SOIINFCHI,Soins Infirmiers Chirurgicaux
+2025/2026,SOIINFCOP,Soins Infirmiers Communautaires Et Psychiatriques
+2025/2026,SOIINFMED,Soins Infirmiers Médicaux
+2025/2026,SOIINTURM,Soins Intensifs Et Urgences Médicales
+2025/2026,SOIMATSRP,"Soins De La Maternité, Sante De La Reproduction Et Pédiatrie"
+2025/2026,SOINFIANE,Soins Infirmier en Anesthésie
+2025/2026,SOINGENIC,Soins en génicologie
+2025/2026,SOININFIM,Soins infirmiers + TP
+2025/2026,SOININTRA,Soins intra partum
+2025/2026,SOINMEDEC,Soins en médecine
+2025/2026,SOINPEDIA,Soins en pédiatrie
+2025/2026,SOINPERSP,Soins aux personnes atteint de deficiences special
+2025/2026,SOINSANNE,Soins aux NNE
+2025/2026,SOINSCHIR,Soins en chirurgie 
+2025/2026,SOINSOBST,Soins Obstetricaux 
+2025/2026,SOINSPOPA,Soins posts partum
+2025/2026,SOINSURGE,Soins aux urgences
+2025/2026,SOIPERDEM,Soins aux personnes atteintes démence spécialisée
+2025/2026,SOISANPRI,Soins de santé primaire 
+2025/2026,SPEOPEEN1,Specific Operations And End Of Year Adjustments
+2025/2026,SPEOPEEN2,Specific Operations And End Of Year Adjustments II
+2025/2026,SPORT,Sport
+2025/2026,STADYNFLU,Statique et dynamique des fluides 
+2025/2026,STAGECLI1,Stage clinique 1 
+2025/2026,STAGECLI2,Stage clinique II
+2025/2026,STAGECLI3,Stage clinique III
+2025/2026,STAGECLI4,Stage clinique IV
+2025/2026,STAGECLI6,Stage clinique 6 
+2025/2026,STAGECLIN,Stage clinique V
+2025/2026,STAGECOMM,Stage Communautaire 
+2025/2026,STAGEPROF,Stage professionnel
+2025/2026,STAMEDPEII,Stage de médecine et pédiatrique II 
+2025/2026,STAPROSFM,Stage Professionnelle En Sage - Femme
+2025/2026,STASANCO2,Stage de santé communautaire 2 
+2025/2026,STATDESCR,Statistique descriptive
+2025/2026,STATIQUE,STATIQUE
+2025/2026,STATISTI1,Statistiques I
+2025/2026,STATISTI2,Statistiques II
+2025/2026,STATISTIQ,Statistique
+2025/2026,STATSTIC1,Statistics I
+2025/2026,STATSTIC2,Statistics II
+2025/2026,STONURPRO,Story of nursing profession
+2025/2026,STRDONAVA,Structure de données avancées
+2025/2026,STREAMING,Streaming
+2025/2026,STRENMAT1,Strength of materials I
+2025/2026,STRENMAT2,Strength of material II
+2025/2026,STRFONGMP,Structure et fonctiont Grpe Moto Propulseur(GMP)
+2025/2026,STUDIOPH1,Studio photo I
+2025/2026,STUDIOPH2,Studio photo II 
+2025/2026,STYLMODEL,Stylisme/Modélisme
+2025/2026,SUIPREPOS,"Suivi Prénatal, Et Postnatal"
+2025/2026,SUIVMANOE,Suivi et Manoeuvre
+2025/2026,SUIVPRENA,Suivi-prénatal 
+2025/2026,SURGPATHO,Surgical Pathologies
+2025/2026,SURTHERAP,Surveillance therapeutique
+2025/2026,SYSCARVAS,Système cardiovasculaire 
+2025/2026,SYSELCAUT,Système electronique des vehicules automonile
+2025/2026,SYSELEVEH,Système électronique véhicules automobiles et TPs
+2025/2026,SYSGENURI,Système génito-urinaire (femme-homme) 
+2025/2026,SYSHEAINF,Système health information
+2025/2026,SYSINFGEO,Système d’information géographique
+2025/2026,SYSINFSAN,Systeme d'information sanitaire
+2025/2026,SYSNATSAN,Système national de santé / Politique de santé 
+2025/2026,SYSTCONST,Systemes Constructifs
+2025/2026,SYSTDIGES,Système digestif 
+2025/2026,SYSTEXPL1,Système d’Exploitation I
+2025/2026,SYSTEXPL2,Système d’Exploitation II
+2025/2026,SYSTEXPLO,Système d’exploitation
+2025/2026,SYSTINFO2,Système d’information II
+2025/2026,SYSTINFOR,Système d’Information
+2025/2026,SYSTLOGI1,Système Logistique I 
+2025/2026,SYSTLOGI2,Système Logistique II 
+2025/2026,SYSTMECA1,Systemes Mecaniques I
+2025/2026,SYSTMECA2,Systemes Mecaniques II
+2025/2026,SYSTRESPI,Système respiratoire 
+2025/2026,SYSTTRANS,Système de transmission
+2025/2026,TABMESPE1,Tableau de bord et mesure performance logistique I
+2025/2026,TABMESPE2,Tableau de bord & mesure performance logistique II
+2025/2026,TECEFFSPE,Techniques des effets spéciaux
+2025/2026,TECHCARPE,Technical care specific 2
+2025/2026,TECHCASPE,Technical care specific 1
+2025/2026,TECHCONST,TECHNOLOGIE DE CONSTRUCTION
+2025/2026,TECHEXPRE,Techniques d’Expression
+2025/2026,TECHINTER,Technologie de l’internet
+2025/2026,TECHLABOR,TECHNIQUE DE LABORATOIRE 
+2025/2026,TECHMATER,Technologie Des Materiaux
+2025/2026,TECHMESUR,TECHNIQUE DE MESURE 
+2025/2026,TECHNICOM,Technique de Communication
+2025/2026,TECHNINFC,Technology of Information and communication
+2025/2026,TECHREALI,Technique de realisation
+2025/2026,TECHREGUL,Technique de régulation
+2025/2026,TECHSOIN1,TECHNIQUE SOINS SPECIFIQUE 1
+2025/2026,TECHSOUDA,Technologie du soudage 
+2025/2026,TECHTOPO1,Technologie Topométriques I
+2025/2026,TECHTOPO2,Technologie topométriques II
+2025/2026,TECHTOPO3,Technologie topométrique III
+2025/2026,TECHTOPO4,Technologie topométrique IV
+2025/2026,TECINFCOM,TIC
+2025/2026,TECINFCOM2,TIC 2
+2025/2026,TECINFCOM3,TIC 3
+2025/2026,TECINFCOM4,TIC 4
+2025/2026,TECINFFRI,Technologie des installations frigorifiques 
+2025/2026,TECMICPRO,Technologie des microprocesseurs et TPs
+2025/2026,TECPREHYG,Technique de prélèvement et hygiène du laboratoire
+2025/2026,TECPROTRA,"Technique of production,transport and distribution"
+2025/2026,TECSOICHI,Techniques de soins en Chirurgie
+2025/2026,TECSOISPE,TECHNIQUE SOINS SPECIFIQUE 2
+2025/2026,TECSYSTHE,Technologie des systèmes thermiques
+2025/2026,TECTRAANA,Technique de transmission analogique
+2025/2026,TECTRANUM,Technique de Transmissions numérique
+2025/2026,TELECOMMU,Télécommunications
+2025/2026,TELECONET,Telecommunication Networks
+2025/2026,TELEDETE1,Télédétection I
+2025/2026,TELEDETE2,Télédétection II
+2025/2026,TELEDETEC,Teledetection Appliquee
+2025/2026,TELEPHOIP,Téléphonie sur IP
+2025/2026,TELEPRTC,Telephonie rtc
+2025/2026,TELRTCRNI,Téléphonie (RTC/RNIS)
+2025/2026,TGA 1,TGA I 
+2025/2026,TGA 2,TGA II
+2025/2026,THERAMONI,Therapeutic Monitoring
+2025/2026,THERAPEUT,Therapeutic monitoring
+2025/2026,THERMODIN,Thermodynamique
+2025/2026,TISSAGE,Tissage
+2025/2026,TOPANASIT,Topographie Et Analyse De Site
+2025/2026,TOPOGPHY1,Topography I
+2025/2026,TOPOGPHY2,Topography II
+2025/2026,TOPOGRAP1,Topographie I
+2025/2026,TOPOGRAP2,Topographie II
+2025/2026,TOTQUAMAN,Total quality management
+2025/2026,TOXICOLOG,TOXICOLOGIE 
+2025/2026,TPBACTERI,TP bactériologie
+2025/2026,TPBIOCHIM,TP Biochimie
+2025/2026,TPCHIMANA,TP Chimie analytique
+2025/2026,TPHEMATOL,TP Hématologie 
+2025/2026,TPIMMUNOL,TP Immunologie
+2025/2026,TPMACELE1,TP Machines électriques I 
+2025/2026,TPMACELE2,TP Machines électriques II 
+2025/2026,TPPARASIT,TP Parasitologie
+2025/2026,TPPROTECH,TP de procede et technique de realisation
+2025/2026,TPRESEAUX,TP Réseaux 
+2025/2026,TPSANTE,TP santé
+2025/2026,TPSCIMAT ,TP sciences des matériaux
+2025/2026,TPSYNTHES,TP synthèse I 
+2025/2026,TRACAGE,Traçage I
+2025/2026,TRAFIBOPT,Transmission sur fibre optique
+2025/2026,TRAITIMA1,Traitement d’image I
+2025/2026,TRAITIMA2,Traitement d’image II
+2025/2026,TRAITSIGN,Traitement du Signal
+2025/2026,TRAMARFL1,Transport maritime et fluvial I 
+2025/2026,TRAMARFL2,Transport maritime et fluvial II 
+2025/2026,TRANSAER1,Transport aérien I 
+2025/2026,TRANSAER2,Transport aérien II 
+2025/2026,TRANSFER1,Transport ferroviaire I 
+2025/2026,TRANSFER2,Transport ferroviaire II 
+2025/2026,TRANSFSAN,Transfusion sanguine
+2025/2026,TRANSPLAW,Transport law
+2025/2026,TRANSROU1,Transport routier I 
+2025/2026,TRANSROU2,Transport routier II 
+2025/2026,TRANSTHER,Transfert thermique
+2025/2026,TRAPERETD,Travaux personnels des etudiants
+2025/2026,TRAPRACO1,Travaux pratique de confection I
+2025/2026,TRAPRACO2,Travaux pratique de confection II
+2025/2026,TRAPRACO3,Travaux Pratique de Confection III
+2025/2026,TRAVDIRIG,Travaux dirigés (TD)
+2025/2026,TRAVPRA,Travaux pratiques
+2025/2026,TRAVPRATQ,Travaux Pratiques
+2025/2026,TRAVSYNT1,Travaux de synthèse I
+2025/2026,TRAVSYNT2,Travaux de synthèse II
+2025/2026,TUTORIALS,Tutorials
+2025/2026,TVAIRPP,TVA et IRPP
+2025/2026,URBANISME,Urbanisme
+2025/2026,URGENOBST,Urgences Obstéricales et néonatales
+2025/2026,VACCINATI,Vaccination
+2025/2026,VATANDTIT,Vat And Tit
+2025/2026,VEILLETEC,Veille technologique
+2025/2026,VIRO,Virology
+2025/2026,VIROLOGIE,Virologie – VIH/SIDA
+2025/2026,VOCAMEDIC,Vocabulaire médical
+2025/2026,VOIRESDIV,Voiris et Réseaux divers
+2025/2026,WAREHMANG,Warehouse management
+2025/2026,WEBDESIGN,Web design
+2025/2026,WELCOME,"Warm welcome, Guiding and Conseilling"
+2025/2026,WORSUPMAN,Workshop supervisor Management

@@ -1,6 +1,7 @@
 import { Entity, Column, PrimaryGeneratedColumn, JoinColumn, OneToOne, CreateDateColumn, OneToMany } from 'typeorm';
 import { User } from './user.entity';
 import { Subject } from './subject.entity';
+import { TeacherSubjectClass } from './teacher-subject-class.entity';
 
 @Entity({ name: 'staff' })
 export class Staff {
@@ -88,4 +89,7 @@ export class Staff {
 
   @OneToMany(() => Subject, subject => subject.teacher)
   subjects: Subject[];
+
+  @OneToMany(() => TeacherSubjectClass, tsc => tsc.staff)
+  teacherAssignments: TeacherSubjectClass[];
 }

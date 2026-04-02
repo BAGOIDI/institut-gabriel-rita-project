@@ -1,0 +1,51 @@
+{% extends "base_report.html" %}
+
+{% block title %}Procès-Verbal des Notes - {{ class_name }}{% endblock %}
+
+{% block content %}
+  <div class="section-title">
+    <h2>PROCÈS-VERBAL DE SYNTHÈSE DES NOTES</h2>
+    <div class="line"></div>
+    <p>Classe: <strong>{{ class_name }}</strong> | Date: {{ current_date }}</p>
+  </div>
+
+  <div class="pv-container" style="overflow-x: auto;">
+    <table class="luxury-table pv-table" style="font-size: 9px; width: 100%;">
+      <thead>
+        <tr>
+          <th style="width: 150px;">Nom de l'étudiant</th>
+          <th style="width: 80px;">Matricule</th>
+          {% for subject in subjects %}
+            <th style="transform: rotate(-45deg); height: 80px; white-space: nowrap;">{{ subject[:15] }}{% if subject|length > 15 %}...{% endif %}</th>
+          {% endfor %}
+          <th style="background-color: #f0f0f0; font-weight: bold;">MOY</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for row in matrix %}
+          <tr>
+            <td style="font-weight: bold;">{{ row.name }}</td>
+            <td style="font-mono">{{ row.matricule }}</td>
+            {% for grade in row.grades %}
+              <td style="text-align: center;">{{ grade }}</td>
+            {% endfor %}
+            <td style="text-align: center; font-weight: bold; background-color: #f9f9f9;">{{ row.average }}</td>
+          </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+
+  <div class="pv-footer" style="margin-top: 50px; display: flex; justify-content: space-between;">
+    <div class="signature-box">
+      <p>Le Chef de Département</p>
+      <div style="height: 60px;"></div>
+      <p>_______________________</p>
+    </div>
+    <div class="signature-box">
+      <p>Le Directeur des Études</p>
+      <div style="height: 60px;"></div>
+      <p>_______________________</p>
+    </div>
+  </div>
+{% endblock %}

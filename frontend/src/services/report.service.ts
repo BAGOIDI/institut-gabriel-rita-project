@@ -5,6 +5,7 @@
 import api from './api.service';
 
 const BASE = import.meta.env.VITE_REPORT_SERVICE_URL || '/api/reports';
+const CORE_BASE = '/api/core';
 
 export type ReportFormat = 'pdf' | 'docx' | 'xlsx';
 
@@ -25,6 +26,17 @@ const MIME: Record<ReportFormat, string> = {
 
 export type ReportPeriod = 'day' | 'evening' | 'all';
 
+const toArray = (v: any) => {
+  if (!v) return [];
+  if (Array.isArray(v)) return v;
+  if (Array.isArray(v.items)) return v.items;
+  if (Array.isArray(v.data)) return v.data;
+  if (typeof v === 'object' && Object.keys(v).every(k => !isNaN(parseInt(k)))) {
+    return Object.values(v);
+  }
+  return [];
+};
+
 const reportService = {
   /** Vérifie l'état du service */
   async healthCheck() {
@@ -35,31 +47,55 @@ const reportService = {
   /** Liste les rapports disponibles */
   async getAvailableReports(): Promise<ReportDef[]> {
     const res = await api.get(`${BASE}/available`);
-    return res.data;
+    return toArray(res.data);
   },
 
   /** Liste les classes disponibles */
   async getClasses(): Promise<{id: string; name: string; level?: string; specialty_id: string}[]> {
-    const res = await api.get(`${BASE}/classes`);
-    return res.data;
+    // Utiliser le service core si report-service n'est pas disponible
+    try {
+      const res = await api.get(`${BASE}/classes`);
+      return toArray(res.data);
+    } catch (error) {
+      // Fallback sur core-scolarite
+      const res = await api.get(`${CORE_BASE}/classes`);
+      const items = res.data?.items || res.data || [];
+      return toArray(items).map((c: any) => ({
+        id: String(c.id),
+        name: c.name,
+        level: c.level,
+        specialty_id: String(c.specialty_id)
+      }));
+    }
   },
 
   /** Liste les enseignants disponibles */
   async getTeachers(): Promise<{id: string; name: string}[]> {
-    const res = await api.get(`${BASE}/teachers`);
-    return res.data;
+    // Utiliser le service core si report-service n'est pas disponible
+    try {
+      const res = await api.get(`${BASE}/teachers`);
+      return toArray(res.data);
+    } catch (error) {
+      // Fallback sur core-scolarite
+      const res = await api.get(`${CORE_BASE}/teachers`);
+      const items = res.data?.items || res.data || [];
+      return toArray(items).map((t: any) => ({
+        id: String(t.id),
+        name: `${t.firstName || ''} ${t.lastName || ''}`.trim()
+      }));
+    }
   },
 
   /** Liste les matières disponibles */
   async getSubjects(): Promise<{id: string; name: string}[]> {
     const res = await api.get(`${BASE}/subjects`);
-    return res.data;
+    return toArray(res.data);
   },
 
   /** Liste les filières (specialties) disponibles */
   async getSpecialties(): Promise<{id: string; name: string; code: string}[]> {
     const res = await api.get(`${BASE}/specialties`);
-    return res.data;
+    return toArray(res.data);
   },
 
   /** Génère l'emploi du temps d'une classe (Blob) */
@@ -95,7 +131,7 @@ const reportService = {
       responseType: 'blob',
       timeout: 120000,
     });
-    return new Blob([res.data], { type: MIME[format] });
+    return res.data;
   },
 
   /** Déclenche le téléchargement de l'EDT d'une classe */
@@ -125,6 +161,52 @@ const reportService = {
   async downloadSynthesisSchedule(classId?: string, staffId?: string, format: ReportFormat = 'pdf', specialtyIds?: string[], period: ReportPeriod = 'all') {
     const blob = await this.getSynthesisBlob(classId, staffId, format, specialtyIds, period);
     this.triggerDownload(blob, `Synthese_EDT.${format}`);
+  },
+
+  /** Télécharge un endpoint custom du report-service (PDF/DOCX/XLSX) */
+  async downloadCustom(path: string, format: ReportFormat = 'pdf', params?: Record<string, any>, fileName?: string) {
+    const cleanPath = path.startsWith('/') ? path : `/${path}`;
+    const res = await api.get(`${BASE}${cleanPath}`, {
+      params: { format, ...(params || {}) },
+      responseType: 'blob',
+      timeout: 120000,
+    });
+    this.triggerDownload(res.data, fileName || `document.${format}`);
+    return res.data;
+  },
+
+  /** Envoie l'EDT d'une classe par WhatsApp */
+  async sendScheduleWhatsApp(classId: string, phone: string, period: ReportPeriod = 'all') {
+    const res = await api.post(`${BASE}/whatsapp/send-schedule/${classId}`, {
+      phone,
+      period
+    });
+    return res.data;
+  },
+
+  /** Envoie l'EDT d'un enseignant par WhatsApp */
+  async sendTeacherScheduleWhatsApp(staffId: string, phone: string, period: ReportPeriod = 'all') {
+    const res = await api.post(`${BASE}/whatsapp/send-to-teacher/${staffId}`, {
+      phone,
+      period
+    });
+    return res.data;
+  },
+
+  /** Envoie la synthèse par WhatsApp */
+  async sendSynthesisWhatsApp(classIds: string[], phone: string, period: ReportPeriod = 'all') {
+    const res = await api.post(`${BASE}/whatsapp/send-synthesis`, {
+      phone,
+      class_ids: classIds,
+      period
+    });
+    return res.data;
+  },
+
+  /** Récupère le statut de WAHA */
+  async getWhatsAppStatus() {
+    const res = await api.get(`${BASE}/whatsapp/status`);
+    return res.data;
   },
 
   /** Déclenche le téléchargement d'un fichier */
@@ -190,7 +272,7 @@ const reportService = {
       responseType: 'blob',
       timeout: 120000,
     });
-    this.triggerDownload(res.data, `paiements_classe_${className}.${format}`);
+    this.triggerDownload(res.data, `paiements_classe_${className.replace(/\s+/g, '_')}.${format}`);
     return res.data;
   },
 
@@ -212,7 +294,7 @@ const reportService = {
       responseType: 'blob',
       timeout: 120000,
     });
-    return new Blob([res.data], { type: MIME['pdf'] });
+    return res.data;
   },
 
   /** Déclenche le téléchargement */

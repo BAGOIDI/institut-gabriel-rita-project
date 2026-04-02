@@ -1,0 +1,72 @@
+{% extends "base_report.html" %}
+
+{% block title %}Bulletin - {{ student.matricule }}{% endblock %}
+
+{% block content %}
+  <div class="section-title">
+    <h2>BULLETIN DE NOTES</h2>
+    <div class="line"></div>
+  </div>
+
+  <div class="student-header-box">
+    <div class="student-info">
+      <div class="student-name">{{ student.last_name }} {{ student.first_name }}</div>
+      <div class="student-meta">
+        <span><strong>Matricule:</strong> {{ student.matricule }}</span>
+        <span><strong>Classe:</strong> {{ student.class_name }}</span>
+        <span><strong>Année:</strong> {{ academic_year.name }}</span>
+        <span><strong>Semestre:</strong> {{ semester.name }}</span>
+      </div>
+    </div>
+  </div>
+
+  <table class="luxury-table">
+    <thead>
+      <tr>
+        <th>Matière</th>
+        <th>Évaluation</th>
+        <th>Type</th>
+        <th>Coef (%)</th>
+        <th>Note</th>
+        <th>Max</th>
+        <th>Note pondérée (/20)</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for row in rows %}
+        <tr>
+          <td>{{ row.subject_name }}</td>
+          <td>{{ row.evaluation_name }}</td>
+          <td>{{ row.evaluation_type }}</td>
+          <td>{{ row.weight_percent }}</td>
+          <td>
+            {% if row.is_absent %}
+              <span class="badge badge-danger">ABS</span>
+            {% else %}
+              {{ row.score }}
+            {% endif %}
+          </td>
+          <td>{{ row.max_score }}</td>
+          <td>{{ row.weighted_score_20 }}</td>
+        </tr>
+      {% endfor %}
+      {% if rows|length == 0 %}
+        <tr>
+          <td colspan="7">Aucune note disponible pour ce semestre.</td>
+        </tr>
+      {% endif %}
+    </tbody>
+  </table>
+
+  <div class="kpi-grid">
+    <div class="kpi-card">
+      <div class="kpi-label">Moyenne générale (/20)</div>
+      <div class="kpi-value">{{ summary.general_average_20 }}</div>
+    </div>
+    <div class="kpi-card orange">
+      <div class="kpi-label">Évaluations prises en compte</div>
+      <div class="kpi-value">{{ summary.count_evaluations }}</div>
+    </div>
+  </div>
+{% endblock %}
+

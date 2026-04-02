@@ -94,7 +94,8 @@ services:
       - "--providers.docker=true"
       - "--providers.docker.exposedbydefault=false"
       - "--entrypoints.web.address=:80"
-    ports: ["80:80", "8080:8080"]
+      - "--entrypoints.web.forwardedHeaders.insecure=true"
+    ports: ["0.0.0.0:80:80", "0.0.0.0:8080:8080"]
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock:ro
     networks: [school-network]
@@ -163,6 +164,7 @@ services:
       - DATABASE_PASSWORD=${POSTGRES_PASSWORD:-postgres}
       - DATABASE_NAME=institut_gabriel_rita_db
       - FLASK_ENV=production
+      - PLANNING_SERVICE_URL=http://service-planning:3000/schedules
     networks: [school-network]
     depends_on:
       - postgres
@@ -170,6 +172,8 @@ services:
     labels:
       - "traefik.enable=true"
       - "traefik.http.routers.reports.rule=Host(`localhost`) && PathPrefix(`/api/reports`)"
+      - "traefik.http.middlewares.reports-strip.stripprefix.prefixes=/api/reports"
+      - "traefik.http.routers.reports.middlewares=reports-strip"
       - "traefik.http.services.reports.loadbalancer.server.port=5000"
     restart: unless-stopped
 

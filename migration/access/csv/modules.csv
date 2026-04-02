@@ -1,0 +1,1664 @@
+annee,code,libelle,codspe,codniv,codec,cm,td,tp,tpe,cr
+2024/2025,BAT111,Mathématiques I,BAT,01,FOND,30.0,25.0,0.0,5.0,4.0
+2024/2025,BAT112,Physique et Chimie,BAT,01,FOND,35.0,23.0,12.0,5.0,5.0
+2024/2025,BAT113,Procédés généraux de construction,BAT,01,PROF,25.0,15.0,0.0,5.0,3.0
+2024/2025,BAT114,Dessin et technologie de bâtiment,BAT,01,PROF,35.0,10.0,0.0,0.0,3.0
+2024/2025,BAT115,Organisation des chantiers,BAT,01,PROF,35.0,20.0,0.0,5.0,4.0
+2024/2025,BAT116,Architecture et Résistance des matériaux,BAT,01,PROF,45.0,55.0,15.0,5.0,8.0
+2024/2025,BAT117,Formation bilingue,BAT,01,TRANS,25.0,15.0,0.0,5.0,3.0
+2024/2025,BAT121,Mathématiques II,BAT,01,FOND,30.0,25.0,0.0,5.0,4.0
+2024/2025,BAT122,Physique et Informatique,BAT,01,FOND,35.0,20.0,15.0,5.0,5.0
+2024/2025,BAT123,Bureau d’étude et projets,BAT,01,PROF,40.0,20.0,10.0,5.0,5.0
+2024/2025,BAT124,Topographie I,BAT,01,PROF,20.0,10.0,10.0,5.0,3.0
+2024/2025,BAT125,Béton armé I,BAT,01,PROF,30.0,25.0,0.0,5.0,4.0
+2024/2025,BAT126,Géotechnique et Résistances des matériaux II,BAT,01,PROF,55.0,20.0,10.0,5.0,6.0
+2024/2025,BAT127,"Création d’entreprise et Education civique et
+éthique",BAT,01,TRANS,30.0,10.0,0.0,5.0,3.0
+2024/2025,BAT231,Mathématiques III,BAT,02,FOND,30.0,30.0,0.0,0.0,4.0
+2024/2025,BAT232,Physique et Chimie,BAT,02,FOND,35.0,20.0,15.0,5.0,5.0
+2024/2025,BAT233,Equipements et Matériaux,BAT,02,PROF,55.0,20.0,0.0,0.0,5.0
+2024/2025,BAT234,Résistance III,BAT,02,PROF,20.0,10.0,10.0,5.0,3.0
+2024/2025,BAT235,Béton Armé II et Dessin assisté par ordinateur,BAT,02,PROF,40.0,15.0,45.0,5.0,7.0
+2024/2025,BAT236,Procédés et techniques de réalisation,BAT,02,PROF,30.0,15.0,0.0,0.0,3.0
+2024/2025,BAT237,Comptabilité et Droit du travail,BAT,02,TRANS,30.0,10.0,0.0,5.0,3.0
+2024/2025,BAT241,Mathématiques IV,BAT,02,FOND,30.0,30.0,0.0,0.0,4.0
+2024/2025,BAT242,Informatique II,BAT,02,FOND,20.0,10.0,40.0,5.0,5.0
+2024/2025,BAT243,Bureau d’etude II et Dessin assisté par ordinateur,BAT,02,PROF,30.0,10.0,30.0,5.0,5.0
+2024/2025,BAT244,Fondations et soutènements,BAT,02,PROF,20.0,10.0,15.0,0.0,3.0
+2024/2025,BAT245,Topographie II et Essais,BAT,02,PROF,25.0,10.0,20.0,5.0,4.0
+2024/2025,BAT246,Stage professionnel,BAT,02,PROF,0.0,0.0,60.0,30.0,6.0
+2024/2025,BAT247,Economie,BAT,02,TRANS,30.0,10.0,0.0,5.0,3.0
+2024/2025,BOW111,Engineering Mathematics I ,BOW,01,FUND,30.0,25.0,0.0,5.0,4.0
+2024/2025,BOW112,Enginer in the Society ,BOW,01,FUND,30.0,25.0,15.0,5.0,5.0
+2024/2025,BOW113,Methods and jigs and fixtures ,BOW,01,PROF,35.0,20.0,0.0,5.0,4.0
+2024/2025,BOW114,Practice of welding ,BOW,01,PROF,10.0,0.0,60.0,5.0,5.0
+2024/2025,BOW115,Technology and Materials ,BOW,01,PROF,40.0,30.0,0.0,5.0,5.0
+2024/2025,BOW116,Marking out I ,BOW,01,PROF,25.0,15.0,15.0,5.0,4.0
+2024/2025,BOW117,Bilingual training ,BOW,01,TRANS,25.0,17.0,0.0,3.0,3.0
+2024/2025,BOW121,"Engineering Mathematics II and Fluid
+Mechanics ",BOW,01,FUND,30.0,25.0,0.0,5.0,4.0
+2024/2025,BOW122,Workshop supervisor Management ,BOW,01,FUND,35.0,20.0,15.0,5.0,5.0
+2024/2025,BOW123,"Analysis and Design of metal
+structures ",BOW,01,PROF,35.0,20.0,0.0,5.0,4.0
+2024/2025,BOW124,Design of sheet metal structures ,BOW,01,PROF,15.0,10.0,30.0,5.0,4.0
+2024/2025,BOW125,Metallurgy I ,BOW,01,PROF,30.0,25.0,15.0,5.0,5.0
+2024/2025,BOW126,"Computer aided drawing
+(Autocard) ",BOW,01,PROF,20.0,15.0,35.0,5.0,5.0
+2024/2025,BOW127,"Computer for business I / Civic and
+Moral Education ",BOW,01,TRANS,27.0,15.0,0.0,3.0,3.0
+2024/2025,BOW231,EngineeringMathematics III ,BOW,02,FUND,30.0,25.0,0.0,5.0,4.0
+2024/2025,BOW232,"Computer for business and computer
+programming ",BOW,02,FUND,30.0,25.0,15.0,5.0,5.0
+2024/2025,BOW233,"numerical control and costs
+estimation ",BOW,02,PROF,30.0,30.0,10.0,5.0,5.0
+2024/2025,BOW234,Methods and jigs and fixtures II ,BOW,02,PROF,27.0,15.0,0.0,3.0,3.0
+2024/2025,BOW235,CAD and metallurgy II ,BOW,02,PROF,35.0,20.0,15.0,5.0,5.0
+2024/2025,BOW236,Metrology ,BOW,02,PROF,20.0,5.0,45.0,5.0,5.0
+2024/2025,BOW237,"Environmental Engineering and
+Enterpreneuriaship ",BOW,02,TRANS,27.0,15.0,0.0,3.0,3.0
+2024/2025,BOW241,Engineering Mathematics IV ,BOW,02,FUND,30.0,25.0,0.0,5.0,4.0
+2024/2025,BOW242,Physics and chemistry ,BOW,02,FUND,20.0,10.0,40.0,5.0,5.0
+2024/2025,BOW243,marking out II and sheet metal ,BOW,02,PROF,25.0,0.0,45.0,5.0,5.0
+2024/2025,BOW244,"CFAO and digital control numerical
+control and CAM ",BOW,02,PROF,25.0,10.0,20.0,5.0,4.0
+2024/2025,BOW245,Analysis and Design II ,BOW,02,PROF,22.0,20.0,0.0,3.0,3.0
+2024/2025,BOW246,Academic Internship ,BOW,02,PROF,0.0,0.0,60.0,30.0,6.0
+2024/2025,BOW247,"Industrial safety /Engineering
+Management Law and Economics ",BOW,02,TRANS,27.0,15.0,0.0,3.0,3.0
+2024/2025,BST111,Mathematics I ,BST,01,FUND,30.0,25.0,0.0,5.0,4.0
+2024/2025,BST112,Physics and Chemistry I ,BST,01,FUND,35.0,23.0,12.0,5.0,5.0
+2024/2025,BST113,General construction processes ,BST,01,PROF,25.0,15.0,0.0,5.0,3.0
+2024/2025,BST114,Design and building Technology ,BST,01,PROF,40.0,15.0,0.0,5.0,4.0
+2024/2025,BST115,sites organization ,BST,01,PROF,45.0,25.0,0.0,5.0,5.0
+2024/2025,BST116,"Architecture and resistance of
+materials I ",BST,01,PROF,35.0,40.0,10.0,5.0,6.0
+2024/2025,BST117,Bilingual Training ,BST,01,TRANS,25.0,15.0,0.0,5.0,3.0
+2024/2025,BST121,Mathematics II ,BST,01,FUND,30.0,25.0,0.0,5.0,4.0
+2024/2025,BST122,Computer Science I ,BST,01,FUND,35.0,20.0,15.0,5.0,5.0
+2024/2025,BST123,Design office and projects ,BST,01,PROF,40.0,20.0,10.0,5.0,5.0
+2024/2025,BST124,Topography I ,BST,01,PROF,20.0,10.0,10.0,5.0,3.0
+2024/2025,BST125,Reinforced concrete I ,BST,01,PROF,30.0,25.0,0.0,5.0,4.0
+2024/2025,BST126,"Geotechnics and resistance of
+materials II ",BST,01,PROF,55.0,20.0,10.0,5.0,6.0
+2024/2025,BST127,"Creation of Company and Civic and
+Moral Education ",BST,01,TRANS,30.0,10.0,0.0,5.0,3.0
+2024/2025,BST231,Mathematics III ,BST,02,FUND,30.0,30.0,0.0,0.0,4.0
+2024/2025,BST232,Physics and Chemistry II ,BST,02,FUND,35.0,20.0,15.0,5.0,5.0
+2024/2025,BST233,Equipment and Materials ,BST,02,PROF,55.0,20.0,0.0,0.0,5.0
+2024/2025,BST234,Resistance of Materials III ,BST,02,PROF,20.0,10.0,10.0,5.0,3.0
+2024/2025,BST235,"Reinforced concrete II and Computer
+Assisted Drawing I",BST,02,PROF,35.0,15.0,35.0,5.0,6.0
+2024/2025,BST236,Processes and techniques of realization ,BST,02,PROF,30.0,15.0,0.0,0.0,3.0
+2024/2025,BST237,"Methodology of drafting internship
+report / LAW ",BST,02,TRANS,30.0,10.0,0.0,5.0,3.0
+2024/2025,BST241,Statistics ,BST,02,FUND,30.0,30.0,0.0,0.0,4.0
+2024/2025,BST242,Computer Science II ,BST,02,FUND,20.0,10.0,40.0,5.0,5.0
+2024/2025,BST243,"Design office II and Computer
+Assisted Drawing II ",BST,02,PROF,30.0,10.0,30.0,5.0,5.0
+2024/2025,BST244,Foundations and retaining structures ,BST,02,PROF,20.0,10.0,15.0,0.0,3.0
+2024/2025,BST245,Topography II and tests ,BST,02,PROF,25.0,10.0,20.0,5.0,4.0
+2024/2025,BST246,Professional internship ,BST,02,PROF,0.0,0.0,60.0,30.0,6.0
+2024/2025,BST247,Accounting and Economics ,BST,02,TRANS,30.0,10.0,0.0,5.0,3.0
+2024/2025,CFP1101,Anatomie - Physiologie,CFP,01,PROF,0.0,0.0,0.0,0.0,4.0
+2024/2025,CFP1102,Pharmacologie,CFP,01,PROF,0.0,0.0,0.0,0.0,2.0
+2024/2025,CFP1103,Secourisme,CFP,01,PROF,0.0,0.0,0.0,0.0,1.0
+2024/2025,CFP1104,Vocabulaire Medical,CFP,01,PROF,0.0,0.0,0.0,0.0,1.0
+2024/2025,CFP1105,Semiologie Generale,CFP,01,PROF,0.0,0.0,0.0,0.0,3.0
+2024/2025,CFP1106,Semiologie Medicale,CFP,01,PROF,0.0,0.0,0.0,0.0,4.0
+2024/2025,CFP1107,Semiologie Chirurgicale,CFP,01,PROF,0.0,0.0,0.0,0.0,2.0
+2024/2025,CFP1108,Maladies Infectieuses Et Parasitaires,CFP,01,PROF,0.0,0.0,0.0,0.0,3.0
+2024/2025,CFP1109,Techniques De Soins En Medecine,CFP,01,PROF,0.0,0.0,0.0,0.0,2.0
+2024/2025,CFP1110,Pediatrie,CFP,01,PROF,0.0,0.0,0.0,0.0,3.0
+2024/2025,CFP1111,Anatomie - Physiologie 2,CFP,01,PROF,0.0,0.0,0.0,0.0,4.0
+2024/2025,CFP1141,Concepts Et Théories En Sciences Infirmières ,CFP,01,PROF,0.0,0.0,0.0,0.0,2.0
+2024/2025,CFP1151,Histoire De La Profession Infirmière,CFP,01,PROF,0.0,0.0,0.0,0.0,1.0
+2024/2025,CFP1201,Techniques De Soins En Chirurgie,CFP,01,PROF,0.0,0.0,0.0,0.0,2.0
+2024/2025,CFP1202,Technique De Laboratoire,CFP,01,PROF,0.0,0.0,0.0,0.0,2.0
+2024/2025,CFP1203,Deontologie,CFP,01,FOND,0.0,0.0,0.0,0.0,1.0
+2024/2025,CFP1204,Medecine De Travail,CFP,01,PROF,0.0,0.0,0.0,0.0,1.0
+2024/2025,CFP1205,Sante Publique,CFP,01,PROF,0.0,0.0,0.0,0.0,1.0
+2024/2025,CFP1206,Semiologie Obstetricale,CFP,01,PROF,0.0,0.0,0.0,0.0,1.0
+2024/2025,CFP1207,Obstetrique Et Soins Apparentes,CFP,01,PROF,0.0,0.0,0.0,0.0,2.0
+2024/2025,CFP1208,Puericulture Et Soins Apparentes,CFP,01,PROF,0.0,0.0,0.0,0.0,2.0
+2024/2025,CFP1209,Legislation,CFP,01,FOND,0.0,0.0,0.0,0.0,1.0
+2024/2025,CFP1210,Français,CFP,01,TRANS,0.0,0.0,0.0,0.0,2.0
+2024/2025,CFP1211,Anglais,CFP,01,TRANS,0.0,0.0,0.0,0.0,2.0
+2024/2025,CFP1212,Informatique,CFP,01,TRANS,0.0,0.0,0.0,0.0,1.0
+2024/2025,CFP1233,Premiers Secours ,CFP,01,PROF,0.0,0.0,0.0,0.0,2.0
+2024/2025,CFP1324,Épidémiologie,CFP,01,PROF,0.0,0.0,0.0,0.0,1.0
+2024/2025,CFP1325,Démographie,CFP,01,FOND,0.0,0.0,0.0,0.0,1.0
+2024/2025,CFP1326,Planification Des Soins,CFP,01,PROF,0.0,0.0,0.0,0.0,2.0
+2024/2025,CFP1327,Microbiologie 2,CFP,01,PROF,0.0,0.0,0.0,0.0,4.0
+2024/2025,CFP1328,Santé Environnementale ,CFP,01,PROF,0.0,0.0,0.0,0.0,1.0
+2024/2025,ELN111,Mathematics I ,ELN,01,FUND,40.0,15.0,0.0,5.0,4.0
+2024/2025,ELN112,Physics and Chemistry ,ELN,01,FUND,40.0,20.0,10.0,5.0,5.0
+2024/2025,ELN113,"Basics of Electricity and Electrical
+circuit ",ELN,01,PROF,40.0,30.0,0.0,5.0,5.0
+2024/2025,ELN114,Electrical Machines ,ELN,01,PROF,45.0,25.0,0.0,5.0,5.0
+2024/2025,ELN115,Electronics and Automation ,ELN,01,PROF,40.0,20.0,10.0,5.0,5.0
+2024/2025,ELN116,Construction Design ,ELN,01,PROF,25.0,10.0,5.0,5.0,3.0
+2024/2025,ELN117,Bilingual Training ,ELN,01,TRANS,25.0,15.0,0.0,5.0,3.0
+2024/2025,ELN121,Mathematics II ,ELN,01,FUND,40.0,15.0,0.0,5.0,4.0
+2024/2025,ELN122,Physics and Computer Science ,ELN,01,FUND,35.0,20.0,15.0,5.0,5.0
+2024/2025,ELN123,"Measurement Technology and
+Electronics",ELN,01,PROF,45.0,25.0,0.0,5.0,5.0
+2024/2025,ELN124,Maintenance ,ELN,01,PROF,45.0,25.0,0.0,5.0,5.0
+2024/2025,ELN125,"Power Electronics and actuator
+control",ELN,01,PROF,30.0,0.0,25.0,5.0,4.0
+2024/2025,ELN126,CAD in Electrical Engineering ,ELN,01,PROF,20.0,0.0,35.0,5.0,4.0
+2024/2025,ELN127,"Business creation, Civil and ethical
+Education ",ELN,01,TRANS,25.0,15.0,0.0,5.0,3.0
+2024/2025,ELN231,Mathematics III ,ELN,02,FUND,40.0,15.0,0.0,5.0,4.0
+2024/2025,ELN232,Physics and Chemistry ,ELN,02,FUND,40.0,20.0,10.0,5.0,5.0
+2024/2025,ELN233,Practical Work Electronic II ,ELN,02,PROF,25.0,15.0,15.0,5.0,4.0
+2024/2025,ELN234,"Introduction in the Robotics
+electronics ",ELN,02,PROF,40.0,0.0,30.0,5.0,5.0
+2024/2025,ELN235,Maintenance of complexe Systems ,ELN,02,PROF,25.0,0.0,30.0,5.0,4.0
+2024/2025,ELN236,"Data Processing and
+Telecommunications Network ",ELN,02,PROF,30.0,15.0,25.0,5.0,5.0
+2024/2025,ELN237,Accounting and labour law ,ELN,02,TRANS,25.0,15.0,0.0,5.0,3.0
+2024/2025,ELN241,Mathematics IV ,ELN,02,FUND,40.0,15.0,0.0,5.0,4.0
+2024/2025,ELN242,Computer Science II ,ELN,02,FUND,40.0,20.0,10.0,5.0,5.0
+2024/2025,ELN243,"Planing and Intervention in
+Maintenance of complexe Systems ",ELN,02,PROF,40.0,15.0,0.0,5.0,4.0
+2024/2025,ELN244,Home Electronics and Automation ,ELN,02,PROF,25.0,0.0,30.0,5.0,4.0
+2024/2025,ELN245,Digital Electronics and power Control ,ELN,02,PROF,25.0,0.0,30.0,5.0,4.0
+2024/2025,ELN246,Professional internship ,ELN,02,PROF,0.0,0.0,0.0,90.0,6.0
+2024/2025,ELN247,Economy and business organization ,ELN,02,TRANS,25.0,15.0,0.0,5.0,3.0
+2024/2025,ELT 111,Mathematics I ,HNDET,01,FUND,40.0,15.0,0.0,5.0,4.0
+2024/2025,ELT 112,Physics and Chemistry I ,HNDET,01,FUND,40.0,20.0,10.0,5.0,5.0
+2024/2025,ELT 113,Basics of Electricity and Electrical circuit ,HNDET,01,PROF,40.0,30.0,0.0,5.0,5.0
+2024/2025,ELT 114,Electrical Machines ,HNDET,01,PROF,45.0,25.0,0.0,5.0,5.0
+2024/2025,ELT 115,Electronics and automation ,HNDET,01,PROF,40.0,20.0,10.0,5.0,5.0
+2024/2025,ELT 116,Construction Design ,HNDET,01,PROF,25.0,10.0,5.0,5.0,3.0
+2024/2025,ELT 117,Bilingual Training ,HNDET,01,TRANS,25.0,15.0,0.0,5.0,3.0
+2024/2025,ELT 121,Mathematics II ,HNDET,01,FUND,40.0,15.0,0.0,5.0,4.0
+2024/2025,ELT 122,Physics and Computer Science ,HNDET,01,FUND,35.0,20.0,15.0,5.0,5.0
+2024/2025,ELT 123,Electrical Machines and Measurment Technics ,HNDET,01,PROF,45.0,25.0,0.0,5.0,5.0
+2024/2025,ELT 124,Electronics and signal processing ,HNDET,01,PROF,45.0,25.0,0.0,5.0,5.0
+2024/2025,ELT 125,Power Electronics ,HNDET,01,PROF,30.0,0.0,25.0,5.0,4.0
+2024/2025,ELT 126,CAD in Electrical Engineering ,HNDET,01,PROF,10.0,10.0,40.0,0.0,4.0
+2024/2025,ELT 127,"Business creation, Civic and moral Education ",HNDET,01,TRANS,25.0,15.0,0.0,5.0,3.0
+2024/2025,ELT 231,Mathematics III ,HNDET,02,FUND,40.0,15.0,0.0,5.0,4.0
+2024/2025,ELT 232,Physics and Chemistry III ,HNDET,02,FUND,40.0,20.0,10.0,5.0,5.0
+2024/2025,ELT 233,Energy production and Schema ,HNDET,02,PROF,30.0,15.0,25.0,5.0,5.0
+2024/2025,ELT 234,Servoing and Data communication ,HNDET,02,PROF,30.0,0.0,25.0,5.0,4.0
+2024/2025,ELT 235,Advabced Electronics ,HNDET,02,PROF,30.0,0.0,25.0,5.0,4.0
+2024/2025,ELT 236,Electrical Machines practicals works ,HNDET,02,PROF,30.0,0.0,40.0,5.0,5.0
+2024/2025,ELT 237,Accounting and labour law ,HNDET,02,TRANS,25.0,15.0,0.0,5.0,3.0
+2024/2025,ELT 241,Mathematics IV ,HNDET,02,FUND,40.0,15.0,0.0,5.0,4.0
+2024/2025,ELT 242,Computer science II ,HNDET,02,FUND,40.0,20.0,10.0,5.0,5.0
+2024/2025,ELT 243,Maintenance and industrial Networks ,HNDET,02,PROF,30.0,20.0,20.0,5.0,5.0
+2024/2025,ELT 244,Electrical Installation and Equipments ,HNDET,02,PROF,30.0,15.0,10.0,5.0,4.0
+2024/2025,ELT 245,Practical Work Electrical Machine II ,HNDET,02,PROF,10.0,0.0,30.0,5.0,3.0
+2024/2025,ELT 246,Internship ,HNDET,02,PROF,0.0,0.0,0.0,90.0,6.0
+2024/2025,ELT 247,Economy and business organization ,HNDET,02,TRANS,25.0,15.0,0.0,5.0,3.0
+2024/2025,ELT111,Mathématiques I,BTSET,01,FOND,30.0,25.0,0.0,5.0,4.0
+2024/2025,ELT112,Physique et Chimie,BTSET,01,FOND,35.0,23.0,12.0,5.0,5.0
+2024/2025,ELT113,Electricité générale et Circuits électriques,BTSET,01,PROF,40.0,30.0,0.0,5.0,5.0
+2024/2025,ELT114,Machine électrique I,BTSET,01,PROF,45.0,25.0,0.0,5.0,5.0
+2024/2025,ELT115,Electronique et automatisme,BTSET,01,PROF,40.0,20.0,15.0,0.0,5.0
+2024/2025,ELT116,Technologie de construction,BTSET,01,PROF,25.0,10.0,5.0,5.0,3.0
+2024/2025,ELT117,Expression écrite et Formation bilingue,BTSET,01,TRANS,25.0,15.0,5.0,45.0,3.0
+2024/2025,ELT121,Mathématiques II,BTSET,01,FOND,30.0,25.0,0.0,5.0,4.0
+2024/2025,ELT122,Physique et Informatique,BTSET,01,FOND,35.0,20.0,15.0,5.0,5.0
+2024/2025,ELT123,Machines électriques et techniques de mesures,BTSET,01,PROF,45.0,25.0,0.0,5.0,5.0
+2024/2025,ELT124,Electronique et traitement du signal,BTSET,01,PROF,45.0,25.0,0.0,5.0,5.0
+2024/2025,ELT125,Electronique de puissance,BTSET,01,PROF,30.0,30.0,0.0,0.0,4.0
+2024/2025,ELT126,CAO en Génie électrique,BTSET,01,PROF,10.0,10.0,40.0,0.0,4.0
+2024/2025,ELT127,"Création d’entreprise et Education civique et
+éthique",BTSET,01,TRANS,30.0,10.0,0.0,5.0,3.0
+2024/2025,ELT231,Mathématiques III,BTSET,02,FOND,30.0,30.0,0.0,0.0,4.0
+2024/2025,ELT232,Physique et Chimie,BTSET,02,FOND,35.0,20.0,15.0,5.0,5.0
+2024/2025,ELT233,Productions et schémas,BTSET,02,PROF,45.0,25.0,0.0,5.0,5.0
+2024/2025,ELT234,Asservissements et communication des données,BTSET,02,PROF,45.0,30.0,0.0,0.0,5.0
+2024/2025,ELT235,Electronique III,BTSET,02,PROF,20.0,10.0,30.0,0.0,4.0
+2024/2025,ELT236,TP Machines électrique I,BTSET,02,PROF,0.0,0.0,55.0,5.0,4.0
+2024/2025,ELT237,Comptabilité et Droit du travail,BTSET,02,TRANS,30.0,10.0,0.0,5.0,3.0
+2024/2025,ELT241,Mathématiques IV,BTSET,02,FOND,30.0,30.0,0.0,0.0,4.0
+2024/2025,ELT242,Informatique II,BTSET,02,FOND,20.0,10.0,40.0,5.0,5.0
+2024/2025,ELT243,Maintenance et réseaux industriels,BTSET,02,PROF,30.0,10.0,15.0,5.0,4.0
+2024/2025,ELT244,Installations électriques et appareillages,BTSET,02,PROF,30.0,15.0,10.0,5.0,4.0
+2024/2025,ELT245,TP Machines électriques II,BTSET,02,PROF,0.0,0.0,60.0,0.0,4.0
+2024/2025,ELT246,Stage professionnel,BTSET,02,PROF,0.0,0.0,60.0,30.0,6.0
+2024/2025,ELT247,Economie,BTSET,02,TRANS,30.0,10.0,0.0,5.0,3.0
+2024/2025,FCL111,Mathématiques I,FCL,01,FOND,30.0,25.0,0.0,5.0,4.0
+2024/2025,FCL112,TIC I,FCL,01,FOND,30.0,20.0,20.0,5.0,5.0
+2024/2025,FCL113,Electronique et Electrotechnique,FCL,01,PROF,35.0,20.0,15.0,5.0,5.0
+2024/2025,FCL114,Thermodynamique,FCL,01,PROF,20.0,15.0,5.0,5.0,3.0
+2024/2025,FCL115,Transferts thermique,FCL,01,PROF,40.0,15.0,0.0,5.0,4.0
+2024/2025,FCL116,Mécanique des fluides et technique de mesure,FCL,01,PROF,55.0,30.0,0.0,5.0,6.0
+2024/2025,FCL117,Formation bilingue,FCL,01,TRANS,27.0,15.0,0.0,3.0,3.0
+2024/2025,FCL121,Mathématiques II,FCL,01,FOND,30.0,25.0,0.0,5.0,4.0
+2024/2025,FCL122,Physique et Chimie I,FCL,01,FOND,30.0,20.0,20.0,5.0,5.0
+2024/2025,FCL123,Technologies des installations frogorifiques,FCL,01,PROF,35.0,20.0,0.0,5.0,4.0
+2024/2025,FCL124,Régulation et Gestion d’énergie,FCL,01,PROF,15.0,15.0,25.0,5.0,4.0
+2024/2025,FCL125,Automatique et Ventilation,FCL,01,PROF,35.0,20.0,0.0,5.0,4.0
+2024/2025,FCL126,"Hydraulique et Schémas électriques appliqués au
+froid",FCL,01,PROF,50.0,25.0,10.0,5.0,6.0
+2024/2025,FCL127,Economie et Gestion des entreprises,FCL,01,TRANS,25.0,15.0,0.0,5.0,3.0
+2024/2025,FCL231,Mathématiques III,FCL,02,FOND,30.0,25.0,0.0,5.0,4.0
+2024/2025,FCL232,Physique et Chimie II,FCL,02,FOND,30.0,25.0,15.0,5.0,5.0
+2024/2025,FCL233,CAO et DAO,FCL,02,PROF,5.0,5.0,60.0,5.0,5.0
+2024/2025,FCL234,Travaux pratiques,FCL,02,PROF,5.0,5.0,60.0,5.0,5.0
+2024/2025,FCL235,Entrepôt frigorifique et installation,FCL,02,PROF,40.0,15.0,0.0,5.0,4.0
+2024/2025,FCL236,Production du froid,FCL,02,PROF,25.0,15.0,15.0,5.0,4.0
+2024/2025,FCL237,Méthodologie de rédaction du RDS,FCL,02,TRANS,27.0,15.0,0.0,3.0,3.0
+2024/2025,FCL241,Mathématiques IV,FCL,02,FOND,30.0,25.0,0.0,5.0,4.0
+2024/2025,FCL242,Informatique II,FCL,02,FOND,30.0,25.0,15.0,5.0,5.0
+2024/2025,FCL243,Matériaux,FCL,02,PROF,22.0,15.0,5.0,3.0,3.0
+2024/2025,FCL244,"Electricité et Technologie des installations
+frigorifiques",FCL,02,PROF,30.0,25.0,30.0,5.0,6.0
+2024/2025,FCL245,Conservation frigorifique,FCL,02,PROF,20.0,10.0,10.0,5.0,3.0
+2024/2025,FCL246,Stage académique,FCL,02,PROF,0.0,0.0,60.0,30.0,6.0
+2024/2025,FCL247,Comptabilité et Economie,FCL,02,TRANS,27.0,15.0,0.0,3.0,3.0
+2024/2025,GTO111,Mathématiques I,GTO,01,FOND,30.0,25.0,0.0,5.0,4.0
+2024/2025,GTO112,Physique et Chimie I,GTO,01,FOND,30.0,25.0,15.0,5.0,5.0
+2024/2025,GTO113,Topométrie I,GTO,01,PROF,45.0,25.0,15.0,5.0,6.0
+2024/2025,GTO114,Dessin Technique et Cartographie I,GTO,01,PROF,30.0,25.0,0.0,5.0,4.0
+2024/2025,GTO115,Système Géographique I,GTO,01,PROF,35.0,20.0,0.0,5.0,4.0
+2024/2025,GTO116,Géologie de l’ingénieur /Topologie,GTO,01,PROF,30.0,25.0,0.0,5.0,4.0
+2024/2025,GTO117,Expression écrite et Formation bilingue,GTO,01,TRANS,25.0,17.0,0.0,3.0,3.0
+2024/2025,GTO121,Mathématiques II,GTO,01,FOND,30.0,25.0,0.0,5.0,4.0
+2024/2025,GTO122,Physique et Informatique,GTO,01,FOND,30.0,20.0,20.0,5.0,5.0
+2024/2025,GTO123,Système Géographique II,GTO,01,PROF,35.0,20.0,0.0,5.0,4.0
+2024/2025,GTO124,Dessin Technique et Cartographie II,GTO,01,PROF,15.0,25.0,15.0,5.0,4.0
+2024/2025,GTO125,Régime Foncier et Domanial,GTO,01,PROF,27.0,15.0,0.0,3.0,3.0
+2024/2025,GTO126,Calculs Topometriques II et Technologie Topometrique II,GTO,01,PROF,55.0,25.0,20.0,5.0,7.0
+2024/2025,GTO127,"Création d’entreprise, Education civique et éthique",GTO,01,TRANS,26.0,15.0,0.0,4.0,3.0
+2024/2025,GTO231,Mathématiques III,GTO,02,FOND,30.0,25.0,0.0,5.0,4.0
+2024/2025,GTO232,Physique et Chimie II,GTO,02,FOND,35.0,20.0,15.0,5.0,5.0
+2024/2025,GTO233,Système Géographique III et Télédétection,GTO,02,PROF,35.0,15.0,5.0,5.0,4.0
+2024/2025,GTO234,Calculs Topometriques III,GTO,02,PROF,30.0,15.0,10.0,5.0,4.0
+2024/2025,GTO235,Technologie Topometrique III,GTO,02,PROF,15.0,15.0,25.0,5.0,4.0
+2024/2025,GTO236,Urbanisme et Dessin Assisté Par Ordinateur,GTO,02,PROF,35.0,20.0,30.0,5.0,6.0
+2024/2025,GTO237,Méthodologie de rédaction du RDS,GTO,02,TRANS,27.0,15.0,0.0,3.0,3.0
+2024/2025,GTO241,Mathématiques IV,GTO,02,FOND,30.0,25.0,0.0,5.0,4.0
+2024/2025,GTO242,Informatique II,GTO,02,FOND,20.0,10.0,40.0,5.0,5.0
+2024/2025,GTO243,Topometrie IV,GTO,02,PROF,25.0,35.0,10.0,5.0,5.0
+2024/2025,GTO244,Géodésie et Télédétection,GTO,02,PROF,35.0,15.0,20.0,5.0,5.0
+2024/2025,GTO245,Voiries et Réseaux Divers,GTO,02,PROF,28.0,0.0,15.0,2.0,3.0
+2024/2025,GTO246,Stage Professionnel,GTO,02,PROF,0.0,0.0,75.0,0.0,5.0
+2024/2025,GTO247,Comptabilité et Economie,GTO,02,TRANS,27.0,15.0,0.0,3.0,3.0
+2024/2025,IGL111,Outils Mathématiques I,IGL,01,FOND,45.0,25.0,0.0,5.0,5.0
+2024/2025,IGL112,Environnement de base I,IGL,01,FOND,20.0,10.0,25.0,5.0,4.0
+2024/2025,IGL113,Architecture,IGL,01,PROF,30.0,10.0,0.0,5.0,3.0
+2024/2025,IGL114,Initiation à l’algorithmique,IGL,01,PROF,40.0,30.0,0.0,5.0,5.0
+2024/2025,IGL115,Initiation au Génie logiciel,IGL,01,PROF,70.0,30.0,0.0,5.0,7.0
+2024/2025,IGL116,Traitement des données multimédia,IGL,01,PROF,20.0,5.0,20.0,0.0,3.0
+2024/2025,IGL117,Anglais et Comptabilité générale,IGL,01,TRANS,30.0,10.0,0.0,5.0,3.0
+2024/2025,IGL121,Outils mathématiques II,IGL,01,FOND,35.0,20.0,0.0,5.0,4.0
+2024/2025,IGL122,Environnement de base II,IGL,01,FOND,35.0,20.0,15.0,5.0,5.0
+2024/2025,IGL123,Programmation I,IGL,01,PROF,20.0,10.0,25.0,5.0,4.0
+2024/2025,IGL124,Base de données et MERISE I,IGL,01,PROF,40.0,15.0,15.0,5.0,5.0
+2024/2025,IGL125,Programmation II,IGL,01,PROF,20.0,15.0,35.0,5.0,5.0
+2024/2025,IGL126,Maintenance et Négociation informatique,IGL,01,PROF,25.0,15.0,15.0,5.0,4.0
+2024/2025,IGL127,EOE et Techniques d’expression,IGL,01,TRANS,30.0,10.0,0.0,5.0,3.0
+2024/2025,IGL231,Outils mathématiques III,IGL,02,FOND,45.0,25.0,0.0,5.0,5.0
+2024/2025,IGL232,Outils mathématiques IV,IGL,02,FOND,40.0,20.0,0.0,0.0,4.0
+2024/2025,IGL233,MOO UML,IGL,02,PROF,40.0,10.0,5.0,5.0,4.0
+2024/2025,IGL234,Structure de données et langage SQL,IGL,02,PROF,40.0,25.0,5.0,5.0,5.0
+2024/2025,IGL235,Programmation III,IGL,02,PROF,15.0,15.0,40.0,5.0,5.0
+2024/2025,IGL236,Système et Réseaux,IGL,02,PROF,40.0,10.0,5.0,5.0,4.0
+2024/2025,IGL237,Création d’entreprise et Education civique et,IGL,02,TRANS,30.0,10.0,0.0,5.0,3.0
+2024/2025,IGL241,Terminaux mobiles,IGL,02,FOND,25.0,10.0,35.0,5.0,5.0
+2024/2025,IGL242,Gestion des projets,IGL,02,FOND,30.0,10.0,15.0,5.0,4.0
+2024/2025,IGL243,Réseaux et Administration Système,IGL,02,PROF,30.0,10.0,15.0,5.0,4.0
+2024/2025,IGL244,POO et Bases de données Avancées,IGL,02,PROF,25.0,5.0,25.0,5.0,4.0
+2024/2025,IGL245,Structure de données et IHM,IGL,02,PROF,30.0,10.0,15.0,5.0,4.0
+2024/2025,IGL246,Stage professionnel,IGL,02,PROF,0.0,0.0,60.0,30.0,6.0
+2024/2025,IGL247,Economie Générale,IGL,02,TRANS,30.0,10.0,0.0,5.0,3.0
+2024/2025,IWD111,Outils de base d’infographie,IWD,01,FOND,40.0,30.0,0.0,5.0,5.0
+2024/2025,IWD112,Algorithmique et Système d’information,IWD,01,FOND,25.0,30.0,0.0,5.0,4.0
+2024/2025,IWD113,Multimédia,IWD,01,PROF,15.0,20.0,35.0,5.0,5.0
+2024/2025,IWD114,Design I,IWD,01,PROF,20.0,10.0,25.0,5.0,4.0
+2024/2025,IWD115,Images et animations,IWD,01,PROF,20.0,20.0,30.0,5.0,5.0
+2024/2025,IWD116,Photographie et programmation web,IWD,01,PROF,20.0,10.0,25.0,5.0,4.0
+2024/2025,IWD117,Anglais et Comptabilité générale,IWD,01,TRANS,30.0,10.0,0.0,5.0,3.0
+2024/2025,IWD121,Informatique,IWD,01,FOND,35.0,20.0,0.0,5.0,4.0
+2024/2025,IWD122,Programmation et photographie II,IWD,01,FOND,20.0,20.0,30.0,5.0,5.0
+2024/2025,IWD123,Dessin I,IWD,01,PROF,20.0,10.0,25.0,5.0,4.0
+2024/2025,IWD124,Animations,IWD,01,PROF,15.0,20.0,35.0,5.0,5.0
+2024/2025,IWD125,Intégration web et effets spéciaux,IWD,01,PROF,20.0,20.0,30.0,5.0,5.0
+2024/2025,IWD126,Montage,IWD,01,PROF,20.0,15.0,20.0,5.0,4.0
+2024/2025,IWD127,EOE et Techniques d’expression,IWD,01,TRANS,30.0,10.0,0.0,5.0,3.0
+2024/2025,IWD231,Science physique et Streaming,IWD,02,FOND,25.0,15.0,15.0,5.0,4.0
+2024/2025,IWD232,Programmation et Projet,IWD,02,FOND,25.0,15.0,30.0,5.0,5.0
+2024/2025,IWD233,TGA et Animation,IWD,02,PROF,15.0,20.0,35.0,5.0,5.0
+2024/2025,IWD234,Programmation II,IWD,02,PROF,25.0,10.0,35.0,5.0,5.0
+2024/2025,IWD235,Design,IWD,02,PROF,20.0,15.0,20.0,5.0,4.0
+2024/2025,IWD236,PAO,IWD,02,PROF,20.0,15.0,20.0,5.0,4.0
+2024/2025,IWD237,Création d’entreprise et Education civique et,IWD,02,TRANS,30.0,10.0,0.0,5.0,3.0
+2024/2025,IWD241,Entreprenariat,IWD,02,FOND,25.0,10.0,35.0,5.0,5.0
+2024/2025,IWD242,Informatique II,IWD,02,FOND,20.0,10.0,25.0,5.0,4.0
+2024/2025,IWD243,Dessin II et Animation II,IWD,02,PROF,25.0,20.0,25.0,5.0,5.0
+2024/2025,IWD244,Montage et Design,IWD,02,PROF,20.0,15.0,20.0,5.0,4.0
+2024/2025,IWD245,Programmation et administration d’un site web,IWD,02,PROF,10.0,5.0,25.0,5.0,3.0
+2024/2025,IWD246,Stage professionnel,IWD,02,PROF,0.0,0.0,60.0,30.0,6.0
+2024/2025,IWD247,Economie générale,IWD,02,TRANS,30.0,10.0,0.0,5.0,3.0
+2024/2025,MEC111,Engineering Mathematics I ,MEC,01,FUND,40.0,30.0,0.0,5.0,5.0
+2024/2025,MEC112,Enginer in the Society ,MEC,01,FUND,40.0,15.0,0.0,5.0,4.0
+2024/2025,MEC113,Mechanical manufacture ,MEC,01,PROF,40.0,20.0,12.0,3.0,5.0
+2024/2025,MEC114,Materials and Applied Mechanics ,MEC,01,PROF,50.0,20.0,0.0,5.0,5.0
+2024/2025,MEC115,Maintenance and automation ,MEC,01,PROF,40.0,10.0,20.0,5.0,5.0
+2024/2025,MEC116,Analysis and design drawing ,MEC,01,PROF,25.0,15.0,0.0,5.0,3.0
+2024/2025,MEC117,Bilingual training ,MEC,01,TRANS,25.0,15.0,0.0,5.0,3.0
+2024/2025,MEC121,"Engineering Mathematics II and Fluids
+Mechanics ",MEC,01,FUND,30.0,25.0,0.0,5.0,4.0
+2024/2025,MEC122,Workshop Supervisor management ,MEC,01,FUND,30.0,20.0,20.0,5.0,5.0
+2024/2025,MEC123,Mechanical Analysis I ,MEC,01,PROF,45.0,25.0,0.0,5.0,5.0
+2024/2025,MEC124,Computer Assisted Drawing (CAD) ,MEC,01,PROF,25.0,10.0,20.0,5.0,4.0
+2024/2025,MEC125,Work Manufacturing Practice ,MEC,01,PROF,10.0,0.0,45.0,5.0,4.0
+2024/2025,MEC126,"Computer aided Design
+(SOLIDWORK) ",MEC,01,PROF,25.0,10.0,35.0,5.0,5.0
+2024/2025,MEC127,"Computer for business I/ Civic and
+Moral Education ",MEC,01,TRANS,30.0,15.0,0.0,0.0,3.0
+2024/2025,MEC231,"Engineering Mathematics III, Legal
+and Economic Environment ",MEC,02,FUND,40.0,30.0,0.0,5.0,5.0
+2024/2025,MEC232,"Computer for Business I and
+Computer programming ",MEC,02,FUND,20.0,25.0,10.0,5.0,4.0
+2024/2025,MEC233,Mechanical Analysis II ,MEC,02,PROF,45.0,25.0,0.0,5.0,5.0
+2024/2025,MEC234,Materials ,MEC,02,PROF,30.0,20.0,5.0,5.0,4.0
+2024/2025,MEC235,Computer Aided Manufacturing ,MEC,02,PROF,25.0,10.0,50.0,5.0,6.0
+2024/2025,MEC236,Applied Mechanics ,MEC,02,PROF,30.0,12.0,0.0,3.0,3.0
+2024/2025,MEC237,"Environmental Engineering and
+Enterpreneuriatship ",MEC,02,TRANS,25.0,15.0,0.0,5.0,3.0
+2024/2025,MEC241,Engineering Mathematics IV ,MEC,02,FUND,30.0,25.0,0.0,5.0,4.0
+2024/2025,MEC242,Physics and chemistry ,MEC,02,FUND,25.0,20.0,25.0,5.0,5.0
+2024/2025,MEC243,"Applied Mechanics and Strength of
+material ",MEC,02,PROF,40.0,30.0,0.0,5.0,5.0
+2024/2025,MEC244,Drawing and automation ,MEC,02,PROF,30.0,15.0,10.0,5.0,4.0
+2024/2025,MEC245,Computer Aided Manufacturing ,MEC,02,PROF,30.0,12.0,0.0,3.0,3.0
+2024/2025,MEC246,Academic Internship ,MEC,02,PROF,0.0,0.0,60.0,30.0,6.0
+2024/2025,MEC247,"Industrial Safety/ Engineering
+Management Law and Economics ",MEC,02,TRANS,25.0,15.0,0.0,5.0,3.0
+2024/2025,MKA111,Mathématiques I,MKA,01,FOND,30.0,25.0,0.0,5.0,4.0
+2024/2025,MKA112,TIC I,MKA,01,FOND,35.0,25.0,10.0,5.0,5.0
+2024/2025,MKA113,Bases en Electronique,MKA,01,PROF,20.0,20.0,15.0,5.0,4.0
+2024/2025,MKA114,Notions de Bases en Mécanique et Physique,MKA,01,PROF,55.0,25.0,5.0,5.0,6.0
+2024/2025,MKA115,"Développement du Véhicule Automobile et
+Organes de Châssis / Carrosserie",MKA,01,PROF,40.0,20.0,10.0,5.0,5.0
+2024/2025,MKA116,"Structure et Fonctionnement du Groupe Moto
+Propulseur (GMP)",MKA,01,PROF,20.0,10.0,10.0,5.0,3.0
+2024/2025,MKA117,Formation bilingue,MKA,01,TRANS,22.0,20.0,0.0,3.0,3.0
+2024/2025,MKA121,Mathématiques II,MKA,01,FOND,30.0,25.0,0.0,5.0,4.0
+2024/2025,MKA122,Physique et Chimie I,MKA,01,FOND,35.0,20.0,15.0,5.0,5.0
+2024/2025,MKA123,Informatique et Electronique Numérique,MKA,01,PROF,20.0,20.0,17.0,3.0,4.0
+2024/2025,MKA124,"Construction et Notion de Base sur les Systèmes
+Embarqués",MKA,01,PROF,35.0,20.0,30.0,5.0,6.0
+2024/2025,MKA125,Notion de Base en CAO/DAO/CFAO,MKA,01,PROF,10.0,20.0,25.0,5.0,4.0
+2024/2025,MKA126,Résistance des Matériaux,MKA,01,PROF,23.0,18.0,15.0,4.0,4.0
+2024/2025,MKA127,Economie et Gestion des entreprises,MKA,01,TRANS,27.0,15.0,0.0,3.0,3.0
+2024/2025,MKA231,Mathématiques III,MKA,02,FOND,30.0,25.0,0.0,5.0,4.0
+2024/2025,MKA232,Physique et Chimie II,MKA,02,FOND,35.0,25.0,10.0,5.0,5.0
+2024/2025,MKA233,Matériaux et Production,MKA,02,PROF,25.0,20.0,10.0,5.0,4.0
+2024/2025,MKA234,Electrotechnique Appliquées et Métrologie,MKA,02,PROF,40.0,30.0,15.0,5.0,6.0
+2024/2025,MKA235,Bases de la transmission Automobile,MKA,02,PROF,10.0,10.0,35.0,5.0,4.0
+2024/2025,MKA236,Thermodynamique et Mécanique des Fluides,MKA,02,PROF,28.0,20.0,10.0,2.0,4.0
+2024/2025,MKA237,Méthodologie de rédaction du RDS,MKA,02,TRANS,27.0,15.0,0.0,3.0,3.0
+2024/2025,MKA241,Mathématiques IV,MKA,02,FOND,30.0,25.0,0.0,5.0,4.0
+2024/2025,MKA242,Informatique II,MKA,02,FOND,20.0,10.0,40.0,5.0,5.0
+2024/2025,MKA243,"Signaux, Système et Electronique Automobile",MKA,02,PROF,30.0,20.0,35.0,5.0,6.0
+2024/2025,MKA244,"Technique de Microprocesseur, Algorithmique et
+Structure de Données",MKA,02,PROF,15.0,10.0,20.0,0.0,3.0
+2024/2025,MKA245,Service dans le cycle de l’Automobile,MKA,02,PROF,5.0,10.0,30.0,0.0,3.0
+2024/2025,MKA246,Stage académique,MKA,02,PROF,0.0,0.0,60.0,30.0,6.0
+2024/2025,MKA247,Comptabilité et Economie,MKA,02,TRANS,27.0,15.0,0.0,3.0,3.0
+2024/2025,MLS111,"Cell Biology and histology - Anatomy
+Physiology 1 -General Chemistry ",MLS,01,FUND,70.0,12.0,0.0,8.0,6.0
+2024/2025,MLS112,"General Microbiology 1 - General
+biochemistry ",MLS,01,FUND,32.0,8.0,0.0,5.0,3.0
+2024/2025,MLS113,"Sociology and anthropology, Medical -
+Medical Psychology - Ethics and Medical
+Ethics",MLS,01,PROF,44.0,10.0,0.0,6.0,4.0
+2024/2025,MLS114,Life-cycle - Nursing - First Aid ,MLS,01,PROF,42.0,8.0,6.0,4.0,4.0
+2024/2025,MLS115,Physics- Mathematics - Biostatistics ,MLS,01,PROF,40.0,14.0,0.0,6.0,4.0
+2024/2025,MLS116,Clinical Internship 1(immersion) ,MLS,01,PROF,0.0,0.0,70.0,20.0,6.0
+2024/2025,MLS117,Functional English/ Functional French ,MLS,01,TRANS,30.0,9.0,0.0,6.0,3.0
+2024/2025,MLS121,"Anatomy and Physiology 2 - Organic
+Chemistry ",MLS,01,FUND,60.0,22.0,0.0,8.0,6.0
+2024/2025,MLS122,"General Microbiology 2 - General
+Parasitology ",MLS,01,FUND,28.0,6.0,6.0,5.0,3.0
+2024/2025,MLS123,Techniques in the laboratory ,MLS,01,PROF,30.0,2.0,10.0,3.0,3.0
+2024/2025,MLS124,"IEC 1- General hygiene and hospitable -
+Infectious and parasitic diseases ",MLS,01,PROF,62.0,14.0,0.0,14.0,6.0
+2024/2025,MLS125,"General pharmacology - Nutrition -
+Epidemiology ",MLS,01,PROF,34.0,6.0,0.0,5.0,3.0
+2024/2025,MLS126,Clinical Internship 2(immersion) ,MLS,01,PROF,0.0,0.0,70.0,20.0,6.0
+2024/2025,MLS127,General Economy - Demography ,MLS,01,TRANS,30.0,7.0,0.0,8.0,3.0
+2024/2025,MLS231,"IEC2 -Health and Devpmt&Comnity Health/Biosecurity/Quality
+management /Envir.Mnagt System",MLS,02,FUND,65.0,20.0,0.0,20.0,7.0
+2024/2025,MLS232,Initiation to research ,MLS,02,FUND,20.0,4.0,0.0,6.0,2.0
+2024/2025,MLS233,"Clinical haematology 1 - Medical
+Entomology - Blood Transfusion/ Quality
+Assurance",MLS,02,PROF,40.0,10.0,15.0,10.0,5.0
+2024/2025,MLS234,Clinical Biochemistry 1 - Laboratory ,MLS,02,PROF,30.0,6.0,20.0,4.0,4.0
+2024/2025,MLS235,Clinical Bacteriology 1 - Laboratory ,MLS,02,PROF,30.0,2.0,10.0,3.0,3.0
+2024/2025,MLS236,"Internship of community health
+1/Hematology ",MLS,02,PROF,0.0,0.0,70.0,20.0,6.0
+2024/2025,MLS237,Information and Communication Techniques ,MLS,02,TRANS,30.0,9.0,0.0,6.0,3.0
+2024/2025,MLS241,"Clinical Parasitology 1 - Medical Mycology -
+Immunology/serology ",MLS,02,FUND,60.0,14.0,8.0,8.0,6.0
+2024/2025,MLS242,"The economics of health - a priority program
+of health in Cameroon ",MLS,02,FUND,32.0,8.0,0.0,5.0,3.0
+2024/2025,MLS243,"Clinical Bacteriology 2 - Clinical Biochemistry
+2 - Laboratory ",MLS,02,PROF,30.0,4.0,20.0,6.0,4.0
+2024/2025,MLS244,Clinical haematology 2 -The Laboratory ,MLS,02,PROF,15.0,2.0,10.0,3.0,2.0
+2024/2025,MLS245,"Clinical Internship
+3(parasitology/Immunology) ",MLS,02,PROF,0.0,0.0,70.0,20.0,6.0
+2024/2025,MLS246,"Clinical Internship 4(serology/
+Anapath/Histology ",MLS,02,PROF,0.0,0.0,70.0,20.0,6.0
+2024/2025,MLS247,"French and English for Medical profession and
+Law ",MLS,02,TRANS,30.0,10.0,0.0,5.0,3.0
+2024/2025,MLS351,"IEC3 - Health Information System - Health
+Management ",MLS,03,FUND,60.0,12.0,0.0,18.0,6.0
+2024/2025,MLS352,Rédactiondemémoire ,MLS,03,FUND,15.0,0.0,0.0,30.0,3.0
+2024/2025,MLS353,"Clinical Parasitology 2 - Clinical
+Haematology 3 - Laboratory ",MLS,03,PROF,40.0,8.0,45.0,12.0,7.0
+2024/2025,MLS354,"Clinical Bacteriology 3 – Laboratory -
+Virology ",MLS,03,PROF,25.0,4.0,10.0,6.0,3.0
+2024/2025,MLS355,Analytical Chemistry - Laboratory ,MLS,03,PROF,15.0,4.0,5.0,6.0,2.0
+2024/2025,MLS356,Internship of community health 2 ,MLS,03,PROF,0.0,0.0,70.0,20.0,6.0
+2024/2025,MLS357,Ethics and Civic education Law ,MLS,03,TRANS,30.0,9.0,0.0,6.0,3.0
+2024/2025,MLS361,"Microbiology of the environment - Food
+Microbiology ",MLS,03,FUND,50.0,16.0,0.0,9.0,5.0
+2024/2025,MLS362,Histopathology –Human Cytology ,MLS,03,FUND,40.0,12.0,0.0,8.0,4.0
+2024/2025,MLS363,"Clinical Biochemistry 3 - Clinical
+Parasitology 3 - Laboratory ",MLS,03,PROF,20.0,4.0,30.0,6.0,4.0
+2024/2025,MLS364,Molecular Biology ,MLS,03,PROF,20.0,6.0,0.0,4.0,2.0
+2024/2025,MLS365,Clinical Internship 5(Biochemistry) ,MLS,03,PROF,0.0,0.0,70.0,20.0,6.0
+2024/2025,MLS366,Clinical Internship 6(MycoBacteriology) ,MLS,03,PROF,0.0,0.0,70.0,20.0,6.0
+2024/2025,MLS367,Professional Ethics &Deontology ,MLS,03,TRANS,10.0,0.0,15.0,20.0,3.0
+2024/2025,NUS111,"Anatomy - Physiology I - Cell Biology -
+Histology - General Chemistry ",NUS,01,FUND,60.0,24.0,0.0,6.0,6.0
+2024/2025,NUS112,"Microbiology I: Bacteriology -
+Parasitology - Biochemistry ",NUS,01,FUND,30.0,12.0,0.0,3.0,3.0
+2024/2025,NUS113,"Sociology - anthropology and
+medical psychology ",NUS,01,PROF,50.0,20.0,0.0,5.0,5.0
+2024/2025,NUS114,"The basis of the Science nurse I:
+Concepts and Theories in Nursing
+Sciences",NUS,01,PROF,44.0,10.0,0.0,6.0,4.0
+2024/2025,NUS115,"History of the Nursing profession (life
+cycle) ",NUS,01,PROF,36.0,5.0,0.0,4.0,3.0
+2024/2025,NUS116,"Clinical Internship I (Medicine –
+General Surgery) ",NUS,01,PROF,0.0,0.0,0.0,0.0,6.0
+2024/2025,NUS117,Functional French and English ,NUS,01,TRANS,30.0,6.0,0.0,9.0,3.0
+2024/2025,NUS121,Anatomy and Physiology II ,NUS,01,FUND,50.0,20.0,0.0,5.0,5.0
+2024/2025,NUS122,"Microbiology II (Virology - Mycology -
+Immunology) ",NUS,01,FUND,40.0,16.0,0.0,4.0,4.0
+2024/2025,NUS123,"Foundations science Nurse II -
+approach Nursing care-
+Orgztion Care targeted
+transmissions-First Aid",NUS,01,PROF,50.0,20.0,0.0,5.0,5.0
+2024/2025,NUS124,"Nursing care in medicine 1 - Ethics
+and Professional Ethics ",NUS,01,PROF,40.0,13.0,0.0,7.0,4.0
+2024/2025,NUS125,"Public health: Epidemiology -
+Demography - Environmental Health
+and Health Promotion",NUS,01,PROF,30.0,10.0,0.0,5.0,3.0
+2024/2025,NUS126,Medicine Course in paediatric I and II ,NUS,01,PROF,0.0,0.0,70.0,20.0,6.0
+2024/2025,NUS127,"Information and Communication
+Techniques - ICT ",NUS,01,TRANS,30.0,10.0,0.0,5.0,3.0
+2024/2025,NUS231,"Applied Mathematics - Biostatistics -
+General biophysical and technology ",NUS,02,FUND,50.0,20.0,0.0,5.0,5.0
+2024/2025,NUS232,General pharmacology ,NUS,02,FUND,40.0,16.0,0.0,4.0,4.0
+2024/2025,NUS233,"Nursing care in surgery and blood
+transfusion - Nursing in Pediatrics and
+Child Care",NUS,02,PROF,40.0,10.0,0.0,10.0,4.0
+2024/2025,NUS234,"Reproductive health: health mother-child-Obst. care-care to
+women suffer. from obst.
+patholo. gynec.",NUS,02,PROF,40.0,16.0,0.0,4.0,4.0
+2024/2025,NUS235,"Medical pathologies - infectious
+diseases and zoonoses, pediatric
+pathologies childhood",NUS,02,PROF,40.0,10.0,0.0,10.0,4.0
+2024/2025,NUS236,"ClinicalInternship III( obstecrical care : 
+pre and post natal)",NUS,02,PROF,0.0,0.0,90.0,0.0,6.0
+2024/2025,NUS237,Medical French and English ,NUS,02,TRANS,30.0,10.0,0.0,5.0,3.0
+2024/2025,NUS241,"Communication for behavior
+change(CBC) - Community Health -
+Health and Development",NUS,02,FUND,30.0,20.0,0.0,10.0,4.0
+2024/2025,NUS242,"Techniques of medical analysis laboratory
+- medical imaging techniques ",NUS,02,FUND,25.0,20.0,20.0,10.0,5.0
+2024/2025,NUS243,"Obstetrical pathologies
+gynecological ",NUS,02,PROF,40.0,15.0,0.0,5.0,4.0
+2024/2025,NUS244,"Emergencies - operative Block -
+Anesthesiology ",NUS,02,PROF,25.0,15.0,5.0,45.0,3.0
+2024/2025,NUS245,"Clinical Pharmacology - Nutrition and
+pathologies associated - Alternative
+Medicine",NUS,02,PROF,50.0,20.0,0.0,5.0,5.0
+2024/2025,NUS246,Clinical Internship (Surgical ward and lab) ,NUS,02,PROF,0.0,0.0,90.0,0.0,6.0
+2024/2025,NUS247,"Civic education, Ethics and
+Initiation to research ",NUS,02,TRANS,30.0,10.0,0.0,5.0,3.0
+2024/2025,NUS351,"Medical pathologies - priority health
+programs in Cameroon - CCC III ",NUS,03,FUND,40.0,15.0,0.0,5.0,4.0
+2024/2025,NUS352,"The economics of health - Hospital
+management - system of health
+information",NUS,03,FUND,50.0,20.0,0.0,5.0,5.0
+2024/2025,NUS353,"Mental Health-Nursing in psychiatry-Nursing in geriatrics-Clinical
+Pharmaco.2-Therapeutic
+monitoring",NUS,03,PROF,35.0,20.0,0.0,5.0,4.0
+2024/2025,NUS354,Nursing care in resuscitation - care to ,NUS,03,PROF,20.0,5.0,0.0,5.0,2.0
+2024/2025,NUS355,Internship of Community Health II ,NUS,03,PROF,0.0,0.0,70.0,20.0,6.0
+2024/2025,NUS356,"Clinical Internship (Intensive care –
+Neuro-geriartry) ",NUS,03,PROF,0.0,0.0,70.0,20.0,6.0
+2024/2025,NUS357,"Medical Law - Health at Work - School
+Medicine ",NUS,03,TRANS,30.0,10.0,0.0,5.0,3.0
+2024/2025,NUS361,"Technical care of specific 1
+(neurology, ophthalmology,
+Stomatology, Dermatology - ENT)",NUS,03,FUND,30.0,0.0,40.0,5.0,5.0
+2024/2025,NUS362,"Techniques of specific care 2 -
+(Urology - Respiratory - Gastro
+enterology- cardiology)",NUS,03,FUND,20.0,0.0,35.0,5.0,4.0
+2024/2025,NUS363,"Implementation professional situation
+1 (MSP 1) ",NUS,03,PROF,40.0,16.0,0.0,4.0,4.0
+2024/2025,NUS364,"Implementation professional situation
+2 (MSP 2) ",NUS,03,PROF,30.0,10.0,0.0,5.0,3.0
+2024/2025,NUS365,"Implementation professional situation
+3 (MSP 3) ",NUS,03,PROF,0.0,0.0,70.0,20.0,6.0
+2024/2025,NUS366,"Drafting of the research project (work
+of End of Studies) ",NUS,03,PROF,50.0,0.0,20.0,5.0,5.0
+2024/2025,NUS367,Professional Ethics and Deontology ,NUS,03,TRANS,30.0,10.0,0.0,5.0,3.0
+2024/2025,RES111,Outils scientifique de base I,RES,01,FOND,35.0,20.0,0.0,5.0,4.0
+2024/2025,RES112,Informatique et Physique I,RES,01,FOND,40.0,15.0,15.0,5.0,5.0
+2024/2025,RES113,Telecom I,RES,01,PROF,40.0,20.0,10.0,5.0,5.0
+2024/2025,RES114,Electronique I,RES,01,PROF,40.0,20.0,10.0,5.0,5.0
+2024/2025,RES115,Electronique de base I,RES,01,PROF,20.0,10.0,10.0,5.0,3.0
+2024/2025,RES116,Réseaux I,RES,01,PROF,30.0,10.0,30.0,5.0,5.0
+2024/2025,RES117,Anglais et Comptabilité générale,RES,01,TRANS,30.0,10.0,0.0,5.0,3.0
+2024/2025,RES121,Outils scientifiques de base II,RES,01,FOND,35.0,20.0,0.0,5.0,4.0
+2024/2025,RES122,Informatique et Physique II,RES,01,FOND,40.0,15.0,15.0,5.0,5.0
+2024/2025,RES123,Telecom II,RES,01,PROF,20.0,10.0,10.0,5.0,3.0
+2024/2025,RES124,Electronique II,RES,01,PROF,35.0,15.0,20.0,5.0,5.0
+2024/2025,RES125,Administration et Sécurité réseaux,RES,01,PROF,35.0,20.0,15.0,5.0,5.0
+2024/2025,RES126,Technologie web II,RES,01,PROF,30.0,20.0,20.0,5.0,5.0
+2024/2025,RES127,EOE et Techniques d’expression,RES,01,TRANS,30.0,10.0,0.0,5.0,3.0
+2024/2025,RES231,Outils scientifiques de base III,RES,02,FOND,35.0,20.0,0.0,5.0,4.0
+2024/2025,RES232,Informatique et Physique III,RES,02,FOND,40.0,25.0,5.0,5.0,5.0
+2024/2025,RES233,Téléphonie,RES,02,PROF,30.0,10.0,30.0,5.0,5.0
+2024/2025,RES234,Telecoms III,RES,02,PROF,35.0,15.0,20.0,5.0,5.0
+2024/2025,RES235,Réseaux et Technologies,RES,02,PROF,15.0,10.0,15.0,5.0,3.0
+2024/2025,RES236,Administration et Sécurité II,RES,02,PROF,20.0,5.0,45.0,5.0,5.0
+2024/2025,RES237,Création entreprise et éducation civique et éthique,RES,02,TRANS,30.0,10.0,0.0,5.0,3.0
+2024/2025,RES241,Outils scientifiques de base IV,RES,02,FOND,35.0,20.0,0.0,5.0,4.0
+2024/2025,RES242,Informatique et Physique IV,RES,02,FOND,40.0,15.0,15.0,5.0,5.0
+2024/2025,RES243,Telecoms IV – Réseaux et Veille technologique,RES,02,PROF,35.0,15.0,20.0,5.0,5.0
+2024/2025,RES244,Réseaux et Applications,RES,02,PROF,25.0,15.0,15.0,5.0,4.0
+2024/2025,RES245,Réseaux mobiles et Sécurité,RES,02,PROF,30.0,15.0,15.0,0.0,4.0
+2024/2025,RES246,Stage professionnel,RES,02,PROF,0.0,0.0,0.0,75.0,5.0
+2024/2025,RES247,Economie Générale,RES,02,TRANS,30.0,10.0,0.0,5.0,3.0
+2024/2025,SFM111,Anatomie physiologie 1 – Embryologie - Biologie de la reproduction,SFM,01,FOND,55.0,17.0,4.0,14.0,6.0
+2024/2025,SFM112,Puériculture – Nutrition - Diététique,SFM,01,FOND,30.0,6.0,9.0,0.0,3.0
+2024/2025,SFM113,"Histoire profession Sages-femmes - Éthique et
+déontologie profession. santé-Soins infirmiers de
+base",SFM,01,PROF,55.0,17.0,4.0,14.0,6.0
+2024/2025,SFM114,"Législation professionnelle – Système national de santé /
+Politique de santé – Microbiologie",SFM,01,PROF,30.0,6.0,9.0,0.0,3.0
+2024/2025,SFM115,"Pharmacologie générale – Hématologie – Pathologie
+générale",SFM,01,PROF,55.0,17.0,4.0,14.0,6.0
+2024/2025,SFM116,"Psychologie-sociologie – Éducation pour la santé –
+Prévention des infections",SFM,01,PROF,30.0,6.0,9.0,0.0,3.0
+2024/2025,SFM117,"Méthodes de travail - Langue officielle 1 - Techniques de
+l’information et de la communication 1",SFM,01,TRANS,30.0,6.0,9.0,0.0,3.0
+2024/2025,SFM121,"Anatomie et physiologie 2 – Sémiologie - Pharmacologie
+spéciale",SFM,01,FOND,55.0,17.0,4.0,14.0,6.0
+2024/2025,SFM122,"Techniques de laboratoire – Biochimie –
+Parasitologie/Mycologie",SFM,01,FOND,30.0,6.0,9.0,0.0,3.0
+2024/2025,SFM123,"Grossesse /Suivi prénatal-Accouchement en
+présentation du sommet - Suivi post natal",SFM,01,PROF,40.0,9.0,11.0,0.0,4.0
+2024/2025,SFM124,"Communication développement-Éducation à la
+vie familiale -Soins de base à la Naissance/Néonatologie",SFM,01,PROF,30.0,6.0,9.0,0.0,3.0
+2024/2025,SFM125,"Soins santé primaire – Soins
+infirmiers obsté.-Néonat. de base – Hygiène et
+assainissem.-Secourisme",SFM,01,PROF,50.0,12.0,13.0,0.0,5.0
+2024/2025,SFM126,Stage clinique 1,SFM,01,PROF,90.0,90.0,6.0,0.0,0.0
+2024/2025,SFM127,Démarche de soins - Genre - Droits humains,SFM,01,TRANS,30.0,6.0,9.0,0.0,3.0
+2024/2025,SFM231,Autres variétés d’accouchement,SFM,02,FOND,20.0,5.0,0.0,5.0,2.0
+2024/2025,SFM232,"Dystocies – Pathologies obstétricales - Complications
+obstétricales",SFM,02,FOND,66.0,21.0,3.0,15.0,3.0
+2024/2025,SFM233,"Méthodes de la recherche –Statistique - Soins infirmiers
+avancés",SFM,02,PROF,40.0,9.0,0.0,11.0,4.0
+2024/2025,SFM234,Épidémiologie– Démographie–Santé communautaire,SFM,02,PROF,30.0,6.0,0.0,9.0,3.0
+2024/2025,SFM235,"Pédiatrie - Vaccination - Techniques avancées en
+obstétrique",SFM,02,PROF,50.0,12.0,0.0,13.0,5.0
+2024/2025,SFM236,Stage communautaire,SFM,02,PROF,0.0,0.0,90.0,0.0,6.0
+2024/2025,SFM237,"Anglais médical/Français médical 1- Techniques de
+l’information et de la communication 2",SFM,02,TRANS,24.0,12.0,0.0,9.0,3.0
+2024/2025,SFM241,Gynécologie – Soins obstétricaux,SFM,02,FOND,40.0,10.0,0.0,10.0,4.0
+2024/2025,SFM242,"Pédiatrie/néonatologie/pathologies nouveau-né –
+Pathologies gynécologiques",SFM,02,FOND,46.0,16.0,3.0,10.0,5.0
+2024/2025,SFM243,Analgésique en obstétrique - Communication,SFM,02,PROF,40.0,10.0,0.0,10.0,4.0
+2024/2025,SFM244,PTME – IST/SIDA,SFM,02,PROF,40.0,10.0,0.0,10.0,4.0
+2024/2025,SFM245,Pathologies obstétricales,SFM,02,PROF,35.0,13.0,4.0,8.0,4.0
+2024/2025,SFM246,Stage clinique 2,SFM,02,PROF,0.0,0.0,90.0,0.0,6.0
+2024/2025,SFM247,"Planification familiale, Initiation à la recherche et
+Education civique",SFM,02,TRANS,26.0,11.0,3.0,5.0,3.0
+2024/2025,SFM351,"Anthropologie - Santé génésique et droit sexuel -
+Toxicologie",SFM,03,FOND,40.0,9.0,0.0,11.0,4.0
+2024/2025,SFM352,Anesthésiologie - Réanimation - Infécondité/Infertilité,SFM,03,FOND,50.0,12.0,0.0,13.0,5.0
+2024/2025,SFM353,Association grossesse et pathologie PEG,SFM,03,PROF,50.0,5.0,0.0,5.0,4.0
+2024/2025,SFM354,Gynécologie et pathologies gynécologiques,SFM,03,PROF,10.0,2.0,0.0,3.0,1.0
+2024/2025,SFM355,Urgences obstétricales et néonatales,SFM,03,PROF,10.0,2.0,0.0,3.0,1.0
+2024/2025,SFM356,Mise en situation maternité - Stage communautaire,SFM,03,PROF,0.0,0.0,180.0,0.0,12.0
+2024/2025,SFM357,Éducation civique et éthique – Langue officielle,SFM,03,TRANS,30.0,7.0,0.0,8.0,3.0
+2024/2025,SFM361,"Gérontologie/Gériatrie + IEC 3 – Rédaction
+administrative – Psychiatrie/Psychopathologie",SFM,03,FOND,50.0,18.0,3.0,13.0,6.0
+2024/2025,SFM362,Imagerie médicale – Assurance qualité - Entreprenariat,SFM,03,FOND,30.0,6.0,0.0,9.0,3.0
+2024/2025,SFM363,Économie de la santé – Rédaction de mémoire,SFM,03,PROF,30.0,7.0,0.0,8.0,3.0
+2024/2025,SFM364,PCIME,SFM,03,PROF,30.0,6.0,0.0,9.0,3.0
+2024/2025,SFM365,Suivi du travail et manœuvre obstétricales,SFM,03,PROF,20.0,5.0,0.0,5.0,2.0
+2024/2025,SFM366,Stage (MSP maternité) – Stage (MSP Pédiatrie),SFM,03,PROF,0.0,0.0,150.0,0.0,10.0
+2024/2025,SFM367,Anglais médical/Français médical - NTIC,SFM,03,TRANS,30.0,7.0,0.0,8.0,3.0
+2024/2025,SIN111,Anatomie – Physiologie I – Biologie cellulaire – Histologie – Chimie générale,SIN,01,FOND,60.0,24.0,0.0,6.0,6.0
+2024/2025,SIN112,Microbiologie I : Bactériologie – Parasitologie – Biochimie,SIN,01,FOND,30.0,12.0,0.0,3.0,3.0
+2024/2025,SIN113,Sociologie – anthropologie et psychologie médicale,SIN,01,PROF,50.0,20.0,0.0,5.0,5.0
+2024/2025,SIN114,"Fondement de la science infirmière I : concepts et
+théories en sciences infirmières",SIN,01,PROF,44.0,10.0,0.0,6.0,4.0
+2024/2025,SIN115,Histoire de la profession infirmière (cycle de vie),SIN,01,PROF,36.0,5.0,0.0,4.0,3.0
+2024/2025,SIN116,Stage clinique I (médecine – pédiatrie),SIN,01,PROF,0.0,0.0,70.0,20.0,6.0
+2024/2025,SIN117,Français médical – Anglais médical - TIC,SIN,01,TRANS,30.0,6.0,0.0,9.0,3.0
+2024/2025,SIN121,Anatomie et physiologie II,SIN,01,FOND,50.0,20.0,0.0,5.0,5.0
+2024/2025,SIN122,Microbiologie II (Virologie – Mycologie – Immunologie),SIN,01,FOND,40.0,16.0,0.0,4.0,4.0
+2024/2025,SIN123,"Fondements science infirmièreII–Démarche 
+soins infirmiers–soins transmissions
+ciblées –1ers secours",SIN,01,PROF,50.0,20.0,0.0,5.0,5.0
+2024/2025,SIN124,"Soins infirmiers en médecine 1 – Éthique et déontologie
+professionnelles",SIN,01,PROF,40.0,13.0,0.0,7.0,4.0
+2024/2025,SIN125,"Santé publique : Épidémiologie – Démographie – Santé
+environnementale et Promotion de la santé",SIN,01,PROF,30.0,10.0,0.0,5.0,3.0
+2024/2025,SIN126,Stage de médecine et pédiatrique II,SIN,01,PROF,0.0,0.0,70.0,20.0,6.0
+2024/2025,SIN127,Français médical – Anglais médical – TIC II,SIN,01,TRANS,30.0,10.0,0.0,5.0,3.0
+2024/2025,SIN231,"Mathématiques appliquées – Biostatistique –
+Biophysiques générale et technologie",SIN,02,FOND,50.0,20.0,0.0,5.0,5.0
+2024/2025,SIN232,Pharmacologie générale,SIN,02,FOND,40.0,16.0,0.0,4.0,4.0
+2024/2025,SIN233,"Soins infirmiers en chirurgie & Transfusion sanguine –
+Soins infirmiers en pédiatrie & puériculture",SIN,02,PROF,40.0,10.0,0.0,10.0,4.0
+2024/2025,SIN234,"Santé reproduction mère – enfant – soins
+Obsté. – soins femmes avec
+pathologies obsté. et gynécolog.",SIN,02,PROF,40.0,16.0,0.0,4.0,4.0
+2024/2025,SIN235,"Pathologies médicales – Pathologies infectieuses
+zoonoses et pathologies pédiatriques et infantiles",SIN,02,PROF,40.0,10.0,0.0,10.0,4.0
+2024/2025,SIN236,Stage clinique III,SIN,02,PROF,90.0,0.0,70.0,20.0,6.0
+2024/2025,SIN237,Français médical – Anglais médical – TIC III,SIN,02,TRANS,30.0,10.0,0.0,5.0,3.0
+2024/2025,SIN241,"Communication pour changement de comportement
+(CCC) – Santé communautaire – Santé et
+développement",SIN,02,FOND,40.0,16.0,0.0,14.0,4.0
+2024/2025,SIN242,"Techniques de laboratoire d’analyses médicales –
+Techniques d’imagerie médicale",SIN,02,FOND,20.0,8.0,0.0,2.0,2.0
+2024/2025,SIN243,Pathologies obstétricales et gynécologiques,SIN,02,PROF,50.0,20.0,0.0,5.0,5.0
+2024/2025,SIN244,Urgences – Bloc opératoire – Anesthésiologie,SIN,02,PROF,45.0,12.0,3.0,60.0,4.0
+2024/2025,SIN245,"Pharmacologie clinique – Nutrition et pathologies
+associées – Médecine alternative",SIN,02,PROF,60.0,20.0,0.0,10.0,6.0
+2024/2025,SIN246,Stage clinique 2,SIN,02,PROF,90.0,0.0,70.0,20.0,6.0
+2024/2025,SIN247,Initiation à la Recherche,SIN,02,TRANS,30.0,10.0,0.0,5.0,3.0
+2024/2025,SIN351,"Pathologies médicales - Programmes prioritaires de
+santé au Cameroun – CCC III",SIN,03,FOND,40.0,16.0,0.0,4.0,4.0
+2024/2025,SIN352,"Économie de la santé – Gestion hospitalière – système
+d’informations sanitaires",SIN,03,FOND,50.0,20.0,0.0,5.0,5.0
+2024/2025,SIN353,"Santé mentale-Soins infirmiers psychiatrie–Soins
+infirm.gériatrie–pharmaco. Cliniq.2–surveil.thérap.",SIN,03,PROF,50.0,20.0,0.0,5.0,5.0
+2024/2025,SIN354,"Soins infirmiers en réanimation – Soins aux personnes
+atteintes de déficiences spéciales",SIN,03,PROF,30.0,10.0,0.0,5.0,3.0
+2024/2025,SIN355,Stage de santé communautaire II,SIN,03,PROF,0.0,0.0,70.0,20.0,6.0
+2024/2025,SIN356,Stage clinique V,SIN,03,PROF,0.0,0.0,70.0,20.0,6.0
+2024/2025,SIN357,Droit médical – Santé au travail – Médecine scolaire,SIN,03,TRANS,30.0,10.0,0.0,5.0,3.0
+2024/2025,SIN361,"Techniques de soins spécifiques 1 (neurologie,
+ophtalmologie, stomatologie, dermatologie – ORL)",SIN,03,FOND,30.0,0.0,40.0,5.0,5.0
+2024/2025,SIN362,"Techniques de soins spécifiques 2 – (Urologie –
+Pneumologie - gastro entérologie- Cardiologie)",SIN,03,FOND,20.0,0.0,35.0,5.0,4.0
+2024/2025,SIN363,Mise en situation professionnelle 1 (MSP 1),SIN,03,PROF,40.0,16.0,0.0,4.0,4.0
+2024/2025,SIN364,Mise en situation professionnelle 2 (MSP 2),SIN,03,PROF,30.0,10.0,0.0,5.0,3.0
+2024/2025,SIN365,Mise en situation professionnelle 3 (MSP 3),SIN,03,PROF,0.0,0.0,70.0,20.0,6.0
+2024/2025,SIN366,Rédaction du projet de recherche (travail de fin d’études),SIN,03,PROF,50.0,0.0,20.0,5.0,5.0
+2024/2025,SIN367,Éducation civique et éthique,SIN,03,TRANS,30.0,10.0,0.0,5.0,3.0
+2024/2025,TLB111,Biologie cellulaire et histologie – Anatomie physiologie 1 –Chimie générale,TLB,01,FOND,70.0,12.0,0.0,8.0,6.0
+2024/2025,TLB112,Microbiologie générale 1 – Biochimie générale,TLB,01,FOND,32.0,8.0,0.0,5.0,3.0
+2024/2025,TLB113,Sociologie et anthropologie médicale – Psychologie médicale – Éthique et déontologie médicale,TLB,01,PROF,44.0,10.0,0.0,6.0,4.0
+2024/2025,TLB114,Cycle de vie – Soins infirmiers – Secourisme,TLB,01,PROF,42.0,8.0,6.0,4.0,4.0
+2024/2025,TLB115,Physique – Mathématique – Biostatistique,TLB,01,PROF,40.0,14.0,0.0,6.0,4.0
+2024/2025,TLB116,Stage clinique 1,TLB,01,PROF,0.0,0.0,70.0,20.0,6.0
+2024/2025,TLB117,Langue officielle  -  Techniques de l’information et de la communication 1,TLB,01,TRANS,30.0,9.0,0.0,6.0,3.0
+2024/2025,TLB121,Anatomie et physiologie 2 – Chimie organique,TLB,01,FOND,60.0,22.0,0.0,8.0,6.0
+2024/2025,TLB122,Microbiologie générale  2 – Parasitologie générale,TLB,01,FOND,28.0,6.0,6.0,5.0,3.0
+2024/2025,TLB123,Techniques de laboratoire,TLB,01,PROF,30.0,2.0,10.0,3.0,3.0
+2024/2025,TLB124,IEC 1-  Hygiène générale et hospitalière -  Maladies infectieuses et parasitaires ,TLB,01,PROF,62.0,14.0,0.0,14.0,6.0
+2024/2025,TLB125,Pharmacologie générale – Nutrition - Épidémiologie,TLB,01,PROF,34.0,6.0,0.0,5.0,3.0
+2024/2025,TLB126,Stage  clinique 2,TLB,01,PROF,0.0,0.0,70.0,20.0,6.0
+2024/2025,TLB127,Économie générale – Démographie,TLB,01,TRANS,30.0,7.0,0.0,8.0,3.0
+2024/2025,TLB231,IEC 2 - Santé et développement -  Santé communautaire,TLB,02,FOND,65.0,20.0,0.0,20.0,7.0
+2024/2025,TLB232,Initiation à la recherche,TLB,02,FOND,20.0,4.0,0.0,6.0,2.0
+2024/2025,TLB233,Hématologie Clinique 1 -  Entomologie médicale -  Transfusion sanguine,TLB,02,PROF,40.0,10.0,15.0,10.0,5.0
+2024/2025,TLB234,Biochimie Clinique 1 – Laboratoire,TLB,02,PROF,30.0,6.0,20.0,4.0,4.0
+2024/2025,TLB235,Bactériologie Clinique 1 – Laboratoire,TLB,02,PROF,30.0,2.0,10.0,3.0,3.0
+2024/2025,TLB236,Stage de santé communautaire 1,TLB,02,PROF,0.0,0.0,70.0,20.0,6.0
+2024/2025,TLB237,Anglais médical/Français médical - Techniques de l’information et de la communication 2,TLB,02,TRANS,30.0,9.0,0.0,6.0,3.0
+2024/2025,TLB241,Parasitologie Clinique 1 –  Mycologie médicale – Immunologie/Sérologie,TLB,02,FOND,60.0,14.0,8.0,8.0,6.0
+2024/2025,TLB242,Économie de la santé – Programme prioritaire de santé au Cameroun,TLB,02,FOND,32.0,8.0,0.0,5.0,3.0
+2024/2025,TLB243,Bactériologie Clinique 2 - Biochimie Clinique 2 – Laboratoire,TLB,02,PROF,30.0,4.0,20.0,6.0,4.0
+2024/2025,TLB244,Hématologie Clinique 2 -Laboratoire,TLB,02,PROF,15.0,2.0,10.0,3.0,2.0
+2024/2025,TLB245,Stage clinique 3,TLB,02,PROF,0.0,0.0,70.0,20.0,6.0
+2024/2025,TLB246,Stage clinique 4,TLB,02,PROF,0.0,0.0,70.0,20.0,6.0
+2024/2025,TLB247,Droitmédical,TLB,02,TRANS,30.0,10.0,0.0,5.0,3.0
+2024/2025,TLB351,IEC3 - Système d’information sanitaire - Gestion sanitaire,TLB,03,FOND,60.0,12.0,0.0,18.0,6.0
+2024/2025,TLB352,Rédactiondemémoire,TLB,03,FOND,15.0,0.0,0.0,30.0,3.0
+2024/2025,TLB353,Parasitologie Clinique 2  - Hématologie Clinique 3 – Laboratoire,TLB,03,PROF,40.0,8.0,45.0,12.0,7.0
+2024/2025,TLB354,Bactériologie Clinique 3  - Laboratoire-Virologie,TLB,03,PROF,25.0,4.0,10.0,6.0,3.0
+2024/2025,TLB355,Chimie analytique – Laboratoire,TLB,03,PROF,15.0,4.0,5.0,6.0,2.0
+2024/2025,TLB356,Stage de santé communautaire 2,TLB,03,PROF,0.0,0.0,70.0,20.0,6.0
+2024/2025,TLB357,Initiation à la recherche  -  TIC - ,TLB,03,TRANS,30.0,9.0,0.0,6.0,3.0
+2024/2025,TLB361,Microbiologie de l’environnement – Microbiologie des aliments,TLB,03,FOND,50.0,16.0,0.0,9.0,5.0
+2024/2025,TLB362,Histopathologie – Cytologiehumaine,TLB,03,FOND,40.0,12.0,0.0,8.0,4.0
+2024/2025,TLB363,Biochimie Clinique  3  - Parasitologie Clinique 3 – Laboratoire,TLB,03,PROF,20.0,4.0,30.0,6.0,4.0
+2024/2025,TLB364,Biologiemoléculaire,TLB,03,PROF,20.0,6.0,0.0,4.0,2.0
+2024/2025,TLB365,Stage clinique 5,TLB,03,PROF,0.0,0.0,70.0,20.0,6.0
+2024/2025,TLB366,Stage clinique 6,TLB,03,PROF,0.0,0.0,70.0,20.0,6.0
+2024/2025,TLB367,Projet tutoré,TLB,03,TRANS,10.0,0.0,15.0,20.0,3.0
+2025/2026,ACC111 ,Mathematics and Computer Science I ,ACC,01,FUND,50.0,20.0,0.0,5.0,5.0
+2025/2026,ACC112 ,Quantitative techniques of management I ,ACC,01,FUND,40.0,15.0,0.0,5.0,4.0
+2025/2026,ACC113 ,General accounting I ,ACC,01,PROF,70.0,15.0,15.0,5.0,7.0
+2025/2026,ACC114 ,Costs and management accounting I ,ACC,01,PROF,40.0,10.0,5.0,5.0,4.0
+2025/2026,ACC115 ,Taxation I ,ACC,01,PROF,25.0,10.0,5.0,5.0,3.0
+2025/2026,ACC116 ,"Introduction to Financial Analysis and
+accounting to the computer I ",ACC,01,PROF,20.0,20.0,15.0,5.0,4.0
+2025/2026,ACC117 ,Bilingual training I and Environment ,ACC,01,CROSS,25.0,10.0,5.0,5.0,3.0
+2025/2026,ACC121 ,Mathematics and Computing II ,ACC,01,FUND,15.0,40.0,15.0,5.0,5.0
+2025/2026,ACC122 ,"Quantitative techniques of
+management II ",ACC,01,FUND,10.0,30.0,10.0,5.0,4.0
+2025/2026,ACC123 ,General Accounting II ,ACC,01,PROF,40.0,20.0,25.0,5.0,6.0
+2025/2026,ACC124 ,Costs accounting II ,ACC,01,PROF,35.0,10.0,10.0,5.0,4.0
+2025/2026,ACC125 ,Methodology and Taxation II ,ACC,01,PROF,30.0,10.0,15.0,5.0,4.0
+2025/2026,ACC126 ,"Introduction to Financial Analysis and
+accounting to the computer II ",ACC,01,PROF,20.0,15.0,20.0,5.0,4.0
+2025/2026,ACC127 ,Bilingual Training II and Environment ,ACC,01,TRANS,25.0,10.0,5.0,5.0,3.0
+2025/2026,BAT111,Mathématiques I,BAT,01,FOND,30.0,25.0,0.0,5.0,4.0
+2025/2026,BAT112,Physique et Chimie,BAT,01,FOND,35.0,23.0,12.0,5.0,5.0
+2025/2026,BAT113,Procédés généraux de construction,BAT,01,PROF,25.0,15.0,0.0,5.0,3.0
+2025/2026,BAT114,Dessin et technologie de bâtiment,BAT,01,PROF,35.0,10.0,0.0,0.0,3.0
+2025/2026,BAT115,Organisation des chantiers,BAT,01,PROF,35.0,20.0,0.0,5.0,4.0
+2025/2026,BAT116,Architecture et Résistance des matériaux,BAT,01,PROF,45.0,55.0,15.0,5.0,8.0
+2025/2026,BAT117,Formation bilingue,BAT,01,TRANS,25.0,15.0,0.0,5.0,3.0
+2025/2026,BAT121,Mathématiques II,BAT,01,FOND,30.0,25.0,0.0,5.0,4.0
+2025/2026,BAT122,Physique et Informatique,BAT,01,FOND,35.0,20.0,15.0,5.0,5.0
+2025/2026,BAT123,Bureau d’étude et projets,BAT,01,PROF,40.0,20.0,10.0,5.0,5.0
+2025/2026,BAT124,Topographie I,BAT,01,PROF,20.0,10.0,10.0,5.0,3.0
+2025/2026,BAT125,Béton armé I,BAT,01,PROF,30.0,25.0,0.0,5.0,4.0
+2025/2026,BAT126,Géotechnique et Résistances des matériaux II,BAT,01,PROF,55.0,20.0,10.0,5.0,6.0
+2025/2026,BAT127,"Création d’entreprise et Education civique et
+éthique",BAT,01,TRANS,30.0,10.0,0.0,5.0,3.0
+2025/2026,BAT231,Mathématiques III,BAT,02,FOND,30.0,30.0,0.0,0.0,4.0
+2025/2026,BAT232,Physique et Chimie,BAT,02,FOND,35.0,20.0,15.0,5.0,5.0
+2025/2026,BAT233,Equipements et Matériaux,BAT,02,PROF,55.0,20.0,0.0,0.0,5.0
+2025/2026,BAT234,Résistance III,BAT,02,PROF,20.0,10.0,10.0,5.0,3.0
+2025/2026,BAT235,Béton Armé II et Dessin assisté par ordinateur,BAT,02,PROF,40.0,15.0,45.0,5.0,7.0
+2025/2026,BAT236,Procédés et techniques de réalisation,BAT,02,PROF,30.0,15.0,0.0,0.0,3.0
+2025/2026,BAT237,Comptabilité et Droit du travail,BAT,02,TRANS,30.0,10.0,0.0,5.0,3.0
+2025/2026,BAT241,Mathématiques IV,BAT,02,FOND,30.0,30.0,0.0,0.0,4.0
+2025/2026,BAT242,Informatique II,BAT,02,FOND,20.0,10.0,40.0,5.0,5.0
+2025/2026,BAT243,Bureau d’etude II et Dessin assisté par ordinateur,BAT,02,PROF,30.0,10.0,30.0,5.0,5.0
+2025/2026,BAT244,Fondations et soutènements,BAT,02,PROF,20.0,10.0,15.0,0.0,3.0
+2025/2026,BAT245,Topographie II et Essais,BAT,02,PROF,25.0,10.0,20.0,5.0,4.0
+2025/2026,BAT246,Stage professionnel,BAT,02,PROF,0.0,0.0,60.0,30.0,6.0
+2025/2026,BAT247,Economie,BAT,02,TRANS,30.0,10.0,0.0,5.0,3.0
+2025/2026,BOW111,Engineering Mathematics I ,BOW,01,FUND,30.0,25.0,0.0,5.0,4.0
+2025/2026,BOW112,Enginer in the Society ,BOW,01,FUND,30.0,25.0,15.0,5.0,5.0
+2025/2026,BOW113,Methods and jigs and fixtures ,BOW,01,PROF,35.0,20.0,0.0,5.0,4.0
+2025/2026,BOW114,Practice of welding ,BOW,01,PROF,10.0,0.0,60.0,5.0,5.0
+2025/2026,BOW115,Technology and Materials ,BOW,01,PROF,40.0,30.0,0.0,5.0,5.0
+2025/2026,BOW116,Marking out I ,BOW,01,PROF,25.0,15.0,15.0,5.0,4.0
+2025/2026,BOW117,Bilingual training ,BOW,01,TRANS,25.0,17.0,0.0,3.0,3.0
+2025/2026,BOW121,"Engineering Mathematics II and Fluid
+Mechanics ",BOW,01,FUND,30.0,25.0,0.0,5.0,4.0
+2025/2026,BOW122,Workshop supervisor Management ,BOW,01,FUND,35.0,20.0,15.0,5.0,5.0
+2025/2026,BOW123,"Analysis and Design of metal
+structures ",BOW,01,PROF,35.0,20.0,0.0,5.0,4.0
+2025/2026,BOW124,Design of sheet metal structures ,BOW,01,PROF,15.0,10.0,30.0,5.0,4.0
+2025/2026,BOW125,Metallurgy I ,BOW,01,PROF,30.0,25.0,15.0,5.0,5.0
+2025/2026,BOW126,"Computer aided drawing
+(Autocard) ",BOW,01,PROF,20.0,15.0,35.0,5.0,5.0
+2025/2026,BOW127,"Computer for business I / Civic and
+Moral Education ",BOW,01,TRANS,27.0,15.0,0.0,3.0,3.0
+2025/2026,BOW231,EngineeringMathematics III ,BOW,02,FUND,30.0,25.0,0.0,5.0,4.0
+2025/2026,BOW232,"Computer for business and computer
+programming ",BOW,02,FUND,30.0,25.0,15.0,5.0,5.0
+2025/2026,BOW233,"numerical control and costs
+estimation ",BOW,02,PROF,30.0,30.0,10.0,5.0,5.0
+2025/2026,BOW234,Methods and jigs and fixtures II ,BOW,02,PROF,27.0,15.0,0.0,3.0,3.0
+2025/2026,BOW235,CAD and metallurgy II ,BOW,02,PROF,35.0,20.0,15.0,5.0,5.0
+2025/2026,BOW236,Metrology ,BOW,02,PROF,20.0,5.0,45.0,5.0,5.0
+2025/2026,BOW237,"Environmental Engineering and
+Enterpreneuriaship ",BOW,02,TRANS,27.0,15.0,0.0,3.0,3.0
+2025/2026,BOW241,Engineering Mathematics IV ,BOW,02,FUND,30.0,25.0,0.0,5.0,4.0
+2025/2026,BOW242,Physics and chemistry ,BOW,02,FUND,20.0,10.0,40.0,5.0,5.0
+2025/2026,BOW243,marking out II and sheet metal ,BOW,02,PROF,25.0,0.0,45.0,5.0,5.0
+2025/2026,BOW244,"CFAO and digital control numerical
+control and CAM ",BOW,02,PROF,25.0,10.0,20.0,5.0,4.0
+2025/2026,BOW245,Analysis and Design II ,BOW,02,PROF,22.0,20.0,0.0,3.0,3.0
+2025/2026,BOW246,Academic Internship ,BOW,02,PROF,0.0,0.0,60.0,30.0,6.0
+2025/2026,BOW247,"Industrial safety /Engineering
+Management Law and Economics ",BOW,02,TRANS,27.0,15.0,0.0,3.0,3.0
+2025/2026,BST111,Mathematics I ,BST,01,FUND,30.0,25.0,0.0,5.0,4.0
+2025/2026,BST112,Physics and Chemistry I ,BST,01,FUND,35.0,23.0,12.0,5.0,5.0
+2025/2026,BST113,General construction processes ,BST,01,PROF,25.0,15.0,0.0,5.0,3.0
+2025/2026,BST114,Design and building Technology ,BST,01,PROF,40.0,15.0,0.0,5.0,4.0
+2025/2026,BST115,sites organization ,BST,01,PROF,45.0,25.0,0.0,5.0,5.0
+2025/2026,BST116,"Architecture and resistance of
+materials I ",BST,01,PROF,35.0,40.0,10.0,5.0,6.0
+2025/2026,BST117,Bilingual Training ,BST,01,TRANS,25.0,15.0,0.0,5.0,3.0
+2025/2026,BST121,Mathematics II ,BST,01,FUND,30.0,25.0,0.0,5.0,4.0
+2025/2026,BST122,Computer Science I ,BST,01,FUND,35.0,20.0,15.0,5.0,5.0
+2025/2026,BST123,Design office and projects ,BST,01,PROF,40.0,20.0,10.0,5.0,5.0
+2025/2026,BST124,Topography I ,BST,01,PROF,20.0,10.0,10.0,5.0,3.0
+2025/2026,BST125,Reinforced concrete I ,BST,01,PROF,30.0,25.0,0.0,5.0,4.0
+2025/2026,BST126,"Geotechnics and resistance of
+materials II ",BST,01,PROF,55.0,20.0,10.0,5.0,6.0
+2025/2026,BST127,"Creation of Company and Civic and
+Moral Education ",BST,01,TRANS,30.0,10.0,0.0,5.0,3.0
+2025/2026,BST231,Mathematics III ,BST,02,FUND,30.0,30.0,0.0,0.0,4.0
+2025/2026,BST232,Physics and Chemistry II ,BST,02,FUND,35.0,20.0,15.0,5.0,5.0
+2025/2026,BST233,Equipment and Materials ,BST,02,PROF,55.0,20.0,0.0,0.0,5.0
+2025/2026,BST234,Resistance of Materials III ,BST,02,PROF,20.0,10.0,10.0,5.0,3.0
+2025/2026,BST235,"Reinforced concrete II and Computer
+Assisted Drawing I",BST,02,PROF,35.0,15.0,35.0,5.0,6.0
+2025/2026,BST236,Processes and techniques of realization ,BST,02,PROF,30.0,15.0,0.0,0.0,3.0
+2025/2026,BST237,"Methodology of drafting internship
+report / LAW ",BST,02,TRANS,30.0,10.0,0.0,5.0,3.0
+2025/2026,BST241,Statistics ,BST,02,FUND,30.0,30.0,0.0,0.0,4.0
+2025/2026,BST242,Computer Science II ,BST,02,FUND,20.0,10.0,40.0,5.0,5.0
+2025/2026,BST243,"Design office II and Computer
+Assisted Drawing II ",BST,02,PROF,30.0,10.0,30.0,5.0,5.0
+2025/2026,BST244,Foundations and retaining structures ,BST,02,PROF,20.0,10.0,15.0,0.0,3.0
+2025/2026,BST245,Topography II and tests ,BST,02,PROF,25.0,10.0,20.0,5.0,4.0
+2025/2026,BST246,Professional internship ,BST,02,PROF,0.0,0.0,60.0,30.0,6.0
+2025/2026,BST247,Accounting and Economics ,BST,02,TRANS,30.0,10.0,0.0,5.0,3.0
+2025/2026,CFP110,Module CFP110,CFP,01,PROF,232.0,116.0,58.0,29.0,22.0
+2025/2026,CFP111,Module CFP111,CFP,01,PROF,53.0,27.0,13.0,7.0,7.0
+2025/2026,CFP114,Module CFP114,CFP,01,PROF,16.0,8.0,4.0,2.0,2.0
+2025/2026,CFP115,Module CFP115,CFP,01,PROF,8.0,4.0,2.0,1.0,1.0
+2025/2026,CFP120,Module CFP120,CFP,01,PROF,192.0,96.0,48.0,24.0,13.0
+2025/2026,CFP121,Module CFP121,CFP,01,PROF,72.0,36.0,18.0,9.0,5.0
+2025/2026,CFP123,Module CFP123,CFP,01,PROF,69.0,35.0,17.0,9.0,3.0
+2025/2026,CFP132,Module CFP132,CFP,01,PROF,96.0,48.0,24.0,12.0,12.0
+2025/2026,CFPACB0,Aide Chimiste Biologiste-Module 0,CFPACB,01,FOND,128.25,63.0,22.5,11.25,15.0
+2025/2026,CFPACB1,Aide Chimiste Biologiste-Module 1,CFPACB,01,PROF,128.25,63.0,22.5,11.25,14.0
+2025/2026,CFPACB2,Aide Chimiste Biologiste-Module 2,CFPACB,01,PROF,257.3550109863281,126.41999816894531,45.150001525878906,22.575000762939453,52.5
+2025/2026,CFPACB3,Aide Chimiste Biologiste-Module 3,CFPACB,02,PROF,116.27999877929688,57.119998931884766,20.399999618530273,10.199999809265137,36.0
+2025/2026,CFPACB4,Aide Chimiste Biologiste-Module 4,CFPACB,02,PROF,256.5,126.0,45.0,22.5,30.0
+2025/2026,CFPACM0,Assistant en Cabinet Médical-Module 0,CFPACM,01,PROF,270.75,133.0,47.5,23.75,30.0
+2025/2026,CFPACM1,Assistant en Cabinet Médical-Module 1,CFPACM,01,PROF,222.3000030517578,109.19999694824219,39.0,19.5,23.0
+2025/2026,CFPACM2,Assistant en Cabinet Médical-Module 2,CFPACM,01,TRANS,34.20000076293945,16.799999237060547,6.0,3.0,4.0
+2025/2026,CFPFCL0,Froid et Climatisation-Module 0,CFPFCL,01,TRANS,488.489990234375,239.9600067138672,85.69999694824219,42.849998474121094,1.0
+2025/2026,CFPFCL1,Froid et Climatisation-Module 1,CFPFCL,01,PROF,171.0,84.0,30.0,15.0,0.0
+2025/2026,CFPISA0,Installation Sanitaire-Module 0,CFPISA,01,PROF,1724.25,847.0,302.5,151.25,1.0
+2025/2026,CFPISA1,Installation Sanitaire-Module 1,CFPISA,01,PROF,273.6000061035156,134.39999389648438,48.0,24.0,0.0
+2025/2026,CGE111 ,Mathématiques et informatique I ,CGE,01,FOND,50.0,20.0,0.0,5.0,5.0
+2025/2026,CGE112 ,Techniques quantitatives de gestion I ,CGE,01,FOND,40.0,15.0,0.0,5.0,4.0
+2025/2026,CGE113 ,Comptabilité générale I ,CGE,01,PROF,70.0,15.0,15.0,5.0,7.0
+2025/2026,CGE114 ,Comptabilité analytique I ,CGE,01,PROF,40.0,10.0,5.0,5.0,4.0
+2025/2026,CGE115 ,Fiscalité I ,CGE,01,PROF,25.0,10.0,5.0,5.0,3.0
+2025/2026,CGE116 ,"Introduction à l’analyse Financière et
+Comptabilité à l’ordinateur CAO I ",CGE,01,PROF,20.0,20.0,15.0,5.0,4.0
+2025/2026,CGE117 ,Formation bilingue ,CGE,01,TRANS,25.0,10.0,5.0,5.0,3.0
+2025/2026,CGE121 ,Mathématiques et informatique II ,CGE,01,FOND,15.0,40.0,15.0,5.0,5.0
+2025/2026,CGE122 ,Techniques quantitatives de gestion II ,CGE,01,FOND,10.0,30.0,10.0,5.0,4.0
+2025/2026,CGE123 ,Comptabilité générale II ,CGE,01,PROF,40.0,20.0,25.0,5.0,6.0
+2025/2026,CGE124 ,Comptabilité analytique II ,CGE,01,PROF,35.0,10.0,10.0,5.0,4.0
+2025/2026,CGE125 ,Méthodologie et Fiscalité II ,CGE,01,PROF,30.0,10.0,15.0,5.0,4.0
+2025/2026,CGE126 ,"Introduction à l’analyse Financière et
+Comptabilité à l’ordinateur CAOII ",CGE,01,PROF,20.0,15.0,20.0,5.0,4.0
+2025/2026,CGE127 ,Economie et Gestion des entreprises ,CGE,01,TRANS,25.0,10.0,5.0,5.0,3.0
+2025/2026,CGE231 ,Techniques quantitatives de gestion III ,CGE,02,FOND,50.0,15.0,5.0,5.0,5.0
+2025/2026,CGE232 ,Mathématiques et Informatique III ,CGE,02,FOND,25.0,15.0,15.0,5.0,4.0
+2025/2026,CGE233 ,Comptabilité des sociétés I ,CGE,02,PROF,20.0,15.0,20.0,5.0,4.0
+2025/2026,CGE234 ,Analyse financière I ,CGE,02,PROF,20.0,10.0,10.0,5.0,3.0
+2025/2026,CGE235 ,Gestion prévisionnelle I et II ,CGE,02,PROF,50.0,15.0,20.0,5.0,6.0
+2025/2026,CGE236 ,Fiscalité et CAO III ,CGE,02,PROF,15.0,40.0,15.0,5.0,5.0
+2025/2026,CGE237 ,"Education citoyenne et déontologie
+professionnelle ",CGE,02,TRANS,25.0,10.0,5.0,5.0,3.0
+2025/2026,CGE241 ,Techniques quantitatives IV ,CGE,02,FOND,15.0,40.0,15.0,5.0,5.0
+2025/2026,CGE242 ,Mathématiques et Informatique IV ,CGE,02,FOND,15.0,20.0,20.0,5.0,4.0
+2025/2026,CGE243 ,Comptabilité des sociétés II ,CGE,02,PROF,15.0,20.0,20.0,5.0,4.0
+2025/2026,CGE244 ,Analyse financière II ,CGE,02,PROF,15.0,15.0,10.0,5.0,3.0
+2025/2026,CGE245 ,Fiscalité et CAO IV ,CGE,02,PROF,10.0,45.0,15.0,5.0,5.0
+2025/2026,CGE246 ,Stage professionnel ,CGE,02,PROF,0.0,0.0,60.0,30.0,6.0
+2025/2026,CGE247 ,Entrepreneuriat et marketing ,CGE,02,TRANS,25.0,15.0,0.0,5.0,3.0
+2025/2026,DOT111 ,Environnement économique et juridique I ,DOT,01,FOND,40.0,15.0,0.0,5.0,4.0
+2025/2026,DOT112 ,Enseignement scientifique de base I ,DOT,01,FOND,40.0,20.0,10.0,5.0,5.0
+2025/2026,DOT113 ,Introduction au droit douanier ,DOT,01,PROF,20.0,10.0,0.0,0.0,2.0
+2025/2026,DOT114 ,Régimes douaniers ,DOT,01,PROF,40.0,15.0,0.0,5.0,4.0
+2025/2026,DOT115 ,Transit I ,DOT,01,PROF,15.0,10.0,30.0,5.0,4.0
+2025/2026,DOT116 ,Eléments de taxation I ,DOT,01,PROF,70.0,30.0,15.0,5.0,8.0
+2025/2026,DOT117 ,Formation bilingue ,DOT,01,TRANS,30.0,5.0,5.0,5.0,3.0
+2025/2026,DOT121 ,Environnement économique et juridique II ,DOT,01,FOND,40.0,15.0,0.0,5.0,4.0
+2025/2026,DOT122 ,Enseignement scientifique de base II ,DOT,01,FOND,40.0,20.0,10.0,5.0,5.0
+2025/2026,DOT123 ,Procédure de dédouanement ,DOT,01,PROF,40.0,15.0,0.0,5.0,4.0
+2025/2026,DOT124 ,Impôt douanier ,DOT,01,PROF,20.0,5.0,0.0,5.0,2.0
+2025/2026,DOT125 ,Transport ,DOT,01,PROF,70.0,25.0,20.0,5.0,8.0
+2025/2026,DOT126 ,Transit II ,DOT,01,PROF,20.0,10.0,25.0,5.0,4.0
+2025/2026,DOT127 ,Informatique ,DOT,01,TRANS,20.0,10.0,10.0,5.0,3.0
+2025/2026,DOT231 ,Environnement économique et juridique III ,DOT,02,FOND,40.0,15.0,0.0,5.0,4.0
+2025/2026,DOT232 ,Enseignements scientifiques de base III ,DOT,02,FOND,40.0,20.0,10.0,5.0,5.0
+2025/2026,DOT233 ,Gestion des litiges douaniers ,DOT,02,PROF,30.0,20.0,5.0,5.0,4.0
+2025/2026,DOT234 ,Eléments de taxation II ,DOT,02,PROF,60.0,40.0,15.0,5.0,8.0
+2025/2026,DOT235 ,Transit III ,DOT,02,PROF,20.0,30.0,5.0,5.0,4.0
+2025/2026,DOT236 ,Informatique appliquée ,DOT,02,PROF,10.0,5.0,10.0,5.0,2.0
+2025/2026,DOT237 ,"Education citoyenne et déontologie
+professionnelle ",DOT,02,TRANS,30.0,5.0,5.0,5.0,3.0
+2025/2026,DOT241 ,Environnement économique et juridique IV ,DOT,02,FOND,40.0,15.0,0.0,5.0,4.0
+2025/2026,DOT242 ,Enseignements scientifiques de base IV ,DOT,02,FOND,40.0,20.0,10.0,5.0,5.0
+2025/2026,DOT243 ,Pratique douanière ,DOT,02,PROF,10.0,20.0,25.0,5.0,4.0
+2025/2026,DOT244 ,Eléments de taxation III ,DOT,02,PROF,10.0,20.0,25.0,5.0,4.0
+2025/2026,DOT245 ,Pratique de transit ,DOT,02,PROF,10.0,20.0,25.0,5.0,4.0
+2025/2026,DOT246 ,Stage professionnel ,DOT,02,PROF,0.0,0.0,30.0,60.0,6.0
+2025/2026,DOT247 ,Entrepreneuriat et marketing ,DOT,02,TRANS,30.0,5.0,5.0,5.0,3.0
+2025/2026,ELN111,Mathematics I ,ELN,01,FUND,40.0,15.0,0.0,5.0,4.0
+2025/2026,ELN112,Physics and Chemistry ,ELN,01,FUND,40.0,20.0,10.0,5.0,5.0
+2025/2026,ELN113,"Basics of Electricity and Electrical
+circuit ",ELN,01,PROF,40.0,30.0,0.0,5.0,5.0
+2025/2026,ELN114,Electrical Machines ,ELN,01,PROF,45.0,25.0,0.0,5.0,5.0
+2025/2026,ELN115,Electronics and Automation ,ELN,01,PROF,40.0,20.0,10.0,5.0,5.0
+2025/2026,ELN116,Construction Design ,ELN,01,PROF,25.0,10.0,5.0,5.0,3.0
+2025/2026,ELN117,Bilingual Training ,ELN,01,TRANS,25.0,15.0,0.0,5.0,3.0
+2025/2026,ELN121,Mathematics II ,ELN,01,FUND,40.0,15.0,0.0,5.0,4.0
+2025/2026,ELN122,Physics and Computer Science ,ELN,01,FUND,35.0,20.0,15.0,5.0,5.0
+2025/2026,ELN123,"Measurement Technology and
+Electronics",ELN,01,PROF,45.0,25.0,0.0,5.0,5.0
+2025/2026,ELN124,Maintenance ,ELN,01,PROF,45.0,25.0,0.0,5.0,5.0
+2025/2026,ELN125,"Power Electronics and actuator
+control",ELN,01,PROF,30.0,0.0,25.0,5.0,4.0
+2025/2026,ELN126,CAD in Electrical Engineering ,ELN,01,PROF,20.0,0.0,35.0,5.0,4.0
+2025/2026,ELN127,"Business creation, Civil and ethical
+Education ",ELN,01,TRANS,25.0,15.0,0.0,5.0,3.0
+2025/2026,ELN231,Mathematics III ,ELN,02,FUND,40.0,15.0,0.0,5.0,4.0
+2025/2026,ELN232,Physics and Chemistry ,ELN,02,FUND,40.0,20.0,10.0,5.0,5.0
+2025/2026,ELN233,Practical Work Electronic II ,ELN,02,PROF,25.0,15.0,15.0,5.0,4.0
+2025/2026,ELN234,"Introduction in the Robotics
+electronics ",ELN,02,PROF,40.0,0.0,30.0,5.0,5.0
+2025/2026,ELN235,Maintenance of complexe Systems ,ELN,02,PROF,25.0,0.0,30.0,5.0,4.0
+2025/2026,ELN236,"Data Processing and
+Telecommunications Network ",ELN,02,PROF,30.0,15.0,25.0,5.0,5.0
+2025/2026,ELN237,Accounting and labour law ,ELN,02,TRANS,25.0,15.0,0.0,5.0,3.0
+2025/2026,ELN241,Mathematics IV ,ELN,02,FUND,40.0,15.0,0.0,5.0,4.0
+2025/2026,ELN242,Computer Science II ,ELN,02,FUND,40.0,20.0,10.0,5.0,5.0
+2025/2026,ELN243,"Planing and Intervention in
+Maintenance of complexe Systems ",ELN,02,PROF,40.0,15.0,0.0,5.0,4.0
+2025/2026,ELN244,Home Electronics and Automation ,ELN,02,PROF,25.0,0.0,30.0,5.0,4.0
+2025/2026,ELN245,Digital Electronics and power Control ,ELN,02,PROF,25.0,0.0,30.0,5.0,4.0
+2025/2026,ELN246,Professional internship ,ELN,02,PROF,0.0,0.0,0.0,90.0,6.0
+2025/2026,ELN247,Economy and business organization ,ELN,02,TRANS,25.0,15.0,0.0,5.0,3.0
+2025/2026,ELT 111,Mathematics I ,HNDET,01,FUND,40.0,15.0,0.0,5.0,4.0
+2025/2026,ELT 112,Physics and Chemistry I ,HNDET,01,FUND,40.0,20.0,10.0,5.0,5.0
+2025/2026,ELT 113,Basics of Electricity and Electrical circuit ,HNDET,01,PROF,40.0,30.0,0.0,5.0,5.0
+2025/2026,ELT 114,Electrical Machines ,HNDET,01,PROF,45.0,25.0,0.0,5.0,5.0
+2025/2026,ELT 115,Electronics and automation ,HNDET,01,PROF,40.0,20.0,10.0,5.0,5.0
+2025/2026,ELT 116,Construction Design ,HNDET,01,PROF,25.0,10.0,5.0,5.0,3.0
+2025/2026,ELT 117,Bilingual Training ,HNDET,01,TRANS,25.0,15.0,0.0,5.0,3.0
+2025/2026,ELT 121,Mathematics II ,HNDET,01,FUND,40.0,15.0,0.0,5.0,4.0
+2025/2026,ELT 122,Physics and Computer Science ,HNDET,01,FUND,35.0,20.0,15.0,5.0,5.0
+2025/2026,ELT 123,Electrical Machines and Measurment Technics ,HNDET,01,PROF,45.0,25.0,0.0,5.0,5.0
+2025/2026,ELT 124,Electronics and signal processing ,HNDET,01,PROF,45.0,25.0,0.0,5.0,5.0
+2025/2026,ELT 125,Power Electronics ,HNDET,01,PROF,30.0,0.0,25.0,5.0,4.0
+2025/2026,ELT 126,CAD in Electrical Engineering ,HNDET,01,PROF,10.0,10.0,40.0,0.0,4.0
+2025/2026,ELT 127,"Business creation, Civic and moral Education ",HNDET,01,TRANS,25.0,15.0,0.0,5.0,3.0
+2025/2026,ELT 231,Mathematics III ,HNDET,02,FUND,40.0,15.0,0.0,5.0,4.0
+2025/2026,ELT 232,Physics and Chemistry III ,HNDET,02,FUND,40.0,20.0,10.0,5.0,5.0
+2025/2026,ELT 233,Energy production and Schema ,HNDET,02,PROF,30.0,15.0,25.0,5.0,5.0
+2025/2026,ELT 234,Servoing and Data communication ,HNDET,02,PROF,30.0,0.0,25.0,5.0,4.0
+2025/2026,ELT 235,Advabced Electronics ,HNDET,02,PROF,30.0,0.0,25.0,5.0,4.0
+2025/2026,ELT 236,Electrical Machines practicals works ,HNDET,02,PROF,30.0,0.0,40.0,5.0,5.0
+2025/2026,ELT 237,Accounting and labour law ,HNDET,02,TRANS,25.0,15.0,0.0,5.0,3.0
+2025/2026,ELT 241,Mathematics IV ,HNDET,02,FUND,40.0,15.0,0.0,5.0,4.0
+2025/2026,ELT 242,Computer science II ,HNDET,02,FUND,40.0,20.0,10.0,5.0,5.0
+2025/2026,ELT 243,Maintenance and industrial Networks ,HNDET,02,PROF,30.0,20.0,20.0,5.0,5.0
+2025/2026,ELT 244,Electrical Installation and Equipments ,HNDET,02,PROF,30.0,15.0,10.0,5.0,4.0
+2025/2026,ELT 245,Practical Work Electrical Machine II ,HNDET,02,PROF,10.0,0.0,30.0,5.0,3.0
+2025/2026,ELT 246,Internship ,HNDET,02,PROF,0.0,0.0,0.0,90.0,6.0
+2025/2026,ELT 247,Economy and business organization ,HNDET,02,TRANS,25.0,15.0,0.0,5.0,3.0
+2025/2026,ELT111,Mathématiques I,BTSET,01,FOND,30.0,25.0,0.0,5.0,4.0
+2025/2026,ELT112,Physique et Chimie,BTSET,01,FOND,35.0,23.0,12.0,5.0,5.0
+2025/2026,ELT113,Electricité générale et Circuits électriques,BTSET,01,PROF,40.0,30.0,0.0,5.0,5.0
+2025/2026,ELT114,Machine électrique I,BTSET,01,PROF,45.0,25.0,0.0,5.0,5.0
+2025/2026,ELT115,Electronique et automatisme,BTSET,01,PROF,40.0,20.0,15.0,0.0,5.0
+2025/2026,ELT116,Technologie de construction,BTSET,01,PROF,25.0,10.0,5.0,5.0,3.0
+2025/2026,ELT117,Expression écrite et Formation bilingue,BTSET,01,TRANS,25.0,15.0,5.0,45.0,3.0
+2025/2026,ELT121,Mathématiques II,BTSET,01,FOND,30.0,25.0,0.0,5.0,4.0
+2025/2026,ELT122,Physique et Informatique,BTSET,01,FOND,35.0,20.0,15.0,5.0,5.0
+2025/2026,ELT123,Machines électriques et techniques de mesures,BTSET,01,PROF,45.0,25.0,0.0,5.0,5.0
+2025/2026,ELT124,Electronique et traitement du signal,BTSET,01,PROF,45.0,25.0,0.0,5.0,5.0
+2025/2026,ELT125,Electronique de puissance,BTSET,01,PROF,30.0,30.0,0.0,0.0,4.0
+2025/2026,ELT126,CAO en Génie électrique,BTSET,01,PROF,10.0,10.0,40.0,0.0,4.0
+2025/2026,ELT127,"Création d’entreprise et Education civique et
+éthique",BTSET,01,TRANS,30.0,10.0,0.0,5.0,3.0
+2025/2026,ELT231,Mathématiques III,BTSET,02,FOND,30.0,30.0,0.0,0.0,4.0
+2025/2026,ELT232,Physique et Chimie,BTSET,02,FOND,35.0,20.0,15.0,5.0,5.0
+2025/2026,ELT233,Productions et schémas,BTSET,02,PROF,45.0,25.0,0.0,5.0,5.0
+2025/2026,ELT234,Asservissements et communication des données,BTSET,02,PROF,45.0,30.0,0.0,0.0,5.0
+2025/2026,ELT235,Electronique III,BTSET,02,PROF,20.0,10.0,30.0,0.0,4.0
+2025/2026,ELT236,TP Machines électrique I,BTSET,02,PROF,0.0,0.0,55.0,5.0,4.0
+2025/2026,ELT237,Comptabilité et Droit du travail,BTSET,02,TRANS,30.0,10.0,0.0,5.0,3.0
+2025/2026,ELT241,Mathématiques IV,BTSET,02,FOND,30.0,30.0,0.0,0.0,4.0
+2025/2026,ELT242,Informatique II,BTSET,02,FOND,20.0,10.0,40.0,5.0,5.0
+2025/2026,ELT243,Maintenance et réseaux industriels,BTSET,02,PROF,30.0,10.0,15.0,5.0,4.0
+2025/2026,ELT244,Installations électriques et appareillages,BTSET,02,PROF,30.0,15.0,10.0,5.0,4.0
+2025/2026,ELT245,TP Machines électriques II,BTSET,02,PROF,0.0,0.0,60.0,0.0,4.0
+2025/2026,ELT246,Stage professionnel,BTSET,02,PROF,0.0,0.0,60.0,30.0,6.0
+2025/2026,ELT247,Economie,BTSET,02,TRANS,30.0,10.0,0.0,5.0,3.0
+2025/2026,FCL111,Mathématiques I,FCL,01,FOND,30.0,25.0,0.0,5.0,4.0
+2025/2026,FCL112,TIC I,FCL,01,FOND,30.0,20.0,20.0,5.0,5.0
+2025/2026,FCL113,Electronique et Electrotechnique,FCL,01,PROF,35.0,20.0,15.0,5.0,5.0
+2025/2026,FCL114,Thermodynamique,FCL,01,PROF,20.0,15.0,5.0,5.0,3.0
+2025/2026,FCL115,Transferts thermique,FCL,01,PROF,40.0,15.0,0.0,5.0,4.0
+2025/2026,FCL116,Mécanique des fluides et technique de mesure,FCL,01,PROF,55.0,30.0,0.0,5.0,6.0
+2025/2026,FCL117,Formation bilingue,FCL,01,TRANS,27.0,15.0,0.0,3.0,3.0
+2025/2026,FCL121,Mathématiques II,FCL,01,FOND,30.0,25.0,0.0,5.0,4.0
+2025/2026,FCL122,Physique et Chimie I,FCL,01,FOND,30.0,20.0,20.0,5.0,5.0
+2025/2026,FCL123,Technologies des installations frogorifiques,FCL,01,PROF,35.0,20.0,0.0,5.0,4.0
+2025/2026,FCL124,Régulation et Gestion d’énergie,FCL,01,PROF,15.0,15.0,25.0,5.0,4.0
+2025/2026,FCL125,Automatique et Ventilation,FCL,01,PROF,35.0,20.0,0.0,5.0,4.0
+2025/2026,FCL126,"Hydraulique et Schémas électriques appliqués au
+froid",FCL,01,PROF,50.0,25.0,10.0,5.0,6.0
+2025/2026,FCL127,Economie et Gestion des entreprises,FCL,01,TRANS,25.0,15.0,0.0,5.0,3.0
+2025/2026,FCL231,Mathématiques III,FCL,02,FOND,30.0,25.0,0.0,5.0,4.0
+2025/2026,FCL232,Physique et Chimie II,FCL,02,FOND,30.0,25.0,15.0,5.0,5.0
+2025/2026,FCL233,CAO et DAO,FCL,02,PROF,5.0,5.0,60.0,5.0,5.0
+2025/2026,FCL234,Travaux pratiques,FCL,02,PROF,5.0,5.0,60.0,5.0,5.0
+2025/2026,FCL235,Entrepôt frigorifique et installation,FCL,02,PROF,40.0,15.0,0.0,5.0,4.0
+2025/2026,FCL236,Production du froid,FCL,02,PROF,25.0,15.0,15.0,5.0,4.0
+2025/2026,FCL237,Méthodologie de rédaction du RDS,FCL,02,TRANS,27.0,15.0,0.0,3.0,3.0
+2025/2026,FCL241,Mathématiques IV,FCL,02,FOND,30.0,25.0,0.0,5.0,4.0
+2025/2026,FCL242,Informatique II,FCL,02,FOND,30.0,25.0,15.0,5.0,5.0
+2025/2026,FCL243,Matériaux,FCL,02,PROF,22.0,15.0,5.0,3.0,3.0
+2025/2026,FCL244,"Electricité et Technologie des installations
+frigorifiques",FCL,02,PROF,30.0,25.0,30.0,5.0,6.0
+2025/2026,FCL245,Conservation frigorifique,FCL,02,PROF,20.0,10.0,10.0,5.0,3.0
+2025/2026,FCL246,Stage académique,FCL,02,PROF,0.0,0.0,60.0,30.0,6.0
+2025/2026,FCL247,Comptabilité et Economie,FCL,02,TRANS,27.0,15.0,0.0,3.0,3.0
+2025/2026,GTO111,Mathématiques I,GTO,01,FOND,30.0,25.0,0.0,5.0,4.0
+2025/2026,GTO112,Physique et Chimie I,GTO,01,FOND,30.0,25.0,15.0,5.0,5.0
+2025/2026,GTO113,Topométrie I,GTO,01,PROF,45.0,25.0,15.0,5.0,6.0
+2025/2026,GTO114,Dessin Technique et Cartographie I,GTO,01,PROF,30.0,25.0,0.0,5.0,4.0
+2025/2026,GTO115,Système Géographique I,GTO,01,PROF,35.0,20.0,0.0,5.0,4.0
+2025/2026,GTO116,Géologie de l’ingénieur /Topologie,GTO,01,PROF,30.0,25.0,0.0,5.0,4.0
+2025/2026,GTO117,Expression écrite et Formation bilingue,GTO,01,TRANS,25.0,17.0,0.0,3.0,3.0
+2025/2026,GTO121,Mathématiques II,GTO,01,FOND,30.0,25.0,0.0,5.0,4.0
+2025/2026,GTO122,Physique et Informatique,GTO,01,FOND,30.0,20.0,20.0,5.0,5.0
+2025/2026,GTO123,Système Géographique II,GTO,01,PROF,35.0,20.0,0.0,5.0,4.0
+2025/2026,GTO124,Dessin Technique et Cartographie II,GTO,01,PROF,15.0,25.0,15.0,5.0,4.0
+2025/2026,GTO125,Régime Foncier et Domanial,GTO,01,PROF,27.0,15.0,0.0,3.0,3.0
+2025/2026,GTO126,Calculs Topometriques II et Technologie Topometrique II,GTO,01,PROF,55.0,25.0,20.0,5.0,7.0
+2025/2026,GTO127,"Création d’entreprise, Education civique et éthique",GTO,01,TRANS,26.0,15.0,0.0,4.0,3.0
+2025/2026,GTO231,Mathématiques III,GTO,02,FOND,30.0,25.0,0.0,5.0,4.0
+2025/2026,GTO232,Physique et Chimie II,GTO,02,FOND,35.0,20.0,15.0,5.0,5.0
+2025/2026,GTO233,Système Géographique III et Télédétection,GTO,02,PROF,35.0,15.0,5.0,5.0,4.0
+2025/2026,GTO234,Calculs Topometriques III,GTO,02,PROF,30.0,15.0,10.0,5.0,4.0
+2025/2026,GTO235,Technologie Topometrique III,GTO,02,PROF,15.0,15.0,25.0,5.0,4.0
+2025/2026,GTO236,Urbanisme et Dessin Assisté Par Ordinateur,GTO,02,PROF,35.0,20.0,30.0,5.0,6.0
+2025/2026,GTO237,Méthodologie de rédaction du RDS,GTO,02,TRANS,27.0,15.0,0.0,3.0,3.0
+2025/2026,GTO241,Mathématiques IV,GTO,02,FOND,30.0,25.0,0.0,5.0,4.0
+2025/2026,GTO242,Informatique II,GTO,02,FOND,20.0,10.0,40.0,5.0,5.0
+2025/2026,GTO243,Topometrie IV,GTO,02,PROF,25.0,35.0,10.0,5.0,5.0
+2025/2026,GTO244,Géodésie et Télédétection,GTO,02,PROF,35.0,15.0,20.0,5.0,5.0
+2025/2026,GTO245,Voiries et Réseaux Divers,GTO,02,PROF,28.0,0.0,15.0,2.0,3.0
+2025/2026,GTO246,Stage Professionnel,GTO,02,PROF,0.0,0.0,75.0,0.0,5.0
+2025/2026,GTO247,Comptabilité et Economie,GTO,02,TRANS,27.0,15.0,0.0,3.0,3.0
+2025/2026,IGL111,Outils Mathématiques I,IGL,01,FOND,45.0,25.0,0.0,5.0,5.0
+2025/2026,IGL112,Environnement de base I,IGL,01,FOND,20.0,10.0,25.0,5.0,4.0
+2025/2026,IGL113,Architecture,IGL,01,PROF,30.0,10.0,0.0,5.0,3.0
+2025/2026,IGL114,Initiation à l’algorithmique,IGL,01,PROF,40.0,30.0,0.0,5.0,5.0
+2025/2026,IGL115,Initiation au Génie logiciel,IGL,01,PROF,70.0,30.0,0.0,5.0,7.0
+2025/2026,IGL116,Traitement des données multimédia,IGL,01,PROF,20.0,5.0,20.0,0.0,3.0
+2025/2026,IGL117,Anglais et Comptabilité générale,IGL,01,TRANS,30.0,10.0,0.0,5.0,3.0
+2025/2026,IGL121,Outils mathématiques II,IGL,01,FOND,35.0,20.0,0.0,5.0,4.0
+2025/2026,IGL122,Environnement de base II,IGL,01,FOND,35.0,20.0,15.0,5.0,5.0
+2025/2026,IGL123,Programmation I,IGL,01,PROF,20.0,10.0,25.0,5.0,4.0
+2025/2026,IGL124,Base de données et MERISE I,IGL,01,PROF,40.0,15.0,15.0,5.0,5.0
+2025/2026,IGL125,Programmation II,IGL,01,PROF,20.0,15.0,35.0,5.0,5.0
+2025/2026,IGL126,Maintenance et Négociation informatique,IGL,01,PROF,25.0,15.0,15.0,5.0,4.0
+2025/2026,IGL127,EOE et Techniques d’expression,IGL,01,TRANS,30.0,10.0,0.0,5.0,3.0
+2025/2026,IGL231,Outils mathématiques III,IGL,02,FOND,45.0,25.0,0.0,5.0,5.0
+2025/2026,IGL232,Outils mathématiques IV,IGL,02,FOND,40.0,20.0,0.0,0.0,4.0
+2025/2026,IGL233,MOO UML,IGL,02,PROF,40.0,10.0,5.0,5.0,4.0
+2025/2026,IGL234,Structure de données et langage SQL,IGL,02,PROF,40.0,25.0,5.0,5.0,5.0
+2025/2026,IGL235,Programmation III,IGL,02,PROF,15.0,15.0,40.0,5.0,5.0
+2025/2026,IGL236,Système et Réseaux,IGL,02,PROF,40.0,10.0,5.0,5.0,4.0
+2025/2026,IGL237,Création d’entreprise et Education civique et,IGL,02,TRANS,30.0,10.0,0.0,5.0,3.0
+2025/2026,IGL241,Terminaux mobiles,IGL,02,FOND,25.0,10.0,35.0,5.0,5.0
+2025/2026,IGL242,Gestion des projets,IGL,02,FOND,30.0,10.0,15.0,5.0,4.0
+2025/2026,IGL243,Réseaux et Administration Système,IGL,02,PROF,30.0,10.0,15.0,5.0,4.0
+2025/2026,IGL244,POO et Bases de données Avancées,IGL,02,PROF,25.0,5.0,25.0,5.0,4.0
+2025/2026,IGL245,Structure de données et IHM,IGL,02,PROF,30.0,10.0,15.0,5.0,4.0
+2025/2026,IGL246,Stage professionnel,IGL,02,PROF,0.0,0.0,60.0,30.0,6.0
+2025/2026,IGL247,Economie Générale,IGL,02,TRANS,30.0,10.0,0.0,5.0,3.0
+2025/2026,IIA111,Outils scientifique de base II,IIA,01,FOND,35.0,20.0,0.0,5.0,4.0
+2025/2026,IIA112,Algorithmique et Physique,IIA,01,FOND,40.0,15.0,15.0,5.0,5.0
+2025/2026,IIA113,Electricité II,IIA,01,PROF,30.0,20.0,20.0,5.0,5.0
+2025/2026,IIA114,Electronique II,IIA,01,PROF,30.0,20.0,20.0,5.0,5.0
+2025/2026,IIA115,Réseaux et Téléinformatiques,IIA,01,PROF,25.0,15.0,15.0,5.0,4.0
+2025/2026,IIA116,Domotique I,IIA,01,PROF,25.0,15.0,15.0,5.0,4.0
+2025/2026,IIA117,Anglais et Comptabilité générale,IIA,01,TRANS,30.0,10.0,0.0,5.0,3.0
+2025/2026,IIA121,Outils scientifiques de base I,IIA,01,FOND,35.0,20.0,0.0,5.0,4.0
+2025/2026,IIA122,Physique et Informatique de base,IIA,01,FOND,40.0,15.0,15.0,5.0,5.0
+2025/2026,IIA123,Electricité I,IIA,01,PROF,30.0,20.0,20.0,5.0,5.0
+2025/2026,IIA124,Electronique I,IIA,01,PROF,30.0,20.0,20.0,5.0,5.0
+2025/2026,IIA125,Télécommunications,IIA,01,PROF,25.0,15.0,0.0,5.0,3.0
+2025/2026,IIA126,Mesures et instrumentations,IIA,01,PROF,30.0,20.0,20.0,5.0,5.0
+2025/2026,IIA127,EOE et Techniques d’expression,IIA,01,TRANS,30.0,10.0,0.0,5.0,3.0
+2025/2026,IIA231,Outils scientifiques de base III,IIA,02,FOND,35.0,20.0,0.0,5.0,4.0
+2025/2026,IIA232,Physique et Informatique III,IIA,02,FOND,40.0,15.0,15.0,5.0,5.0
+2025/2026,IIA233,Electricité III,IIA,02,PROF,40.0,20.0,10.0,5.0,5.0
+2025/2026,IIA234,Electronique III,IIA,02,PROF,40.0,20.0,10.0,5.0,5.0
+2025/2026,IIA235,Automatisme et Electronique de puissance,IIA,02,PROF,40.0,20.0,10.0,5.0,5.0
+2025/2026,IIA236,Commande de processus industriels I,IIA,02,PROF,25.0,15.0,0.0,5.0,3.0
+2025/2026,IIA237,éthique,IIA,02,TRANS,30.0,10.0,0.0,5.0,3.0
+2025/2026,IIA241,Outils scientifiques de base IV,IIA,02,FOND,35.0,20.0,0.0,5.0,4.0
+2025/2026,IIA242,Physique et Informatique IV,IIA,02,FOND,40.0,15.0,15.0,5.0,5.0
+2025/2026,IIA243,Installation et Domotique,IIA,02,PROF,20.0,10.0,25.0,5.0,4.0
+2025/2026,IIA244,Périphériques et Microprocesseurs,IIA,02,PROF,20.0,15.0,5.0,5.0,3.0
+2025/2026,IIA245,Automatisme et Commandes/Régulations,IIA,02,PROF,45.0,20.0,10.0,0.0,5.0
+2025/2026,IIA246,Stage professionnel,IIA,02,PROF,0.0,0.0,60.0,30.0,6.0
+2025/2026,IIA247,Economie Générale,IIA,02,TRANS,30.0,10.0,0.0,5.0,3.0
+2025/2026,ISGRCGC54,"Mecaniqe Des Sols Et Geologie
+De L’Ingenieur",BCI,03,PROF,0.0,0.0,0.0,0.0,6.0
+2025/2026,ISGRCMP51,Analyse Numerique Et Edps,CMP,03,PROF,0.0,0.0,0.0,0.0,4.0
+2025/2026,ISGRCMP52,Communicatio N Et Developpemen T Durable,CMP,03,PROF,0.0,0.0,0.0,0.0,4.0
+2025/2026,ISGRCMP53,Sciences Des Materiaux,CMP,03,PROF,0.0,0.0,0.0,0.0,6.0
+2025/2026,ISGRCMP54,Construction Et Fabrication Mecanique,CMP,03,PROF,0.0,0.0,0.0,0.0,6.0
+2025/2026,ISGRCMP55,Systeme Mecanique I Et Gestion De La Maintenance,CMP,03,PROF,0.0,0.0,0.0,0.0,6.0
+2025/2026,ISGRCMP56,Metiers De La Construction Metallique,CMP,03,PROF,0.0,0.0,0.0,0.0,4.0
+2025/2026,ISGRCMP61,"Mecanique Des Fluides Et Resistance Des
+Materiaux",CMP,03,PROF,0.0,0.0,0.0,0.0,6.0
+2025/2026,ISGRCMP62,Electrotechnique Et Automatisme Industrielle,CMP,03,PROF,0.0,0.0,0.0,0.0,4.0
+2025/2026,ISGRCMP63,Systeme Mecanique Ii Et Projet,CMP,03,PROF,0.0,0.0,0.0,0.0,6.0
+2025/2026,ISGRCMP64,Conception Assistee Par Ordinateur,CMP,03,PROF,0.0,0.0,0.0,0.0,4.0
+2025/2026,ISGRCMP65,Industrialisation,CMP,03,PROF,0.0,0.0,0.0,0.0,4.0
+2025/2026,ISGRCMP66,Production Des Elements De Construction Mecanique Et Metallique,CMP,03,PROF,0.0,0.0,0.0,0.0,6.0
+2025/2026,ISGRGC51,Analyse Numerique Et Edps,BCI,03,PROF,0.0,0.0,0.0,0.0,4.0
+2025/2026,ISGRGC52,Communication Et Developpement Durable,BCI,03,PROF,0.0,0.0,0.0,0.0,4.0
+2025/2026,ISGRGC53,Mecanique Des Milieux Continus Et Rdm,BCI,03,PROF,0.0,0.0,0.0,0.0,6.0
+2025/2026,ISGRGC55,Bases Du Genie Civil,BCI,03,PROF,0.0,0.0,0.0,0.0,6.0
+2025/2026,ISGRGC56,Materiaux De Construction Et Ingenierie Des Betons,BCI,03,PROF,0.0,0.0,0.0,0.0,4.0
+2025/2026,ISGRGC61,"Calcul Des Structures Et
+Beton Arme",BCI,03,PROF,0.0,0.0,0.0,0.0,6.0
+2025/2026,ISGRGC62,Architecture Et Urbanisme,BCI,03,PROF,0.0,0.0,0.0,0.0,6.0
+2025/2026,ISGRGC63,Mecanique Des Fluides Et Hydraulique,BCI,03,PROF,0.0,0.0,0.0,0.0,6.0
+2025/2026,ISGRGC64,Geophysique Et Hydrologie Appliquees,BCI,03,PROF,0.0,0.0,0.0,0.0,6.0
+2025/2026,ISGRGC65,Topographie- Projet Tutore Et Stage,BCI,03,PROF,0.0,0.0,0.0,0.0,6.0
+2025/2026,ISGRGL51,Mathematiques Pour Ingenieur,IGL,03,PROF,0.0,0.0,0.0,0.0,4.0
+2025/2026,ISGRGL52,Communication Et Developpement Durable,IGL,03,PROF,0.0,0.0,0.0,0.0,4.0
+2025/2026,ISGRGL53,Reseaux Et Logique,IGL,03,PROF,0.0,0.0,0.0,0.0,9.0
+2025/2026,ISGRGL54,Systemes D’Information,IGL,03,PROF,0.0,0.0,0.0,0.0,7.0
+2025/2026,ISGRGL55,Programmation Web I,IGL,03,PROF,0.0,0.0,0.0,0.0,6.0
+2025/2026,ISGRQSRI51,Analyse Numerique Et Edps,QSRI,03,PROF,0.0,0.0,0.0,0.0,4.0
+2025/2026,ISGRQSRI52,Communication Et Developpement Durable,QSRI,03,PROF,0.0,0.0,0.0,0.0,4.0
+2025/2026,ISGRQSRI53,Sciences Des Materiaux,QSRI,03,PROF,0.0,0.0,0.0,0.0,6.0
+2025/2026,ISGRQSRI54,"Teledetection, Procedes Et Theorie Des Maquettes",QSRI,03,PROF,0.0,0.0,0.0,0.0,6.0
+2025/2026,ISGRQSRI55,Introduction Aux Sciences Des Procedes,QSRI,03,PROF,0.0,0.0,0.0,0.0,6.0
+2025/2026,ISGRQSRI56,Metiers De La Construction Metallique,QSRI,03,PROF,0.0,0.0,0.0,0.0,4.0
+2025/2026,IWD111,Outils de base d’infographie,IWD,01,FOND,40.0,30.0,0.0,5.0,5.0
+2025/2026,IWD112,Algorithmique et Système d’information,IWD,01,FOND,25.0,30.0,0.0,5.0,4.0
+2025/2026,IWD113,Multimédia,IWD,01,PROF,15.0,20.0,35.0,5.0,5.0
+2025/2026,IWD114,Design I,IWD,01,PROF,20.0,10.0,25.0,5.0,4.0
+2025/2026,IWD115,Images et animations,IWD,01,PROF,20.0,20.0,30.0,5.0,5.0
+2025/2026,IWD116,Photographie et programmation web,IWD,01,PROF,20.0,10.0,25.0,5.0,4.0
+2025/2026,IWD117,Anglais et Comptabilité générale,IWD,01,TRANS,30.0,10.0,0.0,5.0,3.0
+2025/2026,IWD121,Informatique,IWD,01,FOND,35.0,20.0,0.0,5.0,4.0
+2025/2026,IWD122,Programmation et photographie II,IWD,01,FOND,20.0,20.0,30.0,5.0,5.0
+2025/2026,IWD123,Dessin I,IWD,01,PROF,20.0,10.0,25.0,5.0,4.0
+2025/2026,IWD124,Animations,IWD,01,PROF,15.0,20.0,35.0,5.0,5.0
+2025/2026,IWD125,Intégration web et effets spéciaux,IWD,01,PROF,20.0,20.0,30.0,5.0,5.0
+2025/2026,IWD126,Montage,IWD,01,PROF,20.0,15.0,20.0,5.0,4.0
+2025/2026,IWD127,EOE et Techniques d’expression,IWD,01,TRANS,30.0,10.0,0.0,5.0,3.0
+2025/2026,IWD231,Science physique et Streaming,IWD,02,FOND,25.0,15.0,15.0,5.0,4.0
+2025/2026,IWD232,Programmation et Projet,IWD,02,FOND,25.0,15.0,30.0,5.0,5.0
+2025/2026,IWD233,TGA et Animation,IWD,02,PROF,15.0,20.0,35.0,5.0,5.0
+2025/2026,IWD234,Programmation II,IWD,02,PROF,25.0,10.0,35.0,5.0,5.0
+2025/2026,IWD235,Design,IWD,02,PROF,20.0,15.0,20.0,5.0,4.0
+2025/2026,IWD236,PAO,IWD,02,PROF,20.0,15.0,20.0,5.0,4.0
+2025/2026,IWD237,Création d’entreprise et Education civique et,IWD,02,TRANS,30.0,10.0,0.0,5.0,3.0
+2025/2026,IWD241,Entreprenariat,IWD,02,FOND,25.0,10.0,35.0,5.0,5.0
+2025/2026,IWD242,Informatique II,IWD,02,FOND,20.0,10.0,25.0,5.0,4.0
+2025/2026,IWD243,Dessin II et Animation II,IWD,02,PROF,25.0,20.0,25.0,5.0,5.0
+2025/2026,IWD244,Montage et Design,IWD,02,PROF,20.0,15.0,20.0,5.0,4.0
+2025/2026,IWD245,Programmation et administration d’un site web,IWD,02,PROF,10.0,5.0,25.0,5.0,3.0
+2025/2026,IWD246,Stage professionnel,IWD,02,PROF,0.0,0.0,60.0,30.0,6.0
+2025/2026,IWD247,Economie générale,IWD,02,TRANS,30.0,10.0,0.0,5.0,3.0
+2025/2026,LSF4010, Préparation Psychoprophylactique À L’Accouchement,SFM,04,PROF,0.0,0.0,0.0,0.0,1.0
+2025/2026,LSF4020, Fondements Pédagogiques,SFM,04,FOND,0.0,0.0,0.0,0.0,1.0
+2025/2026,LSF4031," Obstétrique, Maïeutique, Démarche Clinique",SFM,04,PROF,0.0,0.0,0.0,0.0,1.0
+2025/2026,LSF4032, Diagnostic Anténatal Et Médecine Fœtale,SFM,04,PROF,0.0,0.0,0.0,0.0,1.0
+2025/2026,LSF4041, Compétences En Communication,SFM,04,TRANS,0.0,0.0,0.0,0.0,1.0
+2025/2026,LSF4042, Environnement Juridique,SFM,04,TRANS,0.0,0.0,0.0,0.0,1.0
+2025/2026,LSF4050," Santé Génésique Des Femmes, Pharmacologie",SFM,04,PROF,0.0,0.0,0.0,0.0,
+2025/2026,LSF4070," Soins De La Maternité, Sante De La Reproduction Et Pédiatrie",SFM,04,PROF,0.0,0.0,0.0,0.0,
+2025/2026,LSF4080, Stage Professionnelle En Sage - Femme,SFM,04,PROF,0.0,0.0,0.0,0.0,0.0
+2025/2026,LSF4090," Suivi Prénatal, Et Postnatal",SFM,04,PROF,0.0,0.0,0.0,0.0,
+2025/2026,LSF4100, Séminaires En Sage- Femme Professionnels,SFM,04,PROF,0.0,0.0,0.0,0.0,0.0
+2025/2026,LSF4110, Projet De Recherche,SFM,04,PROF,0.0,0.0,0.0,0.0,
+2025/2026,LSF4111, Sciences Humaines Et Sociales,SFM,04,PROF,0.0,0.0,0.0,0.0,1.0
+2025/2026,LSF4112, Droit Et Législation,SFM,04,TRANS,0.0,0.0,0.0,0.0,
+2025/2026,LSF4113, Gestion Hospitalière,SFM,04,PROF,0.0,0.0,0.0,0.0,
+2025/2026,LSI4010, Fondamentaux Des Soins Infirmiers,SIN,04,FOND,0.0,0.0,0.0,0.0,
+2025/2026,LSI4020, Gestion De La Santé ,SIN,04,PROF,0.0,0.0,0.0,0.0,
+2025/2026,LSI4031, Soins Infirmiers Médicaux,SIN,04,PROF,0.0,0.0,0.0,0.0,1.0
+2025/2026,LSI4032, Soins Infirmiers Chirurgicaux,SIN,04,PROF,0.0,0.0,0.0,0.0,1.0
+2025/2026,LSI4040, Fondements Pédagogiques,SIN,04,FOND,0.0,0.0,0.0,0.0,1.0
+2025/2026,LSI4050, Soins Intensifs Et Urgences Médicales ,SIN,04,PROF,0.0,0.0,0.0,0.0,
+2025/2026,LSI4061, Compétences En Communication,SIN,04,TRANS,0.0,0.0,0.0,0.0,1.0
+2025/2026,LSI4062, Environnement Juridique,SIN,04,TRANS,0.0,0.0,0.0,0.0,1.0
+2025/2026,LSI4070," Soins Maternels, Santé Reproductive Et Pédiatrie ",SIN,04,PROF,0.0,0.0,0.0,0.0,
+2025/2026,LSI4080, Pratique Professionnelle Infirmière ,SIN,04,PROF,0.0,0.0,0.0,0.0,0.0
+2025/2026,LSI4090, Soins Infirmiers Communautaires Et Psychiatriques,SIN,04,PROF,0.0,0.0,0.0,0.0,
+2025/2026,LSI4100, Séminaires En Soins Infirmiers Professionnels,SIN,04,PROF,0.0,0.0,0.0,0.0,0.0
+2025/2026,LSI4110, Projet De Recherche,SIN,04,PROF,0.0,0.0,0.0,0.0,1.0
+2025/2026,MEC111,Engineering Mathematics I ,MEC,01,FUND,40.0,30.0,0.0,5.0,5.0
+2025/2026,MEC112,Enginer in the Society ,MEC,01,FUND,40.0,15.0,0.0,5.0,4.0
+2025/2026,MEC113,Mechanical manufacture ,MEC,01,PROF,40.0,20.0,12.0,3.0,5.0
+2025/2026,MEC114,Materials and Applied Mechanics ,MEC,01,PROF,50.0,20.0,0.0,5.0,5.0
+2025/2026,MEC115,Maintenance and automation ,MEC,01,PROF,40.0,10.0,20.0,5.0,5.0
+2025/2026,MEC116,Analysis and design drawing ,MEC,01,PROF,25.0,15.0,0.0,5.0,3.0
+2025/2026,MEC117,Bilingual training ,MEC,01,TRANS,25.0,15.0,0.0,5.0,3.0
+2025/2026,MEC121,"Engineering Mathematics II and Fluids
+Mechanics ",MEC,01,FUND,30.0,25.0,0.0,5.0,4.0
+2025/2026,MEC122,Workshop Supervisor management ,MEC,01,FUND,30.0,20.0,20.0,5.0,5.0
+2025/2026,MEC123,Mechanical Analysis I ,MEC,01,PROF,45.0,25.0,0.0,5.0,5.0
+2025/2026,MEC124,Computer Assisted Drawing (CAD) ,MEC,01,PROF,25.0,10.0,20.0,5.0,4.0
+2025/2026,MEC125,Work Manufacturing Practice ,MEC,01,PROF,10.0,0.0,45.0,5.0,4.0
+2025/2026,MEC126,"Computer aided Design
+(SOLIDWORK) ",MEC,01,PROF,25.0,10.0,35.0,5.0,5.0
+2025/2026,MEC127,"Computer for business I/ Civic and
+Moral Education ",MEC,01,TRANS,30.0,15.0,0.0,0.0,3.0
+2025/2026,MEC231,"Engineering Mathematics III, Legal
+and Economic Environment ",MEC,02,FUND,40.0,30.0,0.0,5.0,5.0
+2025/2026,MEC232,"Computer for Business I and
+Computer programming ",MEC,02,FUND,20.0,25.0,10.0,5.0,4.0
+2025/2026,MEC233,Mechanical Analysis II ,MEC,02,PROF,45.0,25.0,0.0,5.0,5.0
+2025/2026,MEC234,Materials ,MEC,02,PROF,30.0,20.0,5.0,5.0,4.0
+2025/2026,MEC235,Computer Aided Manufacturing ,MEC,02,PROF,25.0,10.0,50.0,5.0,6.0
+2025/2026,MEC236,Applied Mechanics ,MEC,02,PROF,30.0,12.0,0.0,3.0,3.0
+2025/2026,MEC237,"Environmental Engineering and
+Enterpreneuriatship ",MEC,02,TRANS,25.0,15.0,0.0,5.0,3.0
+2025/2026,MEC241,Engineering Mathematics IV ,MEC,02,FUND,30.0,25.0,0.0,5.0,4.0
+2025/2026,MEC242,Physics and chemistry ,MEC,02,FUND,25.0,20.0,25.0,5.0,5.0
+2025/2026,MEC243,"Applied Mechanics and Strength of
+material ",MEC,02,PROF,40.0,30.0,0.0,5.0,5.0
+2025/2026,MEC244,Drawing and automation ,MEC,02,PROF,30.0,15.0,10.0,5.0,4.0
+2025/2026,MEC245,Computer Aided Manufacturing ,MEC,02,PROF,30.0,12.0,0.0,3.0,3.0
+2025/2026,MEC246,Academic Internship ,MEC,02,PROF,0.0,0.0,60.0,30.0,6.0
+2025/2026,MEC247,"Industrial Safety/ Engineering
+Management Law and Economics ",MEC,02,TRANS,25.0,15.0,0.0,5.0,3.0
+2025/2026,MKA111,Mathématiques I,MKA,01,FOND,30.0,25.0,0.0,5.0,4.0
+2025/2026,MKA112,TIC I,MKA,01,FOND,35.0,25.0,10.0,5.0,5.0
+2025/2026,MKA113,Bases en Electronique,MKA,01,PROF,20.0,20.0,15.0,5.0,4.0
+2025/2026,MKA114,Notions de Bases en Mécanique et Physique,MKA,01,PROF,55.0,25.0,5.0,5.0,6.0
+2025/2026,MKA115,"Développement du Véhicule Automobile et
+Organes de Châssis / Carrosserie",MKA,01,PROF,40.0,20.0,10.0,5.0,5.0
+2025/2026,MKA116,"Structure et Fonctionnement du Groupe Moto
+Propulseur (GMP)",MKA,01,PROF,20.0,10.0,10.0,5.0,3.0
+2025/2026,MKA117,Formation bilingue,MKA,01,TRANS,22.0,20.0,0.0,3.0,3.0
+2025/2026,MKA121,Mathématiques II,MKA,01,FOND,30.0,25.0,0.0,5.0,4.0
+2025/2026,MKA122,Physique et Chimie I,MKA,01,FOND,35.0,20.0,15.0,5.0,5.0
+2025/2026,MKA123,Informatique et Electronique Numérique,MKA,01,PROF,20.0,20.0,17.0,3.0,4.0
+2025/2026,MKA124,"Construction et Notion de Base sur les Systèmes
+Embarqués",MKA,01,PROF,35.0,20.0,30.0,5.0,6.0
+2025/2026,MKA125,Notion de Base en CAO/DAO/CFAO,MKA,01,PROF,10.0,20.0,25.0,5.0,4.0
+2025/2026,MKA126,Résistance des Matériaux,MKA,01,PROF,23.0,18.0,15.0,4.0,4.0
+2025/2026,MKA127,Economie et Gestion des entreprises,MKA,01,TRANS,27.0,15.0,0.0,3.0,3.0
+2025/2026,MKA231,Mathématiques III,MKA,02,FOND,30.0,25.0,0.0,5.0,4.0
+2025/2026,MKA232,Physique et Chimie II,MKA,02,FOND,35.0,25.0,10.0,5.0,5.0
+2025/2026,MKA233,Matériaux et Production,MKA,02,PROF,25.0,20.0,10.0,5.0,4.0
+2025/2026,MKA234,Electrotechnique Appliquées et Métrologie,MKA,02,PROF,40.0,30.0,15.0,5.0,6.0
+2025/2026,MKA235,Bases de la transmission Automobile,MKA,02,PROF,10.0,10.0,35.0,5.0,4.0
+2025/2026,MKA236,Thermodynamique et Mécanique des Fluides,MKA,02,PROF,28.0,20.0,10.0,2.0,4.0
+2025/2026,MKA237,Méthodologie de rédaction du RDS,MKA,02,TRANS,27.0,15.0,0.0,3.0,3.0
+2025/2026,MKA241,Mathématiques IV,MKA,02,FOND,30.0,25.0,0.0,5.0,4.0
+2025/2026,MKA242,Informatique II,MKA,02,FOND,20.0,10.0,40.0,5.0,5.0
+2025/2026,MKA243,"Signaux, Système et Electronique Automobile",MKA,02,PROF,30.0,20.0,35.0,5.0,6.0
+2025/2026,MKA244,"Technique de Microprocesseur, Algorithmique et
+Structure de Données",MKA,02,PROF,15.0,10.0,20.0,0.0,3.0
+2025/2026,MKA245,Service dans le cycle de l’Automobile,MKA,02,PROF,5.0,10.0,30.0,0.0,3.0
+2025/2026,MKA246,Stage académique,MKA,02,PROF,0.0,0.0,60.0,30.0,6.0
+2025/2026,MKA247,Comptabilité et Economie,MKA,02,TRANS,27.0,15.0,0.0,3.0,3.0
+2025/2026,MLS111,"Cell Biology and histology - Anatomy
+Physiology 1 -General Chemistry ",MLS,01,FUND,70.0,12.0,0.0,8.0,6.0
+2025/2026,MLS112,"General Microbiology 1 - General
+biochemistry ",MLS,01,FUND,32.0,8.0,0.0,5.0,3.0
+2025/2026,MLS113,"Sociology and anthropology, Medical -
+Medical Psychology - Ethics and Medical
+Ethics",MLS,01,PROF,44.0,10.0,0.0,6.0,4.0
+2025/2026,MLS114,Life-cycle - Nursing - First Aid ,MLS,01,PROF,42.0,8.0,6.0,4.0,4.0
+2025/2026,MLS115,Physics- Mathematics - Biostatistics ,MLS,01,PROF,40.0,14.0,0.0,6.0,4.0
+2025/2026,MLS116,Clinical Internship 1(immersion) ,MLS,01,PROF,0.0,0.0,70.0,20.0,6.0
+2025/2026,MLS117,Functional English/ Functional French ,MLS,01,TRANS,30.0,9.0,0.0,6.0,3.0
+2025/2026,MLS121,"Anatomy and Physiology 2 - Organic
+Chemistry ",MLS,01,FUND,60.0,22.0,0.0,8.0,6.0
+2025/2026,MLS122,"General Microbiology 2 - General
+Parasitology ",MLS,01,FUND,28.0,6.0,6.0,5.0,3.0
+2025/2026,MLS123,Techniques in the laboratory ,MLS,01,PROF,30.0,2.0,10.0,3.0,3.0
+2025/2026,MLS124,"IEC 1- General hygiene and hospitable -
+Infectious and parasitic diseases ",MLS,01,PROF,62.0,14.0,0.0,14.0,6.0
+2025/2026,MLS125,"General pharmacology - Nutrition -
+Epidemiology ",MLS,01,PROF,34.0,6.0,0.0,5.0,3.0
+2025/2026,MLS126,Clinical Internship 2(immersion) ,MLS,01,PROF,0.0,0.0,70.0,20.0,6.0
+2025/2026,MLS127,General Economy - Demography ,MLS,01,TRANS,30.0,7.0,0.0,8.0,3.0
+2025/2026,MLS231,"IEC2 -Health and Devpmt&Comnity Health/Biosecurity/Quality
+management /Envir.Mnagt System",MLS,02,FUND,65.0,20.0,0.0,20.0,7.0
+2025/2026,MLS232,Initiation to research ,MLS,02,FUND,20.0,4.0,0.0,6.0,2.0
+2025/2026,MLS233,"Clinical haematology 1 - Medical
+Entomology - Blood Transfusion/ Quality
+Assurance",MLS,02,PROF,40.0,10.0,15.0,10.0,5.0
+2025/2026,MLS234,Clinical Biochemistry 1 - Laboratory ,MLS,02,PROF,30.0,6.0,20.0,4.0,4.0
+2025/2026,MLS235,Clinical Bacteriology 1 - Laboratory ,MLS,02,PROF,30.0,2.0,10.0,3.0,3.0
+2025/2026,MLS236,"Internship of community health
+1/Hematology ",MLS,02,PROF,0.0,0.0,70.0,20.0,6.0
+2025/2026,MLS237,Information and Communication Techniques ,MLS,02,TRANS,30.0,9.0,0.0,6.0,3.0
+2025/2026,MLS241,"Clinical Parasitology 1 - Medical Mycology -
+Immunology/serology ",MLS,02,FUND,60.0,14.0,8.0,8.0,6.0
+2025/2026,MLS242,"The economics of health - a priority program
+of health in Cameroon ",MLS,02,FUND,32.0,8.0,0.0,5.0,3.0
+2025/2026,MLS243,"Clinical Bacteriology 2 - Clinical Biochemistry
+2 - Laboratory ",MLS,02,PROF,30.0,4.0,20.0,6.0,4.0
+2025/2026,MLS244,Clinical haematology 2 -The Laboratory ,MLS,02,PROF,15.0,2.0,10.0,3.0,2.0
+2025/2026,MLS245,"Clinical Internship
+3(parasitology/Immunology) ",MLS,02,PROF,0.0,0.0,70.0,20.0,6.0
+2025/2026,MLS246,"Clinical Internship 4(serology/
+Anapath/Histology ",MLS,02,PROF,0.0,0.0,70.0,20.0,6.0
+2025/2026,MLS247,"French and English for Medical profession and
+Law ",MLS,02,TRANS,30.0,10.0,0.0,5.0,3.0
+2025/2026,MLS351,"IEC3 - Health Information System - Health
+Management ",MLS,03,FUND,60.0,12.0,0.0,18.0,6.0
+2025/2026,MLS352,Rédactiondemémoire ,MLS,03,FUND,15.0,0.0,0.0,30.0,3.0
+2025/2026,MLS353,"Clinical Parasitology 2 - Clinical
+Haematology 3 - Laboratory ",MLS,03,PROF,40.0,8.0,45.0,12.0,7.0
+2025/2026,MLS354,"Clinical Bacteriology 3 – Laboratory -
+Virology ",MLS,03,PROF,25.0,4.0,10.0,6.0,3.0
+2025/2026,MLS355,Analytical Chemistry - Laboratory ,MLS,03,PROF,15.0,4.0,5.0,6.0,2.0
+2025/2026,MLS356,Internship of community health 2 ,MLS,03,PROF,0.0,0.0,70.0,20.0,6.0
+2025/2026,MLS357,Ethics and Civic education Law ,MLS,03,TRANS,30.0,9.0,0.0,6.0,3.0
+2025/2026,MLS361,"Microbiology of the environment - Food
+Microbiology ",MLS,03,FUND,50.0,16.0,0.0,9.0,5.0
+2025/2026,MLS362,Histopathology –Human Cytology ,MLS,03,FUND,40.0,12.0,0.0,8.0,4.0
+2025/2026,MLS363,"Clinical Biochemistry 3 - Clinical
+Parasitology 3 - Laboratory ",MLS,03,PROF,20.0,4.0,30.0,6.0,4.0
+2025/2026,MLS364,Molecular Biology ,MLS,03,PROF,20.0,6.0,0.0,4.0,2.0
+2025/2026,MLS365,Clinical Internship 5(Biochemistry) ,MLS,03,PROF,0.0,0.0,70.0,20.0,6.0
+2025/2026,MLS366,Clinical Internship 6(MycoBacteriology) ,MLS,03,PROF,0.0,0.0,70.0,20.0,6.0
+2025/2026,MLS367,Professional Ethics &Deontology ,MLS,03,TRANS,10.0,0.0,15.0,20.0,3.0
+2025/2026,NUS111,"Anatomy - Physiology I - Cell Biology -
+Histology - General Chemistry ",NUS,01,FUND,60.0,24.0,0.0,6.0,6.0
+2025/2026,NUS112,"Microbiology I: Bacteriology -
+Parasitology - Biochemistry ",NUS,01,FUND,30.0,12.0,0.0,3.0,3.0
+2025/2026,NUS113,"Sociology - anthropology and
+medical psychology ",NUS,01,PROF,50.0,20.0,0.0,5.0,5.0
+2025/2026,NUS114,"The basis of the Science nurse I:
+Concepts and Theories in Nursing
+Sciences",NUS,01,PROF,44.0,10.0,0.0,6.0,4.0
+2025/2026,NUS115,"History of the Nursing profession (life
+cycle) ",NUS,01,PROF,36.0,5.0,0.0,4.0,3.0
+2025/2026,NUS116,"Clinical Internship I (Medicine –
+General Surgery) ",NUS,01,PROF,0.0,0.0,0.0,0.0,6.0
+2025/2026,NUS117,Functional French and English ,NUS,01,TRANS,30.0,6.0,0.0,9.0,3.0
+2025/2026,NUS121,Anatomy and Physiology II ,NUS,01,FUND,50.0,20.0,0.0,5.0,5.0
+2025/2026,NUS122,"Microbiology II (Virology - Mycology -
+Immunology) ",NUS,01,FUND,40.0,16.0,0.0,4.0,4.0
+2025/2026,NUS123,"Foundations science Nurse II -
+approach Nursing care-
+Orgztion Care targeted
+transmissions-First Aid",NUS,01,PROF,50.0,20.0,0.0,5.0,5.0
+2025/2026,NUS124,"Nursing care in medicine 1 - Ethics
+and Professional Ethics ",NUS,01,PROF,40.0,13.0,0.0,7.0,4.0
+2025/2026,NUS125,"Public health: Epidemiology -
+Demography - Environmental Health
+and Health Promotion",NUS,01,PROF,30.0,10.0,0.0,5.0,3.0
+2025/2026,NUS126,Medicine Course in paediatric I and II ,NUS,01,PROF,0.0,0.0,70.0,20.0,6.0
+2025/2026,NUS127,"Information and Communication
+Techniques - ICT ",NUS,01,TRANS,30.0,10.0,0.0,5.0,3.0
+2025/2026,NUS231,"Applied Mathematics - Biostatistics -
+General biophysical and technology ",NUS,02,FUND,50.0,20.0,0.0,5.0,5.0
+2025/2026,NUS232,General pharmacology ,NUS,02,FUND,40.0,16.0,0.0,4.0,4.0
+2025/2026,NUS233,"Nursing care in surgery and blood
+transfusion - Nursing in Pediatrics and
+Child Care",NUS,02,PROF,40.0,10.0,0.0,10.0,4.0
+2025/2026,NUS234,"Reproductive health: health mother-child-Obst. care-care to
+women suffer. from obst.
+patholo. gynec.",NUS,02,PROF,40.0,16.0,0.0,4.0,4.0
+2025/2026,NUS235,"Medical pathologies - infectious
+diseases and zoonoses, pediatric
+pathologies childhood",NUS,02,PROF,40.0,10.0,0.0,10.0,4.0
+2025/2026,NUS236,"ClinicalInternship III( obstecrical care :
+pre and post natal) ",NUS,02,PROF,0.0,0.0,90.0,0.0,6.0
+2025/2026,NUS237,Medical French and English ,NUS,02,TRANS,30.0,10.0,0.0,5.0,3.0
+2025/2026,NUS241,"Communication for behavior
+change(CBC) - Community Health -
+Health and Development",NUS,02,FUND,30.0,20.0,0.0,10.0,4.0
+2025/2026,NUS242,"Techniques of medical analysis laboratory
+- medical imaging techniques ",NUS,02,FUND,25.0,20.0,20.0,10.0,5.0
+2025/2026,NUS243,"Obstetrical pathologies
+gynecological ",NUS,02,PROF,40.0,15.0,0.0,5.0,4.0
+2025/2026,NUS244,"Emergencies - operative Block -
+Anesthesiology ",NUS,02,PROF,25.0,15.0,5.0,45.0,0.0
+2025/2026,NUS245,"Clinical Pharmacology - Nutrition and
+pathologies associated - Alternative
+Medicine",NUS,02,PROF,50.0,20.0,0.0,5.0,5.0
+2025/2026,NUS246,Clinical Internship (Surgical ward and lab) ,NUS,02,PROF,0.0,0.0,90.0,0.0,6.0
+2025/2026,NUS247,"Civic education, Ethics and
+Initiation to research ",NUS,02,TRANS,30.0,10.0,0.0,5.0,3.0
+2025/2026,NUS351,"Medical pathologies - priority health
+programs in Cameroon - CCC III ",NUS,03,FUND,40.0,15.0,0.0,5.0,4.0
+2025/2026,NUS352,"The economics of health - Hospital
+management - system of health
+information",NUS,03,FUND,50.0,20.0,0.0,5.0,5.0
+2025/2026,NUS353,"Mental Health-Nursing in psychiatry-Nursing in geriatrics-Clinical
+Pharmaco.2-Therapeutic
+monitoring",NUS,03,PROF,35.0,20.0,0.0,5.0,4.0
+2025/2026,NUS354,Nursing care in resuscitation - care to ,NUS,03,PROF,20.0,5.0,0.0,5.0,2.0
+2025/2026,NUS355,Internship of Community Health II ,NUS,03,PROF,0.0,0.0,70.0,20.0,6.0
+2025/2026,NUS356,"Clinical Internship (Intensive care –
+Neuro-geriartry) ",NUS,03,PROF,0.0,0.0,70.0,20.0,6.0
+2025/2026,NUS357,"Medical Law - Health at Work - School
+Medicine ",NUS,03,TRANS,30.0,10.0,0.0,5.0,3.0
+2025/2026,NUS361,"Technical care of specific 1
+(neurology, ophthalmology,
+Stomatology, Dermatology - ENT)",NUS,03,FUND,30.0,0.0,40.0,5.0,5.0
+2025/2026,NUS362,"Techniques of specific care 2 -
+(Urology - Respiratory - Gastro
+enterology- cardiology)",NUS,03,FUND,20.0,0.0,35.0,5.0,4.0
+2025/2026,NUS363,"Implementation professional situation
+1 (MSP 1) ",NUS,03,PROF,40.0,16.0,0.0,4.0,4.0
+2025/2026,NUS364,"Implementation professional situation
+2 (MSP 2) ",NUS,03,PROF,30.0,10.0,0.0,5.0,3.0
+2025/2026,NUS365,"Implementation professional situation
+3 (MSP 3) ",NUS,03,PROF,0.0,0.0,70.0,20.0,6.0
+2025/2026,NUS366,"Drafting of the research project (work
+of End of Studies) ",NUS,03,PROF,50.0,0.0,20.0,5.0,5.0
+2025/2026,NUS367,Professional Ethics and Deontology ,NUS,03,TRANS,30.0,10.0,0.0,5.0,3.0
+2025/2026,RES111,Outils scientifique de base I,RES,01,FOND,35.0,20.0,0.0,5.0,4.0
+2025/2026,RES112,Informatique et Physique I,RES,01,FOND,40.0,15.0,15.0,5.0,5.0
+2025/2026,RES113,Telecom I,RES,01,PROF,40.0,20.0,10.0,5.0,5.0
+2025/2026,RES114,Electronique I,RES,01,PROF,40.0,20.0,10.0,5.0,5.0
+2025/2026,RES115,Electronique de base I,RES,01,PROF,20.0,10.0,10.0,5.0,3.0
+2025/2026,RES116,Réseaux I,RES,01,PROF,30.0,10.0,30.0,5.0,5.0
+2025/2026,RES117,Anglais et Comptabilité générale,RES,01,TRANS,30.0,10.0,0.0,5.0,3.0
+2025/2026,RES121,Outils scientifiques de base II,RES,01,FOND,35.0,20.0,0.0,5.0,4.0
+2025/2026,RES122,Informatique et Physique II,RES,01,FOND,40.0,15.0,15.0,5.0,5.0
+2025/2026,RES123,Telecom II,RES,01,PROF,20.0,10.0,10.0,5.0,3.0
+2025/2026,RES124,Electronique II,RES,01,PROF,35.0,15.0,20.0,5.0,5.0
+2025/2026,RES125,Administration et Sécurité réseaux,RES,01,PROF,35.0,20.0,15.0,5.0,5.0
+2025/2026,RES126,Technologie web II,RES,01,PROF,30.0,20.0,20.0,5.0,5.0
+2025/2026,RES127,EOE et Techniques d’expression,RES,01,TRANS,30.0,10.0,0.0,5.0,3.0
+2025/2026,RES231,Outils scientifiques de base III,RES,02,FOND,35.0,20.0,0.0,5.0,4.0
+2025/2026,RES232,Informatique et Physique III,RES,02,FOND,40.0,25.0,5.0,5.0,5.0
+2025/2026,RES233,Téléphonie,RES,02,PROF,30.0,10.0,30.0,5.0,5.0
+2025/2026,RES234,Telecoms III,RES,02,PROF,35.0,15.0,20.0,5.0,5.0
+2025/2026,RES235,Réseaux et Technologies,RES,02,PROF,15.0,10.0,15.0,5.0,3.0
+2025/2026,RES236,Administration et Sécurité II,RES,02,PROF,20.0,5.0,45.0,5.0,5.0
+2025/2026,RES237,Création entreprise et éducation civique et éthique,RES,02,TRANS,30.0,10.0,0.0,5.0,3.0
+2025/2026,RES241,Outils scientifiques de base IV,RES,02,FOND,35.0,20.0,0.0,5.0,4.0
+2025/2026,RES242,Informatique et Physique IV,RES,02,FOND,40.0,15.0,15.0,5.0,5.0
+2025/2026,RES243,Telecoms IV – Réseaux et Veille technologique,RES,02,PROF,35.0,15.0,20.0,5.0,5.0
+2025/2026,RES244,Réseaux et Applications,RES,02,PROF,25.0,15.0,15.0,5.0,4.0
+2025/2026,RES245,Réseaux mobiles et Sécurité,RES,02,PROF,30.0,15.0,15.0,0.0,4.0
+2025/2026,RES246,Stage professionnel,RES,02,PROF,0.0,0.0,0.0,75.0,5.0
+2025/2026,RES247,Economie Générale,RES,02,TRANS,30.0,10.0,0.0,5.0,3.0
+2025/2026,SFM111,Anatomie physiologie 1 – Embryologie - Biologie de la reproduction,SFM,01,FOND,55.0,17.0,4.0,14.0,6.0
+2025/2026,SFM112,Puériculture – Nutrition - Diététique,SFM,01,FOND,30.0,6.0,9.0,0.0,3.0
+2025/2026,SFM113,"Histoire profession Sages-femmes - Éthique et
+déontologie profession. santé-Soins infirmiers de
+base",SFM,01,PROF,55.0,17.0,4.0,14.0,6.0
+2025/2026,SFM114,"Législation professionnelle – Système national de santé /
+Politique de santé – Microbiologie",SFM,01,PROF,30.0,6.0,9.0,0.0,3.0
+2025/2026,SFM115,"Pharmacologie générale – Hématologie – Pathologie
+générale",SFM,01,PROF,55.0,17.0,4.0,14.0,6.0
+2025/2026,SFM116,"Psychologie-sociologie – Éducation pour la santé –
+Prévention des infections",SFM,01,PROF,30.0,6.0,9.0,0.0,3.0
+2025/2026,SFM117,"Méthodes de travail - Langue officielle 1 - Techniques de
+l’information et de la communication 1",SFM,01,TRANS,30.0,6.0,9.0,0.0,3.0
+2025/2026,SFM121,"Anatomie et physiologie 2 – Sémiologie - Pharmacologie
+spéciale",SFM,01,FOND,55.0,17.0,4.0,14.0,6.0
+2025/2026,SFM122,"Techniques de laboratoire – Biochimie –
+Parasitologie/Mycologie",SFM,01,FOND,30.0,6.0,9.0,0.0,3.0
+2025/2026,SFM123,"Grossesse /Suivi prénatal-Accouchement en
+présentation du sommet - Suivi post natal",SFM,01,PROF,40.0,9.0,11.0,0.0,4.0
+2025/2026,SFM124,"Communication développement-Éducation à la
+vie familiale -Soins de base à la Naissance/Néonatologie",SFM,01,PROF,30.0,6.0,9.0,0.0,3.0
+2025/2026,SFM125,"Soins santé primaire – Soins
+infirmiers obsté.-Néonat. de base – Hygiène et
+assainissem.-Secourisme",SFM,01,PROF,50.0,12.0,13.0,0.0,5.0
+2025/2026,SFM126,Stage clinique 1,SFM,01,PROF,90.0,90.0,6.0,0.0,0.0
+2025/2026,SFM127,Démarche de soins - Genre - Droits humains,SFM,01,TRANS,30.0,6.0,9.0,0.0,3.0
+2025/2026,SFM231,Autres variétés d’accouchement,SFM,02,FOND,20.0,5.0,0.0,5.0,2.0
+2025/2026,SFM232,"Dystocies – Pathologies obstétricales - Complications
+obstétricales",SFM,02,FOND,66.0,21.0,3.0,15.0,3.0
+2025/2026,SFM233,"Méthodes de la recherche –Statistique - Soins infirmiers
+avancés",SFM,02,PROF,40.0,9.0,0.0,11.0,4.0
+2025/2026,SFM234,Épidémiologie– Démographie–Santé communautaire,SFM,02,PROF,30.0,6.0,0.0,9.0,3.0
+2025/2026,SFM235,"Pédiatrie - Vaccination - Techniques avancées en
+obstétrique",SFM,02,PROF,50.0,12.0,0.0,13.0,5.0
+2025/2026,SFM236,Stage communautaire,SFM,02,PROF,0.0,0.0,90.0,0.0,6.0
+2025/2026,SFM237,"Anglais médical/Français médical 1- Techniques de
+l’information et de la communication 2",SFM,02,TRANS,24.0,12.0,0.0,9.0,3.0
+2025/2026,SFM241,Gynécologie – Soins obstétricaux,SFM,02,FOND,40.0,10.0,0.0,10.0,4.0
+2025/2026,SFM242,"Pédiatrie/néonatologie/pathologies nouveau-né –
+Pathologies gynécologiques",SFM,02,FOND,46.0,16.0,3.0,10.0,5.0
+2025/2026,SFM243,Analgésique en obstétrique - Communication,SFM,02,PROF,40.0,10.0,0.0,10.0,4.0
+2025/2026,SFM244,PTME – IST/SIDA,SFM,02,PROF,40.0,10.0,0.0,10.0,4.0
+2025/2026,SFM245,Pathologies obstétricales,SFM,02,PROF,35.0,13.0,4.0,8.0,4.0
+2025/2026,SFM246,Stage clinique 2,SFM,02,PROF,0.0,0.0,90.0,0.0,6.0
+2025/2026,SFM247,"Planification familiale, Initiation à la recherche et
+Education civique",SFM,02,TRANS,26.0,11.0,3.0,5.0,3.0
+2025/2026,SFM351,"Anthropologie - Santé génésique et droit sexuel -
+Toxicologie",SFM,03,FOND,40.0,9.0,0.0,11.0,4.0
+2025/2026,SFM352,Anesthésiologie - Réanimation - Infécondité/Infertilité,SFM,03,FOND,50.0,12.0,0.0,13.0,5.0
+2025/2026,SFM353,Association grossesse et pathologie PEG,SFM,03,PROF,50.0,5.0,0.0,5.0,4.0
+2025/2026,SFM354,Gynécologie et pathologies gynécologiques,SFM,03,PROF,10.0,2.0,0.0,3.0,1.0
+2025/2026,SFM355,Urgences obstétricales et néonatales,SFM,03,PROF,10.0,2.0,0.0,3.0,1.0
+2025/2026,SFM356,Mise en situation maternité - Stage communautaire,SFM,03,PROF,0.0,0.0,180.0,0.0,12.0
+2025/2026,SFM357,Éducation civique et éthique – Langue officielle,SFM,03,TRANS,30.0,7.0,0.0,8.0,3.0
+2025/2026,SFM361,"Gérontologie/Gériatrie + IEC 3 – Rédaction
+administrative – Psychiatrie/Psychopathologie",SFM,03,FOND,50.0,18.0,3.0,13.0,6.0
+2025/2026,SFM362,Imagerie médicale – Assurance qualité - Entreprenariat,SFM,03,FOND,30.0,6.0,0.0,9.0,3.0
+2025/2026,SFM363,Économie de la santé – Rédaction de mémoire,SFM,03,PROF,30.0,7.0,0.0,8.0,3.0
+2025/2026,SFM364,PCIME,SFM,03,PROF,30.0,6.0,0.0,9.0,3.0
+2025/2026,SFM365,Suivi du travail et manœuvre obstétricales,SFM,03,PROF,20.0,5.0,0.0,5.0,2.0
+2025/2026,SFM366,Stage (MSP maternité) – Stage (MSP Pédiatrie),SFM,03,PROF,0.0,0.0,150.0,0.0,10.0
+2025/2026,SFM367,Anglais médical/Français médical - NTIC,SFM,03,TRANS,30.0,7.0,0.0,8.0,3.0
+2025/2026,SIN111,Anatomie – Physiologie I – Biologie cellulaire – Histologie – Chimie générale,SIN,01,FOND,60.0,24.0,0.0,6.0,6.0
+2025/2026,SIN112,Microbiologie I : Bactériologie – Parasitologie – Biochimie,SIN,01,FOND,30.0,12.0,0.0,3.0,3.0
+2025/2026,SIN113,Sociologie – anthropologie et psychologie médicale,SIN,01,PROF,50.0,20.0,0.0,5.0,5.0
+2025/2026,SIN114,"Fondement de la science infirmière I : concepts et
+théories en sciences infirmières",SIN,01,PROF,44.0,10.0,0.0,6.0,4.0
+2025/2026,SIN115,Histoire de la profession infirmière (cycle de vie),SIN,01,PROF,36.0,5.0,0.0,4.0,3.0
+2025/2026,SIN116,Stage clinique I (médecine – pédiatrie),SIN,01,PROF,0.0,0.0,70.0,20.0,6.0
+2025/2026,SIN117,Français médical – Anglais médical - TIC,SIN,01,TRANS,30.0,6.0,0.0,9.0,3.0
+2025/2026,SIN121,Anatomie et physiologie II,SIN,01,FOND,50.0,20.0,0.0,5.0,5.0
+2025/2026,SIN122,Microbiologie II (Virologie – Mycologie – Immunologie),SIN,01,FOND,40.0,16.0,0.0,4.0,4.0
+2025/2026,SIN123,"Fondements science infirmièreII–Démarche 
+soins infirmiers–soins transmissions
+ciblées –1ers secours",SIN,01,PROF,50.0,20.0,0.0,5.0,5.0
+2025/2026,SIN124,"Soins infirmiers en médecine 1 – Éthique et déontologie
+professionnelles",SIN,01,PROF,40.0,13.0,0.0,7.0,4.0
+2025/2026,SIN125,"Santé publique : Épidémiologie – Démographie – Santé
+environnementale et Promotion de la santé",SIN,01,PROF,30.0,10.0,0.0,5.0,3.0
+2025/2026,SIN126,Stage de médecine et pédiatrique II,SIN,01,PROF,0.0,0.0,70.0,20.0,6.0
+2025/2026,SIN127,Français médical – Anglais médical – TIC II,SIN,01,TRANS,30.0,10.0,0.0,5.0,3.0
+2025/2026,SIN231,"Mathématiques appliquées – Biostatistique –
+Biophysiques générale et technologie",SIN,02,FOND,50.0,20.0,0.0,5.0,5.0
+2025/2026,SIN232,Pharmacologie générale,SIN,02,FOND,40.0,16.0,0.0,4.0,4.0
+2025/2026,SIN233,"Soins infirmiers en chirurgie & Transfusion sanguine –
+Soins infirmiers en pédiatrie & puériculture",SIN,02,PROF,40.0,10.0,0.0,10.0,4.0
+2025/2026,SIN234,"Santé reproduction mère – enfant – soins
+Obsté. – soins femmes avec
+pathologies obsté. et gynécolog.",SIN,02,PROF,40.0,16.0,0.0,4.0,4.0
+2025/2026,SIN235,"Pathologies médicales – Pathologies infectieuses
+zoonoses et pathologies pédiatriques et infantiles",SIN,02,PROF,40.0,10.0,0.0,10.0,4.0
+2025/2026,SIN236,Stage clinique III,SIN,02,PROF,0.0,0.0,70.0,20.0,6.0
+2025/2026,SIN237,Français médical – Anglais médical – TIC III,SIN,02,TRANS,30.0,10.0,0.0,5.0,3.0
+2025/2026,SIN241,"Communication pour changement de comportement
+(CCC) – Santé communautaire – Santé et
+développement",SIN,02,FOND,40.0,16.0,0.0,14.0,4.0
+2025/2026,SIN242,"Techniques de laboratoire d’analyses médicales –
+Techniques d’imagerie médicale",SIN,02,FOND,20.0,8.0,0.0,2.0,2.0
+2025/2026,SIN243,Pathologies obstétricales et gynécologiques,SIN,02,PROF,50.0,20.0,0.0,5.0,5.0
+2025/2026,SIN244,Urgences – Bloc opératoire – Anesthésiologie,SIN,02,PROF,45.0,12.0,3.0,60.0,4.0
+2025/2026,SIN245,"Pharmacologie clinique – Nutrition et pathologies
+associées – Médecine alternative",SIN,02,PROF,60.0,20.0,0.0,10.0,6.0
+2025/2026,SIN246,Stage clinique 2,SIN,02,PROF,0.0,0.0,70.0,20.0,6.0
+2025/2026,SIN247,Initiation à la Recherche,SIN,02,TRANS,30.0,10.0,0.0,5.0,3.0
+2025/2026,SIN351,"Pathologies médicales - Programmes prioritaires de
+santé au Cameroun – CCC III",SIN,03,FOND,40.0,16.0,0.0,4.0,4.0
+2025/2026,SIN352,"Économie de la santé – Gestion hospitalière – système
+d’informations sanitaires",SIN,03,FOND,50.0,20.0,0.0,5.0,5.0
+2025/2026,SIN353,"Santé mentale-Soins infirmiers psychiatrie–Soins
+infirm.gériatrie–pharmaco. Cliniq.2–surveil.thérap.",SIN,03,PROF,50.0,20.0,0.0,5.0,5.0
+2025/2026,SIN354,"Soins infirmiers en réanimation – Soins aux personnes
+atteintes de déficiences spéciales",SIN,03,PROF,30.0,10.0,0.0,5.0,3.0
+2025/2026,SIN355,Stage de santé communautaire II,SIN,03,PROF,0.0,0.0,70.0,20.0,6.0
+2025/2026,SIN356,Stage clinique V,SIN,03,PROF,0.0,0.0,70.0,20.0,6.0
+2025/2026,SIN357,Droit médical – Santé au travail – Médecine scolaire,SIN,03,TRANS,30.0,10.0,0.0,5.0,3.0
+2025/2026,SIN361,"Techniques de soins spécifiques 1 (neurologie,
+ophtalmologie, stomatologie, dermatologie – ORL)",SIN,03,FOND,30.0,0.0,40.0,5.0,5.0
+2025/2026,SIN362,"Techniques de soins spécifiques 2 – (Urologie –
+Pneumologie - gastro entérologie- Cardiologie)",SIN,03,FOND,20.0,0.0,35.0,5.0,4.0
+2025/2026,SIN363,Mise en situation professionnelle 1 (MSP 1),SIN,03,PROF,40.0,16.0,0.0,4.0,4.0
+2025/2026,SIN364,Mise en situation professionnelle 2 (MSP 2),SIN,03,PROF,30.0,10.0,0.0,5.0,3.0
+2025/2026,SIN365,Mise en situation professionnelle 3 (MSP 3),SIN,03,PROF,0.0,0.0,70.0,20.0,6.0
+2025/2026,SIN366,Rédaction du projet de recherche (travail de fin d’études),SIN,03,PROF,50.0,0.0,20.0,5.0,5.0
+2025/2026,SIN367,Éducation civique et éthique,SIN,03,TRANS,30.0,10.0,0.0,5.0,3.0
+2025/2026,TLB111,Biologie cellulaire et histologie – Anatomie physiologie 1 –Chimie générale,TLB,01,FOND,70.0,12.0,0.0,8.0,6.0
+2025/2026,TLB112,Microbiologie générale 1 – Biochimie générale,TLB,01,FOND,32.0,8.0,0.0,5.0,3.0
+2025/2026,TLB113,Sociologie et anthropologie médicale – Psychologie médicale – Éthique et déontologie médicale,TLB,01,PROF,44.0,10.0,0.0,6.0,4.0
+2025/2026,TLB114,Cycle de vie – Soins infirmiers – Secourisme,TLB,01,PROF,42.0,8.0,6.0,4.0,4.0
+2025/2026,TLB115,Physique – Mathématique – Biostatistique,TLB,01,PROF,40.0,14.0,0.0,6.0,4.0
+2025/2026,TLB116,Stage clinique 1,TLB,01,PROF,0.0,0.0,70.0,20.0,6.0
+2025/2026,TLB117,Langue officielle  -  Techniques de l’information et de la communication 1,TLB,01,TRANS,30.0,9.0,0.0,6.0,3.0
+2025/2026,TLB121,Anatomie et physiologie 2 – Chimie organique,TLB,01,FOND,60.0,22.0,0.0,8.0,6.0
+2025/2026,TLB122,Microbiologie générale  2 – Parasitologie générale,TLB,01,FOND,28.0,6.0,6.0,5.0,3.0
+2025/2026,TLB123,Techniques de laboratoire,TLB,01,PROF,30.0,2.0,10.0,3.0,3.0
+2025/2026,TLB124,IEC 1-  Hygiène générale et hospitalière -  Maladies infectieuses et parasitaires ,TLB,01,PROF,62.0,14.0,0.0,14.0,6.0
+2025/2026,TLB125,Pharmacologie générale – Nutrition - Épidémiologie,TLB,01,PROF,34.0,6.0,0.0,5.0,3.0
+2025/2026,TLB126,Stage  clinique 2,TLB,01,PROF,0.0,0.0,70.0,20.0,6.0
+2025/2026,TLB127,Économie générale – Démographie,TLB,01,TRANS,30.0,7.0,0.0,8.0,3.0
+2025/2026,TLB231,IEC 2 - Santé et développement -  Santé communautaire,TLB,02,FOND,65.0,20.0,0.0,20.0,7.0
+2025/2026,TLB232,Initiation à la recherche,TLB,02,FOND,20.0,4.0,0.0,6.0,2.0
+2025/2026,TLB233,Hématologie Clinique 1 -  Entomologie médicale -  Transfusion sanguine,TLB,02,PROF,40.0,10.0,15.0,10.0,5.0
+2025/2026,TLB234,Biochimie Clinique 1 – Laboratoire,TLB,02,PROF,30.0,6.0,20.0,4.0,4.0
+2025/2026,TLB235,Bactériologie Clinique 1 – Laboratoire,TLB,02,PROF,30.0,2.0,10.0,3.0,3.0
+2025/2026,TLB236,Stage de santé communautaire 1,TLB,02,PROF,0.0,0.0,70.0,20.0,6.0
+2025/2026,TLB237,Anglais médical/Français médical - Techniques de l’information et de la communication 2,TLB,02,TRANS,30.0,9.0,0.0,6.0,3.0
+2025/2026,TLB241,Parasitologie Clinique 1 –  Mycologie médicale – Immunologie/Sérologie,TLB,02,FOND,60.0,14.0,8.0,8.0,6.0
+2025/2026,TLB242,Économie de la santé – Programme prioritaire de santé au Cameroun,TLB,02,FOND,32.0,8.0,0.0,5.0,3.0
+2025/2026,TLB243,Bactériologie Clinique 2 - Biochimie Clinique 2 – Laboratoire,TLB,02,PROF,30.0,4.0,20.0,6.0,4.0
+2025/2026,TLB244,Hématologie Clinique 2 -Laboratoire,TLB,02,PROF,15.0,2.0,10.0,3.0,2.0
+2025/2026,TLB245,Stage clinique 3,TLB,02,PROF,0.0,0.0,70.0,20.0,6.0
+2025/2026,TLB246,Stage clinique 4,TLB,02,PROF,0.0,0.0,70.0,20.0,6.0
+2025/2026,TLB247,Droitmédical,TLB,02,TRANS,30.0,10.0,0.0,5.0,3.0
+2025/2026,TLB351,IEC3 - Système d’information sanitaire - Gestion sanitaire,TLB,03,FOND,60.0,12.0,0.0,18.0,6.0
+2025/2026,TLB352,Rédactiondemémoire,TLB,03,FOND,15.0,0.0,0.0,30.0,3.0
+2025/2026,TLB353,Parasitologie Clinique 2  - Hématologie Clinique 3 – Laboratoire,TLB,03,PROF,40.0,8.0,45.0,12.0,7.0
+2025/2026,TLB354,Bactériologie Clinique 3  - Laboratoire-Virologie,TLB,03,PROF,25.0,4.0,10.0,6.0,3.0
+2025/2026,TLB355,Chimie analytique – Laboratoire,TLB,03,PROF,15.0,4.0,5.0,6.0,2.0
+2025/2026,TLB356,Stage de santé communautaire 2,TLB,03,PROF,0.0,0.0,70.0,20.0,6.0
+2025/2026,TLB357,Initiation à la recherche  -  TIC - ,TLB,03,TRANS,30.0,9.0,0.0,6.0,3.0
+2025/2026,TLB361,Microbiologie de l’environnement – Microbiologie des aliments,TLB,03,FOND,50.0,16.0,0.0,9.0,5.0
+2025/2026,TLB362,Histopathologie – Cytologiehumaine,TLB,03,FOND,40.0,12.0,0.0,8.0,4.0
+2025/2026,TLB363,Biochimie Clinique  3  - Parasitologie Clinique 3 – Laboratoire,TLB,03,PROF,20.0,4.0,30.0,6.0,4.0
+2025/2026,TLB364,Biologiemoléculaire,TLB,03,PROF,20.0,6.0,0.0,4.0,2.0
+2025/2026,TLB365,Stage clinique 5,TLB,03,PROF,0.0,0.0,70.0,20.0,6.0
+2025/2026,TLB366,Stage clinique 6,TLB,03,PROF,0.0,0.0,70.0,20.0,6.0
+2025/2026,TLB367,Projet tutoré,TLB,03,TRANS,10.0,0.0,15.0,20.0,3.0

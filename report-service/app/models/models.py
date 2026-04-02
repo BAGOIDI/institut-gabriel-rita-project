@@ -98,8 +98,8 @@ class Semester(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String, nullable=False)
     academic_year_id = db.Column(db.Integer, db.ForeignKey('academic_years.id'))
-    start_date = db.Column(db.Date)
-    end_date = db.Column(db.Date)
+    start_date = db.Column('startDate', db.Date)
+    end_date = db.Column('endDate', db.Date)
     
     # Relationships
     subjects = db.relationship('Subject', backref='semester', lazy=True)
@@ -273,11 +273,14 @@ class Evaluation(db.Model):
     
     id = db.Column(db.Integer, primary_key=True)
     subject_id = db.Column(db.Integer, db.ForeignKey('subjects.id'))
+    academic_year_id = db.Column(db.Integer, db.ForeignKey('academic_years.id'))
+    semester_id = db.Column(db.Integer, db.ForeignKey('semesters.id'))
     name = db.Column(db.String, nullable=False)
     type = db.Column(db.String, nullable=False)
     weight_percent = db.Column(db.Integer, default=100)
     max_score = db.Column(db.Numeric(5, 2), default=20)
     date = db.Column(db.Date)
+    status = db.Column(db.String, default='DRAFT')
     
     # Relationships
     grades = db.relationship('Grade', backref='evaluation', lazy=True)
@@ -289,9 +292,14 @@ class Grade(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     student_id = db.Column(db.Integer, db.ForeignKey('students.id'))
     evaluation_id = db.Column(db.Integer, db.ForeignKey('evaluations.id'))
+    anonymity_code = db.Column(db.String(50), unique=True)
     score = db.Column(db.Numeric(5, 2))
     is_absent = db.Column(db.Boolean, default=False)
     comments = db.Column(db.Text)
+    created_at = db.Column(db.DateTime, default=datetime.utcnow)
+    created_by = db.Column(db.String(100))
+    updated_at = db.Column(db.DateTime, default=datetime.utcnow, onupdate=datetime.utcnow)
+    updated_by = db.Column(db.String(100))
 
 
 class MedicalVisit(db.Model):

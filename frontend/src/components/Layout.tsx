@@ -13,13 +13,14 @@ import {
 } from 'lucide-react';
 import { Topbar } from './Topbar';
 import { useTheme } from '../contexts/ThemeContext';
+import { useTranslation } from '../hooks/useTranslation';
 import { translations } from '../lib/translations';
 
 export const Layout = ({ children }: { children: React.ReactNode }) => {
   const location = useLocation();
   const { language } = useTheme();
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
-  const t = translations[language];
+  const { t } = useTranslation();
 
   // Close sidebar when route changes on mobile
   useEffect(() => {

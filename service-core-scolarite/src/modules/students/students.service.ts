@@ -138,8 +138,12 @@ export class StudentService {
     };
   }
 
-  async findAll(options?: PaginationOptions): Promise<PaginatedResult<StudentListItem>> {
-    return this.getPaginatedResult({}, options);
+  async findAll(options?: PaginationOptions, classId?: number): Promise<PaginatedResult<StudentListItem>> {
+    const where: any = {};
+    if (classId) {
+      where.class = { id: classId };
+    }
+    return this.getPaginatedResult(where, options);
   }
 
   async search(

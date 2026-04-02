@@ -8,7 +8,7 @@ import { Timetable } from './pages/Timetable';
 import { Attendance } from './pages/Attendance';
 import { Finance } from './pages/Finance';
 import { PaymentRules } from './pages/PaymentRules';
-import Reports from './pages/Reports';
+import { Bulletins } from './pages/Bulletins';
 import { Settings } from './pages/Settings';
 import { Configurations } from './pages/Configurations';
 
@@ -41,7 +41,7 @@ function App() {
                       <Route path="/attendance" element={<Attendance />} />
                       <Route path="/finance" element={<Finance />} />
                       <Route path="/payment-rules" element={<PaymentRules />} />
-                      <Route path="/reports" element={<Reports />} />
+                      <Route path="/bulletins" element={<Bulletins />} />
                       <Route path="/settings" element={<Settings />} />
                       <Route path="/configurations" element={<Configurations />} />
                     </Routes>

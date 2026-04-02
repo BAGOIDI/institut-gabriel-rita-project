@@ -1,0 +1,67 @@
+{% extends "base_report.html" %}
+
+{% block title %}Bulletins Collectifs{% endblock %}
+
+{% block content %}
+  {% for b in bulletins %}
+    <div class="bulletin-page" style="page-break-after: always;">
+      <div class="section-title">
+        <h2>BULLETIN DE NOTES</h2>
+        <div class="line"></div>
+      </div>
+
+      <div class="student-header-box">
+        <div class="student-info">
+          <div class="student-name">{{ b.student.last_name }} {{ b.student.first_name }}</div>
+          <div class="student-meta">
+            <span><strong>Matricule:</strong> {{ b.student.matricule }}</span>
+            <span><strong>Classe:</strong> {{ b.student.class_name }}</span>
+            <span><strong>Année:</strong> {{ b.year }}</span>
+            <span><strong>Semestre:</strong> {{ b.semester }}</span>
+          </div>
+        </div>
+      </div>
+
+      <table class="luxury-table">
+        <thead>
+          <tr>
+            <th>Matière</th>
+            <th>Évaluation</th>
+            <th>Note</th>
+            <th>Max</th>
+            <th>Note (/20)</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for row in b.rows %}
+            <tr>
+              <td>{{ row.subject_name }}</td>
+              <td>{{ row.evaluation_name }}</td>
+              <td>
+                {% if row.is_absent %}
+                  <span class="badge badge-danger">ABS</span>
+                {% else %}
+                  {{ row.score }}
+                {% endif %}
+              </td>
+              <td>{{ row.max_score }}</td>
+              <td>{{ row.weighted_score_20 }}</td>
+            </tr>
+          {% endfor %}
+          {% if b.rows|length == 0 %}
+            <tr>
+              <td colspan="5">Aucune note disponible.</td>
+            </tr>
+          {% endif %}
+        </tbody>
+      </table>
+
+      <div class="kpi-grid">
+        <div class="kpi-card">
+          <div class="kpi-label">Moyenne générale (/20)</div>
+          <div class="kpi-value">{{ b.general_avg }}</div>
+        </div>
+      </div>
+    </div>
+  {% endfor %}
+{% endblock %}

@@ -11,7 +11,8 @@ import {
   ResponsiveContainer, LineChart, Line, Legend,
 } from 'recharts';
 import { useTheme } from '../contexts/ThemeContext';
-import { translations } from '../lib/translations';
+import { useTranslation } from '../hooks/useTranslation';
+
 import DashboardService, { DashboardStats } from '../services/dashboard.service';
 import { socket } from '../services/api';
 
@@ -51,7 +52,7 @@ const Skeleton = ({ className = '' }: { className?: string }) => (
 // ─── Main Dashboard component ─────────────────────────────────────────────────
 export const Dashboard = () => {
   const { language } = useTheme();
-  const t = translations[language];
+  const { t } = useTranslation();
 
   const [data, setData]         = useState<DashboardStats | null>(null);
   const [loading, setLoading]   = useState(true);
@@ -109,17 +110,17 @@ export const Dashboard = () => {
   // ─── Render ───────────────────────────────────────────────────────────────
 
   const kpiCards = data ? [
-    { label: t.teachersPresent,  stat: data.stats.teachersPresent,  icon: Users,       color: 'text-emerald-600', iconBg: 'bg-emerald-100 dark:bg-emerald-900/40' },
-    { label: t.studentsEnrolled, stat: data.stats.studentsEnrolled, icon: GraduationCap,color: 'text-blue-600',   iconBg: 'bg-blue-100    dark:bg-blue-900/40'    },
-    { label: t.latesToday,       stat: data.stats.latesToday,       icon: Clock,       color: 'text-amber-600',  iconBg: 'bg-amber-100   dark:bg-amber-900/40'   },
-    { label: t.paymentAlerts,    stat: data.stats.paymentAlerts,    icon: AlertCircle, color: 'text-rose-600',   iconBg: 'bg-rose-100    dark:bg-rose-900/40'    },
+    { label: t('teachersPresent'),  stat: data.stats.teachersPresent,  icon: Users,       color: 'text-emerald-600', iconBg: 'bg-emerald-100 dark:bg-emerald-900/40' },
+    { label: t('studentsEnrolled'), stat: data.stats.studentsEnrolled, icon: GraduationCap,color: 'text-blue-600',   iconBg: 'bg-blue-100    dark:bg-blue-900/40'    },
+    { label: t('latesToday'),       stat: data.stats.latesToday,       icon: Clock,       color: 'text-amber-600',  iconBg: 'bg-amber-100   dark:bg-amber-900/40'   },
+    { label: t('paymentAlerts'),    stat: data.stats.paymentAlerts,    icon: AlertCircle, color: 'text-rose-600',   iconBg: 'bg-rose-100    dark:bg-rose-900/40'    },
   ] : [];
 
   const finCards = data ? [
-    { label: t.totalReceived,    stat: data.financialStats.totalReceived,   icon: DollarSign, color: 'text-emerald-600' },
-    { label: t.amountRemaining,  stat: data.financialStats.amountRemaining, icon: FileText,   color: 'text-blue-600'   },
-    { label: t.recoveryRate,     stat: data.financialStats.recoveryRate,    icon: Percent,    color: 'text-purple-600' },
-    { label: t.penalties,        stat: data.financialStats.penalties,       icon: AlertCircle,color: 'text-rose-600'   },
+    { label: t('totalReceived'),    stat: data.financialStats.totalReceived,   icon: DollarSign, color: 'text-emerald-600' },
+    { label: t('amountRemaining'),  stat: data.financialStats.amountRemaining, icon: FileText,   color: 'text-blue-600'   },
+    { label: t('recoveryRate'),     stat: data.financialStats.recoveryRate,    icon: Percent,    color: 'text-purple-600' },
+    { label: t('penalties'),        stat: data.financialStats.penalties,       icon: AlertCircle,color: 'text-rose-600'   },
   ] : [];
 
   return (
@@ -129,9 +130,9 @@ export const Dashboard = () => {
       <div className="flex justify-between items-center mb-6">
         <div>
           <h1 className="text-xl font-bold text-gray-900 dark:text-white mb-0.5 uppercase tracking-tight font-inter">
-            {t.dashboard}
+            {t('dashboard')}
           </h1>
-          <p className="text-[11px] text-gray-500 dark:text-gray-400 font-inter">{t.welcome}</p>
+          <p className="text-[11px] text-gray-500 dark:text-gray-400 font-inter">{t('welcome')}</p>
         </div>
         <div className="flex items-center gap-2">
           {/* WS status indicator */}
@@ -151,7 +152,7 @@ export const Dashboard = () => {
             onClick={() => fetchStats()}
             disabled={loading}
             className="p-2 text-gray-400 hover:text-blue-600 dark:hover:text-blue-400 transition-colors border border-gray-200 dark:border-slate-700 rounded-md bg-white dark:bg-slate-800 shadow-sm disabled:opacity-50"
-            title={t.actualizeData}
+            title={t('actualizeData')}
           >
             <RefreshCw className={`w-4 h-4 ${loading ? 'animate-spin' : ''}`} />
           </button>
@@ -163,7 +164,7 @@ export const Dashboard = () => {
         <div className="mb-4 p-4 bg-rose-50 dark:bg-rose-900/30 border border-rose-200 dark:border-rose-800 rounded-xl flex items-center gap-3">
           <AlertCircle className="w-5 h-5 text-rose-500 flex-shrink-0" />
           <div>
-            <p className="text-sm font-bold text-rose-700 dark:text-rose-400 font-inter">Erreur de chargement</p>
+            <p className="text-sm font-bold text-rose-700 dark:text-rose-400 font-inter">{t('loadingError')}</p>
             <p className="text-xs text-rose-600 dark:text-rose-500 font-inter">{error}</p>
           </div>
           <button onClick={() => fetchStats()} className="ml-auto text-xs font-bold text-rose-600 border border-rose-300 px-3 py-1.5 rounded-lg hover:bg-rose-100 transition-colors font-inter">
@@ -210,17 +211,17 @@ export const Dashboard = () => {
       <div className="bg-white dark:bg-slate-800 rounded-xl border border-gray-200 dark:border-slate-700 shadow-sm p-5 mb-5">
         <div className="flex items-center justify-between mb-4">
           <div>
-            <h2 className="text-gray-900 dark:text-white text-base font-bold font-inter">{t.financialOverview}</h2>
-            <p className="text-gray-500 dark:text-gray-400 text-[11px] font-inter">{t.financialManagement}</p>
+            <h2 className="text-gray-900 dark:text-white text-base font-bold font-inter">{t('financialOverview')}</h2>
+            <p className="text-gray-500 dark:text-gray-400 text-[11px] font-inter">{t('financialManagement')}</p>
           </div>
           <select
             value={selectedPeriod}
             onChange={e => setSelectedPeriod(e.target.value)}
             className="bg-white dark:bg-slate-700 text-gray-800 dark:text-gray-200 border border-gray-300 dark:border-slate-600 rounded-lg px-3 py-1.5 text-sm font-medium font-inter"
           >
-            <option value="week">{t.thisWeek}</option>
-            <option value="month">{t.thisMonth}</option>
-            <option value="year">{t.thisYear}</option>
+            <option value="week">{t('thisWeek')}</option>
+            <option value="month">{t('thisMonth')}</option>
+            <option value="year">{t('thisYear')}</option>
           </select>
         </div>
         <div className="grid grid-cols-2 lg:grid-cols-4 gap-3">
@@ -259,7 +260,7 @@ export const Dashboard = () => {
 
         {/* Class Summary */}
         <div className="banco-card rounded-xl p-5">
-          <SectionTitle title={t.recoveryByClass} action={<ViewMoreBtn label={t.details} />} />
+          <SectionTitle title={t('recoveryByClass')} action={<ViewMoreBtn label={t('details')} />} />
           {loading ? (
             <div className="space-y-4">{Array.from({ length: 4 }).map((_, i) => <Skeleton key={i} className="h-14 w-full rounded-lg" />)}</div>
           ) : (
@@ -269,7 +270,7 @@ export const Dashboard = () => {
                   <div className="flex items-center justify-between mb-2">
                     <div>
                       <div className="text-sm font-bold text-gray-900 dark:text-white font-inter">{item.class}</div>
-                      <div className="text-xs text-gray-500 dark:text-gray-400 font-inter">{item.students} {t.studentsLowerCase}</div>
+                      <div className="text-xs text-gray-500 dark:text-gray-400 font-inter">{item.students} {t('studentsLowerCase')}</div>
                     </div>
                     <div className={`text-sm font-bold font-inter ${
                       item.rate >= 80 ? 'text-emerald-600' : item.rate >= 60 ? 'text-amber-600' : 'text-rose-600'
@@ -284,8 +285,8 @@ export const Dashboard = () => {
                     />
                   </div>
                   <div className="flex items-center justify-between text-xs font-inter">
-                    <span className="text-gray-500">{t.paid}: {(item.paid / 1_000_000).toFixed(1)}M FCFA</span>
-                    <span className="text-gray-400">{t.remaining}: {((item.due - item.paid) / 1_000_000).toFixed(1)}M FCFA</span>
+                    <span className="text-gray-500">{t('paid')}: {(item.paid / 1_000_000).toFixed(1)}M FCFA</span>
+                    <span className="text-gray-400">{t('remaining')}: {((item.due - item.paid) / 1_000_000).toFixed(1)}M FCFA</span>
                   </div>
                 </div>
               ))}
@@ -296,10 +297,10 @@ export const Dashboard = () => {
         {/* Late Payments */}
         <div className="banco-card rounded-xl p-5">
           <SectionTitle
-            title={t.latePayments}
+            title={t('latePayments')}
             action={
               <span className="text-xs px-3 py-1.5 bg-rose-50 dark:bg-rose-900/40 text-rose-600 dark:text-rose-400 rounded-full font-bold font-inter">
-                {data?.latePayments.length ?? 0} {t.cases}
+                {data?.latePayments.length ?? 0} {t('cases')}
               </span>
             }
           />
@@ -325,10 +326,10 @@ export const Dashboard = () => {
                   </div>
                   <div className="flex items-center justify-between">
                     <div className="text-xs text-gray-600 dark:text-gray-400 font-inter">
-                      {t.amount}: <span className="font-bold text-gray-900 dark:text-white">{(item.amount / 1000).toFixed(0)}K FCFA</span>
+                      {t('amount')}: <span className="font-bold text-gray-900 dark:text-white">{(item.amount / 1000).toFixed(0)}K FCFA</span>
                     </div>
                     <div className="text-xs text-rose-600 dark:text-rose-400 font-bold font-inter">
-                      +{(item.penalty / 1000).toFixed(0)}K {t.penalty}
+                      +{(item.penalty / 1000).toFixed(0)}K {t('penalty')}
                     </div>
                   </div>
                 </div>
@@ -344,10 +345,10 @@ export const Dashboard = () => {
         {/* Moratoires */}
         <div className="banco-card rounded-xl p-5">
           <SectionTitle
-            title={t.grantedMoratoria}
+            title={t('grantedMoratoria')}
             action={
               <span className="text-xs px-3 py-1.5 bg-amber-50 dark:bg-amber-900/40 text-amber-600 dark:text-amber-400 rounded-full font-bold font-inter">
-                {data?.moratoires.length ?? 0} {t.active}
+                {data?.moratoires.length ?? 0} {t('active')}
               </span>
             }
           />
@@ -381,8 +382,8 @@ export const Dashboard = () => {
         {/* Partial Payments */}
         <div className="banco-card rounded-xl p-5">
           <SectionTitle
-            title={t.partialPayments}
-            action={<button className="text-xs font-semibold border border-gray-300 dark:border-slate-600 px-3 py-1.5 rounded-lg hover:bg-gray-50 dark:hover:bg-slate-700 transition-colors font-inter text-gray-600 dark:text-gray-400">{t.manage}</button>}
+            title={t('partialPayments')}
+            action={<button className="text-xs font-semibold border border-gray-300 dark:border-slate-600 px-3 py-1.5 rounded-lg hover:bg-gray-50 dark:hover:bg-slate-700 transition-colors font-inter text-gray-600 dark:text-gray-400">{t('manage')}</button>}
           />
           {loading ? (
             <div className="space-y-3">{Array.from({ length: 3 }).map((_, i) => <Skeleton key={i} className="h-16 w-full rounded-xl" />)}</div>
@@ -409,7 +410,7 @@ export const Dashboard = () => {
                     </div>
                     <div className="flex items-center justify-between text-xs font-inter">
                       <span className="text-gray-500">{(item.paid / 1000).toFixed(0)}K / {(item.total / 1000).toFixed(0)}K FCFA</span>
-                      <span className="text-gray-400">Dernier: {item.lastDate}</span>
+                      <span className="text-gray-400">{t('last')}: {item.lastDate}</span>
                     </div>
                   </div>
                 );
@@ -424,12 +425,12 @@ export const Dashboard = () => {
 
         {/* Bar Chart */}
         <div className="lg:col-span-2 banco-card rounded-xl p-5">
-          <SectionTitle title="Présences de la semaine" action={<ViewMoreBtn label={t.seeMore} />} />
-          <div className="h-64">
+          <SectionTitle title="Présences de la semaine" action={<ViewMoreBtn label={t('seeMore')} />} />
+          <div className="h-64 w-full">
             {loading ? (
               <Skeleton className="w-full h-full rounded-xl" />
             ) : (
-              <ResponsiveContainer width="100%" height="100%">
+              <ResponsiveContainer width="100%" height="100%" minWidth={0} minHeight={0}>
                 <BarChart data={data?.attendanceData} barGap={4}>
                   <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="rgba(148,163,184,0.2)" />
                   <XAxis dataKey="name" axisLine={false} tickLine={false} tick={{ fill: '#64748b', fontSize: 11, fontFamily: 'Inter' }} dy={10} />
@@ -449,7 +450,7 @@ export const Dashboard = () => {
 
         {/* Recent Attendance */}
         <div className="banco-card rounded-xl p-5">
-          <SectionTitle title="Derniers pointages" subtitle={t.today} />
+          <SectionTitle title={t('latestCheckIns')} subtitle={t('today')} />
           {loading ? (
             <div className="space-y-4">{Array.from({ length: 5 }).map((_, i) => <Skeleton key={i} className="h-10 w-full rounded-lg" />)}</div>
           ) : (
@@ -466,7 +467,7 @@ export const Dashboard = () => {
                   <div className="text-right flex-shrink-0 ml-2">
                     <div className="text-sm font-bold text-gray-900 dark:text-white font-inter">{item.time}</div>
                     <div className={`text-xs font-bold font-inter ${item.status === 'PRESENT' ? 'text-emerald-600' : 'text-amber-600'}`}>
-                      {item.status === 'PRESENT' ? t.onTime : t.late}
+                      {item.status === 'PRESENT' ? t('onTime') : t('late')}
                     </div>
                   </div>
                 </div>
@@ -485,16 +486,16 @@ export const Dashboard = () => {
             title="Recouvrement des frais (FCFA)"
             action={
               <select className="text-xs border border-gray-200 dark:border-slate-600 bg-transparent rounded-lg px-3 py-1.5 font-medium text-gray-600 dark:text-gray-400 font-inter">
-                <option>{t.thisMonth}</option>
-                <option>{t.lastMonth}</option>
+                <option>{t('thisMonth')}</option>
+                <option>{t('lastMonth')}</option>
               </select>
             }
           />
-          <div className="h-56">
+          <div className="h-56 w-full">
             {loading ? (
               <Skeleton className="w-full h-full rounded-xl" />
             ) : (
-              <ResponsiveContainer width="100%" height="100%">
+              <ResponsiveContainer width="100%" height="100%" minWidth={0} minHeight={0}>
                 <LineChart data={data?.paymentData}>
                   <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="rgba(148,163,184,0.2)" />
                   <XAxis dataKey="month" axisLine={false} tickLine={false} tick={{ fill: '#64748b', fontSize: 11, fontFamily: 'Inter' }} dy={10} />
@@ -512,13 +513,13 @@ export const Dashboard = () => {
 
         {/* Quick Actions */}
         <div className="banco-card rounded-xl p-5">
-          <h3 className="text-base font-bold text-gray-900 dark:text-white mb-4 font-inter">Actions rapides</h3>
+          <h3 className="text-base font-bold text-gray-900 dark:text-white mb-4 font-inter">{t('quickActions')}</h3>
           <div className="grid grid-cols-2 gap-3">
             {[
-              { icon: UserPlus,  label: t.newTeacher,     sub: t.addToSystem,      accent: 'primary', hover: 'hover:border-primary hover:bg-primary-light dark:hover:bg-primary-dark/20' },
-              { icon: BarChart2, label: t.generateReport, sub: t.exportPdfExcel,   accent: 'emerald', hover: 'hover:border-emerald-500 hover:bg-emerald-50 dark:hover:bg-emerald-900/20' },
-              { icon: CreditCard,label: t.collectFees,    sub: t.studentPayment,   accent: 'amber',   hover: 'hover:border-amber-500 hover:bg-amber-50 dark:hover:bg-amber-900/20' },
-              { icon: Settings,  label: t.configureK40,   sub: t.terminalBio,      accent: 'purple',  hover: 'hover:border-purple-500 hover:bg-purple-50 dark:hover:bg-purple-900/20' },
+              { icon: UserPlus,  label: t('newTeacher'),     sub: t('addToSystem'),      accent: 'primary', hover: 'hover:border-primary hover:bg-primary-light dark:hover:bg-primary-dark/20' },
+              { icon: BarChart2, label: t('generateReport'), sub: t('exportPdfExcel'),   accent: 'emerald', hover: 'hover:border-emerald-500 hover:bg-emerald-50 dark:hover:bg-emerald-900/20' },
+              { icon: CreditCard,label: t('collectFees'),    sub: t('studentPayment'),   accent: 'amber',   hover: 'hover:border-amber-500 hover:bg-amber-50 dark:hover:bg-amber-900/20' },
+              { icon: Settings,  label: t('configureK40'),   sub: t('terminalBio'),      accent: 'purple',  hover: 'hover:border-purple-500 hover:bg-purple-50 dark:hover:bg-purple-900/20' },
             ].map(({ icon: Icon, label, sub, accent, hover }, i) => (
               <button key={i} className={`p-4 rounded-xl border-2 border-dashed border-gray-200 dark:border-slate-700 ${hover} transition-all text-left group`}>
                 <Icon className={`w-5 h-5 mb-2 text-gray-400 group-hover:text-${accent}-600 dark:group-hover:text-${accent}-400 transition-colors`} />

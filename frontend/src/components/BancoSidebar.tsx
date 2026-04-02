@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { useTheme } from '../contexts/ThemeContext';
+import { useTranslation } from '../hooks/useTranslation';
 import { translations } from '../lib/translations';
 import {
   BancoDashboardIcon,
@@ -10,6 +11,7 @@ import {
   BancoAttendanceIcon,
   BancoFinanceIcon,
   BancoReportsIcon,
+  BancoBulletinsIcon,
   BancoSettingsIcon
 } from './BancoIcons';
 
@@ -30,48 +32,54 @@ export const BancoSidebar: React.FC<BancoSidebarProps> = ({ isOpen, onClose }) =
   const location = useLocation();
   const { language } = useTheme();
   const [openSubmenus, setOpenSubmenus] = useState<Record<string, boolean>>({});
-  const t = translations[language];
+  const { t } = useTranslation();
 
   // Structure de menu essentielle pour le système de gestion
   const menuItems: MenuItem[] = [
     { 
       icon: BancoDashboardIcon, 
-      label: t.dashboard, 
+      label: t('dashboard'), 
       path: '/' 
     },
     { 
       icon: BancoTeachersIcon, 
-      label: t.teachers, 
+      label: t('teachers'), 
       path: '/teachers' 
     },
     { 
       icon: BancoStudentsIcon, 
-      label: t.students, 
+      label: t('students'), 
       path: '/students' 
     },
     { 
       icon: BancoTimetableIcon, 
-      label: t.timetable, 
+      label: t('timetable'), 
       path: '/timetable' 
     },
     { 
       icon: BancoAttendanceIcon, 
-      label: t.attendance, 
+      label: t('attendance'), 
       path: '/attendance' 
     },
     { 
       icon: BancoFinanceIcon, 
-      label: t.finance, 
+      label: t('finance'), 
       path: '/finance' 
     },
+    // Rapport temporairement retiré du menu
+    // {
+    //   icon: BancoReportsIcon,
+    //   label: t('reports'),
+    //   path: '/reports'
+    // },
     { 
-      icon: BancoReportsIcon, 
-      label: t.reports, 
-      path: '/reports' 
+      icon: BancoBulletinsIcon, 
+      label: t('bulletins'), 
+      path: '/bulletins' 
     },
     { 
       icon: BancoSettingsIcon, 
-      label: t.settingsTitle, 
+      label: t('settingsTitle'), 
       path: '/settings' 
     }
   ];

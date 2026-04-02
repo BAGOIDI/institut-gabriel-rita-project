@@ -96,16 +96,17 @@ export class StaffService implements OnModuleInit {
     const page = Math.max(1, Number(query?.page) || 1);
     const limit = Math.min(100, Math.max(1, Number(query?.limit) || 10));
 
-    const qb = this.staffRepository.createQueryBuilder('staff');
+    const qb = this.staffRepository.createQueryBuilder('staff')
+      .leftJoinAndSelect('staff.teacherAssignments', 'teacherAssignments')
+      .leftJoinAndSelect('teacherAssignments.class', 'class')
+      .leftJoinAndSelect('teacherAssignments.subject', 'subject');
 
     if (query?.classId) {
-      qb.innerJoin('staff.subjects', 'subject')
-        .andWhere('subject.class_id = :classId', { classId: query.classId });
+      qb.andWhere('teacherAssignments.classId = :classId', { classId: query.classId });
     }
 
     if (query?.subjectId) {
-      qb.innerJoin('staff.subjects', 'subject_filter')
-        .andWhere('subject_filter.id = :subjectId', { subjectId: query.subjectId });
+      qb.andWhere('teacherAssignments.subjectId = :subjectId', { subjectId: query.subjectId });
     }
 
     if (query?.q) {
@@ -133,7 +134,10 @@ export class StaffService implements OnModuleInit {
   }
 
   async findOne(id: number): Promise<Staff> {
-    const staff = await this.staffRepository.findOne({ where: { id } });
+    const staff = await this.staffRepository.findOne({ 
+      where: { id },
+      relations: ['teacherAssignments', 'teacherAssignments.class', 'teacherAssignments.subject']
+    });
     if (!staff) {
       throw new NotFoundException(`Staff with ID ${id} not found`);
     }

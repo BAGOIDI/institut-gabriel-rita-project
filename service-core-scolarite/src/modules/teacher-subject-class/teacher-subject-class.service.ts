@@ -66,6 +66,22 @@ export class TeacherSubjectClassService {
     await this.repository.remove(found);
   }
 
+  async syncTeacherAssignments(staffId: number, assignments: { classId: number; subjectId: number }[]): Promise<TeacherSubjectClass[]> {
+    // 1. Delete all current assignments for this teacher
+    await this.repository.delete({ staffId });
+
+    // 2. Create new ones
+    if (assignments.length === 0) return [];
+
+    const entities = assignments.map(a => this.repository.create({
+      staffId,
+      classId: a.classId,
+      subjectId: a.subjectId,
+    }));
+
+    return await this.repository.save(entities);
+  }
+
   // Helper methods for dynamic filtering
   async findTeachersByClass(classId: number): Promise<any[]> {
     const relations = await this.findAll({ classId });

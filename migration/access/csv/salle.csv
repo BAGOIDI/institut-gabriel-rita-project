@@ -1,0 +1,30 @@
+code,libelle
+A01,Infirmerie
+A11,Salle A11
+A12,Salle A12
+A13,Salle Informatique
+A21,Salle A21
+A22,Salle A22
+A23,Salle A23
+A31,Salle A31
+A32,Salle A32
+A33,Salle A33
+A41,Salle A42
+A42,Salle A43
+A43,Salle A44
+B01,Magasin
+B02,Atelier Génie Electrique
+B03,Atelier Chaudronnerie et Soudure
+B04,Atelier Génie Mécanique
+B05,Atelier Mécatronique
+B06,Atelier Maintenance Automobile
+B07,Atelier Maintenance Indus.&Produc.
+B08,Pilote des Programmes de santé
+B09,Pilote de CFP et d'Infirmerie
+B10,Laboratoire Biomédical 1
+B11,Laboratoire Biomédical 2
+B12,Atelier Génie Bois
+B13,Atelier FC & Installation Sanitaires
+B14,Atelier Génie Civil
+B15,Atelier Génie Culinaire
+B16,Charge Ethique &Orientation &Hotellerie
