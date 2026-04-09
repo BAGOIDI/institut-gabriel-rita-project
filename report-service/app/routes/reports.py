@@ -249,7 +249,7 @@ def get_student_card_pdf(matricule):
                 'class_name': class_name,
                 'specialty_name': specialty_name,
                 'photo_url': student.photo_url,
-                'phone_number': student.phone,
+                'phone_number': student.phone_number,
                 'date_of_birth': student.date_of_birth.strftime('%d/%m/%Y') if student.date_of_birth else 'N/A',
                 'qr_url': qr_url
             },
@@ -475,7 +475,7 @@ def _process_schedule_request(target_id, target_name, filter_type, fmt, OFFICIAL
             # Planning service doesn't have direct /subject filter, fetch all and filter locally
             url = PLANNING_SERVICE_URL
             
-        response = requests.get(url, timeout=5)
+        response = requests.get(url, timeout=30)
         response.raise_for_status()
         schedules_raw = response.json()
         
@@ -597,7 +597,7 @@ def get_synthesis_schedule_report():
         
         # 1. Fetch all relevant schedules
         url = PLANNING_SERVICE_URL
-        response = requests.get(url, timeout=5)
+        response = requests.get(url, timeout=30)
         response.raise_for_status()
         schedules_raw = response.json()
 
@@ -1300,7 +1300,7 @@ def send_schedule_whatsapp(class_ref):
         
         # Récupérer les données EDT et générer le message
         url = f'{PLANNING_SERVICE_URL}'
-        response = requests.get(url, timeout=5)
+        response = requests.get(url, timeout=30)
         response.raise_for_status()
         all_schedules = response.json()
         
@@ -1399,7 +1399,7 @@ def send_teacher_schedule_whatsapp(staff_id):
         
         # Récupérer les données EDT
         url = f'{PLANNING_SERVICE_URL}/staff/{staff_id}'
-        response = requests.get(url, timeout=5)
+        response = requests.get(url, timeout=30)
         response.raise_for_status()
         teacher_schedules = response.json()
         

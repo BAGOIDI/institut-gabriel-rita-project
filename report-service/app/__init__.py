@@ -78,7 +78,7 @@ def create_app(config_name='default'):
 
     # Enregistrement des Blueprints
     from app.routes.reports import reports_bp
-    app.register_blueprint(reports_bp, url_prefix='/api/reports')
+    app.register_blueprint(reports_bp)  # Pas de url_prefix car Traefik fait déjà le strip
 
     return app
 

@@ -7,10 +7,8 @@ import { Teachers } from './pages/Teachers';
 import { Timetable } from './pages/Timetable';
 import { Attendance } from './pages/Attendance';
 import { Finance } from './pages/Finance';
-import { PaymentRules } from './pages/PaymentRules';
 import { Bulletins } from './pages/Bulletins';
 import { Settings } from './pages/Settings';
-import { Configurations } from './pages/Configurations';
 
 import { ThemeProvider } from './contexts/ThemeContext';
 import { NotificationProvider } from './contexts/NotificationContext';
@@ -40,10 +38,8 @@ function App() {
                       <Route path="/timetable" element={<Timetable />} />
                       <Route path="/attendance" element={<Attendance />} />
                       <Route path="/finance" element={<Finance />} />
-                      <Route path="/payment-rules" element={<PaymentRules />} />
                       <Route path="/bulletins" element={<Bulletins />} />
                       <Route path="/settings" element={<Settings />} />
-                      <Route path="/configurations" element={<Configurations />} />
                     </Routes>
                   </BancoLayout>
                 }

@@ -18,7 +18,7 @@ import { ConfigModule } from '@nestjs/config';
       password: process.env.DATABASE_PASSWORD || 'postgres',
       database: process.env.DATABASE_NAME || 'institut_db',
       autoLoadEntities: true,
-      synchronize: process.env.NODE_ENV !== 'production', // Ne jamais utiliser synchronize en production
+      synchronize: false, // Désactivé pour éviter les conflits de schéma
     }),
   ],
   controllers: [],

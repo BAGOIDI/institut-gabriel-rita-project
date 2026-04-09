@@ -95,7 +95,7 @@ services:
       - "--providers.docker.exposedbydefault=false"
       - "--entrypoints.web.address=:80"
       - "--entrypoints.web.forwardedHeaders.insecure=true"
-    ports: ["0.0.0.0:80:80", "0.0.0.0:8080:8080"]
+    ports: ["192.168.1.121:80:80", "192.168.1.121:8080:8080"]
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock:ro
     networks: [school-network]

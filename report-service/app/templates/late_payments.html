@@ -1,48 +1,201 @@
 {% extends "base_report.html" %}
-
 {% block title %}Rapport de Recouvrement - {{ current_date }}{% endblock %}
 
+{% block extra_css %}
+<style>
+    :root {
+        --primary: #0f172a;
+        --danger: #dc2626;
+        --danger-light: #fee2e2;
+        --text-main: #1e293b;
+        --text-muted: #64748b;
+        --bg-light: #f8fafc;
+        --border: #e2e8f0;
+    }
+
+    .report-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 30px;
+        padding-bottom: 20px;
+        border-bottom: 2px solid var(--border);
+    }
+
+    .header-title h1 {
+        font-size: 22px;
+        font-weight: 900;
+        color: var(--primary);
+        text-transform: uppercase;
+        margin: 0 0 5px 0;
+        letter-spacing: 1px;
+    }
+
+    .header-title p {
+        font-size: 13px;
+        color: var(--text-muted);
+        margin: 0;
+        font-weight: 500;
+    }
+
+    .kpi-danger {
+        background: var(--danger-light);
+        border: 1px solid #fca5a5;
+        padding: 15px 25px;
+        border-radius: 8px;
+        text-align: right;
+        min-width: 180px;
+    }
+
+    .kpi-danger .kpi-label {
+        font-size: 10px;
+        text-transform: uppercase;
+        font-weight: 800;
+        color: #991b1b;
+        margin-bottom: 5px;
+    }
+
+    .kpi-danger .kpi-value {
+        font-size: 28px;
+        font-weight: 900;
+        color: var(--danger);
+        line-height: 1;
+    }
+
+    .financial-table {
+        width: 100%;
+        border-collapse: collapse;
+        font-size: 12px;
+        box-shadow: 0 4px 6px rgba(0,0,0,0.02);
+        border-radius: 8px;
+        overflow: hidden;
+    }
+
+    .financial-table th {
+        background: var(--primary);
+        color: white;
+        padding: 14px 15px;
+        text-align: left;
+        font-weight: 700;
+        text-transform: uppercase;
+        font-size: 11px;
+        letter-spacing: 0.5px;
+    }
+
+    .financial-table th.amount-col {
+        background: #334155;
+        text-align: right;
+    }
+
+    .financial-table td {
+        padding: 12px 15px;
+        border-bottom: 1px solid var(--border);
+        color: var(--text-main);
+        vertical-align: middle;
+    }
+
+    .financial-table tbody tr:nth-child(even) {
+        background-color: var(--bg-light);
+    }
+
+    .financial-table tbody tr:hover {
+        background-color: #f1f5f9;
+    }
+
+    .student-name {
+        font-weight: 700;
+        color: var(--primary);
+        font-size: 13px;
+    }
+
+    .matricule-badge {
+        background: #e2e8f0;
+        padding: 3px 6px;
+        border-radius: 4px;
+        font-family: monospace;
+        font-size: 11px;
+        color: #475569;
+        font-weight: 600;
+    }
+
+    .class-name {
+        font-weight: 600;
+        color: var(--text-muted);
+    }
+
+    .amount-value {
+        font-family: monospace;
+        font-size: 14px;
+        font-weight: 800;
+        color: var(--danger);
+        text-align: right;
+    }
+
+    .status-alert {
+        display: inline-block;
+        background: var(--danger);
+        color: white;
+        font-size: 9px;
+        font-weight: 800;
+        padding: 4px 8px;
+        border-radius: 12px;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+    }
+
+    .empty-state {
+        text-align: center;
+        padding: 60px 20px;
+        color: #10b981;
+        font-weight: 600;
+        background: #ecfdf5;
+        border: 1px dashed #6ee7b7;
+        border-radius: 8px;
+    }
+</style>
+{% endblock %}
+
 {% block content %}
-<div class="main-title-band">
-    RAPPORT DE RECOUVREMENT : ÉTAT DES IMPAYÉS
-</div>
-
-<div class="info-section grid-2" style="margin-bottom: 25px;">
-    <div style="width: 65%; display: inline-block; vertical-align: top;">
-        <h2 style="color: #dc2626; margin: 0; font-weight: 900;">Liste des Retards</h2>
-        <p style="font-size: 10px; color: #64748b;">Étudiants avec solde débiteur au {{ current_date }}</p>
+<div class="report-header">
+    <div class="header-title">
+        <h1>État des Impayés</h1>
+        <p>Rapport généré le <strong>{{ current_date }}</strong></p>
     </div>
-    <div style="width: 33%; display: inline-block; vertical-align: top; text-align: right;">
-        <div class="kpi-card-premium red" style="text-align: left;">
-            <div style="font-size: 7px; font-weight: 700; color: #64748b; text-transform: uppercase;">Total Étudiants</div>
-            <div style="font-size: 18px; font-weight: 900; color: #dc2626;">{{ late_payments|length }}</div>
-        </div>
+    <div class="kpi-danger">
+        <div class="kpi-label">Total Étudiants en Retard</div>
+        <div class="kpi-value">{{ late_payments|length }}</div>
     </div>
 </div>
 
-<table class="styled-table">
+<table class="financial-table">
     <thead>
         <tr>
-            <th style="width: 15%;"><div class="slanted-header"><span>Classe</span></div></th>
-            <th style="width: 15%;"><div class="slanted-header"><span>Matricule</span></div></th>
-            <th style="width: 40%;"><div class="slanted-header"><span>Nom & Prénoms</span></div></th>
-            <th style="width: 20%;"><div class="slanted-header orange"><span>Solde Dû</span></div></th>
-            <th style="width: 10%;"><div class="slanted-header red"><span>Alerte</span></div></th>
+            <th style="width: 15%;">Classe</th>
+            <th style="width: 15%;">Matricule</th>
+            <th style="width: 40%;">Nom & Prénoms</th>
+            <th style="width: 10%; text-align: center;">Statut</th>
+            <th style="width: 20%;" class="amount-col">Solde Dû (FCFA)</th>
         </tr>
     </thead>
     <tbody>
         {% for student in late_payments %}
         <tr>
-            <td style="font-weight: 700;">{{ student.className }}</td>
-            <td><code>{{ student.matricule }}</code></td>
-            <td style="font-weight: 700;">{{ student.lastName }} {{ student.firstName }}</td>
-            <td class="text-right font-mono" style="color: #dc2626; font-weight: 800;">{{ "{:,.0f}".format(student.balance) }}</td>
+            <td class="class-name">{{ student.className }}</td>
+            <td><span class="matricule-badge">{{ student.matricule }}</span></td>
+            <td class="student-name">{{ student.lastName }} {{ student.firstName }}</td>
             <td style="text-align: center;">
-                <div style="background: #fee2e2; color: #dc2626; font-weight: 900; font-size: 7px; padding: 2px 5px; border-radius: 4px; border: 1px solid #fca5a5;">STUCK</div>
+                <span class="status-alert">Retard</span>
             </td>
+            <td class="amount-value">{{ "{:,.0f}".format(student.balance) }}</td>
         </tr>
         {% else %}
-        <tr><td colspan="5" style="text-align: center; padding: 50px; color: #94a3b8;">Félicitations ! Aucun retard de paiement détecté.</td></tr>
+        <tr>
+            <td colspan="5">
+                <div class="empty-state">
+                    🎉 Félicitations ! Aucun retard de paiement n'a été détecté à ce jour.
+                </div>
+            </td>
+        </tr>
         {% endfor %}
     </tbody>
 </table>

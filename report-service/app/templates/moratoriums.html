@@ -1,23 +1,202 @@
 {% extends "base_report.html" %}
 {% block title %}Suivi des Moratoires{% endblock %}
+
+{% block extra_css %}
+<style>
+    :root {
+        --primary: #0f172a;
+        --warning: #f59e0b;
+        --warning-light: #fef3c7;
+        --text-main: #1e293b;
+        --text-muted: #64748b;
+        --bg-light: #f8fafc;
+        --border: #e2e8f0;
+    }
+
+    .report-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 30px;
+        padding-bottom: 20px;
+        border-bottom: 2px solid var(--border);
+    }
+
+    .header-title h1 {
+        font-size: 22px;
+        font-weight: 900;
+        color: var(--primary);
+        text-transform: uppercase;
+        margin: 0 0 5px 0;
+        letter-spacing: 1px;
+    }
+
+    .header-title p {
+        font-size: 13px;
+        color: var(--text-muted);
+        margin: 0;
+        font-weight: 500;
+    }
+
+    .kpi-warning {
+        background: var(--warning-light);
+        border: 1px solid #fcd34d;
+        padding: 15px 25px;
+        border-radius: 8px;
+        text-align: right;
+        min-width: 180px;
+    }
+
+    .kpi-warning .kpi-label {
+        font-size: 10px;
+        text-transform: uppercase;
+        font-weight: 800;
+        color: #b45309;
+        margin-bottom: 5px;
+    }
+
+    .kpi-warning .kpi-value {
+        font-size: 28px;
+        font-weight: 900;
+        color: var(--warning);
+        line-height: 1;
+    }
+
+    .financial-table {
+        width: 100%;
+        border-collapse: collapse;
+        font-size: 12px;
+        box-shadow: 0 4px 6px rgba(0,0,0,0.02);
+        border-radius: 8px;
+        overflow: hidden;
+    }
+
+    .financial-table th {
+        background: var(--primary);
+        color: white;
+        padding: 14px 15px;
+        text-align: left;
+        font-weight: 700;
+        text-transform: uppercase;
+        font-size: 11px;
+        letter-spacing: 0.5px;
+    }
+
+    .financial-table th.amount-col {
+        background: #334155;
+        text-align: right;
+    }
+
+    .financial-table td {
+        padding: 12px 15px;
+        border-bottom: 1px solid var(--border);
+        color: var(--text-main);
+        vertical-align: middle;
+    }
+
+    .financial-table tbody tr:nth-child(even) {
+        background-color: var(--bg-light);
+    }
+
+    .financial-table tbody tr:hover {
+        background-color: #f1f5f9;
+    }
+
+    .student-name {
+        font-weight: 700;
+        color: var(--primary);
+        font-size: 13px;
+    }
+
+    .matricule-badge {
+        background: #e2e8f0;
+        padding: 3px 6px;
+        border-radius: 4px;
+        font-family: monospace;
+        font-size: 11px;
+        color: #475569;
+        font-weight: 600;
+    }
+
+    .class-name {
+        font-weight: 600;
+        color: var(--text-muted);
+    }
+
+    .amount-value {
+        font-family: monospace;
+        font-size: 14px;
+        font-weight: 800;
+        color: var(--warning);
+        text-align: right;
+    }
+
+    .status-warning {
+        display: inline-block;
+        background: var(--warning);
+        color: white;
+        font-size: 9px;
+        font-weight: 800;
+        padding: 4px 8px;
+        border-radius: 12px;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+    }
+
+    .empty-state {
+        text-align: center;
+        padding: 60px 20px;
+        color: var(--text-muted);
+        font-weight: 600;
+        background: var(--bg-light);
+        border: 1px dashed var(--border);
+        border-radius: 8px;
+    }
+</style>
+{% endblock %}
+
 {% block content %}
-<div class="monday-header"><div><h2 class="monday-title">Suivi des Moratoires</h2><p class="monday-subtitle">Échéanciers de paiement actifs</p></div></div>
-<div class="table-container">
-    <table class="monday-table">
-        <thead><tr><th>Étudiant</th><th>Classe</th><th>Matricule</th><th style="text-align: right;">Solde</th><th style="text-align: center;">Statut</th></tr></thead>
-        <tbody>
-            {% for student in students %}
-            <tr>
-                <td><div style="font-weight: 600;">{{ student.lastName }} {{ student.firstName }}</div></td>
-                <td><span class="status-pill status-default">{{ student.className }}</span></td>
-                <td>{{ student.matricule }}</td>
-                <td style="text-align: right; font-family: monospace; font-size: 13px;">{{ "{:,.0f}".format(student.balance) }} FCFA</td>
-                <td style="text-align: center;"><span class="status-pill status-working">Moratoire</span></td>
-            </tr>
-            {% else %}
-            <tr><td colspan="5" style="text-align: center; padding: 30px; color: var(--monday-grey);">Aucun moratoire actif enregistré.</td></tr>
-            {% endfor %}
-        </tbody>
-    </table>
+<div class="report-header">
+    <div class="header-title">
+        <h1>Suivi des Moratoires</h1>
+        <p>Échéanciers de paiement actifs au <strong>{{ current_date }}</strong></p>
+    </div>
+    <div class="kpi-warning">
+        <div class="kpi-label">Moratoires Actifs</div>
+        <div class="kpi-value">{{ students|length }}</div>
+    </div>
 </div>
+
+<table class="financial-table">
+    <thead>
+        <tr>
+            <th style="width: 15%;">Classe</th>
+            <th style="width: 15%;">Matricule</th>
+            <th style="width: 40%;">Nom & Prénoms</th>
+            <th style="width: 10%; text-align: center;">Statut</th>
+            <th style="width: 20%;" class="amount-col">Solde Restant (FCFA)</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for student in students %}
+        <tr>
+            <td class="class-name">{{ student.className }}</td>
+            <td><span class="matricule-badge">{{ student.matricule }}</span></td>
+            <td class="student-name">{{ student.lastName }} {{ student.firstName }}</td>
+            <td style="text-align: center;">
+                <span class="status-warning">Moratoire</span>
+            </td>
+            <td class="amount-value">{{ "{:,.0f}".format(student.balance) }}</td>
+        </tr>
+        {% else %}
+        <tr>
+            <td colspan="5">
+                <div class="empty-state">
+                    Aucun moratoire actif enregistré pour le moment.
+                </div>
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
 {% endblock %}

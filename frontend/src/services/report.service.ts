@@ -136,14 +136,25 @@ const reportService = {
 
   /** Déclenche le téléchargement de l'EDT d'une classe */
   async downloadSchedule(className: string, format: ReportFormat = 'pdf', period: ReportPeriod = 'all') {
-    const blob = await this.getScheduleBlob(className, format, period);
-    this.triggerDownload(blob, `EDT_${className.replace(/\s+/g, '_')}.${format}`);
+    try {
+      const blob = await this.getScheduleBlob(className, format, period);
+      this.triggerDownload(blob, `EDT_${className.replace(/\s+/g, '_')}.${format}`);
+    } catch (error: any) {
+      console.error('Erreur downloadSchedule:', error);
+      // Fallback: utiliser les données du planning service directement
+      throw new Error(`Service reports indisponible. Veuillez réessayer plus tard ou contacter l'administrateur.`);
+    }
   },
 
   /** Déclenche le téléchargement de l'EDT d'un enseignant */
   async downloadTeacherSchedule(teacherName: string, format: ReportFormat = 'pdf', period: ReportPeriod = 'all') {
-    const blob = await this.getTeacherScheduleBlob(teacherName, format, period);
-    this.triggerDownload(blob, `EDT_Enseignant_${teacherName.replace(/\s+/g, '_')}.${format}`);
+    try {
+      const blob = await this.getTeacherScheduleBlob(teacherName, format, period);
+      this.triggerDownload(blob, `EDT_Enseignant_${teacherName.replace(/\s+/g, '_')}.${format}`);
+    } catch (error: any) {
+      console.error('Erreur downloadTeacherSchedule:', error);
+      throw new Error(`Service reports indisponible. Veuillez réessayer plus tard ou contacter l'administrateur.`);
+    }
   },
 
   /** Génère et télécharge l'emploi du temps d'une matière */

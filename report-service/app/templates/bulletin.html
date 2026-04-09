@@ -1,72 +1,334 @@
 {% extends "base_report.html" %}
-
 {% block title %}Bulletin - {{ student.matricule }}{% endblock %}
 
-{% block content %}
-  <div class="section-title">
-    <h2>BULLETIN DE NOTES</h2>
-    <div class="line"></div>
-  </div>
+{% block extra_css %}
+<style>
+    :root {
+        --primary-color: #0f172a;
+        --secondary-color: #3b82f6;
+        --accent-color: #f59e0b;
+        --text-main: #1e293b;
+        --text-muted: #64748b;
+        --bg-light: #f8fafc;
+        --border-color: #e2e8f0;
+        --danger-color: #ef4444;
+    }
 
-  <div class="student-header-box">
-    <div class="student-info">
-      <div class="student-name">{{ student.last_name }} {{ student.first_name }}</div>
-      <div class="student-meta">
-        <span><strong>Matricule:</strong> {{ student.matricule }}</span>
-        <span><strong>Classe:</strong> {{ student.class_name }}</span>
-        <span><strong>Année:</strong> {{ academic_year.name }}</span>
-        <span><strong>Semestre:</strong> {{ semester.name }}</span>
-      </div>
-    </div>
-  </div>
+    .bulletin-wrapper {
+        max-width: 900px;
+        margin: 0 auto;
+        background: #ffffff;
+        position: relative;
+        overflow: hidden;
+        padding: 20px;
+    }
 
-  <table class="luxury-table">
-    <thead>
-      <tr>
-        <th>Matière</th>
-        <th>Évaluation</th>
-        <th>Type</th>
-        <th>Coef (%)</th>
-        <th>Note</th>
-        <th>Max</th>
-        <th>Note pondérée (/20)</th>
-      </tr>
-    </thead>
-    <tbody>
-      {% for row in rows %}
-        <tr>
-          <td>{{ row.subject_name }}</td>
-          <td>{{ row.evaluation_name }}</td>
-          <td>{{ row.evaluation_type }}</td>
-          <td>{{ row.weight_percent }}</td>
-          <td>
-            {% if row.is_absent %}
-              <span class="badge badge-danger">ABS</span>
-            {% else %}
-              {{ row.score }}
-            {% endif %}
-          </td>
-          <td>{{ row.max_score }}</td>
-          <td>{{ row.weighted_score_20 }}</td>
-        </tr>
-      {% endfor %}
-      {% if rows|length == 0 %}
-        <tr>
-          <td colspan="7">Aucune note disponible pour ce semestre.</td>
-        </tr>
-      {% endif %}
-    </tbody>
-  </table>
+    .watermark {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%) rotate(-30deg);
+        font-size: 80px;
+        font-weight: 900;
+        color: rgba(15, 23, 42, 0.03);
+        text-transform: uppercase;
+        pointer-events: none;
+        z-index: 0;
+        letter-spacing: 8px;
+        white-space: nowrap;
+    }
 
-  <div class="kpi-grid">
-    <div class="kpi-card">
-      <div class="kpi-label">Moyenne générale (/20)</div>
-      <div class="kpi-value">{{ summary.general_average_20 }}</div>
-    </div>
-    <div class="kpi-card orange">
-      <div class="kpi-label">Évaluations prises en compte</div>
-      <div class="kpi-value">{{ summary.count_evaluations }}</div>
-    </div>
-  </div>
+    .bulletin-header {
+        text-align: center;
+        margin-bottom: 30px;
+        position: relative;
+        z-index: 1;
+    }
+
+    .bulletin-title {
+        font-size: 24px;
+        font-weight: 800;
+        color: var(--primary-color);
+        text-transform: uppercase;
+        letter-spacing: 2px;
+        margin: 0;
+    }
+
+    .bulletin-line {
+        height: 3px;
+        width: 60px;
+        background: var(--secondary-color);
+        margin: 10px auto;
+        border-radius: 2px;
+    }
+
+    .student-card {
+        display: flex;
+        justify-content: space-between;
+        background: var(--bg-light);
+        border: 1px solid var(--border-color);
+        border-radius: 10px;
+        padding: 25px;
+        margin-bottom: 30px;
+        position: relative;
+        z-index: 1;
+        box-shadow: 0 4px 6px rgba(0,0,0,0.02);
+    }
+
+    .student-identity h2 {
+        margin: 0 0 5px 0;
+        font-size: 22px;
+        color: var(--primary-color);
+        font-weight: 800;
+        text-transform: uppercase;
+    }
+
+    .student-identity p {
+        margin: 0;
+        font-size: 14px;
+        color: var(--text-muted);
+    }
+
+    .student-identity strong {
+        color: var(--primary-color);
+    }
+
+    .academic-info {
+        text-align: right;
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+    }
+
+    .info-badge {
+        background: #ffffff;
+        border: 1px solid var(--border-color);
+        padding: 6px 12px;
+        border-radius: 6px;
+        font-size: 12px;
+        color: var(--text-main);
+        font-weight: 600;
+        box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+    }
+
+    .info-badge span {
+        color: var(--text-muted);
+        font-weight: 400;
+        margin-right: 5px;
+    }
+
+    .grades-table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-bottom: 30px;
+        position: relative;
+        z-index: 1;
+        font-size: 13px;
+    }
+
+    .grades-table th {
+        background: var(--primary-color);
+        color: #ffffff;
+        padding: 12px 15px;
+        text-align: left;
+        font-weight: 600;
+        text-transform: uppercase;
+        font-size: 11px;
+        letter-spacing: 0.5px;
+    }
+
+    .grades-table th.center { text-align: center; }
+    .grades-table th.right { text-align: right; }
+
+    .grades-table td {
+        padding: 12px 15px;
+        border-bottom: 1px solid var(--border-color);
+        color: var(--text-main);
+    }
+
+    .grades-table td.center { text-align: center; }
+    .grades-table td.right { text-align: right; }
+
+    .grades-table tbody tr:nth-child(even) {
+        background-color: #f8fafc;
+    }
+
+    .grades-table tbody tr:hover {
+        background-color: #f1f5f9;
+    }
+
+    .subject-name {
+        font-weight: 700;
+        color: var(--primary-color);
+    }
+
+    .eval-type {
+        font-size: 11px;
+        color: var(--text-muted);
+        background: #e2e8f0;
+        padding: 2px 6px;
+        border-radius: 4px;
+    }
+
+    .highlight-col {
+        background-color: rgba(59, 130, 246, 0.05);
+        font-weight: 700;
+        color: var(--secondary-color) !important;
+    }
+
+    .badge-absent {
+        background: #fee2e2;
+        color: var(--danger-color);
+        padding: 4px 8px;
+        border-radius: 4px;
+        font-size: 11px;
+        font-weight: 800;
+        letter-spacing: 1px;
+    }
+
+    .summary-section {
+        display: flex;
+        justify-content: flex-end;
+        gap: 20px;
+        margin-bottom: 40px;
+        position: relative;
+        z-index: 1;
+    }
+
+    .summary-card {
+        background: #ffffff;
+        border: 1px solid var(--border-color);
+        padding: 15px 25px;
+        border-radius: 8px;
+        text-align: center;
+        min-width: 150px;
+        box-shadow: 0 4px 6px rgba(0,0,0,0.02);
+    }
+
+    .summary-card.main {
+        background: linear-gradient(135deg, var(--primary-color) 0%, #334155 100%);
+        color: white;
+        border: none;
+        box-shadow: 0 8px 15px rgba(15, 23, 42, 0.2);
+    }
+
+    .summary-label {
+        font-size: 11px;
+        text-transform: uppercase;
+        font-weight: 700;
+        color: var(--text-muted);
+        margin-bottom: 5px;
+    }
+
+    .summary-card.main .summary-label {
+        color: #cbd5e1;
+    }
+
+    .summary-value {
+        font-size: 24px;
+        font-weight: 900;
+    }
+
+    .signatures-area {
+        display: flex;
+        justify-content: space-between;
+        margin-top: 50px;
+        padding-top: 20px;
+        position: relative;
+        z-index: 1;
+    }
+
+    .signature-box {
+        width: 40%;
+        text-align: center;
+    }
+
+    .signature-title {
+        font-size: 12px;
+        font-weight: 800;
+        color: var(--text-main);
+        text-transform: uppercase;
+        margin-bottom: 80px;
+        border-bottom: 1px solid var(--border-color);
+        padding-bottom: 10px;
+    }
+</style>
 {% endblock %}
 
+{% block content %}
+<div class="bulletin-wrapper">
+    <div class="watermark">BULLETIN OFFICIEL</div>
+    <div class="bulletin-header">
+        <h1 class="bulletin-title">Bulletin de Notes</h1>
+        <div class="bulletin-line"></div>
+    </div>
+    <div class="student-card">
+        <div class="student-identity">
+            <h2>{{ student.last_name }} {{ student.first_name }}</h2>
+            <p>Matricule : <strong>{{ student.matricule }}</strong></p>
+        </div>
+        <div class="academic-info">
+            <div class="info-badge"><span>Classe :</span> {{ student.class_name }}</div>
+            <div class="info-badge"><span>Année :</span> {{ academic_year.name }}</div>
+            <div class="info-badge"><span>Semestre :</span> {{ semester.name }}</div>
+        </div>
+    </div>
+    <table class="grades-table">
+        <thead>
+            <tr>
+                <th>Matière</th>
+                <th>Évaluation</th>
+                <th class="center">Type</th>
+                <th class="center">Coef (%)</th>
+                <th class="center">Note</th>
+                <th class="center">Max</th>
+                <th class="right">Note pondérée (/20)</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for row in rows %}
+            <tr>
+                <td class="subject-name">{{ row.subject_name }}</td>
+                <td>{{ row.evaluation_name }}</td>
+                <td class="center"><span class="eval-type">{{ row.evaluation_type }}</span></td>
+                <td class="center">{{ row.weight_percent }}</td>
+                <td class="center">
+                    {% if row.is_absent %}
+                        <span class="badge-absent">ABS</span>
+                    {% else %}
+                        <strong>{{ row.score }}</strong>
+                    {% endif %}
+                </td>
+                <td class="center">{{ row.max_score }}</td>
+                <td class="right highlight-col">{{ row.weighted_score_20 }}</td>
+            </tr>
+            {% endfor %}
+            {% if rows|length == 0 %}
+            <tr>
+                <td colspan="7" class="center" style="padding: 30px; color: var(--text-muted); font-style: italic;">
+                    Aucune note disponible pour ce semestre.
+                </td>
+            </tr>
+            {% endif %}
+        </tbody>
+    </table>
+    <div class="summary-section">
+        <div class="summary-card">
+            <div class="summary-label">Évaluations</div>
+            <div class="summary-value" style="color: var(--text-main);">{{ summary.count_evaluations }}</div>
+        </div>
+        <div class="summary-card main">
+            <div class="summary-label">Moyenne Générale</div>
+            <div class="summary-value">{{ summary.general_average_20 }} <small style="font-size: 14px; font-weight: 400;">/20</small></div>
+        </div>
+    </div>
+    <div class="signatures-area">
+        <div class="signature-box">
+            <div class="signature-title">Le Titulaire / Professeur Principal</div>
+        </div>
+        <div class="signature-box">
+            <div class="signature-title">La Direction des Études</div>
+        </div>
+    </div>
+</div>
+{% endblock %}

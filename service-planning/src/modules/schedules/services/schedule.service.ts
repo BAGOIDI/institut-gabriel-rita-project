@@ -133,13 +133,13 @@ export class ScheduleService implements OnModuleInit {
   async findAll(filters: { classId?: string; roomId?: string; staffId?: string }) {
     const where: any = {};
     if (filters.classId) {
-      where.classId = Number(filters.classId);
+      where.classId = filters.classId;
     }
     if (filters.roomId) {
       where.roomName = filters.roomId;
     }
     if (filters.staffId) {
-      where.staffId = Number(filters.staffId);
+      where.staffId = filters.staffId;
     }
     return await this.repo.find({ where });
   }
