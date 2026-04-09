@@ -21,7 +21,7 @@ services:
     networks: [school-network]
     labels:
       - "traefik.enable=true"
-      - "traefik.http.routers.keycloak.rule=Host(`localhost`) && PathPrefix(`/auth`)"
+      - "traefik.http.routers.keycloak.rule=HostRegexp(`localhost`, `192.168.1.121`) && PathPrefix(`/auth`)"
       - "traefik.http.services.keycloak.loadbalancer.server.port=8080"
 
   postgres:
@@ -123,7 +123,7 @@ services:
     restart: unless-stopped
     labels:
       - "traefik.enable=true"
-      - "traefik.http.routers.dashboard.rule=Host(`localhost`) && PathPrefix(`/api/dashboard`)"
+      - "traefik.http.routers.dashboard.rule=HostRegexp(`localhost`, `192.168.1.121`) && PathPrefix(`/api/dashboard`)"
       - "traefik.http.middlewares.dashboard-strip.stripprefix.prefixes=/api/dashboard"
       - "traefik.http.routers.dashboard.middlewares=dashboard-strip"
       - "traefik.http.services.dashboard.loadbalancer.server.port=3000"
@@ -146,7 +146,7 @@ services:
     restart: unless-stopped
     labels:
       - "traefik.enable=true"
-      - "traefik.http.routers.finance.rule=Host(`localhost`) && PathPrefix(`/api/finance`)"
+      - "traefik.http.routers.finance.rule=HostRegexp(`localhost`, `192.168.1.121`) && PathPrefix(`/api/finance`)"
       - "traefik.http.middlewares.finance-strip.stripprefix.prefixes=/api/finance"
       - "traefik.http.routers.finance.middlewares=finance-strip"
       - "traefik.http.services.finance.loadbalancer.server.port=3000"
@@ -171,7 +171,7 @@ services:
       - db-bootstrap
     labels:
       - "traefik.enable=true"
-      - "traefik.http.routers.reports.rule=Host(`localhost`) && PathPrefix(`/api/reports`)"
+      - "traefik.http.routers.reports.rule=HostRegexp(`localhost`, `192.168.1.121`) && PathPrefix(`/api/reports`)"
       - "traefik.http.middlewares.reports-strip.stripprefix.prefixes=/api/reports"
       - "traefik.http.routers.reports.middlewares=reports-strip"
       - "traefik.http.services.reports.loadbalancer.server.port=5000"
@@ -196,7 +196,7 @@ services:
     restart: unless-stopped
     labels:
       - "traefik.enable=true"
-      - "traefik.http.routers.core.rule=Host(`localhost`) && PathPrefix(`/api/core`)"
+      - "traefik.http.routers.core.rule=HostRegexp(`localhost`, `192.168.1.121`) && PathPrefix(`/api/core`)"
       - "traefik.http.middlewares.core-strip.stripprefix.prefixes=/api/core"
       - "traefik.http.routers.core.middlewares=core-strip"
       - "traefik.http.services.core.loadbalancer.server.port=3000"
@@ -219,7 +219,7 @@ services:
     restart: unless-stopped
     labels:
       - "traefik.enable=true"
-      - "traefik.http.routers.planning.rule=Host(`localhost`) && PathPrefix(`/api/planning`)"
+      - "traefik.http.routers.planning.rule=HostRegexp(`localhost`, `192.168.1.121`) && PathPrefix(`/api/planning`)"
       - "traefik.http.middlewares.planning-strip.stripprefix.prefixes=/api/planning"
       - "traefik.http.routers.planning.middlewares=planning-strip"
       - "traefik.http.services.planning.loadbalancer.server.port=3000"
@@ -243,7 +243,7 @@ services:
     restart: unless-stopped
     labels:
       - "traefik.enable=true"
-      - "traefik.http.routers.bulletins.rule=Host(`localhost`) && PathPrefix(`/api/bulletins`)"
+      - "traefik.http.routers.bulletins.rule=HostRegexp(`localhost`, `192.168.1.121`) && PathPrefix(`/api/bulletins`)"
       - "traefik.http.middlewares.bulletins-strip.stripprefix.prefixes=/api/bulletins"
       - "traefik.http.routers.bulletins.middlewares=bulletins-strip"
       - "traefik.http.services.bulletins.loadbalancer.server.port=3000"
@@ -267,7 +267,7 @@ services:
     restart: unless-stopped
     labels:
       - "traefik.enable=true"
-      - "traefik.http.routers.front.rule=Host(`localhost`) && PathPrefix(`/`)"
+      - "traefik.http.routers.front.rule=HostRegexp(`localhost`, `192.168.1.121`) && PathPrefix(`/`)"
       - "traefik.http.routers.front.priority=-1"
       - "traefik.http.services.front.loadbalancer.server.port=80"
 
