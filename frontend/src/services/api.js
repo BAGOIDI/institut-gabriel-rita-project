@@ -32,9 +32,9 @@ financeApi.interceptors.request.use(addAuthToken);
 coreApi.interceptors.request.use(addAuthToken);
 reportsApi.interceptors.request.use(addAuthToken);
 
-// WebSocket Connection (Direct to service port or via Traefik if configured for WS)
-// For dev/docker, direct port is often easier, but let's try relative path if proxied
-export const socket = io('http://localhost:3003', {
-  transports: ['websocket'],
+// WebSocket Connection (relative path - will use current host)
+export const socket = io({
+  transports: ['websocket', 'polling'],
   autoConnect: true,
+  path: '/api/dashboard/socket.io',
 });
